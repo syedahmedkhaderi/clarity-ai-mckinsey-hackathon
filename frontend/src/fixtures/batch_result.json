@@ -6115,7 +6115,7 @@
       }
     ],
     "goal": "Maximise misconceptions resolved in the next week within the facilitator time available.",
-    "generated_at": "2026-09-18T14:05:34+00:00"
+    "generated_at": "2026-09-18T14:06:18+00:00"
   },
   "escalations": [
     {
@@ -6222,7 +6222,7 @@
       "agent": "intake",
       "action": "start",
       "detail": "Loading submissions for A3 from the LMS connector",
-      "timestamp": "2026-09-18T14:05:34.261+00:00",
+      "timestamp": "2026-09-18T14:06:18.838+00:00",
       "duration_ms": 0,
       "level": "info"
     },
@@ -6230,7 +6230,7 @@
       "agent": "intake",
       "action": "history",
       "detail": "12 learners on roll. Returners: L07, L09, L12. Sparse history (<50 percent of expected assessments): none",
-      "timestamp": "2026-09-18T14:05:34.263+00:00",
+      "timestamp": "2026-09-18T14:06:18.840+00:00",
       "duration_ms": 0,
       "level": "info"
     },
@@ -6238,7 +6238,7 @@
       "agent": "intake",
       "action": "end",
       "detail": "96 responses from 12 learners ready to mark",
-      "timestamp": "2026-09-18T14:05:34.263+00:00",
+      "timestamp": "2026-09-18T14:06:18.840+00:00",
       "duration_ms": 1,
       "level": "info"
     },
@@ -6246,7 +6246,7 @@
       "agent": "marker",
       "action": "start",
       "detail": "Marking 96 responses against the scheme (deterministic rules)",
-      "timestamp": "2026-09-18T14:05:34.263+00:00",
+      "timestamp": "2026-09-18T14:06:18.840+00:00",
       "duration_ms": 0,
       "level": "info"
     },
@@ -6254,7 +6254,7 @@
       "agent": "marker",
       "action": "marked",
       "detail": "96 provisional marks. 60 deterministic, 0 from the model, 36 from the rule fallback. 0 model calls.",
-      "timestamp": "2026-09-18T14:05:34.264+00:00",
+      "timestamp": "2026-09-18T14:06:18.841+00:00",
       "duration_ms": 0,
       "level": "info"
     },
@@ -6262,15 +6262,15 @@
       "agent": "marker",
       "action": "end",
       "detail": "96 marks passed the reviewer gate, 0 escalated for human marking",
-      "timestamp": "2026-09-18T14:05:34.264+00:00",
-      "duration_ms": 0,
+      "timestamp": "2026-09-18T14:06:18.841+00:00",
+      "duration_ms": 1,
       "level": "info"
     },
     {
       "agent": "diagnostician",
       "action": "start",
       "detail": "32 of 96 responses lost marks and need a diagnosis",
-      "timestamp": "2026-09-18T14:05:34.264+00:00",
+      "timestamp": "2026-09-18T14:06:18.841+00:00",
       "duration_ms": 0,
       "level": "info"
     },
@@ -6278,7 +6278,7 @@
       "agent": "diagnostician",
       "action": "diagnosed",
       "detail": "32 diagnoses. 18 from the distractor map with no model call, 0 model calls. 1 flagged as a language barrier rather than a misconception.",
-      "timestamp": "2026-09-18T14:05:34.265+00:00",
+      "timestamp": "2026-09-18T14:06:18.842+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6286,7 +6286,7 @@
       "agent": "reviewer",
       "action": "AMBIGUOUS_DIAGNOSIS",
       "detail": "L03 A3Q2: Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
-      "timestamp": "2026-09-18T14:05:34.265+00:00",
+      "timestamp": "2026-09-18T14:06:18.842+00:00",
       "duration_ms": 0,
       "level": "escalation"
     },
@@ -6294,7 +6294,7 @@
       "agent": "reviewer",
       "action": "LANGUAGE_BARRIER",
       "detail": "L11 A3Q4: The final value is correct, so the mathematics holds. The marks lost are in how the working is written, which is a language issue, not a misconception.",
-      "timestamp": "2026-09-18T14:05:34.265+00:00",
+      "timestamp": "2026-09-18T14:06:18.842+00:00",
       "duration_ms": 0,
       "level": "escalation"
     },
@@ -6302,7 +6302,7 @@
       "agent": "reviewer",
       "action": "AMBIGUOUS_DIAGNOSIS",
       "detail": "L06 A3Q6: Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
-      "timestamp": "2026-09-18T14:05:34.265+00:00",
+      "timestamp": "2026-09-18T14:06:18.842+00:00",
       "duration_ms": 0,
       "level": "escalation"
     },
@@ -6310,7 +6310,7 @@
       "agent": "reviewer",
       "action": "AMBIGUOUS_DIAGNOSIS",
       "detail": "L09 A3Q6: Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
-      "timestamp": "2026-09-18T14:05:34.265+00:00",
+      "timestamp": "2026-09-18T14:06:18.842+00:00",
       "duration_ms": 0,
       "level": "escalation"
     },
@@ -6318,7 +6318,7 @@
       "agent": "diagnostician",
       "action": "end",
       "detail": "28 diagnoses passed the reviewer gate, 4 escalated to a human",
-      "timestamp": "2026-09-18T14:05:34.265+00:00",
+      "timestamp": "2026-09-18T14:06:18.842+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6326,7 +6326,7 @@
       "agent": "cohort_analyst",
       "action": "start",
       "detail": "Aggregating 28 surviving diagnoses across 12 learners",
-      "timestamp": "2026-09-18T14:05:34.265+00:00",
+      "timestamp": "2026-09-18T14:06:18.842+00:00",
       "duration_ms": 0,
       "level": "info"
     },
@@ -6334,7 +6334,7 @@
       "agent": "cohort_analyst",
       "action": "teaching_problem",
       "detail": "M01 Adds numerators and denominators separately is held by 5 of 12 learners (42%), at or above the 40% threshold. This is a teaching problem, not 5 individual problems.",
-      "timestamp": "2026-09-18T14:05:34.265+00:00",
+      "timestamp": "2026-09-18T14:06:18.842+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6342,7 +6342,7 @@
       "agent": "cohort_analyst",
       "action": "end",
       "detail": "16 nodes analysed. 1 shared, 11 recurring, 4 emerging, 0 topics with too little data to call",
-      "timestamp": "2026-09-18T14:05:34.265+00:00",
+      "timestamp": "2026-09-18T14:06:18.842+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6350,7 +6350,7 @@
       "agent": "planner",
       "action": "start",
       "detail": "Goal: maximise misconceptions resolved next week. Hard constraint: 120 facilitator minutes.",
-      "timestamp": "2026-09-18T14:05:34.265+00:00",
+      "timestamp": "2026-09-18T14:06:18.842+00:00",
       "duration_ms": 0,
       "level": "info"
     },
@@ -6358,7 +6358,7 @@
       "agent": "planner",
       "action": "candidates",
       "detail": "32 candidate actions proposed, 465 minutes of work against a 120 minute budget. The budget cannot hold all of it.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "info"
     },
@@ -6366,7 +6366,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Individual follow-up: L03 on Treats a negative number as its absolute value when ordering (severity 0.78, 20 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6374,7 +6374,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Individual follow-up: L01 on Evaluates strictly left to right ignoring precedence (severity 0.78, 20 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6382,7 +6382,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Individual follow-up: L10 on Evaluates strictly left to right ignoring precedence (severity 0.78, 20 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6390,7 +6390,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Peer pairing: L04 explains the method for Finds a common denominator but forgets to scale the numerators to L12 (severity 0.74, 15 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6398,7 +6398,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Peer pairing: L03 explains the method for Simplifies by subtracting instead of dividing to L05 (severity 0.74, 15 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6406,7 +6406,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Peer pairing: L03 explains the method for Reads the percentage sign as a decimal point to L04 (severity 0.74, 15 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6414,7 +6414,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Peer pairing: L03 explains the method for Evaluates strictly left to right ignoring precedence to L01 (severity 0.74, 15 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6422,7 +6422,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Restart point for Amira K., returning after a gap (severity 0.73, 20 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6430,7 +6430,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Restart point for Daniel M., returning after a gap (severity 0.73, 20 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6438,7 +6438,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Individual follow-up: L12 on Finds a common denominator but forgets to scale the numerators (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6446,7 +6446,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Individual follow-up: L05 on Simplifies by subtracting instead of dividing (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6454,7 +6454,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Individual follow-up: L10 on Simplifies by subtracting instead of dividing (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6462,7 +6462,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Individual follow-up: L08 on Divides the total by the number of parts named rather than the total share count (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6470,7 +6470,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Individual follow-up: L07 on Arithmetic slip while scaling to a percentage (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6478,7 +6478,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Individual follow-up: L08 on Mishandles subtraction of a negative number (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6486,7 +6486,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Individual follow-up: L06 on Ignores brackets (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6494,7 +6494,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Ravi P. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6502,7 +6502,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Fatima S. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6510,7 +6510,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Chen W. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6518,7 +6518,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Kwame A. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6526,7 +6526,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Amira K. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6534,7 +6534,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Grace O. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6542,7 +6542,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Ibrahim N. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6550,7 +6550,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Sofia R. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6558,7 +6558,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Daniel M. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6566,7 +6566,7 @@
       "agent": "reviewer",
       "action": "BUDGET_OVERFLOW",
       "detail": "Individual follow-up: L03 on Treats a negative number as its absolute value when ordering: Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Treats a negative number as its absolute value when ordering has now appeared for L03 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "escalation"
     },
@@ -6574,7 +6574,7 @@
       "agent": "reviewer",
       "action": "BUDGET_OVERFLOW",
       "detail": "Individual follow-up: L01 on Evaluates strictly left to right ignoring precedence: Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Evaluates strictly left to right ignoring precedence has now appeared for L01 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "escalation"
     },
@@ -6582,7 +6582,7 @@
       "agent": "reviewer",
       "action": "BUDGET_OVERFLOW",
       "detail": "Individual follow-up: L10 on Evaluates strictly left to right ignoring precedence: Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Evaluates strictly left to right ignoring precedence has now appeared for L10 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "escalation"
     },
@@ -6590,7 +6590,7 @@
       "agent": "planner",
       "action": "end",
       "detail": "7 actions scheduled using 120 of 120 minutes. 25 dropped for want of time. 11 feedback notes drafted.",
-      "timestamp": "2026-09-18T14:05:34.266+00:00",
+      "timestamp": "2026-09-18T14:06:18.843+00:00",
       "duration_ms": 0,
       "level": "decision"
     }
