@@ -1,0 +1,88 @@
+{
+  "courses": [
+    {
+      "id": "C1",
+      "name": "Meridian Centre 4 - Foundational Mathematics, Tuesday cohort",
+      "term": "2026 Term 3",
+      "enrolled": 12
+    }
+  ],
+  "assignments": [
+    {
+      "id": "A1",
+      "course_id": "C1",
+      "name": "Assessment 1 - Foundational Mathematics",
+      "points_possible": 14,
+      "question_count": 8,
+      "submission_count": 11,
+      "expected_count": 12,
+      "topics": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7"
+      ],
+      "due_at": "2026-01-12T17:00:00Z"
+    },
+    {
+      "id": "A2",
+      "course_id": "C1",
+      "name": "Assessment 2 - Foundational Mathematics",
+      "points_possible": 14,
+      "question_count": 8,
+      "submission_count": 9,
+      "expected_count": 12,
+      "topics": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7"
+      ],
+      "due_at": "2026-02-12T17:00:00Z"
+    },
+    {
+      "id": "A3",
+      "course_id": "C1",
+      "name": "Assessment 3 - Foundational Mathematics",
+      "points_possible": 14,
+      "question_count": 8,
+      "submission_count": 12,
+      "expected_count": 12,
+      "topics": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7"
+      ],
+      "due_at": "2026-03-12T17:00:00Z"
+    },
+    {
+      "id": "A4",
+      "course_id": "C1",
+      "name": "Assessment 4 - Foundational Mathematics",
+      "points_possible": 14,
+      "question_count": 8,
+      "submission_count": 12,
+      "expected_count": 12,
+      "topics": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7"
+      ],
+      "due_at": "2026-04-12T17:00:00Z"
+    }
+  ]
+}

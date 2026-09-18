@@ -1,0 +1,279 @@
+{
+  "version": "1.0",
+  "subject": "Foundational Mathematics",
+  "topics": [
+    {
+      "id": "T1",
+      "label": "Fractions - equivalence and simplification"
+    },
+    {
+      "id": "T2",
+      "label": "Fractions - addition and subtraction with unlike denominators"
+    },
+    {
+      "id": "T3",
+      "label": "Decimals - place value"
+    },
+    {
+      "id": "T4",
+      "label": "Percentages - conversion to and from fractions"
+    },
+    {
+      "id": "T5",
+      "label": "Ratio and proportion"
+    },
+    {
+      "id": "T6",
+      "label": "Negative numbers - arithmetic"
+    },
+    {
+      "id": "T7",
+      "label": "Order of operations"
+    }
+  ],
+  "error_classes": [
+    {
+      "id": "conceptual",
+      "label": "Conceptual",
+      "description": "The underlying idea is wrong"
+    },
+    {
+      "id": "procedural",
+      "label": "Procedural",
+      "description": "The method is misapplied or steps are out of order"
+    },
+    {
+      "id": "computational",
+      "label": "Computational",
+      "description": "The method is right, the arithmetic slipped"
+    },
+    {
+      "id": "notational",
+      "label": "Notational",
+      "description": "Expression or symbol use is wrong, understanding may be intact"
+    },
+    {
+      "id": "language",
+      "label": "Language comprehension",
+      "description": "The learner may not have understood the question wording, or cannot express a correct idea in the assessment language"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "M01",
+      "topic": "T2",
+      "error_class": "conceptual",
+      "label": "Adds numerators and denominators separately",
+      "description": "Treats a/b + c/d as (a+c)/(b+d), not recognising the need for a common denominator",
+      "typical_evidence": "Answer shows the numerator sum written over the denominator sum",
+      "remediation_hint": "Cut two paper strips into different numbers of equal pieces and try to add the pieces. The pieces must be the same size before you can count them together."
+    },
+    {
+      "id": "M02",
+      "topic": "T2",
+      "error_class": "procedural",
+      "label": "Finds a common denominator but forgets to scale the numerators",
+      "description": "Rewrites both fractions over a correct common denominator but leaves the original numerators unchanged",
+      "typical_evidence": "Denominator is correct, numerators are unchanged from the question",
+      "remediation_hint": "Whatever you multiply the bottom by, you must multiply the top by the same amount, or you have changed the size of the fraction."
+    },
+    {
+      "id": "M03",
+      "topic": "T2",
+      "error_class": "computational",
+      "label": "Correct method, arithmetic slip in the final addition",
+      "description": "Common denominator and scaling are both right, the final numerator sum is miscalculated",
+      "typical_evidence": "All working lines are correct, the last line does not follow",
+      "remediation_hint": "The method is right. Ask the learner to redo only the last line and check it against their own working."
+    },
+    {
+      "id": "M04",
+      "topic": "T1",
+      "error_class": "conceptual",
+      "label": "Believes a larger denominator always means a larger fraction",
+      "description": "Orders or compares fractions by the size of the denominator alone",
+      "typical_evidence": "States that 1/8 is greater than 1/3 because 8 is greater than 3",
+      "remediation_hint": "Share one chapati between 3 people, then between 8 people. More people means each share is smaller."
+    },
+    {
+      "id": "M05",
+      "topic": "T1",
+      "error_class": "procedural",
+      "label": "Simplifies by subtracting instead of dividing",
+      "description": "Reduces a fraction by subtracting the same number from numerator and denominator",
+      "typical_evidence": "Shows 6/8 becoming 4/6 or similar subtract-both steps",
+      "remediation_hint": "Simplifying means splitting into equal groups, so we divide top and bottom by the same number, never subtract."
+    },
+    {
+      "id": "M06",
+      "topic": "T1",
+      "error_class": "notational",
+      "label": "Writes an improper fraction where a mixed number was asked for",
+      "description": "The value is correct but the form requested by the question is not produced",
+      "typical_evidence": "Numerator larger than the denominator in an answer asking for a mixed number",
+      "remediation_hint": "The value is correct. Show how to trade full groups out of the top number to write it as a whole number and a leftover."
+    },
+    {
+      "id": "M07",
+      "topic": "T3",
+      "error_class": "conceptual",
+      "label": "Treats the digits after the decimal point as a whole number",
+      "description": "Compares or orders decimals by reading the fractional part as an integer, so 0.9 is judged smaller than 0.75",
+      "typical_evidence": "Ranks 0.75 above 0.9, or writes the tenths and hundredths digits as one number",
+      "remediation_hint": "Write both numbers with the same number of decimal places first, then compare column by column."
+    },
+    {
+      "id": "M08",
+      "topic": "T3",
+      "error_class": "procedural",
+      "label": "Misaligns the decimal point when adding or subtracting",
+      "description": "Right-aligns the digits instead of aligning the decimal points",
+      "typical_evidence": "Column working where the decimal points do not sit above each other",
+      "remediation_hint": "Draw a vertical line through the decimal points before adding. Fill empty places with zeros."
+    },
+    {
+      "id": "M09",
+      "topic": "T3",
+      "error_class": "computational",
+      "label": "Shifts the decimal point by the wrong number of places",
+      "description": "Multiplies or divides by a power of ten and moves the point one place too few or too many",
+      "typical_evidence": "Answer is a factor of ten away from the correct value",
+      "remediation_hint": "Count the zeros in the number you multiplied by. That is exactly how many places the point moves."
+    },
+    {
+      "id": "M10",
+      "topic": "T4",
+      "error_class": "conceptual",
+      "label": "Reads the percentage sign as a decimal point",
+      "description": "Converts a percentage to a decimal by placing a point without dividing by one hundred",
+      "typical_evidence": "Writes 45 percent as 4.5 or 45.0",
+      "remediation_hint": "Per cent means out of one hundred. Always divide by one hundred first, so 45 percent is 45 out of 100."
+    },
+    {
+      "id": "M11",
+      "topic": "T4",
+      "error_class": "procedural",
+      "label": "Inverts the fraction before converting to a percentage",
+      "description": "Computes the percentage from denominator over numerator instead of numerator over denominator",
+      "typical_evidence": "Percentage is the reciprocal conversion of the expected one",
+      "remediation_hint": "The part goes on top, the whole goes underneath, then multiply by one hundred."
+    },
+    {
+      "id": "M12",
+      "topic": "T5",
+      "error_class": "conceptual",
+      "label": "Treats a ratio as a difference instead of a multiplicative relationship",
+      "description": "Scales a ratio by adding the same amount to both parts rather than multiplying",
+      "typical_evidence": "Turns 2:3 into 4:5 by adding two to each part",
+      "remediation_hint": "A recipe doubled needs double of every ingredient, not one extra spoon of each."
+    },
+    {
+      "id": "M13",
+      "topic": "T5",
+      "error_class": "procedural",
+      "label": "Divides the total by the number of parts named rather than the total share count",
+      "description": "Splits a quantity in a given ratio by dividing by how many names appear, not by the sum of the ratio parts",
+      "typical_evidence": "Divides by 2 for a 3:5 share between two people",
+      "remediation_hint": "Add the ratio numbers together first to find how many equal shares exist, then divide."
+    },
+    {
+      "id": "M14",
+      "topic": "T4",
+      "error_class": "computational",
+      "label": "Arithmetic slip while scaling to a percentage",
+      "description": "Correct conversion method with a multiplication or division error in the final step",
+      "typical_evidence": "Method lines are correct, the final percentage is not consistent with them",
+      "remediation_hint": "The method is right. Ask the learner to recompute the final multiplication only."
+    },
+    {
+      "id": "M15",
+      "topic": "T6",
+      "error_class": "conceptual",
+      "label": "Treats a negative number as its absolute value when ordering",
+      "description": "Judges negative numbers as larger when their digit is larger, so -8 is ranked above -3",
+      "typical_evidence": "Orders negative numbers as if the minus sign were absent",
+      "remediation_hint": "Draw a number line and step left of zero. The further left you go, the smaller the number."
+    },
+    {
+      "id": "M16",
+      "topic": "T6",
+      "error_class": "procedural",
+      "label": "Mishandles subtraction of a negative number",
+      "description": "Does not convert subtracting a negative into addition",
+      "typical_evidence": "Writes 5 - (-3) as 2",
+      "remediation_hint": "Taking away a debt leaves you better off. Two minus signs together become a plus."
+    },
+    {
+      "id": "M17",
+      "topic": "T6",
+      "error_class": "computational",
+      "label": "Sign lost in a multi-step negative calculation",
+      "description": "Correct rules applied but the sign is dropped at one intermediate line",
+      "typical_evidence": "Magnitude is correct, sign is wrong",
+      "remediation_hint": "The size is right. Ask the learner to track only the signs through their own working."
+    },
+    {
+      "id": "M18",
+      "topic": "T7",
+      "error_class": "conceptual",
+      "label": "Evaluates strictly left to right ignoring precedence",
+      "description": "Applies operations in written order without regard to multiplication and division taking priority",
+      "typical_evidence": "Computes 2 + 3 x 4 as 20",
+      "remediation_hint": "Multiplication and division are done before addition and subtraction, no matter where they appear in the line."
+    },
+    {
+      "id": "M19",
+      "topic": "T7",
+      "error_class": "procedural",
+      "label": "Ignores brackets",
+      "description": "Does not evaluate the bracketed expression first",
+      "typical_evidence": "Bracketed terms expanded or evaluated out of order",
+      "remediation_hint": "Whatever is inside the brackets is one single value. Work it out and write it down before anything else."
+    },
+    {
+      "id": "M20",
+      "topic": "T7",
+      "error_class": "notational",
+      "label": "Drops brackets when rewriting the expression",
+      "description": "The intended order is understood but the rewritten line loses the brackets and changes the value",
+      "typical_evidence": "First line has brackets, second line does not, value changes",
+      "remediation_hint": "Understanding is there. Show that the brackets must be carried down to every line until the value inside is worked out."
+    },
+    {
+      "id": "M21",
+      "topic": "T2",
+      "error_class": "language",
+      "label": "Correct mathematics expressed in broken assessment language",
+      "description": "The working and answer are mathematically sound but the written explanation is grammatically irregular. This is a language expression issue and is never evidence of a conceptual gap",
+      "typical_evidence": "Correct numerical result with dropped articles, tense errors or inverted word order in the explanation",
+      "remediation_hint": "The mathematics is correct. Accept the answer and offer sentence starters in the assessment language for writing the method up."
+    },
+    {
+      "id": "M22",
+      "topic": "T5",
+      "error_class": "language",
+      "label": "Misread the word problem context",
+      "description": "The arithmetic is applied competently but to the wrong quantities because the wording of the scenario was misunderstood",
+      "typical_evidence": "Correct operation performed on numbers that the question did not pair",
+      "remediation_hint": "Read the question aloud together and underline what is being asked for before any calculation."
+    },
+    {
+      "id": "M23",
+      "topic": "T4",
+      "error_class": "language",
+      "label": "Unfamiliar vocabulary blocks the start of the question",
+      "description": "The learner does not attempt the question or answers a different one because a key term in the prompt is unknown",
+      "typical_evidence": "Blank response, or a response to a simpler question that was not asked",
+      "remediation_hint": "Check the key words in the question with the learner first. This is a vocabulary gap, not a mathematics gap."
+    },
+    {
+      "id": "M24",
+      "topic": "T3",
+      "error_class": "language",
+      "label": "Answer given in the wrong requested form due to instruction wording",
+      "description": "The value is correct but the instruction about the form of the answer was not understood",
+      "typical_evidence": "Correct value presented in a form the question did not ask for",
+      "remediation_hint": "The value is correct. Go over the instruction words the question uses, such as round, express, and give in."
+    }
+  ]
+}

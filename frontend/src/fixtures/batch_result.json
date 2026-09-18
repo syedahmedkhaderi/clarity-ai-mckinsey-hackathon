@@ -1,0 +1,4602 @@
+{
+  "batch_id": "B-A3-sync",
+  "assessment_id": "A3",
+  "cohort_id": "C1",
+  "facilitator_minutes": 120,
+  "submissions": [
+    {
+      "submission_id": "A3-L01-A3Q1",
+      "learner_id": "L01",
+      "learner_name": "Thabo M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "answer": "a",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L01-A3Q2",
+      "learner_id": "L01",
+      "learner_name": "Thabo M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "answer": "Writing both with two places gives 0.90 and 0.75. The sum is 1.65. Comparing tenths, 0.9 is larger.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L01-A3Q3",
+      "learner_id": "L01",
+      "learner_name": "Thabo M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L01-A3Q4",
+      "learner_id": "L01",
+      "learner_name": "Thabo M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "answer": "Common denominator is 12. 1/3 = 4/12 and 1/4 = 3/12. 4/12 + 3/12 = 7/12 km.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L01-A3Q5",
+      "learner_id": "L01",
+      "learner_name": "Thabo M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L01-A3Q6",
+      "learner_id": "L01",
+      "learner_name": "Thabo M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "answer": "3 + 4 = 7 equal shares. 56 / 7 = 8 per share. Lerato gets 3 x 8 = 24.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L01-A3Q7",
+      "learner_id": "L01",
+      "learner_name": "Thabo M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L01-A3Q8",
+      "learner_id": "L01",
+      "learner_name": "Thabo M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L02-A3Q1",
+      "learner_id": "L02",
+      "learner_name": "Nomsa D.",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L02-A3Q2",
+      "learner_id": "L02",
+      "learner_name": "Nomsa D.",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "answer": "Points under points: 0.90 plus 0.75 makes 1.65. In the tenths column 0.9 wins, so 0.9 is larger.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L02-A3Q3",
+      "learner_id": "L02",
+      "learner_name": "Nomsa D.",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L02-A3Q4",
+      "learner_id": "L02",
+      "learner_name": "Nomsa D.",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "answer": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms. So they walked 2/7 km.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L02-A3Q5",
+      "learner_id": "L02",
+      "learner_name": "Nomsa D.",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L02-A3Q6",
+      "learner_id": "L02",
+      "learner_name": "Nomsa D.",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "answer": "Lerato takes 3 and Dineo takes 4. The rest is 49, split evenly. So Lerato gets 27.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L02-A3Q7",
+      "learner_id": "L02",
+      "learner_name": "Nomsa D.",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L02-A3Q8",
+      "learner_id": "L02",
+      "learner_name": "Nomsa D.",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "answer": "a",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L03-A3Q1",
+      "learner_id": "L03",
+      "learner_name": "Ravi P.",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L03-A3Q2",
+      "learner_id": "L03",
+      "learner_name": "Ravi P.",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "answer": "Lining up the points, 0.90 + 0.75 = 1.75. 0.9 is larger, the tenths digit decides it.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L03-A3Q3",
+      "learner_id": "L03",
+      "learner_name": "Ravi P.",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "answer": "d",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L03-A3Q4",
+      "learner_id": "L03",
+      "learner_name": "Ravi P.",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "answer": "I rewrite both over 12: 4/12 and 3/12. Adding the numerators gives 7/12 km in total.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L03-A3Q5",
+      "learner_id": "L03",
+      "learner_name": "Ravi P.",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L03-A3Q6",
+      "learner_id": "L03",
+      "learner_name": "Ravi P.",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "answer": "Total shares are 7. One share is 56 / 7 = 8. Lerato has 3 shares so Lerato gets 24.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L03-A3Q7",
+      "learner_id": "L03",
+      "learner_name": "Ravi P.",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L03-A3Q8",
+      "learner_id": "L03",
+      "learner_name": "Ravi P.",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L04-A3Q1",
+      "learner_id": "L04",
+      "learner_name": "Fatima S.",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L04-A3Q2",
+      "learner_id": "L04",
+      "learner_name": "Fatima S.",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "answer": "I line up the decimal points. 0.90 + 0.75 = 1.65. 0.9 is larger because its tenths digit is bigger.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L04-A3Q3",
+      "learner_id": "L04",
+      "learner_name": "Fatima S.",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L04-A3Q4",
+      "learner_id": "L04",
+      "learner_name": "Fatima S.",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "answer": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms. So they walked 2/7 km.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L04-A3Q5",
+      "learner_id": "L04",
+      "learner_name": "Fatima S.",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "answer": "d",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L04-A3Q6",
+      "learner_id": "L04",
+      "learner_name": "Fatima S.",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "answer": "Total shares are 7. One share is 56 / 7 = 8. so Lerato gets 24 Lerato has 3 share.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L04-A3Q7",
+      "learner_id": "L04",
+      "learner_name": "Fatima S.",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L04-A3Q8",
+      "learner_id": "L04",
+      "learner_name": "Fatima S.",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "answer": "a",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L05-A3Q1",
+      "learner_id": "L05",
+      "learner_name": "Chen W.",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L05-A3Q2",
+      "learner_id": "L05",
+      "learner_name": "Chen W.",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "answer": "I add them and get 1.65. 0.75 is larger because its number after point is bigger.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L05-A3Q3",
+      "learner_id": "L05",
+      "learner_name": "Chen W.",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L05-A3Q4",
+      "learner_id": "L05",
+      "learner_name": "Chen W.",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "answer": "Common denominator is 12. 1/3 = 4/12 and 1/4 = 3/12. 4/12 + 3/12 = 7/12 km.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L05-A3Q5",
+      "learner_id": "L05",
+      "learner_name": "Chen W.",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L05-A3Q6",
+      "learner_id": "L05",
+      "learner_name": "Chen W.",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "answer": "Total shares are 7. One share is 56 / 7 = 8. Lerato have 3 share so Lerato gets 24.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L05-A3Q7",
+      "learner_id": "L05",
+      "learner_name": "Chen W.",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "answer": "a",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L05-A3Q8",
+      "learner_id": "L05",
+      "learner_name": "Chen W.",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L06-A3Q1",
+      "learner_id": "L06",
+      "learner_name": "Kwame A.",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "answer": "c",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L06-A3Q2",
+      "learner_id": "L06",
+      "learner_name": "Kwame A.",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "answer": "Points under points: 0.90 plus 0.75 makes 1.65. In the tenths column 0.9 wins, so 0.9 is larger.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L06-A3Q3",
+      "learner_id": "L06",
+      "learner_name": "Kwame A.",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L06-A3Q4",
+      "learner_id": "L06",
+      "learner_name": "Kwame A.",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "answer": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms. So they walked 2/7 km.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L06-A3Q5",
+      "learner_id": "L06",
+      "learner_name": "Kwame A.",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L06-A3Q6",
+      "learner_id": "L06",
+      "learner_name": "Kwame A.",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "answer": "3 + 4 = 7 shares. 56 / 7 = 8. Lerato gets 3 x 8 = 25.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L06-A3Q7",
+      "learner_id": "L06",
+      "learner_name": "Kwame A.",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L06-A3Q8",
+      "learner_id": "L06",
+      "learner_name": "Kwame A.",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "answer": "d",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L07-A3Q1",
+      "learner_id": "L07",
+      "learner_name": "Amira K.",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L07-A3Q2",
+      "learner_id": "L07",
+      "learner_name": "Amira K.",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "answer": "Writing both with two places gives 0.90 and 0.75. The sum is 1.65. Comparing tenths, 0.9 is larger.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L07-A3Q3",
+      "learner_id": "L07",
+      "learner_name": "Amira K.",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L07-A3Q4",
+      "learner_id": "L07",
+      "learner_name": "Amira K.",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "answer": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms. So they walked 2/7 km.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L07-A3Q5",
+      "learner_id": "L07",
+      "learner_name": "Amira K.",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "answer": "c",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L07-A3Q6",
+      "learner_id": "L07",
+      "learner_name": "Amira K.",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "answer": "3 + 4 = 7 equal shares. 56 / 7 = 8 per share. Lerato gets 3 x 8 = 24.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L07-A3Q7",
+      "learner_id": "L07",
+      "learner_name": "Amira K.",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L07-A3Q8",
+      "learner_id": "L07",
+      "learner_name": "Amira K.",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "answer": "a",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L08-A3Q1",
+      "learner_id": "L08",
+      "learner_name": "Grace O.",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "answer": "d",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L08-A3Q2",
+      "learner_id": "L08",
+      "learner_name": "Grace O.",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "answer": "Writing both with two places gives 0.90 and 0.75. The sum is 1.65. Comparing tenths, 0.9 is larger.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L08-A3Q3",
+      "learner_id": "L08",
+      "learner_name": "Grace O.",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "answer": "a",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L08-A3Q4",
+      "learner_id": "L08",
+      "learner_name": "Grace O.",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "answer": "3 and 4 both divide into 12, so I use 12. That gives 4/12 + 3/12 = 7/12 km.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L08-A3Q5",
+      "learner_id": "L08",
+      "learner_name": "Grace O.",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L08-A3Q6",
+      "learner_id": "L08",
+      "learner_name": "Grace O.",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "answer": "There are 2 people sharing, so 56 / 2 = 28. Lerato gets 28.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L08-A3Q7",
+      "learner_id": "L08",
+      "learner_name": "Grace O.",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L08-A3Q8",
+      "learner_id": "L08",
+      "learner_name": "Grace O.",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L09-A3Q1",
+      "learner_id": "L09",
+      "learner_name": "Ibrahim N.",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L09-A3Q2",
+      "learner_id": "L09",
+      "learner_name": "Ibrahim N.",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "answer": "0.9 + 0.75 = 16.5. Moving the point across gives that. 0.9 is the larger one.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L09-A3Q3",
+      "learner_id": "L09",
+      "learner_name": "Ibrahim N.",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L09-A3Q4",
+      "learner_id": "L09",
+      "learner_name": "Ibrahim N.",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "answer": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms. So they walked 2/7 km.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L09-A3Q5",
+      "learner_id": "L09",
+      "learner_name": "Ibrahim N.",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L09-A3Q6",
+      "learner_id": "L09",
+      "learner_name": "Ibrahim N.",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "answer": "3 + 4 = 7 shares. 56 / 7 = 8. Lerato gets 3 x 8 = 25.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L09-A3Q7",
+      "learner_id": "L09",
+      "learner_name": "Ibrahim N.",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "answer": "d",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L09-A3Q8",
+      "learner_id": "L09",
+      "learner_name": "Ibrahim N.",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "answer": "a",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L10-A3Q1",
+      "learner_id": "L10",
+      "learner_name": "Sofia R.",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "answer": "a",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L10-A3Q2",
+      "learner_id": "L10",
+      "learner_name": "Sofia R.",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "answer": "Points under points: 0.90 plus 0.75 makes 1.65. In the tenths column 0.9 wins, so 0.9 is larger.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L10-A3Q3",
+      "learner_id": "L10",
+      "learner_name": "Sofia R.",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L10-A3Q4",
+      "learner_id": "L10",
+      "learner_name": "Sofia R.",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "answer": "I rewrite both over 12: 4/12 and 3/12. Adding the numerators gives 7/12 km in total.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L10-A3Q5",
+      "learner_id": "L10",
+      "learner_name": "Sofia R.",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L10-A3Q6",
+      "learner_id": "L10",
+      "learner_name": "Sofia R.",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "answer": "3 + 4 = 7 equal shares. 56 / 7 = 8 per share. Lerato gets 3 x 8 = 24.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L10-A3Q7",
+      "learner_id": "L10",
+      "learner_name": "Sofia R.",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "answer": "a",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L10-A3Q8",
+      "learner_id": "L10",
+      "learner_name": "Sofia R.",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L11-A3Q1",
+      "learner_id": "L11",
+      "learner_name": "Liu Y.",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L11-A3Q2",
+      "learner_id": "L11",
+      "learner_name": "Liu Y.",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "answer": "I line up decimal points. 0.90 + 0.75 = 1.65. its tenths digit is bigger 0.9 is larger because.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L11-A3Q3",
+      "learner_id": "L11",
+      "learner_name": "Liu Y.",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L11-A3Q4",
+      "learner_id": "L11",
+      "learner_name": "Liu Y.",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "answer": "Answer is 7/12 km. and then add top ones together I make bottom number same 12.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L11-A3Q5",
+      "learner_id": "L11",
+      "learner_name": "Liu Y.",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L11-A3Q6",
+      "learner_id": "L11",
+      "learner_name": "Liu Y.",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "answer": "Total shares are 7. One share is 56 / 7 = 8. Lerato has 3 share so Lerato gets 24.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L11-A3Q7",
+      "learner_id": "L11",
+      "learner_name": "Liu Y.",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L11-A3Q8",
+      "learner_id": "L11",
+      "learner_name": "Liu Y.",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L12-A3Q1",
+      "learner_id": "L12",
+      "learner_name": "Daniel M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "answer": "d",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L12-A3Q2",
+      "learner_id": "L12",
+      "learner_name": "Daniel M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "answer": "Points under points: 0.90 plus 0.75 makes 1.65. In the tenths column 0.9 wins, so 0.9 is larger.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L12-A3Q3",
+      "learner_id": "L12",
+      "learner_name": "Daniel M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L12-A3Q4",
+      "learner_id": "L12",
+      "learner_name": "Daniel M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "answer": "The common denominator is 12. So 1/12 + 1/12 = 2/12 km.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L12-A3Q5",
+      "learner_id": "L12",
+      "learner_name": "Daniel M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L12-A3Q6",
+      "learner_id": "L12",
+      "learner_name": "Daniel M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "answer": "Total shares are 7. One share is 56 / 7 = 8. Lerato has 3 shares so Lerato gets 24.",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L12-A3Q7",
+      "learner_id": "L12",
+      "learner_name": "Daniel M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "answer": "b",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    },
+    {
+      "submission_id": "A3-L12-A3Q8",
+      "learner_id": "L12",
+      "learner_name": "Daniel M.",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "answer": "c",
+      "submitted_at": "2026-03-12T09:00:00Z"
+    }
+  ],
+  "learners": [
+    {
+      "learner_id": "L01",
+      "learner_name": "Thabo M.",
+      "returner": false,
+      "history_completeness": 1.0,
+      "assessments_present": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "assessments_expected": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "prior_nodes": {
+        "A1": [
+          "M18"
+        ]
+      },
+      "low_confidence_history": false,
+      "note": null
+    },
+    {
+      "learner_id": "L02",
+      "learner_name": "Nomsa D.",
+      "returner": false,
+      "history_completeness": 1.0,
+      "assessments_present": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "assessments_expected": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "prior_nodes": {
+        "A1": [
+          "M12",
+          "M01"
+        ],
+        "A2": [
+          "M17",
+          "M01",
+          "M12",
+          "M01"
+        ]
+      },
+      "low_confidence_history": false,
+      "note": null
+    },
+    {
+      "learner_id": "L03",
+      "learner_name": "Ravi P.",
+      "returner": false,
+      "history_completeness": 1.0,
+      "assessments_present": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "assessments_expected": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "prior_nodes": {
+        "A1": [
+          "M18",
+          "M15",
+          "M10",
+          "M05"
+        ],
+        "A2": [
+          "M18",
+          "M15",
+          "M05"
+        ]
+      },
+      "low_confidence_history": false,
+      "note": null
+    },
+    {
+      "learner_id": "L04",
+      "learner_name": "Fatima S.",
+      "returner": false,
+      "history_completeness": 1.0,
+      "assessments_present": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "assessments_expected": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "prior_nodes": {
+        "A1": [
+          "M01",
+          "M10",
+          "M01"
+        ],
+        "A2": [
+          "M02",
+          "M10",
+          "M01"
+        ]
+      },
+      "low_confidence_history": false,
+      "note": null
+    },
+    {
+      "learner_id": "L05",
+      "learner_name": "Chen W.",
+      "returner": false,
+      "history_completeness": 1.0,
+      "assessments_present": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "assessments_expected": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "prior_nodes": {
+        "A1": [
+          "M05"
+        ],
+        "A2": [
+          "M07",
+          "M05"
+        ]
+      },
+      "low_confidence_history": false,
+      "note": null
+    },
+    {
+      "learner_id": "L06",
+      "learner_name": "Kwame A.",
+      "returner": false,
+      "history_completeness": 1.0,
+      "assessments_present": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "assessments_expected": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "prior_nodes": {
+        "A1": [
+          "M19",
+          "M01",
+          "M01"
+        ],
+        "A2": [
+          "M19",
+          "M01",
+          "M01"
+        ]
+      },
+      "low_confidence_history": false,
+      "note": null
+    },
+    {
+      "learner_id": "L07",
+      "learner_name": "Amira K.",
+      "returner": true,
+      "history_completeness": 0.75,
+      "assessments_present": [
+        "A1",
+        "A3",
+        "A4"
+      ],
+      "assessments_expected": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "prior_nodes": {
+        "A1": [
+          "M01",
+          "M14",
+          "M01"
+        ]
+      },
+      "low_confidence_history": false,
+      "note": "Returned after a gap. Missing A2. History completeness 75%."
+    },
+    {
+      "learner_id": "L08",
+      "learner_name": "Grace O.",
+      "returner": false,
+      "history_completeness": 1.0,
+      "assessments_present": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "assessments_expected": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "prior_nodes": {
+        "A1": [
+          "M16",
+          "M13"
+        ],
+        "A2": [
+          "M16",
+          "M13"
+        ]
+      },
+      "low_confidence_history": false,
+      "note": null
+    },
+    {
+      "learner_id": "L09",
+      "learner_name": "Ibrahim N.",
+      "returner": true,
+      "history_completeness": 0.5,
+      "assessments_present": [
+        "A3",
+        "A4"
+      ],
+      "assessments_expected": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "prior_nodes": {},
+      "low_confidence_history": false,
+      "note": "Returned after a gap. Missing A1, A2. History completeness 50%."
+    },
+    {
+      "learner_id": "L10",
+      "learner_name": "Sofia R.",
+      "returner": false,
+      "history_completeness": 1.0,
+      "assessments_present": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "assessments_expected": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "prior_nodes": {
+        "A1": [
+          "M18",
+          "M05"
+        ]
+      },
+      "low_confidence_history": false,
+      "note": null
+    },
+    {
+      "learner_id": "L11",
+      "learner_name": "Liu Y.",
+      "returner": false,
+      "history_completeness": 1.0,
+      "assessments_present": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "assessments_expected": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "prior_nodes": {},
+      "low_confidence_history": false,
+      "note": null
+    },
+    {
+      "learner_id": "L12",
+      "learner_name": "Daniel M.",
+      "returner": true,
+      "history_completeness": 0.75,
+      "assessments_present": [
+        "A1",
+        "A3",
+        "A4"
+      ],
+      "assessments_expected": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "prior_nodes": {
+        "A1": [
+          "M02",
+          "M02"
+        ]
+      },
+      "low_confidence_history": false,
+      "note": "Returned after a gap. Missing A2. History completeness 75%."
+    }
+  ],
+  "marks": [
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L01",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L02",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L03",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L04",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L05",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L06",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L07",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L08",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L09",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L10",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L11",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L12",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q2",
+      "learner_id": "L01",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Correct sum 1.65",
+        "States that 0.9 is the larger number",
+        "Working shows place value alignment rather than digit count"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q2",
+      "learner_id": "L02",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Correct sum 1.65",
+        "States that 0.9 is the larger number",
+        "Working shows place value alignment rather than digit count"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q2",
+      "learner_id": "L03",
+      "awarded": 1.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "States that 0.9 is the larger number"
+      ],
+      "criteria_missed": [
+        "Correct sum 1.65",
+        "Working shows place value alignment rather than digit count"
+      ],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q2",
+      "learner_id": "L04",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Correct sum 1.65",
+        "States that 0.9 is the larger number",
+        "Working shows place value alignment rather than digit count"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q2",
+      "learner_id": "L05",
+      "awarded": 1.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Correct sum 1.65"
+      ],
+      "criteria_missed": [
+        "States that 0.9 is the larger number",
+        "Working shows place value alignment rather than digit count"
+      ],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q2",
+      "learner_id": "L06",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Correct sum 1.65",
+        "States that 0.9 is the larger number",
+        "Working shows place value alignment rather than digit count"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q2",
+      "learner_id": "L07",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Correct sum 1.65",
+        "States that 0.9 is the larger number",
+        "Working shows place value alignment rather than digit count"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q2",
+      "learner_id": "L08",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Correct sum 1.65",
+        "States that 0.9 is the larger number",
+        "Working shows place value alignment rather than digit count"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q2",
+      "learner_id": "L09",
+      "awarded": 1.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "States that 0.9 is the larger number"
+      ],
+      "criteria_missed": [
+        "Correct sum 1.65",
+        "Working shows place value alignment rather than digit count"
+      ],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q2",
+      "learner_id": "L10",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Correct sum 1.65",
+        "States that 0.9 is the larger number",
+        "Working shows place value alignment rather than digit count"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q2",
+      "learner_id": "L11",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Correct sum 1.65",
+        "States that 0.9 is the larger number",
+        "Working shows place value alignment rather than digit count"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q2",
+      "learner_id": "L12",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Correct sum 1.65",
+        "States that 0.9 is the larger number",
+        "Working shows place value alignment rather than digit count"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q3",
+      "learner_id": "L01",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q3",
+      "learner_id": "L02",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q3",
+      "learner_id": "L03",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q3",
+      "learner_id": "L04",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q3",
+      "learner_id": "L05",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q3",
+      "learner_id": "L06",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q3",
+      "learner_id": "L07",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q3",
+      "learner_id": "L08",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q3",
+      "learner_id": "L09",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q3",
+      "learner_id": "L10",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q3",
+      "learner_id": "L11",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q3",
+      "learner_id": "L12",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L01",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L02",
+      "awarded": 0.0,
+      "max_marks": 3.0,
+      "confidence": 0.9,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
+      ],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L03",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L04",
+      "awarded": 0.0,
+      "max_marks": 3.0,
+      "confidence": 0.9,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
+      ],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L05",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L06",
+      "awarded": 0.0,
+      "max_marks": 3.0,
+      "confidence": 0.9,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
+      ],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L07",
+      "awarded": 0.0,
+      "max_marks": 3.0,
+      "confidence": 0.9,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
+      ],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L08",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L09",
+      "awarded": 0.0,
+      "max_marks": 3.0,
+      "confidence": 0.9,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
+      ],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L10",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L11",
+      "awarded": 2.0,
+      "max_marks": 3.0,
+      "confidence": 0.72,
+      "criteria_met": [
+        "Identifies a common denominator",
+        "Correct final answer 7/12 with unit"
+      ],
+      "criteria_missed": [
+        "Converts both fractions correctly"
+      ],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L12",
+      "awarded": 1.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Identifies a common denominator"
+      ],
+      "criteria_missed": [
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
+      ],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q5",
+      "learner_id": "L01",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q5",
+      "learner_id": "L02",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q5",
+      "learner_id": "L03",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q5",
+      "learner_id": "L04",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q5",
+      "learner_id": "L05",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q5",
+      "learner_id": "L06",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q5",
+      "learner_id": "L07",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q5",
+      "learner_id": "L08",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q5",
+      "learner_id": "L09",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q5",
+      "learner_id": "L10",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q5",
+      "learner_id": "L11",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q5",
+      "learner_id": "L12",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q6",
+      "learner_id": "L01",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Adds the ratio parts to get 7 shares",
+        "Divides the total to find one share is 8",
+        "Correct final answer 24"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q6",
+      "learner_id": "L02",
+      "awarded": 0.0,
+      "max_marks": 3.0,
+      "confidence": 0.9,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Adds the ratio parts to get 7 shares",
+        "Divides the total to find one share is 8",
+        "Correct final answer 24"
+      ],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q6",
+      "learner_id": "L03",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Adds the ratio parts to get 7 shares",
+        "Divides the total to find one share is 8",
+        "Correct final answer 24"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q6",
+      "learner_id": "L04",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Adds the ratio parts to get 7 shares",
+        "Divides the total to find one share is 8",
+        "Correct final answer 24"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q6",
+      "learner_id": "L05",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Adds the ratio parts to get 7 shares",
+        "Divides the total to find one share is 8",
+        "Correct final answer 24"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q6",
+      "learner_id": "L06",
+      "awarded": 2.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Adds the ratio parts to get 7 shares",
+        "Divides the total to find one share is 8"
+      ],
+      "criteria_missed": [
+        "Correct final answer 24"
+      ],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q6",
+      "learner_id": "L07",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Adds the ratio parts to get 7 shares",
+        "Divides the total to find one share is 8",
+        "Correct final answer 24"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q6",
+      "learner_id": "L08",
+      "awarded": 0.0,
+      "max_marks": 3.0,
+      "confidence": 0.9,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Adds the ratio parts to get 7 shares",
+        "Divides the total to find one share is 8",
+        "Correct final answer 24"
+      ],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q6",
+      "learner_id": "L09",
+      "awarded": 2.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Adds the ratio parts to get 7 shares",
+        "Divides the total to find one share is 8"
+      ],
+      "criteria_missed": [
+        "Correct final answer 24"
+      ],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q6",
+      "learner_id": "L10",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Adds the ratio parts to get 7 shares",
+        "Divides the total to find one share is 8",
+        "Correct final answer 24"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q6",
+      "learner_id": "L11",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Adds the ratio parts to get 7 shares",
+        "Divides the total to find one share is 8",
+        "Correct final answer 24"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q6",
+      "learner_id": "L12",
+      "awarded": 3.0,
+      "max_marks": 3.0,
+      "confidence": 0.88,
+      "criteria_met": [
+        "Adds the ratio parts to get 7 shares",
+        "Divides the total to find one share is 8",
+        "Correct final answer 24"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "fallback",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L01",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L02",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L03",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L04",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L05",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L06",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L07",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L08",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L09",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L10",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L11",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L12",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L01",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L02",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L03",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L04",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L05",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L06",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L07",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L08",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L09",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L10",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L11",
+      "awarded": 1.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [
+        "Correct option selected"
+      ],
+      "criteria_missed": [],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L12",
+      "awarded": 0.0,
+      "max_marks": 1.0,
+      "confidence": 1.0,
+      "criteria_met": [],
+      "criteria_missed": [
+        "Correct option selected"
+      ],
+      "provisional": true,
+      "source": "deterministic",
+      "summative": false
+    }
+  ],
+  "diagnoses": [
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L01",
+      "taxonomy_node": "M18",
+      "alternative_node": null,
+      "error_class": "conceptual",
+      "confidence": 0.95,
+      "evidence_span": "20",
+      "reasoning": "Option a, \"20\", is mapped in the marking scheme to M18: Evaluates strictly left to right ignoring precedence.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T7"
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L06",
+      "taxonomy_node": "M19",
+      "alternative_node": null,
+      "error_class": "procedural",
+      "confidence": 0.95,
+      "evidence_span": "10",
+      "reasoning": "Option c, \"10\", is mapped in the marking scheme to M19: Ignores brackets.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T7"
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L08",
+      "taxonomy_node": "M20",
+      "alternative_node": null,
+      "error_class": "notational",
+      "confidence": 0.95,
+      "evidence_span": "9",
+      "reasoning": "Option d, \"9\", is mapped in the marking scheme to M20: Drops brackets when rewriting the expression.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T7"
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L10",
+      "taxonomy_node": "M18",
+      "alternative_node": null,
+      "error_class": "conceptual",
+      "confidence": 0.95,
+      "evidence_span": "20",
+      "reasoning": "Option a, \"20\", is mapped in the marking scheme to M18: Evaluates strictly left to right ignoring precedence.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T7"
+    },
+    {
+      "question_id": "A3Q1",
+      "learner_id": "L12",
+      "taxonomy_node": "M20",
+      "alternative_node": null,
+      "error_class": "notational",
+      "confidence": 0.95,
+      "evidence_span": "9",
+      "reasoning": "Option d, \"9\", is mapped in the marking scheme to M20: Drops brackets when rewriting the expression.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T7"
+    },
+    {
+      "question_id": "A3Q2",
+      "learner_id": "L05",
+      "taxonomy_node": "M07",
+      "alternative_node": "M09",
+      "error_class": "conceptual",
+      "confidence": 0.89,
+      "evidence_span": "0.75 is larger because its number after point is bigger.",
+      "reasoning": "The comparison ranks the number whose digits after the point read as a bigger whole number, so the decimal tail is being read as an integer.",
+      "language_flag": false,
+      "source": "fallback",
+      "topic": "T3"
+    },
+    {
+      "question_id": "A3Q2",
+      "learner_id": "L09",
+      "taxonomy_node": "M09",
+      "alternative_node": "M08",
+      "error_class": "computational",
+      "confidence": 0.85,
+      "evidence_span": "0.9 + 0.75 = 16.5.",
+      "reasoning": "The sum is correct in its digits but a factor of ten out, so the point moved one place too far.",
+      "language_flag": false,
+      "source": "fallback",
+      "topic": "T3"
+    },
+    {
+      "question_id": "A3Q3",
+      "learner_id": "L03",
+      "taxonomy_node": "M15",
+      "alternative_node": null,
+      "error_class": "conceptual",
+      "confidence": 0.95,
+      "evidence_span": "-8",
+      "reasoning": "Option d, \"-8\", is mapped in the marking scheme to M15: Treats a negative number as its absolute value when ordering.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T6"
+    },
+    {
+      "question_id": "A3Q3",
+      "learner_id": "L08",
+      "taxonomy_node": "M16",
+      "alternative_node": null,
+      "error_class": "procedural",
+      "confidence": 0.95,
+      "evidence_span": "2",
+      "reasoning": "Option a, \"2\", is mapped in the marking scheme to M16: Mishandles subtraction of a negative number.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T6"
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L02",
+      "taxonomy_node": "M01",
+      "alternative_node": "M02",
+      "error_class": "conceptual",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
+      "language_flag": false,
+      "source": "fallback",
+      "topic": "T2"
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L04",
+      "taxonomy_node": "M01",
+      "alternative_node": "M02",
+      "error_class": "conceptual",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
+      "language_flag": false,
+      "source": "fallback",
+      "topic": "T2"
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L06",
+      "taxonomy_node": "M01",
+      "alternative_node": "M02",
+      "error_class": "conceptual",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
+      "language_flag": false,
+      "source": "fallback",
+      "topic": "T2"
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L07",
+      "taxonomy_node": "M01",
+      "alternative_node": "M02",
+      "error_class": "conceptual",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
+      "language_flag": false,
+      "source": "fallback",
+      "topic": "T2"
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L09",
+      "taxonomy_node": "M01",
+      "alternative_node": "M02",
+      "error_class": "conceptual",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
+      "language_flag": false,
+      "source": "fallback",
+      "topic": "T2"
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L12",
+      "taxonomy_node": "M02",
+      "alternative_node": "M01",
+      "error_class": "procedural",
+      "confidence": 0.88,
+      "evidence_span": "So 1/12 + 1/12 = 2/12 km.",
+      "reasoning": "The common denominator is correct but the numerators were carried over unchanged, so the fractions were never rescaled.",
+      "language_flag": false,
+      "source": "fallback",
+      "topic": "T2"
+    },
+    {
+      "question_id": "A3Q5",
+      "learner_id": "L04",
+      "taxonomy_node": "M10",
+      "alternative_node": null,
+      "error_class": "conceptual",
+      "confidence": 0.95,
+      "evidence_span": "0.6%",
+      "reasoning": "Option d, \"0.6%\", is mapped in the marking scheme to M10: Reads the percentage sign as a decimal point.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T4"
+    },
+    {
+      "question_id": "A3Q5",
+      "learner_id": "L07",
+      "taxonomy_node": "M14",
+      "alternative_node": null,
+      "error_class": "computational",
+      "confidence": 0.95,
+      "evidence_span": "35%",
+      "reasoning": "Option c, \"35%\", is mapped in the marking scheme to M14: Arithmetic slip while scaling to a percentage.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T4"
+    },
+    {
+      "question_id": "A3Q6",
+      "learner_id": "L02",
+      "taxonomy_node": "M12",
+      "alternative_node": "M13",
+      "error_class": "conceptual",
+      "confidence": 0.86,
+      "evidence_span": "So Lerato gets 27.",
+      "reasoning": "The ratio numbers were handed out as absolute amounts and the remainder split evenly, which treats the ratio as a difference.",
+      "language_flag": false,
+      "source": "fallback",
+      "topic": "T5"
+    },
+    {
+      "question_id": "A3Q6",
+      "learner_id": "L08",
+      "taxonomy_node": "M13",
+      "alternative_node": "M12",
+      "error_class": "procedural",
+      "confidence": 0.88,
+      "evidence_span": "There are 2 people sharing, so 56 / 2 = 28.",
+      "reasoning": "The total was split by the number of people named rather than by the number of equal shares the ratio describes.",
+      "language_flag": false,
+      "source": "fallback",
+      "topic": "T5"
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L05",
+      "taxonomy_node": "M05",
+      "alternative_node": null,
+      "error_class": "procedural",
+      "confidence": 0.95,
+      "evidence_span": "4/6",
+      "reasoning": "Option a, \"4/6\", is mapped in the marking scheme to M05: Simplifies by subtracting instead of dividing.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T1"
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L09",
+      "taxonomy_node": "M06",
+      "alternative_node": null,
+      "error_class": "notational",
+      "confidence": 0.95,
+      "evidence_span": "6/8",
+      "reasoning": "Option d, \"6/8\", is mapped in the marking scheme to M06: Writes an improper fraction where a mixed number was asked for.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T1"
+    },
+    {
+      "question_id": "A3Q7",
+      "learner_id": "L10",
+      "taxonomy_node": "M05",
+      "alternative_node": null,
+      "error_class": "procedural",
+      "confidence": 0.95,
+      "evidence_span": "4/6",
+      "reasoning": "Option a, \"4/6\", is mapped in the marking scheme to M05: Simplifies by subtracting instead of dividing.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T1"
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L02",
+      "taxonomy_node": "M01",
+      "alternative_node": null,
+      "error_class": "conceptual",
+      "confidence": 0.95,
+      "evidence_span": "2/7",
+      "reasoning": "Option a, \"2/7\", is mapped in the marking scheme to M01: Adds numerators and denominators separately.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T2"
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L04",
+      "taxonomy_node": "M01",
+      "alternative_node": null,
+      "error_class": "conceptual",
+      "confidence": 0.95,
+      "evidence_span": "2/7",
+      "reasoning": "Option a, \"2/7\", is mapped in the marking scheme to M01: Adds numerators and denominators separately.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T2"
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L06",
+      "taxonomy_node": "M03",
+      "alternative_node": null,
+      "error_class": "computational",
+      "confidence": 0.95,
+      "evidence_span": "8/10",
+      "reasoning": "Option d, \"8/10\", is mapped in the marking scheme to M03: Correct method, arithmetic slip in the final addition.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T2"
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L07",
+      "taxonomy_node": "M01",
+      "alternative_node": null,
+      "error_class": "conceptual",
+      "confidence": 0.95,
+      "evidence_span": "2/7",
+      "reasoning": "Option a, \"2/7\", is mapped in the marking scheme to M01: Adds numerators and denominators separately.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T2"
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L09",
+      "taxonomy_node": "M01",
+      "alternative_node": null,
+      "error_class": "conceptual",
+      "confidence": 0.95,
+      "evidence_span": "2/7",
+      "reasoning": "Option a, \"2/7\", is mapped in the marking scheme to M01: Adds numerators and denominators separately.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T2"
+    },
+    {
+      "question_id": "A3Q8",
+      "learner_id": "L12",
+      "taxonomy_node": "M02",
+      "alternative_node": null,
+      "error_class": "procedural",
+      "confidence": 0.95,
+      "evidence_span": "2/10",
+      "reasoning": "Option c, \"2/10\", is mapped in the marking scheme to M02: Finds a common denominator but forgets to scale the numerators.",
+      "language_flag": false,
+      "source": "distractor_map",
+      "topic": "T2"
+    }
+  ],
+  "patterns": {
+    "cohort_id": "C1",
+    "assessment_id": "A3",
+    "cohort_size": 12,
+    "nodes": [
+      {
+        "node_id": "M01",
+        "label": "Adds numerators and denominators separately",
+        "topic": "T2",
+        "error_class": "conceptual",
+        "learner_ids": [
+          "L02",
+          "L04",
+          "L06",
+          "L07",
+          "L09"
+        ],
+        "count": 5,
+        "cohort_size": 12,
+        "share": 0.417,
+        "kind": "shared",
+        "recurring_learner_ids": [
+          "L02",
+          "L04",
+          "L06",
+          "L07"
+        ],
+        "downweighted_learner_ids": [],
+        "teaching_problem": true,
+        "note": null
+      },
+      {
+        "node_id": "M02",
+        "label": "Finds a common denominator but forgets to scale the numerators",
+        "topic": "T2",
+        "error_class": "procedural",
+        "learner_ids": [
+          "L12"
+        ],
+        "count": 1,
+        "cohort_size": 12,
+        "share": 0.083,
+        "kind": "recurring",
+        "recurring_learner_ids": [
+          "L12"
+        ],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      },
+      {
+        "node_id": "M03",
+        "label": "Correct method, arithmetic slip in the final addition",
+        "topic": "T2",
+        "error_class": "computational",
+        "learner_ids": [
+          "L06"
+        ],
+        "count": 1,
+        "cohort_size": 12,
+        "share": 0.083,
+        "kind": "emerging",
+        "recurring_learner_ids": [],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      },
+      {
+        "node_id": "M05",
+        "label": "Simplifies by subtracting instead of dividing",
+        "topic": "T1",
+        "error_class": "procedural",
+        "learner_ids": [
+          "L05",
+          "L10"
+        ],
+        "count": 2,
+        "cohort_size": 12,
+        "share": 0.167,
+        "kind": "recurring",
+        "recurring_learner_ids": [
+          "L05",
+          "L10"
+        ],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      },
+      {
+        "node_id": "M06",
+        "label": "Writes an improper fraction where a mixed number was asked for",
+        "topic": "T1",
+        "error_class": "notational",
+        "learner_ids": [
+          "L09"
+        ],
+        "count": 1,
+        "cohort_size": 12,
+        "share": 0.083,
+        "kind": "emerging",
+        "recurring_learner_ids": [],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      },
+      {
+        "node_id": "M07",
+        "label": "Treats the digits after the decimal point as a whole number",
+        "topic": "T3",
+        "error_class": "conceptual",
+        "learner_ids": [
+          "L05"
+        ],
+        "count": 1,
+        "cohort_size": 12,
+        "share": 0.083,
+        "kind": "recurring",
+        "recurring_learner_ids": [
+          "L05"
+        ],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      },
+      {
+        "node_id": "M09",
+        "label": "Shifts the decimal point by the wrong number of places",
+        "topic": "T3",
+        "error_class": "computational",
+        "learner_ids": [
+          "L09"
+        ],
+        "count": 1,
+        "cohort_size": 12,
+        "share": 0.083,
+        "kind": "emerging",
+        "recurring_learner_ids": [],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      },
+      {
+        "node_id": "M10",
+        "label": "Reads the percentage sign as a decimal point",
+        "topic": "T4",
+        "error_class": "conceptual",
+        "learner_ids": [
+          "L04"
+        ],
+        "count": 1,
+        "cohort_size": 12,
+        "share": 0.083,
+        "kind": "recurring",
+        "recurring_learner_ids": [
+          "L04"
+        ],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      },
+      {
+        "node_id": "M12",
+        "label": "Treats a ratio as a difference instead of a multiplicative relationship",
+        "topic": "T5",
+        "error_class": "conceptual",
+        "learner_ids": [
+          "L02"
+        ],
+        "count": 1,
+        "cohort_size": 12,
+        "share": 0.083,
+        "kind": "recurring",
+        "recurring_learner_ids": [
+          "L02"
+        ],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      },
+      {
+        "node_id": "M13",
+        "label": "Divides the total by the number of parts named rather than the total share count",
+        "topic": "T5",
+        "error_class": "procedural",
+        "learner_ids": [
+          "L08"
+        ],
+        "count": 1,
+        "cohort_size": 12,
+        "share": 0.083,
+        "kind": "recurring",
+        "recurring_learner_ids": [
+          "L08"
+        ],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      },
+      {
+        "node_id": "M14",
+        "label": "Arithmetic slip while scaling to a percentage",
+        "topic": "T4",
+        "error_class": "computational",
+        "learner_ids": [
+          "L07"
+        ],
+        "count": 1,
+        "cohort_size": 12,
+        "share": 0.083,
+        "kind": "recurring",
+        "recurring_learner_ids": [
+          "L07"
+        ],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      },
+      {
+        "node_id": "M15",
+        "label": "Treats a negative number as its absolute value when ordering",
+        "topic": "T6",
+        "error_class": "conceptual",
+        "learner_ids": [
+          "L03"
+        ],
+        "count": 1,
+        "cohort_size": 12,
+        "share": 0.083,
+        "kind": "recurring",
+        "recurring_learner_ids": [
+          "L03"
+        ],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      },
+      {
+        "node_id": "M16",
+        "label": "Mishandles subtraction of a negative number",
+        "topic": "T6",
+        "error_class": "procedural",
+        "learner_ids": [
+          "L08"
+        ],
+        "count": 1,
+        "cohort_size": 12,
+        "share": 0.083,
+        "kind": "recurring",
+        "recurring_learner_ids": [
+          "L08"
+        ],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      },
+      {
+        "node_id": "M18",
+        "label": "Evaluates strictly left to right ignoring precedence",
+        "topic": "T7",
+        "error_class": "conceptual",
+        "learner_ids": [
+          "L01",
+          "L10"
+        ],
+        "count": 2,
+        "cohort_size": 12,
+        "share": 0.167,
+        "kind": "recurring",
+        "recurring_learner_ids": [
+          "L01",
+          "L10"
+        ],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      },
+      {
+        "node_id": "M19",
+        "label": "Ignores brackets",
+        "topic": "T7",
+        "error_class": "procedural",
+        "learner_ids": [
+          "L06"
+        ],
+        "count": 1,
+        "cohort_size": 12,
+        "share": 0.083,
+        "kind": "recurring",
+        "recurring_learner_ids": [
+          "L06"
+        ],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      },
+      {
+        "node_id": "M20",
+        "label": "Drops brackets when rewriting the expression",
+        "topic": "T7",
+        "error_class": "notational",
+        "learner_ids": [
+          "L08",
+          "L12"
+        ],
+        "count": 2,
+        "cohort_size": 12,
+        "share": 0.167,
+        "kind": "emerging",
+        "recurring_learner_ids": [],
+        "downweighted_learner_ids": [],
+        "teaching_problem": false,
+        "note": null
+      }
+    ],
+    "skipped_topics": [],
+    "notes": []
+  },
+  "plan": {
+    "batch_id": "B-A3-sync",
+    "budget_minutes": 120,
+    "minutes_used": 120,
+    "scheduled": [
+      {
+        "action_id": "GR-M01",
+        "type": "group_reteach",
+        "title": "Group re-teach: Adds numerators and denominators separately",
+        "node_id": "M01",
+        "learner_ids": [
+          "L02",
+          "L04",
+          "L06",
+          "L07",
+          "L09"
+        ],
+        "cost_minutes": 30,
+        "severity": 0.95,
+        "justification": "5 of 12 learners (42%) show Adds numerators and denominators separately. Above the 40% threshold this is one teaching gap, not 5 separate learner problems.",
+        "facilitator_script": "Cut two paper strips into different numbers of equal pieces and try to add the pieces. The pieces must be the same size before you can count them together.",
+        "scheduled": true,
+        "drop_reason": null
+      },
+      {
+        "action_id": "RS-L09",
+        "type": "individual_followup",
+        "title": "Restart point for Ibrahim N., returning after a gap",
+        "node_id": null,
+        "learner_ids": [
+          "L09"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.81,
+        "justification": "Ibrahim N. has 50% of the expected assessments. Find where to restart rather than assuming the gap was covered.",
+        "facilitator_script": "Ask what they last remember covering, then work one question from that topic together before moving on.",
+        "scheduled": true,
+        "drop_reason": null
+      },
+      {
+        "action_id": "IF-M07-L05",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L05 on Treats the digits after the decimal point as a whole number",
+        "node_id": "M07",
+        "learner_ids": [
+          "L05"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.78,
+        "justification": "Treats the digits after the decimal point as a whole number has now appeared for L05 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Write both numbers with the same number of decimal places first, then compare column by column.",
+        "scheduled": true,
+        "drop_reason": null
+      },
+      {
+        "action_id": "IF-M10-L04",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L04 on Reads the percentage sign as a decimal point",
+        "node_id": "M10",
+        "learner_ids": [
+          "L04"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.78,
+        "justification": "Reads the percentage sign as a decimal point has now appeared for L04 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Per cent means out of one hundred. Always divide by one hundred first, so 45 percent is 45 out of 100.",
+        "scheduled": true,
+        "drop_reason": null
+      },
+      {
+        "action_id": "IF-M12-L02",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L02 on Treats a ratio as a difference instead of a multiplicative relationship",
+        "node_id": "M12",
+        "learner_ids": [
+          "L02"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.78,
+        "justification": "Treats a ratio as a difference instead of a multiplicative relationship has now appeared for L02 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "A recipe doubled needs double of every ingredient, not one extra spoon of each.",
+        "scheduled": true,
+        "drop_reason": null
+      },
+      {
+        "action_id": "FB-L01",
+        "type": "feedback_review",
+        "title": "Review drafted feedback for Thabo M.",
+        "node_id": null,
+        "learner_ids": [
+          "L01"
+        ],
+        "cost_minutes": 5,
+        "severity": 0.32,
+        "justification": "Every learner receives written feedback. The facilitator reads and approves the draft before it is sent.",
+        "facilitator_script": "Read the draft, change anything that does not sound like you, then approve.",
+        "scheduled": true,
+        "drop_reason": null
+      },
+      {
+        "action_id": "FB-L02",
+        "type": "feedback_review",
+        "title": "Review drafted feedback for Nomsa D.",
+        "node_id": null,
+        "learner_ids": [
+          "L02"
+        ],
+        "cost_minutes": 5,
+        "severity": 0.32,
+        "justification": "Every learner receives written feedback. The facilitator reads and approves the draft before it is sent.",
+        "facilitator_script": "Read the draft, change anything that does not sound like you, then approve.",
+        "scheduled": true,
+        "drop_reason": null
+      }
+    ],
+    "dropped": [
+      {
+        "action_id": "IF-M15-L03",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L03 on Treats a negative number as its absolute value when ordering",
+        "node_id": "M15",
+        "learner_ids": [
+          "L03"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.78,
+        "justification": "Treats a negative number as its absolute value when ordering has now appeared for L03 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Draw a number line and step left of zero. The further left you go, the smaller the number.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M18-L01",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L01 on Evaluates strictly left to right ignoring precedence",
+        "node_id": "M18",
+        "learner_ids": [
+          "L01"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.78,
+        "justification": "Evaluates strictly left to right ignoring precedence has now appeared for L01 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Multiplication and division are done before addition and subtraction, no matter where they appear in the line.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M18-L10",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L10 on Evaluates strictly left to right ignoring precedence",
+        "node_id": "M18",
+        "learner_ids": [
+          "L10"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.78,
+        "justification": "Evaluates strictly left to right ignoring precedence has now appeared for L10 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Multiplication and division are done before addition and subtraction, no matter where they appear in the line.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "PP-M02-L04-L12",
+        "type": "peer_pairing",
+        "title": "Peer pairing: L04 explains the method for Finds a common denominator but forgets to scale the numerators to L12",
+        "node_id": "M02",
+        "learner_ids": [
+          "L04",
+          "L12"
+        ],
+        "cost_minutes": 15,
+        "severity": 0.74,
+        "justification": "L04 showed M02 in an earlier assessment and no longer does. L12 still does. Fifteen minutes fixes it for L12 and consolidates it for L04.",
+        "facilitator_script": "Ask L04 to explain the method to L12, not to give the answer. Whatever you multiply the bottom by, you must multiply the top by the same amount, or you have changed the size of the fraction.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "PP-M05-L03-L05",
+        "type": "peer_pairing",
+        "title": "Peer pairing: L03 explains the method for Simplifies by subtracting instead of dividing to L05",
+        "node_id": "M05",
+        "learner_ids": [
+          "L03",
+          "L05"
+        ],
+        "cost_minutes": 15,
+        "severity": 0.74,
+        "justification": "L03 showed M05 in an earlier assessment and no longer does. L05 still does. Fifteen minutes fixes it for L05 and consolidates it for L03.",
+        "facilitator_script": "Ask L03 to explain the method to L05, not to give the answer. Simplifying means splitting into equal groups, so we divide top and bottom by the same number, never subtract.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "PP-M10-L03-L04",
+        "type": "peer_pairing",
+        "title": "Peer pairing: L03 explains the method for Reads the percentage sign as a decimal point to L04",
+        "node_id": "M10",
+        "learner_ids": [
+          "L03",
+          "L04"
+        ],
+        "cost_minutes": 15,
+        "severity": 0.74,
+        "justification": "L03 showed M10 in an earlier assessment and no longer does. L04 still does. Fifteen minutes fixes it for L04 and consolidates it for L03.",
+        "facilitator_script": "Ask L03 to explain the method to L04, not to give the answer. Per cent means out of one hundred. Always divide by one hundred first, so 45 percent is 45 out of 100.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "PP-M18-L03-L01",
+        "type": "peer_pairing",
+        "title": "Peer pairing: L03 explains the method for Evaluates strictly left to right ignoring precedence to L01",
+        "node_id": "M18",
+        "learner_ids": [
+          "L03",
+          "L01"
+        ],
+        "cost_minutes": 15,
+        "severity": 0.74,
+        "justification": "L03 showed M18 in an earlier assessment and no longer does. L01 still does. Fifteen minutes fixes it for L01 and consolidates it for L03.",
+        "facilitator_script": "Ask L03 to explain the method to L01, not to give the answer. Multiplication and division are done before addition and subtraction, no matter where they appear in the line.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "RS-L07",
+        "type": "individual_followup",
+        "title": "Restart point for Amira K., returning after a gap",
+        "node_id": null,
+        "learner_ids": [
+          "L07"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.73,
+        "justification": "Amira K. has 75% of the expected assessments. Find where to restart rather than assuming the gap was covered.",
+        "facilitator_script": "Ask what they last remember covering, then work one question from that topic together before moving on.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "RS-L12",
+        "type": "individual_followup",
+        "title": "Restart point for Daniel M., returning after a gap",
+        "node_id": null,
+        "learner_ids": [
+          "L12"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.73,
+        "justification": "Daniel M. has 75% of the expected assessments. Find where to restart rather than assuming the gap was covered.",
+        "facilitator_script": "Ask what they last remember covering, then work one question from that topic together before moving on.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M02-L12",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L12 on Finds a common denominator but forgets to scale the numerators",
+        "node_id": "M02",
+        "learner_ids": [
+          "L12"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.7,
+        "justification": "Finds a common denominator but forgets to scale the numerators has now appeared for L12 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Whatever you multiply the bottom by, you must multiply the top by the same amount, or you have changed the size of the fraction.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M05-L05",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L05 on Simplifies by subtracting instead of dividing",
+        "node_id": "M05",
+        "learner_ids": [
+          "L05"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.7,
+        "justification": "Simplifies by subtracting instead of dividing has now appeared for L05 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Simplifying means splitting into equal groups, so we divide top and bottom by the same number, never subtract.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M05-L10",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L10 on Simplifies by subtracting instead of dividing",
+        "node_id": "M05",
+        "learner_ids": [
+          "L10"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.7,
+        "justification": "Simplifies by subtracting instead of dividing has now appeared for L10 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Simplifying means splitting into equal groups, so we divide top and bottom by the same number, never subtract.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M13-L08",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L08 on Divides the total by the number of parts named rather than the total share count",
+        "node_id": "M13",
+        "learner_ids": [
+          "L08"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.7,
+        "justification": "Divides the total by the number of parts named rather than the total share count has now appeared for L08 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Add the ratio numbers together first to find how many equal shares exist, then divide.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M14-L07",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L07 on Arithmetic slip while scaling to a percentage",
+        "node_id": "M14",
+        "learner_ids": [
+          "L07"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.7,
+        "justification": "Arithmetic slip while scaling to a percentage has now appeared for L07 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "The method is right. Ask the learner to recompute the final multiplication only.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M16-L08",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L08 on Mishandles subtraction of a negative number",
+        "node_id": "M16",
+        "learner_ids": [
+          "L08"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.7,
+        "justification": "Mishandles subtraction of a negative number has now appeared for L08 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Taking away a debt leaves you better off. Two minus signs together become a plus.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M19-L06",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L06 on Ignores brackets",
+        "node_id": "M19",
+        "learner_ids": [
+          "L06"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.7,
+        "justification": "Ignores brackets has now appeared for L06 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Whatever is inside the brackets is one single value. Work it out and write it down before anything else.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "FB-L03",
+        "type": "feedback_review",
+        "title": "Review drafted feedback for Ravi P.",
+        "node_id": null,
+        "learner_ids": [
+          "L03"
+        ],
+        "cost_minutes": 5,
+        "severity": 0.32,
+        "justification": "Every learner receives written feedback. The facilitator reads and approves the draft before it is sent.",
+        "facilitator_script": "Read the draft, change anything that does not sound like you, then approve.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "FB-L04",
+        "type": "feedback_review",
+        "title": "Review drafted feedback for Fatima S.",
+        "node_id": null,
+        "learner_ids": [
+          "L04"
+        ],
+        "cost_minutes": 5,
+        "severity": 0.32,
+        "justification": "Every learner receives written feedback. The facilitator reads and approves the draft before it is sent.",
+        "facilitator_script": "Read the draft, change anything that does not sound like you, then approve.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "FB-L05",
+        "type": "feedback_review",
+        "title": "Review drafted feedback for Chen W.",
+        "node_id": null,
+        "learner_ids": [
+          "L05"
+        ],
+        "cost_minutes": 5,
+        "severity": 0.32,
+        "justification": "Every learner receives written feedback. The facilitator reads and approves the draft before it is sent.",
+        "facilitator_script": "Read the draft, change anything that does not sound like you, then approve.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "FB-L06",
+        "type": "feedback_review",
+        "title": "Review drafted feedback for Kwame A.",
+        "node_id": null,
+        "learner_ids": [
+          "L06"
+        ],
+        "cost_minutes": 5,
+        "severity": 0.32,
+        "justification": "Every learner receives written feedback. The facilitator reads and approves the draft before it is sent.",
+        "facilitator_script": "Read the draft, change anything that does not sound like you, then approve.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "FB-L07",
+        "type": "feedback_review",
+        "title": "Review drafted feedback for Amira K.",
+        "node_id": null,
+        "learner_ids": [
+          "L07"
+        ],
+        "cost_minutes": 5,
+        "severity": 0.32,
+        "justification": "Every learner receives written feedback. The facilitator reads and approves the draft before it is sent.",
+        "facilitator_script": "Read the draft, change anything that does not sound like you, then approve.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "FB-L08",
+        "type": "feedback_review",
+        "title": "Review drafted feedback for Grace O.",
+        "node_id": null,
+        "learner_ids": [
+          "L08"
+        ],
+        "cost_minutes": 5,
+        "severity": 0.32,
+        "justification": "Every learner receives written feedback. The facilitator reads and approves the draft before it is sent.",
+        "facilitator_script": "Read the draft, change anything that does not sound like you, then approve.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "FB-L09",
+        "type": "feedback_review",
+        "title": "Review drafted feedback for Ibrahim N.",
+        "node_id": null,
+        "learner_ids": [
+          "L09"
+        ],
+        "cost_minutes": 5,
+        "severity": 0.32,
+        "justification": "Every learner receives written feedback. The facilitator reads and approves the draft before it is sent.",
+        "facilitator_script": "Read the draft, change anything that does not sound like you, then approve.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "FB-L10",
+        "type": "feedback_review",
+        "title": "Review drafted feedback for Sofia R.",
+        "node_id": null,
+        "learner_ids": [
+          "L10"
+        ],
+        "cost_minutes": 5,
+        "severity": 0.32,
+        "justification": "Every learner receives written feedback. The facilitator reads and approves the draft before it is sent.",
+        "facilitator_script": "Read the draft, change anything that does not sound like you, then approve.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "FB-L12",
+        "type": "feedback_review",
+        "title": "Review drafted feedback for Daniel M.",
+        "node_id": null,
+        "learner_ids": [
+          "L12"
+        ],
+        "cost_minutes": 5,
+        "severity": 0.32,
+        "justification": "Every learner receives written feedback. The facilitator reads and approves the draft before it is sent.",
+        "facilitator_script": "Read the draft, change anything that does not sound like you, then approve.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      }
+    ],
+    "feedback": [
+      {
+        "learner_id": "L01",
+        "learner_name": "Thabo M.",
+        "node_ids": [
+          "M18"
+        ],
+        "body": "Thabo M., there is one idea here worth going back over. In your answer you wrote \"20\". Next step: Multiplication and division are done before addition and subtraction, no matter where they appear in the line. Your marks are not final until your facilitator has checked them.",
+        "approved": false
+      },
+      {
+        "learner_id": "L02",
+        "learner_name": "Nomsa D.",
+        "node_ids": [
+          "M01",
+          "M12",
+          "M01"
+        ],
+        "body": "Nomsa D., there is one idea here worth going back over. In your answer you wrote \"1/3 + 1/4 = 2/7.\". Next step: Cut two paper strips into different numbers of equal pieces and try to add the pieces. The pieces must be the same size before you can count them together. The same thing shows up in 2 other answers. Your marks are not final until your facilitator has checked them.",
+        "approved": false
+      },
+      {
+        "learner_id": "L03",
+        "learner_name": "Ravi P.",
+        "node_ids": [
+          "M15"
+        ],
+        "body": "Ravi P., there is one idea here worth going back over. In your answer you wrote \"-8\". Next step: Draw a number line and step left of zero. The further left you go, the smaller the number. Your marks are not final until your facilitator has checked them.",
+        "approved": false
+      },
+      {
+        "learner_id": "L04",
+        "learner_name": "Fatima S.",
+        "node_ids": [
+          "M01",
+          "M10",
+          "M01"
+        ],
+        "body": "Fatima S., there is one idea here worth going back over. In your answer you wrote \"1/3 + 1/4 = 2/7.\". Next step: Cut two paper strips into different numbers of equal pieces and try to add the pieces. The pieces must be the same size before you can count them together. The same thing shows up in 2 other answers. Your marks are not final until your facilitator has checked them.",
+        "approved": false
+      },
+      {
+        "learner_id": "L05",
+        "learner_name": "Chen W.",
+        "node_ids": [
+          "M07",
+          "M05"
+        ],
+        "body": "Chen W., there is one idea here worth going back over. In your answer you wrote \"0.75 is larger because its number after point is bigger.\". Next step: Write both numbers with the same number of decimal places first, then compare column by column. The same thing shows up in 1 other answer. Your marks are not final until your facilitator has checked them.",
+        "approved": false
+      },
+      {
+        "learner_id": "L06",
+        "learner_name": "Kwame A.",
+        "node_ids": [
+          "M19",
+          "M01",
+          "M03"
+        ],
+        "body": "Kwame A., there is one idea here worth going back over. In your answer you wrote \"10\". Next step: Whatever is inside the brackets is one single value. Work it out and write it down before anything else. The same thing shows up in 2 other answers. Your marks are not final until your facilitator has checked them.",
+        "approved": false
+      },
+      {
+        "learner_id": "L07",
+        "learner_name": "Amira K.",
+        "node_ids": [
+          "M01",
+          "M14",
+          "M01"
+        ],
+        "body": "Amira K., there is one idea here worth going back over. In your answer you wrote \"1/3 + 1/4 = 2/7.\". Next step: Cut two paper strips into different numbers of equal pieces and try to add the pieces. The pieces must be the same size before you can count them together. The same thing shows up in 2 other answers. Your marks are not final until your facilitator has checked them.",
+        "approved": false
+      },
+      {
+        "learner_id": "L08",
+        "learner_name": "Grace O.",
+        "node_ids": [
+          "M20",
+          "M16",
+          "M13"
+        ],
+        "body": "Grace O., there is one idea here worth going back over. In your answer you wrote \"9\". Next step: Understanding is there. Show that the brackets must be carried down to every line until the value inside is worked out. The same thing shows up in 2 other answers. Your marks are not final until your facilitator has checked them.",
+        "approved": false
+      },
+      {
+        "learner_id": "L09",
+        "learner_name": "Ibrahim N.",
+        "node_ids": [
+          "M09",
+          "M01",
+          "M06",
+          "M01"
+        ],
+        "body": "Ibrahim N., there is one idea here worth going back over. In your answer you wrote \"0.9 + 0.75 = 16.5.\". Next step: Count the zeros in the number you multiplied by. That is exactly how many places the point moves. The same thing shows up in 3 other answers. Your marks are not final until your facilitator has checked them.",
+        "approved": false
+      },
+      {
+        "learner_id": "L10",
+        "learner_name": "Sofia R.",
+        "node_ids": [
+          "M18",
+          "M05"
+        ],
+        "body": "Sofia R., there is one idea here worth going back over. In your answer you wrote \"20\". Next step: Multiplication and division are done before addition and subtraction, no matter where they appear in the line. The same thing shows up in 1 other answer. Your marks are not final until your facilitator has checked them.",
+        "approved": false
+      },
+      {
+        "learner_id": "L12",
+        "learner_name": "Daniel M.",
+        "node_ids": [
+          "M20",
+          "M02",
+          "M02"
+        ],
+        "body": "Daniel M., there is one idea here worth going back over. In your answer you wrote \"9\". Next step: Understanding is there. Show that the brackets must be carried down to every line until the value inside is worked out. The same thing shows up in 2 other answers. Your marks are not final until your facilitator has checked them.",
+        "approved": false
+      }
+    ],
+    "goal": "Maximise misconceptions resolved in the next week within the facilitator time available.",
+    "generated_at": "2026-09-18T13:49:50+00:00"
+  },
+  "escalations": [
+    {
+      "escalation_id": "E-DIAG-L03-A3Q2",
+      "reason_code": "AMBIGUOUS_DIAGNOSIS",
+      "raised_by": "diagnostician",
+      "learner_id": "L03",
+      "question_id": "A3Q2",
+      "subject": "L03 A3Q2",
+      "reasoning": "Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
+      "candidate_a": null,
+      "candidate_b": null,
+      "would_have_decided": "Record no node at confidence 0.25.",
+      "resolved": false,
+      "resolution": null
+    },
+    {
+      "escalation_id": "E-LANG-L11-A3Q4",
+      "reason_code": "LANGUAGE_BARRIER",
+      "raised_by": "diagnostician",
+      "learner_id": "L11",
+      "question_id": "A3Q4",
+      "subject": "L11 A3Q4",
+      "reasoning": "The final value is correct, so the mathematics holds. The marks lost are in how the working is written, which is a language issue, not a misconception.",
+      "candidate_a": "M21",
+      "candidate_b": null,
+      "would_have_decided": "Record no conceptual misconception. Route to language support rather than re-teaching the mathematics.",
+      "resolved": false,
+      "resolution": null
+    },
+    {
+      "escalation_id": "E-DIAG-L06-A3Q6",
+      "reason_code": "AMBIGUOUS_DIAGNOSIS",
+      "raised_by": "diagnostician",
+      "learner_id": "L06",
+      "question_id": "A3Q6",
+      "subject": "L06 A3Q6",
+      "reasoning": "Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
+      "candidate_a": null,
+      "candidate_b": null,
+      "would_have_decided": "Record no node at confidence 0.25.",
+      "resolved": false,
+      "resolution": null
+    },
+    {
+      "escalation_id": "E-DIAG-L09-A3Q6",
+      "reason_code": "AMBIGUOUS_DIAGNOSIS",
+      "raised_by": "diagnostician",
+      "learner_id": "L09",
+      "question_id": "A3Q6",
+      "subject": "L09 A3Q6",
+      "reasoning": "Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
+      "candidate_a": null,
+      "candidate_b": null,
+      "would_have_decided": "Record no node at confidence 0.25.",
+      "resolved": false,
+      "resolution": null
+    },
+    {
+      "escalation_id": "E-BUD-IF-M15-L03",
+      "reason_code": "BUDGET_OVERFLOW",
+      "raised_by": "planner",
+      "learner_id": "L03",
+      "question_id": null,
+      "subject": "Individual follow-up: L03 on Treats a negative number as its absolute value when ordering",
+      "reasoning": "Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Treats a negative number as its absolute value when ordering has now appeared for L03 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+      "candidate_a": "Schedule it and drop something else",
+      "candidate_b": "Leave it unscheduled until next week",
+      "would_have_decided": "Leave Individual follow-up: L03 on Treats a negative number as its absolute value when ordering unscheduled. The facilitator should decide whether to extend the budget or displace another action.",
+      "resolved": false,
+      "resolution": null
+    },
+    {
+      "escalation_id": "E-BUD-IF-M18-L01",
+      "reason_code": "BUDGET_OVERFLOW",
+      "raised_by": "planner",
+      "learner_id": "L01",
+      "question_id": null,
+      "subject": "Individual follow-up: L01 on Evaluates strictly left to right ignoring precedence",
+      "reasoning": "Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Evaluates strictly left to right ignoring precedence has now appeared for L01 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+      "candidate_a": "Schedule it and drop something else",
+      "candidate_b": "Leave it unscheduled until next week",
+      "would_have_decided": "Leave Individual follow-up: L01 on Evaluates strictly left to right ignoring precedence unscheduled. The facilitator should decide whether to extend the budget or displace another action.",
+      "resolved": false,
+      "resolution": null
+    },
+    {
+      "escalation_id": "E-BUD-IF-M18-L10",
+      "reason_code": "BUDGET_OVERFLOW",
+      "raised_by": "planner",
+      "learner_id": "L10",
+      "question_id": null,
+      "subject": "Individual follow-up: L10 on Evaluates strictly left to right ignoring precedence",
+      "reasoning": "Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Evaluates strictly left to right ignoring precedence has now appeared for L10 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+      "candidate_a": "Schedule it and drop something else",
+      "candidate_b": "Leave it unscheduled until next week",
+      "would_have_decided": "Leave Individual follow-up: L10 on Evaluates strictly left to right ignoring precedence unscheduled. The facilitator should decide whether to extend the budget or displace another action.",
+      "resolved": false,
+      "resolution": null
+    }
+  ],
+  "trace": [
+    {
+      "agent": "intake",
+      "action": "start",
+      "detail": "Loading submissions for A3 from the LMS connector",
+      "timestamp": "2026-09-18T13:49:50.621+00:00",
+      "duration_ms": 0,
+      "level": "info"
+    },
+    {
+      "agent": "intake",
+      "action": "history",
+      "detail": "12 learners on roll. Returners: L07, L09, L12. Sparse history (<50 percent of expected assessments): none",
+      "timestamp": "2026-09-18T13:49:50.623+00:00",
+      "duration_ms": 0,
+      "level": "info"
+    },
+    {
+      "agent": "intake",
+      "action": "end",
+      "detail": "96 responses from 12 learners ready to mark",
+      "timestamp": "2026-09-18T13:49:50.623+00:00",
+      "duration_ms": 1,
+      "level": "info"
+    },
+    {
+      "agent": "marker",
+      "action": "start",
+      "detail": "Marking 96 responses against the scheme (deterministic rules)",
+      "timestamp": "2026-09-18T13:49:50.623+00:00",
+      "duration_ms": 0,
+      "level": "info"
+    },
+    {
+      "agent": "marker",
+      "action": "marked",
+      "detail": "96 provisional marks. 60 deterministic, 0 from the model, 36 from the rule fallback. 0 model calls.",
+      "timestamp": "2026-09-18T13:49:50.624+00:00",
+      "duration_ms": 0,
+      "level": "info"
+    },
+    {
+      "agent": "marker",
+      "action": "end",
+      "detail": "96 marks passed the reviewer gate, 0 escalated for human marking",
+      "timestamp": "2026-09-18T13:49:50.624+00:00",
+      "duration_ms": 0,
+      "level": "info"
+    },
+    {
+      "agent": "diagnostician",
+      "action": "start",
+      "detail": "32 of 96 responses lost marks and need a diagnosis",
+      "timestamp": "2026-09-18T13:49:50.624+00:00",
+      "duration_ms": 0,
+      "level": "info"
+    },
+    {
+      "agent": "diagnostician",
+      "action": "diagnosed",
+      "detail": "32 diagnoses. 18 from the distractor map with no model call, 0 model calls. 1 flagged as a language barrier rather than a misconception.",
+      "timestamp": "2026-09-18T13:49:50.624+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "reviewer",
+      "action": "AMBIGUOUS_DIAGNOSIS",
+      "detail": "L03 A3Q2: Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "escalation"
+    },
+    {
+      "agent": "reviewer",
+      "action": "LANGUAGE_BARRIER",
+      "detail": "L11 A3Q4: The final value is correct, so the mathematics holds. The marks lost are in how the working is written, which is a language issue, not a misconception.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "escalation"
+    },
+    {
+      "agent": "reviewer",
+      "action": "AMBIGUOUS_DIAGNOSIS",
+      "detail": "L06 A3Q6: Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "escalation"
+    },
+    {
+      "agent": "reviewer",
+      "action": "AMBIGUOUS_DIAGNOSIS",
+      "detail": "L09 A3Q6: Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "escalation"
+    },
+    {
+      "agent": "diagnostician",
+      "action": "end",
+      "detail": "28 diagnoses passed the reviewer gate, 4 escalated to a human",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "cohort_analyst",
+      "action": "start",
+      "detail": "Aggregating 28 surviving diagnoses across 12 learners",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "info"
+    },
+    {
+      "agent": "cohort_analyst",
+      "action": "teaching_problem",
+      "detail": "M01 Adds numerators and denominators separately is held by 5 of 12 learners (42%), at or above the 40% threshold. This is a teaching problem, not 5 individual problems.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "cohort_analyst",
+      "action": "end",
+      "detail": "16 nodes analysed. 1 shared, 11 recurring, 4 emerging, 0 topics with too little data to call",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "start",
+      "detail": "Goal: maximise misconceptions resolved next week. Hard constraint: 120 facilitator minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "info"
+    },
+    {
+      "agent": "planner",
+      "action": "candidates",
+      "detail": "32 candidate actions proposed, 465 minutes of work against a 120 minute budget. The budget cannot hold all of it.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "info"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L03 on Treats a negative number as its absolute value when ordering (severity 0.78, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L01 on Evaluates strictly left to right ignoring precedence (severity 0.78, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L10 on Evaluates strictly left to right ignoring precedence (severity 0.78, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Peer pairing: L04 explains the method for Finds a common denominator but forgets to scale the numerators to L12 (severity 0.74, 15 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Peer pairing: L03 explains the method for Simplifies by subtracting instead of dividing to L05 (severity 0.74, 15 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Peer pairing: L03 explains the method for Reads the percentage sign as a decimal point to L04 (severity 0.74, 15 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Peer pairing: L03 explains the method for Evaluates strictly left to right ignoring precedence to L01 (severity 0.74, 15 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Restart point for Amira K., returning after a gap (severity 0.73, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Restart point for Daniel M., returning after a gap (severity 0.73, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L12 on Finds a common denominator but forgets to scale the numerators (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L05 on Simplifies by subtracting instead of dividing (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L10 on Simplifies by subtracting instead of dividing (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L08 on Divides the total by the number of parts named rather than the total share count (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L07 on Arithmetic slip while scaling to a percentage (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L08 on Mishandles subtraction of a negative number (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L06 on Ignores brackets (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Review drafted feedback for Ravi P. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Review drafted feedback for Fatima S. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Review drafted feedback for Chen W. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.625+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Review drafted feedback for Kwame A. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.626+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Review drafted feedback for Amira K. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.626+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Review drafted feedback for Grace O. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.626+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Review drafted feedback for Ibrahim N. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.626+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Review drafted feedback for Sofia R. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.626+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Review drafted feedback for Daniel M. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T13:49:50.626+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "reviewer",
+      "action": "BUDGET_OVERFLOW",
+      "detail": "Individual follow-up: L03 on Treats a negative number as its absolute value when ordering: Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Treats a negative number as its absolute value when ordering has now appeared for L03 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+      "timestamp": "2026-09-18T13:49:50.626+00:00",
+      "duration_ms": 0,
+      "level": "escalation"
+    },
+    {
+      "agent": "reviewer",
+      "action": "BUDGET_OVERFLOW",
+      "detail": "Individual follow-up: L01 on Evaluates strictly left to right ignoring precedence: Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Evaluates strictly left to right ignoring precedence has now appeared for L01 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+      "timestamp": "2026-09-18T13:49:50.626+00:00",
+      "duration_ms": 0,
+      "level": "escalation"
+    },
+    {
+      "agent": "reviewer",
+      "action": "BUDGET_OVERFLOW",
+      "detail": "Individual follow-up: L10 on Evaluates strictly left to right ignoring precedence: Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Evaluates strictly left to right ignoring precedence has now appeared for L10 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+      "timestamp": "2026-09-18T13:49:50.626+00:00",
+      "duration_ms": 0,
+      "level": "escalation"
+    },
+    {
+      "agent": "planner",
+      "action": "end",
+      "detail": "7 actions scheduled using 120 of 120 minutes. 25 dropped for want of time. 11 feedback notes drafted.",
+      "timestamp": "2026-09-18T13:49:50.626+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    }
+  ],
+  "overrides": [],
+  "changes": [],
+  "status": "complete"
+}

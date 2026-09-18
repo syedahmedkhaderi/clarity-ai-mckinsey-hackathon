@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-surface-sunken text-ink font-sans text-base;
+  }
+  table {
+    @apply w-full border-collapse;
+  }
+  th {
+    @apply text-left font-medium text-ink-muted text-xs uppercase tracking-wide
+           border-b border-line py-2 px-3 bg-surface-raised;
+  }
+  td {
+    @apply border-b border-line py-2 px-3 align-top;
+  }
+  tbody tr:last-child td {
+    @apply border-b-0;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply bg-surface border border-line rounded-md;
+  }
+  .panel-head {
+    @apply px-4 py-3 border-b border-line flex items-baseline justify-between gap-3;
+  }
+  .panel-title {
+    @apply text-sm font-semibold text-ink;
+  }
+  .panel-sub {
+    @apply text-xs text-ink-faint;
+  }
+  .btn {
+    @apply inline-flex items-center gap-1.5 rounded border border-line-strong bg-surface
+           px-3 py-1.5 text-sm font-medium text-ink transition-colors
+           hover:bg-surface-sunken disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply border-agent bg-agent text-white hover:bg-[#3242c9];
+  }
+  .btn-xs {
+    @apply px-2 py-1 text-xs;
+  }
+  .tag {
+    @apply inline-flex items-center rounded border px-1.5 py-0.5 text-2xs font-medium
+           tracking-wide whitespace-nowrap;
+  }
+  .num {
+    @apply font-mono text-xs tabular-nums;
+  }
+}
+
+/* The agent pipeline rail. Kept in CSS so the connector lines stay pixel-exact. */
+.rail-line {
+  @apply absolute left-[7px] top-4 bottom-0 w-px bg-line-strong;
+}
