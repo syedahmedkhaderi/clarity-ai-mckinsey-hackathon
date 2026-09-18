@@ -119,3 +119,96 @@ export function severityLabel(
 ): string {
   return SEVERITY_LABELS[severityLevel(severity, highFloor)];
 }
+
+/** Student page wording. Old: "recurring", "returner", "escalation". */
+export const STUDENT_TAG_LABELS = {
+  keepsHappening: PATTERN_KIND_LABELS.recurring,
+  missedEarlier: "Missed earlier tests",
+  needsCall: "Needs your call",
+  once: "Once",
+} as const;
+
+export const LANGUAGE_FINDING_SENTENCE = "The wording, not the maths, may be the problem.";
+
+/** First option in the correction list. Old: "Not a mistake pattern at all, remove it". */
+export const NOT_A_PATTERN_LABEL = "Not a mistake pattern at all";
+
+export const CORRECTION_EXPLAINER =
+  "We will use your answer and update the class picture and the action plan.";
+
+/** "9" or "9.5", never "9.000000001". */
+export function scoreText(value: number): string {
+  return String(Math.round(value * 10) / 10);
+}
+
+/**
+ * One plain sentence about a student's main mistake, built from the taxonomy's own
+ * label so it can never drift from what the rest of the screen says.
+ */
+export function mistakeHeadline(name: string, patternLabel: string | null, keeps: boolean): string {
+  if (!patternLabel) return `${name} has no mistake pattern to work on in this test.`;
+  const pattern = patternLabel.charAt(0).toLowerCase() + patternLabel.slice(1).replace(/\.$/, "");
+  return keeps
+    ? `${name} keeps making the same mistake: ${pattern}.`
+    : `${name} made this mistake this time: ${pattern}.`;
+}
+
+/** Old: the labels above, reworded for the action plan banner. */
+export const PLAN_CHANGE_PLAIN_LABELS: Record<PlanChange["kind"], string> = {
+  removed: "No longer needed",
+  added: "New",
+  rescheduled: "Now fits",
+  budget: "Time",
+};
+
+/** Lookups plainText uses to turn ids into words. Each falls back to the id itself. */
+export interface PlainNames {
+  pattern: (nodeId: string) => string;
+  learner: (learnerId: string) => string;
+}
+
+/**
+ * Old: "Reteach adding fractions (M01)", "42% of learners hold misconception M01",
+ * "Learner L04". The backend writes these sentences with ids and developer words
+ * in them, and this turns them into words a teacher would use.
+ */
+export function plainText(text: string, names: PlainNames): string {
+  return text
+    .replace(/\b(?:[Ll]earner|[Ss]tudent)\s+((?:L\d{2}|C\d{2}-S\d{2}))\b/g, (_, id: string) =>
+      names.learner(id),
+    )
+    .replace(/\b(?:L\d{2}|C\d{2}-S\d{2})\b/g, (id) => names.learner(id))
+    .replace(/\s*\(M\d{2}(?:\s*,\s*M\d{2})*\)/g, "")
+    .replace(/\bM\d{2}\b/g, (id) => {
+      const name = names.pattern(id);
+      return name === id ? id : `‘${name}’`;
+    })
+    .replace(/\bMisconceptions\b/g, "Mistake patterns")
+    .replace(/\bmisconceptions\b/g, "mistake patterns")
+    .replace(/\bMisconception\b/g, "Mistake pattern")
+    .replace(/\bmisconception\b/g, "mistake pattern")
+    .replace(/\bLearners\b/g, "Students")
+    .replace(/\blearners\b/g, "students")
+    .replace(/\bLearner\b/g, "Student")
+    .replace(/\blearner\b/g, "student")
+    .replace(/\bFacilitator\b/g, "Teacher")
+    .replace(/\bfacilitator\b/g, "teacher")
+    .replace(/\bReteach\b/g, "Re-teach")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+/** Old: "budget exhausted". */
+export function dropReasonText(reason: string | null): string {
+  if (!reason || /budget/i.test(reason)) return "There was not enough time left in your budget.";
+  const sentence = reason.charAt(0).toUpperCase() + reason.slice(1);
+  return sentence.endsWith(".") ? sentence : `${sentence}.`;
+}
+
+/** Old: "Withdrawn: ...", "Newly scheduled: ...", "Now scheduled with the freed time: ...". */
+export function planChangeTitle(detail: string): string {
+  return detail.replace(
+    /^(?:Withdrawn|Newly scheduled|Now scheduled with the freed time):\s*/i,
+    "",
+  );
+}
