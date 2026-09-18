@@ -68,7 +68,6 @@ def mark_written_offline(question: dict[str, Any], sub: Any) -> Mark:
 
 
 def _check_q2(question: dict[str, Any], answer: str) -> list[bool]:
-    d1, d2 = question["prompt"].split("Work out ")[1].split(".")[0], None
     nums = re.findall(r"\d+\.\d+", question["prompt"])
     d1, d2 = float(nums[0]), float(nums[1])
     total, larger = round(d1 + d2, 2), max(d1, d2)
@@ -81,7 +80,7 @@ def _check_q2(question: dict[str, Any], answer: str) -> list[bool]:
 
 def _stated_larger(answer: str) -> float | None:
     """The number in the clause that claims something is larger."""
-    for sentence in re.split(r"[.]", answer):
+    for sentence in _sentences(answer):
         low = sentence.lower()
         if "larger" in low or "bigger" in low or "larger one" in low:
             found = re.findall(r"\d+\.\d+", sentence)
@@ -150,7 +149,9 @@ def _diag_q4(question: dict[str, Any], answer: str) -> tuple:
             return ("M03", "M02", 0.84, _span(answer, f"{a2 + c2 + offset}/{lcm}"),
                     "The common denominator and both conversions are right, so only the "
                     "final addition slipped.")
-    return (None, None, 0.25, "", "The working does not match any known pattern for this topic.")
+    return (None, None, 0.25, "", "Marks were lost but the working does not match any misconception pattern for "
+            "this topic. It may be a one-off slip rather than a misconception, which is "
+            "a judgement for a person.")
 
 
 def _diag_q2(question: dict[str, Any], answer: str) -> tuple:
@@ -175,7 +176,9 @@ def _diag_q2(question: dict[str, Any], answer: str) -> tuple:
         return ("M24", None, 0.8, _span(answer, f"{total:g}"),
                 "The value is right. What was lost is the form the question asked for, "
                 "which points at the instruction wording rather than the mathematics.")
-    return (None, None, 0.25, "", "The working does not match any known pattern for this topic.")
+    return (None, None, 0.25, "", "Marks were lost but the working does not match any misconception pattern for "
+            "this topic. It may be a one-off slip rather than a misconception, which is "
+            "a judgement for a person.")
 
 
 def _diag_q6(question: dict[str, Any], answer: str) -> tuple:
@@ -193,7 +196,9 @@ def _diag_q6(question: dict[str, Any], answer: str) -> tuple:
         return ("M12", "M13", 0.86, _span(answer, str(r1 + (total - r1 - r2) // 2)),
                 "The ratio numbers were handed out as absolute amounts and the remainder "
                 "split evenly, which treats the ratio as a difference.")
-    return (None, None, 0.25, "", "The working does not match any known pattern for this topic.")
+    return (None, None, 0.25, "", "Marks were lost but the working does not match any misconception pattern for "
+            "this topic. It may be a one-off slip rather than a misconception, which is "
+            "a judgement for a person.")
 
 
 def diagnose_mcq(question: dict[str, Any], sub: Any) -> Diagnosis | None:
@@ -219,15 +224,25 @@ def diagnose_mcq(question: dict[str, Any], sub: Any) -> Diagnosis | None:
 
 # --- helpers ---------------------------------------------------------------
 
+SENTENCE_BREAK = re.compile(r"\.(?!\d)")
+
+
+def _sentences(text: str) -> list[str]:
+    """Splits on sentence stops only. A full stop between two digits is a decimal
+    point, not the end of a sentence."""
+    return [s for s in SENTENCE_BREAK.split(text) if s.strip()]
+
+
 def _span(answer: str, needle: str) -> str:
     """Widens a match to the surrounding clause so the highlight reads naturally.
     Always returns a verbatim substring of the answer, or an empty string."""
     idx = answer.find(needle)
     if idx < 0:
         return ""
-    start = max(answer.rfind(".", 0, idx) + 1, 0)
-    end = answer.find(".", idx + len(needle))
-    end = len(answer) if end < 0 else end + 1
+    starts = [m.end() for m in SENTENCE_BREAK.finditer(answer) if m.end() <= idx]
+    start = starts[-1] if starts else 0
+    ends = [m.end() for m in SENTENCE_BREAK.finditer(answer) if m.start() >= idx + len(needle)]
+    end = ends[0] if ends else len(answer)
     return answer[start:end].strip()
 
 

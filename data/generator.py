@@ -183,6 +183,15 @@ TENSE_SWAPS = {
 PROTECTED = re.compile(r"[0-9/]")
 
 
+NUMERIC_TOKEN = re.compile(r"\d+/\d+|\d+\.\d+|\d+")
+
+
+def math_tokens(text: str) -> list[str]:
+    """Every number and fraction in the text, in order. Language noise must leave
+    this list untouched."""
+    return NUMERIC_TOKEN.findall(text)
+
+
 def apply_language_noise(text: str, level: float, rng: random.Random) -> str:
     """Perturbs surface grammar only. Never touches a token containing a digit
     or a slash, so the mathematical content is provably unchanged."""
@@ -202,12 +211,24 @@ def apply_language_noise(text: str, level: float, rng: random.Random) -> str:
             token = token[:-1] if token[-1] == "s" else token
         out.append(token)
     text = " ".join(t for t in out if t)
-    return _invert_clause(text, level, rng)
+    noisy = _invert_clause(text, level, rng)
+    before, after = math_tokens(text), math_tokens(noisy)
+    if sorted(before) != sorted(after):
+        raise AssertionError(
+            f"language noise altered the mathematics: {before} became {after}")
+    return noisy
+
+
+SENTENCE_BREAK = re.compile(r"\.(?!\d)")
 
 
 def _invert_clause(text: str, level: float, rng: random.Random) -> str:
-    """Moves the trailing clause of a sentence to the front, a common L2 pattern."""
-    parts = [s.strip() for s in text.split(".") if s.strip()]
+    """Moves the trailing clause of a sentence to the front, a common L2 pattern.
+
+    Splits on sentence stops only. A full stop followed by a digit is a decimal
+    point; splitting there would rewrite the learner's numbers, and the whole
+    point of this fixture is that language noise never touches the mathematics."""
+    parts = [s.strip() for s in SENTENCE_BREAK.split(text) if s.strip()]
     for i, part in enumerate(parts):
         words = part.split()
         if len(words) > 6 and rng.random() < level * 0.5:
@@ -270,7 +291,11 @@ def generate() -> None:
                     text, node, kind = build_written(q, relevant, careless, rng, params[aid])
                     noisy = traits["second_language"] and traits["language_noise_level"] > 0
                     if noisy:
+                        clean = text
                         text = apply_language_noise(text, traits["language_noise_level"], rng)
+                        assert math_tokens(clean) == math_tokens(text) or \
+                            sorted(math_tokens(clean)) == sorted(math_tokens(text)), \
+                            f"noise changed the mathematics on {lid} {q['question_id']}"
                     answer = text
                 submissions.append({
                     "submission_id": f"{aid}-{lid}-{q['question_id']}",

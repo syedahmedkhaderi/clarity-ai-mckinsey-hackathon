@@ -36,7 +36,7 @@ MARK_CONFIDENCE_FLOOR: Final[float] = 0.60
 DIAGNOSIS_CONFIDENCE_FLOOR: Final[float] = 0.65
 AMBIGUITY_GAP: Final[float] = 0.15
 SPARSE_HISTORY_FLOOR: Final[float] = 0.50
-HIGH_SEVERITY_FLOOR: Final[float] = 0.70
+HIGH_SEVERITY_FLOOR: Final[float] = 0.75
 
 # Cohort analysis thresholds.
 SHARED_MISCONCEPTION_SHARE: Final[float] = 0.40

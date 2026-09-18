@@ -127,6 +127,10 @@ def _propose(state: LoopState, nodes: list[NodePattern]) -> list[PlannedAction]:
 def _rule_candidates(state: LoopState, nodes: list[NodePattern]) -> list[PlannedAction]:
     actions: list[PlannedAction] = []
     contexts = {c.learner_id: c for c in state["learners"]}
+    # A learner already sitting in a group session on a node does not also need a
+    # one-to-one on the same node. Proposing both would burn the budget twice on
+    # one problem and would read as an agent that cannot see its own plan.
+    covered = {(lid, n.node_id) for n in nodes if n.teaching_problem for lid in n.learner_ids}
 
     for node in nodes:
         if node.kind == "insufficient_data":
@@ -146,6 +150,8 @@ def _rule_candidates(state: LoopState, nodes: list[NodePattern]) -> list[Planned
                               f"teaching gap, not {node.count} separate learner problems.",
                 facilitator_script=hint))
         for learner_id in node.recurring_learner_ids:
+            if (learner_id, node.node_id) in covered:
+                continue
             actions.append(PlannedAction(
                 action_id=f"IF-{node.node_id}-{learner_id}", type="individual_followup",
                 title=f"Individual follow-up: {learner_id} on {node.label}",
@@ -197,9 +203,10 @@ def _pairings(node: NodePattern, contexts: dict[str, Any], hint: str) -> list[Pl
             action_id=f"PP-{node.node_id}-{explainer}-{learner}", type="peer_pairing",
             title=f"Peer pairing: {explainer} explains the method for {node.label} to {learner}",
             node_id=node.node_id, learner_ids=[explainer, learner],
-            cost_minutes=config.ACTION_COSTS["peer_pairing"], severity=0.55,
+            cost_minutes=config.ACTION_COSTS["peer_pairing"], severity=0.74,
             justification=f"{explainer} showed {node.node_id} in an earlier assessment and no "
-                          f"longer does. {learner} still does.",
+                          f"longer does. {learner} still does. Fifteen minutes fixes it for "
+                          f"{learner} and consolidates it for {explainer}.",
             facilitator_script=f"Ask {explainer} to explain the method to {learner}, not to "
                                f"give the answer. {hint}"))
     return out
