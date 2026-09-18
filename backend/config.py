@@ -188,3 +188,20 @@ CHAT_TOP_K: Final[int] = 6
 CHAT_MAX_QUESTION_CHARS: Final[int] = 500
 BM25_K1: Final[float] = 1.5
 BM25_B: Final[float] = 0.75
+
+# --- Chat helper (S4) ---------------------------------------------------------
+# History is trimmed hard: it only lets a follow-up such as "and why?" resolve, and
+# every turn sent is more text the model could be steered by.
+CHAT_HISTORY_TURNS: Final[int] = 4
+CHAT_HISTORY_CHARS: Final[int] = 600
+CHAT_SNIPPET_CHARS: Final[int] = 240
+# A question with fewer content words than this is a follow-up, so the previous
+# question is searched with it.
+CHAT_MIN_QUERY_TOKENS: Final[int] = 3
+# Priority wording for plan actions. High is at or above HIGH_SEVERITY_FLOOR,
+# Medium is within this step below it, anything lower is Low. It matches the
+# cut-offs the frontend uses for the same labels.
+CHAT_MEDIUM_SEVERITY_STEP: Final[float] = 0.25
+# Answers are the bulk of the passages and the shortest, so they are scored down a
+# little. A question that names the student and the question still finds them.
+CHAT_ANSWER_WEIGHT: Final[float] = 0.75
