@@ -50,19 +50,27 @@ Breaking any of these is a defect, not a trade-off. Each has a test.
    in its grammar.
 
 6. **A learner who understands the mathematics but writes it badly is never
-   diagnosed as conceptually weak.** This is the single most important behaviour
-   in the system. It lives in the language rule in
-   `backend/prompts/diagnosis.py` and in the `language_flag` gate in
-   `backend/agents/reviewer.py`. If you weaken either, `eval/results.md` will
-   show a language separation gap and you have regressed the product.
+   diagnosed as conceptually weak.** The single most important behaviour in the
+   system, and it is enforced in code, not requested in a prompt.
+   `offline_rules.mathematics_is_correct` reads the marking scheme; if the
+   learner reached the value it asks for, `diagnostician._resolve` forces the
+   language flag no matter what the model returned. The prompt rule and the
+   `language_flag` gate in `reviewer.py` remain, but they are the second and
+   third lines of defence.
 
-7. **The model may propose, but it may not drop a guarantee.** Every learner
-   with a diagnosis gets a drafted feedback note, and every learner returning
-   after a gap gets a restart point. `planner._merge_guarantees` adds these back
-   after the model proposes, because a plan that quietly omits a returner is the
-   exact failure Meridian described. Verified by the returner metric in
-   `eval/results.md`, which went to zero the first time the model path replaced
-   the rule candidates outright.
+   This guard exists because without it a model diagnosed
+   "Answer is 7/12 km. and then add top ones together I make bottom number same
+   12." as a procedural misconception at 0.9 confidence. `tests/test_language_rule.py`
+   and the language separation metric in `eval/results.md` both guard it.
+
+7. **The model may propose, but it may not drop a guarantee or contradict a
+   rule.** `planner._merge_guarantees` enforces three things after the model
+   proposes: every learner with a diagnosis gets a drafted feedback note, every
+   learner returning after a gap gets a restart point, and a group re-teach
+   exists for a node if and only if the cohort analyst classified it as a
+   teaching problem. The first went to zero in `eval/results.md` the moment the
+   model path replaced the rule candidates outright. The third stops the plan
+   contradicting the cohort view rendered next to it.
 
 8. **The planner does not fit its own plan to the budget.** A model proposes and
    scores; `planner._fit_budget` fills the budget in code and records every
@@ -106,6 +114,13 @@ that branches on it.
 any backend import. Tests verify wiring and invariants, so they must be fast,
 free and repeatable. `eval/evaluate.py` is where the model is measured. Do not
 let a test depend on a live gateway.
+
+**Nothing may hang.** `llm.call_many` caps a batch with a wall-clock budget
+(`LLM_STAGE_BUDGET_SECONDS`) and abandons stragglers to the deterministic rules,
+reporting it in the trace. The frontend poll loop reschedules in a `finally`,
+backs off on failure and gives up loudly after five consecutive errors rather
+than sitting on a spinner. A run that cannot finish must degrade visibly, never
+stall silently.
 
 **A blank value in `.env` means unset.** `.env.example` ships every key empty so
 the file documents itself. `config._env` treats blank as absent. Never read an

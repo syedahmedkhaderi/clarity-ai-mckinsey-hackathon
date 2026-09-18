@@ -123,7 +123,12 @@ MARK_BATCH_SIZE: Final[int] = int(_env("LOOP_MARK_BATCH_SIZE", "4"))
 # stronger model and planning takes the faster one. Set LOOP_PLANNER_SMART=1 to
 # trade about ten seconds for a richer set of proposals.
 PLANNER_SMART: Final[bool] = _env("LOOP_PLANNER_SMART", "0").lower() in ("1", "true", "yes")
-LLM_TIMEOUT_SECONDS: Final[int] = int(_env("LOOP_LLM_TIMEOUT", "90"))
+LLM_TIMEOUT_SECONDS: Final[int] = int(_env("LOOP_LLM_TIMEOUT", "30"))
+
+# Hard wall-clock ceiling on one agent's model work. When it expires, whatever
+# has not come back is treated as a failed call and the deterministic rules take
+# over for those items. A provider stall degrades the run, it never hangs it.
+LLM_STAGE_BUDGET_SECONDS: Final[int] = int(_env("LOOP_LLM_STAGE_BUDGET", "75"))
 
 # Reviewer gate thresholds. Each maps to one reason code in agents/reviewer.py.
 MARK_CONFIDENCE_FLOOR: Final[float] = 0.60

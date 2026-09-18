@@ -18,7 +18,7 @@ from __future__ import annotations
 
 import logging
 import threading
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, wait
 from typing import Any, Callable, Sequence, TypeVar
 
 from pydantic import BaseModel
@@ -111,7 +111,9 @@ def call(system: str, user: str, schema: type[T], smart: bool = False) -> T | No
 
 def call_many(system: str, users: Sequence[str], schema: type[T],
               smart: bool = False,
-              on_progress: Callable[[int, int], None] | None = None) -> list[T | None]:
+              on_progress: Callable[[int, int], None] | None = None,
+              on_timeout: Callable[[int, int], None] | None = None,
+              budget_seconds: int | None = None) -> list[T | None]:
     """Runs independent calls concurrently, preserving input order.
 
     A failure in one call is a None in that slot, never an exception, so one bad
@@ -120,11 +122,17 @@ def call_many(system: str, users: Sequence[str], schema: type[T],
     on_progress(done, total) fires as each call lands. A model step that takes
     ten seconds with no output looks identical to a hang, so the agents use this
     to report progress while they wait.
+
+    The whole batch is capped by a wall-clock budget. Calls still in flight when
+    it expires are abandoned and reported through on_timeout, and the caller
+    falls back to rules for those slots. A stalled provider must degrade a run,
+    never hang it.
     """
     if config.OFFLINE or not users:
         return [None] * len(users)
     total = len(users)
     workers = max(1, min(config.LLM_CONCURRENCY, total))
+    budget = budget_seconds or config.LLM_STAGE_BUDGET_SECONDS
     done = 0
     lock = threading.Lock()
 
@@ -140,5 +148,28 @@ def call_many(system: str, users: Sequence[str], schema: type[T],
                     pass
         return result
 
-    with ThreadPoolExecutor(max_workers=workers) as pool:
-        return list(pool.map(one, users))
+    results: list[T | None] = [None] * total
+    pool = ThreadPoolExecutor(max_workers=workers)
+    try:
+        futures = {pool.submit(one, u): i for i, u in enumerate(users)}
+        finished, unfinished = wait(futures, timeout=budget)
+        for f in finished:
+            try:
+                results[futures[f]] = f.result()
+            except Exception as exc:  # already logged in call()
+                log.warning("llm task failed: %s", exc)
+        if unfinished:
+            log.warning("%d of %d calls did not return within %ss; "
+                        "falling back to rules for those", len(unfinished), total, budget)
+            for f in unfinished:
+                f.cancel()
+            if on_timeout:
+                try:
+                    on_timeout(len(unfinished), total)
+                except Exception:
+                    pass
+    finally:
+        # Never block on stragglers. Whatever they eventually return is discarded
+        # and the deterministic path has already covered those items.
+        pool.shutdown(wait=False, cancel_futures=True)
+    return results

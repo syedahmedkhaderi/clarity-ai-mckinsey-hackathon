@@ -186,7 +186,8 @@ def stub_model(monkeypatch: pytest.MonkeyPatch, evidence: str | None = None) -> 
     asked: list[str] = []
 
     def call_many(system: str, prompts: list[str], schema: Any, smart: bool = False,
-                  on_progress: Any = None) -> list[Any]:
+                  on_progress: Any = None, on_timeout: Any = None,
+                  budget_seconds: int | None = None) -> list[Any]:
         asked.extend(prompts)
         node = {"T1": "M04", "T2": "M01"}
         outs = []

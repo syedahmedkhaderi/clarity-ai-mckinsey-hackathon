@@ -24,28 +24,49 @@ function stepStates(trace: TraceEvent[], status: string): Record<string, State> 
  * A friendly progress line while the analysis runs: one segment per step, in
  * the teacher's words, lit as each step finishes.
  */
+const STALL_MS = 45000;
+
 export function RunProgress({
   trace,
   status,
   elapsedMs,
+  stalledMs = 0,
+  onCancel,
 }: {
   trace: TraceEvent[];
   status: string;
   elapsedMs: number;
+  /** Time since the last trace event arrived. A long stall may mean a stuck run. */
+  stalledMs?: number;
+  onCancel?: () => void;
 }) {
   const states = stepStates(trace, status);
   const now = STEPS.find((a) => states[a] === "running");
   const done = STEPS.filter((a) => states[a] === "done").length;
+  const stalled = stalledMs > STALL_MS;
   return (
     <div className="panel px-4 py-3" role="status" aria-live="polite">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4">
         <p className="text-sm text-ink">
           {now ? `Working on it. Now: ${AGENT_LABELS[now]}.` : "Working on it."}
         </p>
-        <span className="text-xs text-ink-faint">
-          <span className="num">{Math.round(elapsedMs / 1000)}s</span> so far, usually about 20s.
-        </span>
+        <div className="flex items-center gap-3">
+          <span className={clsx("text-xs", stalled ? "text-flag" : "text-ink-faint")}>
+            <span className="num">{Math.round(elapsedMs / 1000)}s</span> so far, usually about
+            20s.
+          </span>
+          {stalled && onCancel && (
+            <button className="btn btn-xs" onClick={onCancel}>
+              Stop waiting
+            </button>
+          )}
+        </div>
       </div>
+      {stalled && (
+        <p className="mt-1.5 text-xs text-flag">
+          This is taking longer than usual. You can keep waiting or stop and try again.
+        </p>
+      )}
       <ol className="mt-3 grid grid-cols-3 gap-x-2 gap-y-3 sm:grid-cols-6" aria-label={`${done} of ${STEPS.length} steps done`}>
         {STEPS.map((agent) => (
           <li key={agent}>

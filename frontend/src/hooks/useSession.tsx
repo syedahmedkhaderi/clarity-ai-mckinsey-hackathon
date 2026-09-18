@@ -57,7 +57,11 @@ export interface Session {
   /** The stage in flight, in words, or null between stages. */
   stage: string | null;
   elapsedMs: number;
+  /** Time since the last trace event arrived, while running. Zero when not running. */
+  stalledMs: number;
   run: () => Promise<void>;
+  /** Gives up on a run that will not finish and clears the "Working" state. */
+  cancelRun: () => void;
 
   /** Confirms every mark the given students have on the current test. */
   approve: (learnerIds: string[]) => Promise<void>;
@@ -127,6 +131,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const [startedAt, setStartedAt] = useState<number | null>(null);
   const [elapsedMs, setElapsedMs] = useState(0);
+  const [lastEventAt, setLastEventAt] = useState<number | null>(null);
 
   const health = useQuery({ queryKey: ["health"], queryFn: api.health });
   const taxonomy = useQuery({ queryKey: ["taxonomy"], queryFn: api.taxonomy });
@@ -169,28 +174,61 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
   // Poll the trace while the graph runs so the pipeline animates rather than
   // showing a spinner.
+  //
+  // This loop must never die. An earlier version scheduled one timeout per
+  // effect run and swallowed failures into state, so a single failed fetch (a
+  // backend restart, a dropped request, a batch id the server no longer knows)
+  // stopped polling permanently and the screen sat on "Working" forever with a
+  // ticking clock and no events. It reschedules in a finally now, tolerates
+  // transient failures with backoff, and gives up loudly after five in a row
+  // rather than silently.
   useEffect(() => {
-    if (!batchId || status !== "running") return;
+    if (!batchId) return;
     let cancelled = false;
+    let timer: number | undefined;
+    let failures = 0;
+    let since = 0;
+
     const tick = async () => {
+      if (cancelled) return;
+      let delay = POLL_MS;
       try {
-        const res = await api.trace(batchId, trace.length);
+        const res = await api.trace(batchId, since);
         if (cancelled) return;
-        if (res.events.length) setTrace((prev) => [...prev, ...res.events]);
+        failures = 0;
+        if (res.events.length) {
+          since = res.total;
+          setTrace((prev) => [...prev, ...res.events]);
+          setLastEventAt(Date.now());
+        }
         if (res.status !== "running") {
           setStatus(res.status);
           await loadBatch(batchId);
+          return; // terminal, stop polling
         }
-      } catch (e) {
-        if (!cancelled) setError(describe(e));
+      } catch {
+        if (cancelled) return;
+        failures += 1;
+        if (failures >= 5) {
+          setStatus("lost");
+          setError(
+            "Lost contact with the server for this run. It may have restarted. " +
+              "Your data is safe; start the analysis again.",
+          );
+          return;
+        }
+        delay = Math.min(POLL_MS * 2 ** failures, 4000); // back off, keep trying
+      } finally {
+        if (!cancelled) timer = window.setTimeout(tick, delay);
       }
     };
-    const handle = setTimeout(tick, POLL_MS);
+
+    timer = window.setTimeout(tick, POLL_MS);
     return () => {
       cancelled = true;
-      clearTimeout(handle);
+      if (timer) clearTimeout(timer);
     };
-  }, [batchId, status, trace.length, loadBatch]);
+  }, [batchId, loadBatch]);
 
   const testList = tests.data ?? [];
   const healthData = health.data ?? null;
@@ -217,6 +255,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     setStatus("running");
     setStartedAt(Date.now());
     setElapsedMs(0);
+    setLastEventAt(Date.now());
     try {
       const { batch_id } = await api.runBatch(selectedTest, test?.class_id ?? "C1", minutes);
       setBatchId(batch_id);
@@ -224,6 +263,16 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       setError(describe(e));
       setStatus("failed");
     }
+  };
+
+  // A run that has produced nothing for a while is either very slow or wedged.
+  // Either way the teacher should be told and given a way out.
+  const stalledMs = status === "running" && lastEventAt ? Date.now() - lastEventAt : 0;
+
+  const cancelRun = () => {
+    setStatus("idle");
+    setBatchId(null);
+    setError(null);
   };
 
   const approve = async (learnerIds: string[]) => {
@@ -336,7 +385,9 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     running: status === "running",
     stage,
     elapsedMs,
+    stalledMs,
     run,
+    cancelRun,
     approve,
     resolve,
     profiles,

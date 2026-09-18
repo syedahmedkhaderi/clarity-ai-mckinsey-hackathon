@@ -1178,9 +1178,6 @@
       "prior_nodes": {
         "A1": [
           "M18"
-        ],
-        "A2": [
-          "M08"
         ]
       },
       "low_confidence_history": false,
@@ -1211,7 +1208,7 @@
         "A2": [
           "M17",
           "M01",
-          "M13",
+          "M12",
           "M01"
         ]
       },
@@ -1275,7 +1272,7 @@
           "M01"
         ],
         "A2": [
-          "M03",
+          "M02",
           "M10",
           "M01"
         ]
@@ -1362,7 +1359,6 @@
       ],
       "prior_nodes": {
         "A1": [
-          "M08",
           "M01",
           "M14",
           "M01"
@@ -1394,7 +1390,6 @@
           "M13"
         ],
         "A2": [
-          "M08",
           "M16",
           "M13"
         ]
@@ -1464,11 +1459,7 @@
         "A3",
         "A4"
       ],
-      "prior_nodes": {
-        "A1": [
-          "M02"
-        ]
-      },
+      "prior_nodes": {},
       "low_confidence_history": false,
       "note": null
     },
@@ -2344,7 +2335,7 @@
       "learner_id": "L01",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.9,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -2352,7 +2343,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2360,7 +2351,7 @@
       "learner_id": "L02",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.9,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -2368,7 +2359,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2376,7 +2367,7 @@
       "learner_id": "L03",
       "awarded": 1.0,
       "max_marks": 3.0,
-      "confidence": 0.8,
+      "confidence": 0.88,
       "criteria_met": [
         "States that 0.9 is the larger number"
       ],
@@ -2385,7 +2376,7 @@
         "Working shows place value alignment rather than digit count"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2393,7 +2384,7 @@
       "learner_id": "L04",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.9,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -2401,7 +2392,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2409,7 +2400,7 @@
       "learner_id": "L05",
       "awarded": 1.0,
       "max_marks": 3.0,
-      "confidence": 0.9,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65"
       ],
@@ -2418,7 +2409,7 @@
         "Working shows place value alignment rather than digit count"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2426,7 +2417,7 @@
       "learner_id": "L06",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.95,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -2434,7 +2425,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2442,7 +2433,7 @@
       "learner_id": "L07",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.95,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -2450,7 +2441,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2458,7 +2449,7 @@
       "learner_id": "L08",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.95,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -2466,7 +2457,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2474,7 +2465,7 @@
       "learner_id": "L09",
       "awarded": 1.0,
       "max_marks": 3.0,
-      "confidence": 0.7,
+      "confidence": 0.88,
       "criteria_met": [
         "States that 0.9 is the larger number"
       ],
@@ -2483,7 +2474,7 @@
         "Working shows place value alignment rather than digit count"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2491,7 +2482,7 @@
       "learner_id": "L10",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.95,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -2499,7 +2490,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2507,7 +2498,7 @@
       "learner_id": "L11",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.9,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -2515,7 +2506,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2523,7 +2514,7 @@
       "learner_id": "L12",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.95,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -2531,7 +2522,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2539,7 +2530,7 @@
       "learner_id": "L01",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Identifies a common denominator",
         "Converts both fractions correctly",
@@ -2547,7 +2538,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2555,7 +2546,7 @@
       "learner_id": "L02",
       "awarded": 0.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.9,
       "criteria_met": [],
       "criteria_missed": [
         "Identifies a common denominator",
@@ -2563,24 +2554,23 @@
         "Correct final answer 7/12 with unit"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
       "question_id": "A3Q4",
       "learner_id": "L03",
-      "awarded": 2.0,
+      "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
+        "Identifies a common denominator",
         "Converts both fractions correctly",
         "Correct final answer 7/12 with unit"
       ],
-      "criteria_missed": [
-        "Identifies a common denominator"
-      ],
+      "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2588,7 +2578,7 @@
       "learner_id": "L04",
       "awarded": 0.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.9,
       "criteria_met": [],
       "criteria_missed": [
         "Identifies a common denominator",
@@ -2596,7 +2586,7 @@
         "Correct final answer 7/12 with unit"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2604,15 +2594,15 @@
       "learner_id": "L05",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
-        "1 mark(s): Identifies a common denominator",
-        "1 mark(s): Converts both fractions correctly",
-        "1 mark(s): Correct final answer 7/12 with unit"
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2620,15 +2610,15 @@
       "learner_id": "L06",
       "awarded": 0.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.9,
       "criteria_met": [],
       "criteria_missed": [
-        "1 mark(s): Identifies a common denominator",
-        "1 mark(s): Converts both fractions correctly",
-        "1 mark(s): Correct final answer 7/12 with unit"
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2636,32 +2626,31 @@
       "learner_id": "L07",
       "awarded": 0.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.9,
       "criteria_met": [],
       "criteria_missed": [
-        "1 mark(s): Identifies a common denominator",
-        "1 mark(s): Converts both fractions correctly",
-        "1 mark(s): Correct final answer 7/12 with unit"
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
       "question_id": "A3Q4",
       "learner_id": "L08",
-      "awarded": 2.0,
+      "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
-        "1 mark(s): Identifies a common denominator",
-        "1 mark(s): Correct final answer 7/12 with unit"
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
       ],
-      "criteria_missed": [
-        "1 mark(s): Converts both fractions correctly"
-      ],
+      "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2677,7 +2666,7 @@
         "Correct final answer 7/12 with unit"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2685,7 +2674,7 @@
       "learner_id": "L10",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.95,
+      "confidence": 0.88,
       "criteria_met": [
         "Identifies a common denominator",
         "Converts both fractions correctly",
@@ -2693,23 +2682,24 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
       "question_id": "A3Q4",
       "learner_id": "L11",
-      "awarded": 3.0,
+      "awarded": 2.0,
       "max_marks": 3.0,
-      "confidence": 0.85,
+      "confidence": 0.72,
       "criteria_met": [
         "Identifies a common denominator",
-        "Converts both fractions correctly",
         "Correct final answer 7/12 with unit"
       ],
-      "criteria_missed": [],
+      "criteria_missed": [
+        "Converts both fractions correctly"
+      ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2717,7 +2707,7 @@
       "learner_id": "L12",
       "awarded": 1.0,
       "max_marks": 3.0,
-      "confidence": 0.85,
+      "confidence": 0.88,
       "criteria_met": [
         "Identifies a common denominator"
       ],
@@ -2726,7 +2716,7 @@
         "Correct final answer 7/12 with unit"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2734,7 +2724,7 @@
       "learner_id": "L01",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -2742,7 +2732,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2750,7 +2740,7 @@
       "learner_id": "L02",
       "awarded": 0.0,
       "max_marks": 3.0,
-      "confidence": 0.8,
+      "confidence": 0.9,
       "criteria_met": [],
       "criteria_missed": [
         "Adds the ratio parts to get 7 shares",
@@ -2758,7 +2748,7 @@
         "Correct final answer 24"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2766,7 +2756,7 @@
       "learner_id": "L03",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -2774,7 +2764,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2782,7 +2772,7 @@
       "learner_id": "L04",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -2790,7 +2780,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2798,7 +2788,7 @@
       "learner_id": "L05",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -2806,7 +2796,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2814,7 +2804,7 @@
       "learner_id": "L06",
       "awarded": 2.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8"
@@ -2823,7 +2813,7 @@
         "Correct final answer 24"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2831,7 +2821,7 @@
       "learner_id": "L07",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -2839,7 +2829,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2847,7 +2837,7 @@
       "learner_id": "L08",
       "awarded": 0.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.9,
       "criteria_met": [],
       "criteria_missed": [
         "Adds the ratio parts to get 7 shares",
@@ -2855,7 +2845,7 @@
         "Correct final answer 24"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2863,7 +2853,7 @@
       "learner_id": "L09",
       "awarded": 2.0,
       "max_marks": 3.0,
-      "confidence": 0.9,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8"
@@ -2872,7 +2862,7 @@
         "Correct final answer 24"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2880,7 +2870,7 @@
       "learner_id": "L10",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -2888,7 +2878,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2896,7 +2886,7 @@
       "learner_id": "L11",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -2904,7 +2894,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -2912,7 +2902,7 @@
       "learner_id": "L12",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -2920,7 +2910,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     }
   ],
@@ -3770,7 +3760,7 @@
       "learner_id": "L01",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.9,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -3778,7 +3768,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -3786,7 +3776,7 @@
       "learner_id": "L02",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.9,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -3794,7 +3784,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -3802,7 +3792,7 @@
       "learner_id": "L03",
       "awarded": 1.0,
       "max_marks": 3.0,
-      "confidence": 0.8,
+      "confidence": 0.88,
       "criteria_met": [
         "States that 0.9 is the larger number"
       ],
@@ -3811,7 +3801,7 @@
         "Working shows place value alignment rather than digit count"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -3819,7 +3809,7 @@
       "learner_id": "L04",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.9,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -3827,7 +3817,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -3835,7 +3825,7 @@
       "learner_id": "L05",
       "awarded": 1.0,
       "max_marks": 3.0,
-      "confidence": 0.9,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65"
       ],
@@ -3844,7 +3834,7 @@
         "Working shows place value alignment rather than digit count"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -3852,7 +3842,7 @@
       "learner_id": "L06",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.95,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -3860,7 +3850,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -3868,7 +3858,7 @@
       "learner_id": "L07",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.95,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -3876,7 +3866,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -3884,7 +3874,7 @@
       "learner_id": "L08",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.95,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -3892,7 +3882,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -3900,7 +3890,7 @@
       "learner_id": "L09",
       "awarded": 1.0,
       "max_marks": 3.0,
-      "confidence": 0.7,
+      "confidence": 0.88,
       "criteria_met": [
         "States that 0.9 is the larger number"
       ],
@@ -3909,7 +3899,7 @@
         "Working shows place value alignment rather than digit count"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -3917,7 +3907,7 @@
       "learner_id": "L10",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.95,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -3925,7 +3915,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -3933,7 +3923,7 @@
       "learner_id": "L11",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.9,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -3941,7 +3931,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -3949,7 +3939,7 @@
       "learner_id": "L12",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.95,
+      "confidence": 0.88,
       "criteria_met": [
         "Correct sum 1.65",
         "States that 0.9 is the larger number",
@@ -3957,7 +3947,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -3965,7 +3955,7 @@
       "learner_id": "L01",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Identifies a common denominator",
         "Converts both fractions correctly",
@@ -3973,7 +3963,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -3981,7 +3971,7 @@
       "learner_id": "L02",
       "awarded": 0.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.9,
       "criteria_met": [],
       "criteria_missed": [
         "Identifies a common denominator",
@@ -3989,24 +3979,23 @@
         "Correct final answer 7/12 with unit"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
       "question_id": "A3Q4",
       "learner_id": "L03",
-      "awarded": 2.0,
+      "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
+        "Identifies a common denominator",
         "Converts both fractions correctly",
         "Correct final answer 7/12 with unit"
       ],
-      "criteria_missed": [
-        "Identifies a common denominator"
-      ],
+      "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4014,7 +4003,7 @@
       "learner_id": "L04",
       "awarded": 0.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.9,
       "criteria_met": [],
       "criteria_missed": [
         "Identifies a common denominator",
@@ -4022,7 +4011,7 @@
         "Correct final answer 7/12 with unit"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4030,15 +4019,15 @@
       "learner_id": "L05",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
-        "1 mark(s): Identifies a common denominator",
-        "1 mark(s): Converts both fractions correctly",
-        "1 mark(s): Correct final answer 7/12 with unit"
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4046,15 +4035,15 @@
       "learner_id": "L06",
       "awarded": 0.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.9,
       "criteria_met": [],
       "criteria_missed": [
-        "1 mark(s): Identifies a common denominator",
-        "1 mark(s): Converts both fractions correctly",
-        "1 mark(s): Correct final answer 7/12 with unit"
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4062,32 +4051,31 @@
       "learner_id": "L07",
       "awarded": 0.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.9,
       "criteria_met": [],
       "criteria_missed": [
-        "1 mark(s): Identifies a common denominator",
-        "1 mark(s): Converts both fractions correctly",
-        "1 mark(s): Correct final answer 7/12 with unit"
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
       "question_id": "A3Q4",
       "learner_id": "L08",
-      "awarded": 2.0,
+      "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
-        "1 mark(s): Identifies a common denominator",
-        "1 mark(s): Correct final answer 7/12 with unit"
+        "Identifies a common denominator",
+        "Converts both fractions correctly",
+        "Correct final answer 7/12 with unit"
       ],
-      "criteria_missed": [
-        "1 mark(s): Converts both fractions correctly"
-      ],
+      "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4103,7 +4091,7 @@
         "Correct final answer 7/12 with unit"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4111,7 +4099,7 @@
       "learner_id": "L10",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 0.95,
+      "confidence": 0.88,
       "criteria_met": [
         "Identifies a common denominator",
         "Converts both fractions correctly",
@@ -4119,23 +4107,24 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
       "question_id": "A3Q4",
       "learner_id": "L11",
-      "awarded": 3.0,
+      "awarded": 2.0,
       "max_marks": 3.0,
-      "confidence": 0.85,
+      "confidence": 0.72,
       "criteria_met": [
         "Identifies a common denominator",
-        "Converts both fractions correctly",
         "Correct final answer 7/12 with unit"
       ],
-      "criteria_missed": [],
+      "criteria_missed": [
+        "Converts both fractions correctly"
+      ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4143,7 +4132,7 @@
       "learner_id": "L12",
       "awarded": 1.0,
       "max_marks": 3.0,
-      "confidence": 0.85,
+      "confidence": 0.88,
       "criteria_met": [
         "Identifies a common denominator"
       ],
@@ -4152,7 +4141,7 @@
         "Correct final answer 7/12 with unit"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4160,7 +4149,7 @@
       "learner_id": "L01",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -4168,7 +4157,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4176,7 +4165,7 @@
       "learner_id": "L02",
       "awarded": 0.0,
       "max_marks": 3.0,
-      "confidence": 0.8,
+      "confidence": 0.9,
       "criteria_met": [],
       "criteria_missed": [
         "Adds the ratio parts to get 7 shares",
@@ -4184,7 +4173,7 @@
         "Correct final answer 24"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4192,7 +4181,7 @@
       "learner_id": "L03",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -4200,7 +4189,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4208,7 +4197,7 @@
       "learner_id": "L04",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -4216,7 +4205,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4224,7 +4213,7 @@
       "learner_id": "L05",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -4232,7 +4221,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4240,7 +4229,7 @@
       "learner_id": "L06",
       "awarded": 2.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8"
@@ -4249,7 +4238,7 @@
         "Correct final answer 24"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4257,7 +4246,7 @@
       "learner_id": "L07",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -4265,7 +4254,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4273,7 +4262,7 @@
       "learner_id": "L08",
       "awarded": 0.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.9,
       "criteria_met": [],
       "criteria_missed": [
         "Adds the ratio parts to get 7 shares",
@@ -4281,7 +4270,7 @@
         "Correct final answer 24"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4289,7 +4278,7 @@
       "learner_id": "L09",
       "awarded": 2.0,
       "max_marks": 3.0,
-      "confidence": 0.9,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8"
@@ -4298,7 +4287,7 @@
         "Correct final answer 24"
       ],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4306,7 +4295,7 @@
       "learner_id": "L10",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -4314,7 +4303,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4322,7 +4311,7 @@
       "learner_id": "L11",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -4330,7 +4319,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     },
     {
@@ -4338,7 +4327,7 @@
       "learner_id": "L12",
       "awarded": 3.0,
       "max_marks": 3.0,
-      "confidence": 1.0,
+      "confidence": 0.88,
       "criteria_met": [
         "Adds the ratio parts to get 7 shares",
         "Divides the total to find one share is 8",
@@ -4346,7 +4335,7 @@
       ],
       "criteria_missed": [],
       "provisional": true,
-      "source": "model",
+      "source": "fallback",
       "summative": false
     }
   ],
@@ -4605,30 +4594,16 @@
     },
     {
       "question_id": "A3Q2",
-      "learner_id": "L03",
-      "taxonomy_node": "M08",
-      "alternative_node": "M07",
-      "alternative_confidence": 0.1,
-      "error_class": "procedural",
-      "confidence": 0.9,
-      "evidence_span": "Lining up the points, 0.90 + 0.75 = 1.75",
-      "reasoning": "The learner's sum is incorrect because they misaligned the decimal points when adding, resulting in 1.75 instead of the correct 1.65. This points to a procedural error in aligning the decimal points for addition rather than a conceptual misunderstanding of decimal size or place value.",
-      "language_flag": false,
-      "source": "model",
-      "topic": "T3"
-    },
-    {
-      "question_id": "A3Q2",
       "learner_id": "L05",
       "taxonomy_node": "M07",
-      "alternative_node": "M24",
-      "alternative_confidence": 0.1,
+      "alternative_node": "M09",
+      "alternative_confidence": 0.04,
       "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "0.75 is larger because its number after point is bigger",
-      "reasoning": "The learner incorrectly judges 0.75 to be larger than 0.9 by comparing the digits after the decimal point as whole numbers rather than considering place value, matching the misconception M07.",
+      "confidence": 0.89,
+      "evidence_span": "0.75 is larger because its number after point is bigger.",
+      "reasoning": "The comparison ranks the number whose digits after the point read as a bigger whole number, so the decimal tail is being read as an integer.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T3"
     },
     {
@@ -4636,55 +4611,41 @@
       "learner_id": "L09",
       "taxonomy_node": "M09",
       "alternative_node": "M08",
-      "alternative_confidence": 0.1,
+      "alternative_confidence": 0.05,
       "error_class": "computational",
-      "confidence": 0.9,
-      "evidence_span": "0.9 + 0.75 = 16.5. Moving the point across gives that.",
-      "reasoning": "The learner's answer shows that they have shifted the decimal point incorrectly, resulting in an answer ten times larger than the correct sum (1.65). This points to a misconception about how to move the decimal point correctly in addition, consistent with M09. Misalignment of decimal points in addition (M08) is less likely here because the main error is the incorrect decimal shift leading to an answer ten times too large, rather than just misalignment in column addition.",
+      "confidence": 0.85,
+      "evidence_span": "0.9 + 0.75 = 16.5.",
+      "reasoning": "The sum is correct in its digits but a factor of ten out, so the point moved one place too far.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T3"
     },
     {
       "question_id": "A3Q4",
       "learner_id": "L02",
       "taxonomy_node": "M01",
-      "alternative_node": null,
-      "alternative_confidence": 0.0,
+      "alternative_node": "M02",
+      "alternative_confidence": 0.03,
       "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms.",
-      "reasoning": "The learner adds the numerators and denominators directly, showing a misconception that fractions can be added by adding numerators and denominators separately, which is incorrect.",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
       "language_flag": false,
-      "source": "model",
-      "topic": "T2"
-    },
-    {
-      "question_id": "A3Q4",
-      "learner_id": "L03",
-      "taxonomy_node": "M02",
-      "alternative_node": null,
-      "alternative_confidence": 0.0,
-      "error_class": "procedural",
-      "confidence": 0.9,
-      "evidence_span": "I rewrite both over 12: 4/12 and 3/12.",
-      "reasoning": "The learner writes the fractions over the common denominator 12 but does not show scaling the numerators from the original fractions 1/3 and 1/4 to 4/12 and 3/12 explicitly, suggesting they may have forgotten to scale the numerators properly.",
-      "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T2"
     },
     {
       "question_id": "A3Q4",
       "learner_id": "L04",
       "taxonomy_node": "M01",
-      "alternative_node": null,
-      "alternative_confidence": 0.0,
+      "alternative_node": "M02",
+      "alternative_confidence": 0.03,
       "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "I add the tops and add the bottoms",
-      "reasoning": "The learner adds the numerators and denominators directly (1/3 + 1/4 = 2/7), which shows a conceptual misunderstanding that fractions must have a common denominator before addition.",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T2"
     },
     {
@@ -4692,41 +4653,27 @@
       "learner_id": "L06",
       "taxonomy_node": "M01",
       "alternative_node": "M02",
-      "alternative_confidence": 0.1,
+      "alternative_confidence": 0.03,
       "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms.",
-      "reasoning": "The learner incorrectly adds numerator and denominator separately, treating 1/3 + 1/4 as (1+1)/(3+4) = 2/7, showing a conceptual misunderstanding of fraction addition requiring common denominators.",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T2"
     },
     {
       "question_id": "A3Q4",
       "learner_id": "L07",
       "taxonomy_node": "M01",
-      "alternative_node": null,
-      "alternative_confidence": 0.0,
+      "alternative_node": "M02",
+      "alternative_confidence": 0.03,
       "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms.",
-      "reasoning": "The learner adds the numerators and denominators directly, treating the sum as (1+1)/(3+4) = 2/7, which shows the misconception of adding fractions by adding numerators and denominators separately instead of finding a common denominator first.",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
       "language_flag": false,
-      "source": "model",
-      "topic": "T2"
-    },
-    {
-      "question_id": "A3Q4",
-      "learner_id": "L08",
-      "taxonomy_node": "M02",
-      "alternative_node": "M01",
-      "alternative_confidence": 0.1,
-      "error_class": "procedural",
-      "confidence": 0.9,
-      "evidence_span": "4/12 + 3/12 = 7/12 km",
-      "reasoning": "The learner correctly identifies the common denominator as 12, but the numerators are swapped compared to the original fractions (1/3 and 1/4 should scale to 4/12 and 3/12 respectively, but the learner has 4/12 and 3/12 reversed). This indicates they found the common denominator but forgot to scale numerators properly.",
-      "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T2"
     },
     {
@@ -4734,13 +4681,13 @@
       "learner_id": "L09",
       "taxonomy_node": "M01",
       "alternative_node": "M02",
-      "alternative_confidence": 0.1,
+      "alternative_confidence": 0.03,
       "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms.",
-      "reasoning": "The learner adds the numerators and denominators directly, which indicates the misconception that fractions can be added by adding both numerators and denominators instead of finding a common denominator first.",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T2"
     },
     {
@@ -4748,13 +4695,13 @@
       "learner_id": "L12",
       "taxonomy_node": "M02",
       "alternative_node": "M01",
-      "alternative_confidence": 0.1,
+      "alternative_confidence": 0.04,
       "error_class": "procedural",
-      "confidence": 0.9,
-      "evidence_span": "1/12 + 1/12",
-      "reasoning": "The learner correctly finds a common denominator (12) but fails to scale the numerators correctly, leaving both numerators as 1 instead of converting 1/3 and 1/4 to equivalent fractions with denominator 12.",
+      "confidence": 0.88,
+      "evidence_span": "So 1/12 + 1/12 = 2/12 km.",
+      "reasoning": "The common denominator is correct but the numerators were carried over unchanged, so the fractions were never rescaled.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T2"
     },
     {
@@ -4762,55 +4709,27 @@
       "learner_id": "L02",
       "taxonomy_node": "M12",
       "alternative_node": "M13",
-      "alternative_confidence": 0.2,
+      "alternative_confidence": 0.05,
       "error_class": "conceptual",
-      "confidence": 0.8,
-      "evidence_span": "The rest is 49, split evenly. So Lerato gets 27.",
-      "reasoning": "The learner subtracts the ratio parts from the total (56 - 7 = 49) and then splits the remainder evenly, which indicates they are treating the ratio parts as additive rather than multiplicative shares, consistent with the misconception M12.",
+      "confidence": 0.86,
+      "evidence_span": "So Lerato gets 27.",
+      "reasoning": "The ratio numbers were handed out as absolute amounts and the remainder split evenly, which treats the ratio as a difference.",
       "language_flag": false,
-      "source": "model",
-      "topic": "T5"
-    },
-    {
-      "question_id": "A3Q6",
-      "learner_id": "L06",
-      "taxonomy_node": "M12",
-      "alternative_node": null,
-      "alternative_confidence": 0.0,
-      "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "Lerato gets 3 x 8 = 25",
-      "reasoning": "The learner correctly calculates shares and per share value but then incorrectly computes Lerato's share as 25 instead of 24, indicating a likely arithmetic slip or misunderstanding of multiplication rather than a procedural error in dividing the total by the sum of ratio parts.",
-      "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T5"
     },
     {
       "question_id": "A3Q6",
       "learner_id": "L08",
       "taxonomy_node": "M13",
-      "alternative_node": "M22",
-      "alternative_confidence": 0.1,
+      "alternative_node": "M12",
+      "alternative_confidence": 0.04,
       "error_class": "procedural",
-      "confidence": 0.9,
-      "evidence_span": "56 / 2 = 28. Lerato gets 28.",
-      "reasoning": "The learner divided the total number of seedlings by the number of people rather than by the sum of the ratio parts, indicating a procedural misunderstanding of how to split quantities in a ratio.",
+      "confidence": 0.88,
+      "evidence_span": "There are 2 people sharing, so 56 / 2 = 28.",
+      "reasoning": "The total was split by the number of people named rather than by the number of equal shares the ratio describes.",
       "language_flag": false,
-      "source": "model",
-      "topic": "T5"
-    },
-    {
-      "question_id": "A3Q6",
-      "learner_id": "L09",
-      "taxonomy_node": "M12",
-      "alternative_node": null,
-      "alternative_confidence": 0.0,
-      "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "Lerato gets 3 x 8 = 25.",
-      "reasoning": "The learner correctly calculates the share per unit (8) and multiplies by 3 but then incorrectly states the final product as 25 instead of 24, indicating a simple computational slip rather than conceptual misunderstanding of ratios or procedure.",
-      "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T5"
     }
   ],
@@ -5070,29 +4989,29 @@
     {
       "question_id": "A3Q2",
       "learner_id": "L03",
-      "taxonomy_node": "M08",
-      "alternative_node": "M07",
-      "alternative_confidence": 0.1,
-      "error_class": "procedural",
-      "confidence": 0.9,
-      "evidence_span": "Lining up the points, 0.90 + 0.75 = 1.75",
-      "reasoning": "The learner's sum is incorrect because they misaligned the decimal points when adding, resulting in 1.75 instead of the correct 1.65. This points to a procedural error in aligning the decimal points for addition rather than a conceptual misunderstanding of decimal size or place value.",
+      "taxonomy_node": null,
+      "alternative_node": null,
+      "alternative_confidence": 0.0,
+      "error_class": "unclassified",
+      "confidence": 0.25,
+      "evidence_span": "",
+      "reasoning": "Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T3"
     },
     {
       "question_id": "A3Q2",
       "learner_id": "L05",
       "taxonomy_node": "M07",
-      "alternative_node": "M24",
-      "alternative_confidence": 0.1,
+      "alternative_node": "M09",
+      "alternative_confidence": 0.04,
       "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "0.75 is larger because its number after point is bigger",
-      "reasoning": "The learner incorrectly judges 0.75 to be larger than 0.9 by comparing the digits after the decimal point as whole numbers rather than considering place value, matching the misconception M07.",
+      "confidence": 0.89,
+      "evidence_span": "0.75 is larger because its number after point is bigger.",
+      "reasoning": "The comparison ranks the number whose digits after the point read as a bigger whole number, so the decimal tail is being read as an integer.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T3"
     },
     {
@@ -5100,55 +5019,41 @@
       "learner_id": "L09",
       "taxonomy_node": "M09",
       "alternative_node": "M08",
-      "alternative_confidence": 0.1,
+      "alternative_confidence": 0.05,
       "error_class": "computational",
-      "confidence": 0.9,
-      "evidence_span": "0.9 + 0.75 = 16.5. Moving the point across gives that.",
-      "reasoning": "The learner's answer shows that they have shifted the decimal point incorrectly, resulting in an answer ten times larger than the correct sum (1.65). This points to a misconception about how to move the decimal point correctly in addition, consistent with M09. Misalignment of decimal points in addition (M08) is less likely here because the main error is the incorrect decimal shift leading to an answer ten times too large, rather than just misalignment in column addition.",
+      "confidence": 0.85,
+      "evidence_span": "0.9 + 0.75 = 16.5.",
+      "reasoning": "The sum is correct in its digits but a factor of ten out, so the point moved one place too far.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T3"
     },
     {
       "question_id": "A3Q4",
       "learner_id": "L02",
       "taxonomy_node": "M01",
-      "alternative_node": null,
-      "alternative_confidence": 0.0,
+      "alternative_node": "M02",
+      "alternative_confidence": 0.03,
       "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms.",
-      "reasoning": "The learner adds the numerators and denominators directly, showing a misconception that fractions can be added by adding numerators and denominators separately, which is incorrect.",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
       "language_flag": false,
-      "source": "model",
-      "topic": "T2"
-    },
-    {
-      "question_id": "A3Q4",
-      "learner_id": "L03",
-      "taxonomy_node": "M02",
-      "alternative_node": null,
-      "alternative_confidence": 0.0,
-      "error_class": "procedural",
-      "confidence": 0.9,
-      "evidence_span": "I rewrite both over 12: 4/12 and 3/12.",
-      "reasoning": "The learner writes the fractions over the common denominator 12 but does not show scaling the numerators from the original fractions 1/3 and 1/4 to 4/12 and 3/12 explicitly, suggesting they may have forgotten to scale the numerators properly.",
-      "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T2"
     },
     {
       "question_id": "A3Q4",
       "learner_id": "L04",
       "taxonomy_node": "M01",
-      "alternative_node": null,
-      "alternative_confidence": 0.0,
+      "alternative_node": "M02",
+      "alternative_confidence": 0.03,
       "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "I add the tops and add the bottoms",
-      "reasoning": "The learner adds the numerators and denominators directly (1/3 + 1/4 = 2/7), which shows a conceptual misunderstanding that fractions must have a common denominator before addition.",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T2"
     },
     {
@@ -5156,41 +5061,27 @@
       "learner_id": "L06",
       "taxonomy_node": "M01",
       "alternative_node": "M02",
-      "alternative_confidence": 0.1,
+      "alternative_confidence": 0.03,
       "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms.",
-      "reasoning": "The learner incorrectly adds numerator and denominator separately, treating 1/3 + 1/4 as (1+1)/(3+4) = 2/7, showing a conceptual misunderstanding of fraction addition requiring common denominators.",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T2"
     },
     {
       "question_id": "A3Q4",
       "learner_id": "L07",
       "taxonomy_node": "M01",
-      "alternative_node": null,
-      "alternative_confidence": 0.0,
+      "alternative_node": "M02",
+      "alternative_confidence": 0.03,
       "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms.",
-      "reasoning": "The learner adds the numerators and denominators directly, treating the sum as (1+1)/(3+4) = 2/7, which shows the misconception of adding fractions by adding numerators and denominators separately instead of finding a common denominator first.",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
       "language_flag": false,
-      "source": "model",
-      "topic": "T2"
-    },
-    {
-      "question_id": "A3Q4",
-      "learner_id": "L08",
-      "taxonomy_node": "M02",
-      "alternative_node": "M01",
-      "alternative_confidence": 0.1,
-      "error_class": "procedural",
-      "confidence": 0.9,
-      "evidence_span": "4/12 + 3/12 = 7/12 km",
-      "reasoning": "The learner correctly identifies the common denominator as 12, but the numerators are swapped compared to the original fractions (1/3 and 1/4 should scale to 4/12 and 3/12 respectively, but the learner has 4/12 and 3/12 reversed). This indicates they found the common denominator but forgot to scale numerators properly.",
-      "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T2"
     },
     {
@@ -5198,13 +5089,27 @@
       "learner_id": "L09",
       "taxonomy_node": "M01",
       "alternative_node": "M02",
-      "alternative_confidence": 0.1,
+      "alternative_confidence": 0.03,
       "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms.",
-      "reasoning": "The learner adds the numerators and denominators directly, which indicates the misconception that fractions can be added by adding both numerators and denominators instead of finding a common denominator first.",
+      "confidence": 0.91,
+      "evidence_span": "1/3 + 1/4 = 2/7.",
+      "reasoning": "The answer shows the numerators added and the denominators added, which is the signature of adding without a common denominator.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
+      "topic": "T2"
+    },
+    {
+      "question_id": "A3Q4",
+      "learner_id": "L11",
+      "taxonomy_node": "M21",
+      "alternative_node": null,
+      "alternative_confidence": 0.0,
+      "error_class": "language",
+      "confidence": 0.86,
+      "evidence_span": "Answer is 7/12 km.",
+      "reasoning": "The final value is correct, so the mathematics holds. The marks lost are in how the working is written, which is a language issue, not a misconception.",
+      "language_flag": true,
+      "source": "fallback",
       "topic": "T2"
     },
     {
@@ -5212,13 +5117,13 @@
       "learner_id": "L12",
       "taxonomy_node": "M02",
       "alternative_node": "M01",
-      "alternative_confidence": 0.1,
+      "alternative_confidence": 0.04,
       "error_class": "procedural",
-      "confidence": 0.9,
-      "evidence_span": "1/12 + 1/12",
-      "reasoning": "The learner correctly finds a common denominator (12) but fails to scale the numerators correctly, leaving both numerators as 1 instead of converting 1/3 and 1/4 to equivalent fractions with denominator 12.",
+      "confidence": 0.88,
+      "evidence_span": "So 1/12 + 1/12 = 2/12 km.",
+      "reasoning": "The common denominator is correct but the numerators were carried over unchanged, so the fractions were never rescaled.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T2"
     },
     {
@@ -5226,55 +5131,55 @@
       "learner_id": "L02",
       "taxonomy_node": "M12",
       "alternative_node": "M13",
-      "alternative_confidence": 0.2,
+      "alternative_confidence": 0.05,
       "error_class": "conceptual",
-      "confidence": 0.8,
-      "evidence_span": "The rest is 49, split evenly. So Lerato gets 27.",
-      "reasoning": "The learner subtracts the ratio parts from the total (56 - 7 = 49) and then splits the remainder evenly, which indicates they are treating the ratio parts as additive rather than multiplicative shares, consistent with the misconception M12.",
+      "confidence": 0.86,
+      "evidence_span": "So Lerato gets 27.",
+      "reasoning": "The ratio numbers were handed out as absolute amounts and the remainder split evenly, which treats the ratio as a difference.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T5"
     },
     {
       "question_id": "A3Q6",
       "learner_id": "L06",
-      "taxonomy_node": "M12",
+      "taxonomy_node": null,
       "alternative_node": null,
       "alternative_confidence": 0.0,
-      "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "Lerato gets 3 x 8 = 25",
-      "reasoning": "The learner correctly calculates shares and per share value but then incorrectly computes Lerato's share as 25 instead of 24, indicating a likely arithmetic slip or misunderstanding of multiplication rather than a procedural error in dividing the total by the sum of ratio parts.",
+      "error_class": "unclassified",
+      "confidence": 0.25,
+      "evidence_span": "",
+      "reasoning": "Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T5"
     },
     {
       "question_id": "A3Q6",
       "learner_id": "L08",
       "taxonomy_node": "M13",
-      "alternative_node": "M22",
-      "alternative_confidence": 0.1,
+      "alternative_node": "M12",
+      "alternative_confidence": 0.04,
       "error_class": "procedural",
-      "confidence": 0.9,
-      "evidence_span": "56 / 2 = 28. Lerato gets 28.",
-      "reasoning": "The learner divided the total number of seedlings by the number of people rather than by the sum of the ratio parts, indicating a procedural misunderstanding of how to split quantities in a ratio.",
+      "confidence": 0.88,
+      "evidence_span": "There are 2 people sharing, so 56 / 2 = 28.",
+      "reasoning": "The total was split by the number of people named rather than by the number of equal shares the ratio describes.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T5"
     },
     {
       "question_id": "A3Q6",
       "learner_id": "L09",
-      "taxonomy_node": "M12",
+      "taxonomy_node": null,
       "alternative_node": null,
       "alternative_confidence": 0.0,
-      "error_class": "conceptual",
-      "confidence": 0.9,
-      "evidence_span": "Lerato gets 3 x 8 = 25.",
-      "reasoning": "The learner correctly calculates the share per unit (8) and multiplies by 3 but then incorrectly states the final product as 25 instead of 24, indicating a simple computational slip rather than conceptual misunderstanding of ratios or procedure.",
+      "error_class": "unclassified",
+      "confidence": 0.25,
+      "evidence_span": "",
+      "reasoning": "Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
       "language_flag": false,
-      "source": "model",
+      "source": "fallback",
       "topic": "T5"
     }
   ],
@@ -5315,13 +5220,11 @@
         "topic": "T2",
         "error_class": "procedural",
         "learner_ids": [
-          "L03",
-          "L08",
           "L12"
         ],
-        "count": 3,
+        "count": 1,
         "cohort_size": 12,
-        "share": 0.25,
+        "share": 0.083,
         "kind": "recurring",
         "recurring_learner_ids": [
           "L12"
@@ -5405,23 +5308,6 @@
         "note": null
       },
       {
-        "node_id": "M08",
-        "label": "Misaligns the decimal point when adding or subtracting",
-        "topic": "T3",
-        "error_class": "procedural",
-        "learner_ids": [
-          "L03"
-        ],
-        "count": 1,
-        "cohort_size": 12,
-        "share": 0.083,
-        "kind": "emerging",
-        "recurring_learner_ids": [],
-        "downweighted_learner_ids": [],
-        "teaching_problem": false,
-        "note": null
-      },
-      {
         "node_id": "M09",
         "label": "Shifts the decimal point by the wrong number of places",
         "topic": "T3",
@@ -5463,13 +5349,11 @@
         "topic": "T5",
         "error_class": "conceptual",
         "learner_ids": [
-          "L02",
-          "L06",
-          "L09"
+          "L02"
         ],
-        "count": 3,
+        "count": 1,
         "cohort_size": 12,
-        "share": 0.25,
+        "share": 0.083,
         "kind": "recurring",
         "recurring_learner_ids": [
           "L02"
@@ -5622,6 +5506,25 @@
     "minutes_used": 120,
     "scheduled": [
       {
+        "action_id": "GR-M01",
+        "type": "group_reteach",
+        "title": "Group re-teach: Adds numerators and denominators separately",
+        "node_id": "M01",
+        "learner_ids": [
+          "L02",
+          "L04",
+          "L06",
+          "L07",
+          "L09"
+        ],
+        "cost_minutes": 30,
+        "severity": 0.95,
+        "justification": "5 of 12 learners (42%) show Adds numerators and denominators separately. Above the 40% threshold this is one teaching gap, not 5 separate learner problems.",
+        "facilitator_script": "Cut two paper strips into different numbers of equal pieces and try to add the pieces. The pieces must be the same size before you can count them together.",
+        "scheduled": true,
+        "drop_reason": null
+      },
+      {
         "action_id": "RS-L09",
         "type": "individual_followup",
         "title": "Restart point for Ibrahim N., returning after a gap",
@@ -5637,106 +5540,49 @@
         "drop_reason": null
       },
       {
-        "action_id": "A01",
-        "type": "group_reteach",
-        "title": "Reteach adding fractions with unlike denominators (M01)",
-        "node_id": "M01",
-        "learner_ids": [
-          "L02",
-          "L04",
-          "L06",
-          "L07",
-          "L09"
-        ],
-        "cost_minutes": 30,
-        "severity": 0.75,
-        "justification": "42% of learners hold misconception M01 and it is conceptual and recurring for 4 learners.",
-        "facilitator_script": "Let's use paper strips to explore how to add fractions with unlike denominators correctly. Notice why the pieces must be the same size before adding.",
-        "scheduled": true,
-        "drop_reason": null
-      },
-      {
-        "action_id": "RS-L07",
+        "action_id": "IF-M07-L05",
         "type": "individual_followup",
-        "title": "Restart point for Amira K., returning after a gap",
-        "node_id": null,
+        "title": "Individual follow-up: L05 on Treats the digits after the decimal point as a whole number",
+        "node_id": "M07",
         "learner_ids": [
-          "L07"
+          "L05"
         ],
         "cost_minutes": 20,
-        "severity": 0.73,
-        "justification": "Amira K. has 75% of the expected assessments. Find where to restart rather than assuming the gap was covered.",
-        "facilitator_script": "Ask what they last remember covering, then work one question from that topic together before moving on.",
+        "severity": 0.78,
+        "justification": "Treats the digits after the decimal point as a whole number has now appeared for L05 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Write both numbers with the same number of decimal places first, then compare column by column.",
         "scheduled": true,
         "drop_reason": null
       },
       {
-        "action_id": "RS-L12",
+        "action_id": "IF-M10-L04",
         "type": "individual_followup",
-        "title": "Restart point for Daniel M., returning after a gap",
-        "node_id": null,
+        "title": "Individual follow-up: L04 on Reads the percentage sign as a decimal point",
+        "node_id": "M10",
         "learner_ids": [
-          "L12"
+          "L04"
         ],
         "cost_minutes": 20,
-        "severity": 0.73,
-        "justification": "Daniel M. has 75% of the expected assessments. Find where to restart rather than assuming the gap was covered.",
-        "facilitator_script": "Ask what they last remember covering, then work one question from that topic together before moving on.",
+        "severity": 0.78,
+        "justification": "Reads the percentage sign as a decimal point has now appeared for L04 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Per cent means out of one hundred. Always divide by one hundred first, so 45 percent is 45 out of 100.",
         "scheduled": true,
         "drop_reason": null
       },
       {
-        "action_id": "A02",
-        "type": "peer_pairing",
-        "title": "Pair learners to explain scaling numerators with common denominators (M02)",
-        "node_id": "M02",
-        "learner_ids": [
-          "L03",
-          "L08",
-          "L12"
-        ],
-        "cost_minutes": 15,
-        "severity": 0.5,
-        "justification": "25% of learners have recurring M02, a procedural misconception about scaling numerators.",
-        "facilitator_script": "Pair up: explain to your partner why you must multiply the numerator when you find a common denominator. Remember, don't give the answer, just explain the method.",
-        "scheduled": true,
-        "drop_reason": null
-      },
-      {
-        "action_id": "A04",
-        "type": "peer_pairing",
-        "title": "Pair learners to explain ratio as multiplicative relationship (M12)",
+        "action_id": "IF-M12-L02",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L02 on Treats a ratio as a difference instead of a multiplicative relationship",
         "node_id": "M12",
         "learner_ids": [
-          "L02",
-          "L06",
-          "L09"
+          "L02"
         ],
-        "cost_minutes": 15,
-        "severity": 0.5,
-        "justification": "25% of learners have recurring conceptual misconception M12 about ratios.",
-        "facilitator_script": "Explain to your partner why a ratio means multiplying ingredients, not just adding. Focus on the method, not the answer.",
+        "cost_minutes": 20,
+        "severity": 0.78,
+        "justification": "Treats a ratio as a difference instead of a multiplicative relationship has now appeared for L02 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "A recipe doubled needs double of every ingredient, not one extra spoon of each.",
         "scheduled": true,
         "drop_reason": null
-      }
-    ],
-    "dropped": [
-      {
-        "action_id": "A05",
-        "type": "group_reteach",
-        "title": "Reteach order of operations and brackets (M18, M19)",
-        "node_id": null,
-        "learner_ids": [
-          "L01",
-          "L06",
-          "L10"
-        ],
-        "cost_minutes": 30,
-        "severity": 0.34,
-        "justification": "Multiple learners have recurring conceptual and procedural misconceptions ignoring precedence (M18) and brackets (M19).",
-        "facilitator_script": "We'll review how to do multiplication before addition and why brackets must be respected in calculations.",
-        "scheduled": false,
-        "drop_reason": "budget exhausted"
       },
       {
         "action_id": "FB-L01",
@@ -5750,8 +5596,8 @@
         "severity": 0.32,
         "justification": "Every learner receives written feedback. The facilitator reads and approves the draft before it is sent.",
         "facilitator_script": "Read the draft, change anything that does not sound like you, then approve.",
-        "scheduled": false,
-        "drop_reason": "budget exhausted"
+        "scheduled": true,
+        "drop_reason": null
       },
       {
         "action_id": "FB-L02",
@@ -5765,6 +5611,252 @@
         "severity": 0.32,
         "justification": "Every learner receives written feedback. The facilitator reads and approves the draft before it is sent.",
         "facilitator_script": "Read the draft, change anything that does not sound like you, then approve.",
+        "scheduled": true,
+        "drop_reason": null
+      }
+    ],
+    "dropped": [
+      {
+        "action_id": "IF-M15-L03",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L03 on Treats a negative number as its absolute value when ordering",
+        "node_id": "M15",
+        "learner_ids": [
+          "L03"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.78,
+        "justification": "Treats a negative number as its absolute value when ordering has now appeared for L03 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Draw a number line and step left of zero. The further left you go, the smaller the number.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M18-L01",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L01 on Evaluates strictly left to right ignoring precedence",
+        "node_id": "M18",
+        "learner_ids": [
+          "L01"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.78,
+        "justification": "Evaluates strictly left to right ignoring precedence has now appeared for L01 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Multiplication and division are done before addition and subtraction, no matter where they appear in the line.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M18-L10",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L10 on Evaluates strictly left to right ignoring precedence",
+        "node_id": "M18",
+        "learner_ids": [
+          "L10"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.78,
+        "justification": "Evaluates strictly left to right ignoring precedence has now appeared for L10 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Multiplication and division are done before addition and subtraction, no matter where they appear in the line.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "PP-M02-L04-L12",
+        "type": "peer_pairing",
+        "title": "Peer pairing: L04 explains the method for Finds a common denominator but forgets to scale the numerators to L12",
+        "node_id": "M02",
+        "learner_ids": [
+          "L04",
+          "L12"
+        ],
+        "cost_minutes": 15,
+        "severity": 0.74,
+        "justification": "L04 showed M02 in an earlier assessment and no longer does. L12 still does. Fifteen minutes fixes it for L12 and consolidates it for L04.",
+        "facilitator_script": "Ask L04 to explain the method to L12, not to give the answer. Whatever you multiply the bottom by, you must multiply the top by the same amount, or you have changed the size of the fraction.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "PP-M05-L03-L05",
+        "type": "peer_pairing",
+        "title": "Peer pairing: L03 explains the method for Simplifies by subtracting instead of dividing to L05",
+        "node_id": "M05",
+        "learner_ids": [
+          "L03",
+          "L05"
+        ],
+        "cost_minutes": 15,
+        "severity": 0.74,
+        "justification": "L03 showed M05 in an earlier assessment and no longer does. L05 still does. Fifteen minutes fixes it for L05 and consolidates it for L03.",
+        "facilitator_script": "Ask L03 to explain the method to L05, not to give the answer. Simplifying means splitting into equal groups, so we divide top and bottom by the same number, never subtract.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "PP-M10-L03-L04",
+        "type": "peer_pairing",
+        "title": "Peer pairing: L03 explains the method for Reads the percentage sign as a decimal point to L04",
+        "node_id": "M10",
+        "learner_ids": [
+          "L03",
+          "L04"
+        ],
+        "cost_minutes": 15,
+        "severity": 0.74,
+        "justification": "L03 showed M10 in an earlier assessment and no longer does. L04 still does. Fifteen minutes fixes it for L04 and consolidates it for L03.",
+        "facilitator_script": "Ask L03 to explain the method to L04, not to give the answer. Per cent means out of one hundred. Always divide by one hundred first, so 45 percent is 45 out of 100.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "PP-M18-L03-L01",
+        "type": "peer_pairing",
+        "title": "Peer pairing: L03 explains the method for Evaluates strictly left to right ignoring precedence to L01",
+        "node_id": "M18",
+        "learner_ids": [
+          "L03",
+          "L01"
+        ],
+        "cost_minutes": 15,
+        "severity": 0.74,
+        "justification": "L03 showed M18 in an earlier assessment and no longer does. L01 still does. Fifteen minutes fixes it for L01 and consolidates it for L03.",
+        "facilitator_script": "Ask L03 to explain the method to L01, not to give the answer. Multiplication and division are done before addition and subtraction, no matter where they appear in the line.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "RS-L07",
+        "type": "individual_followup",
+        "title": "Restart point for Amira K., returning after a gap",
+        "node_id": null,
+        "learner_ids": [
+          "L07"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.73,
+        "justification": "Amira K. has 75% of the expected assessments. Find where to restart rather than assuming the gap was covered.",
+        "facilitator_script": "Ask what they last remember covering, then work one question from that topic together before moving on.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "RS-L12",
+        "type": "individual_followup",
+        "title": "Restart point for Daniel M., returning after a gap",
+        "node_id": null,
+        "learner_ids": [
+          "L12"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.73,
+        "justification": "Daniel M. has 75% of the expected assessments. Find where to restart rather than assuming the gap was covered.",
+        "facilitator_script": "Ask what they last remember covering, then work one question from that topic together before moving on.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M02-L12",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L12 on Finds a common denominator but forgets to scale the numerators",
+        "node_id": "M02",
+        "learner_ids": [
+          "L12"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.7,
+        "justification": "Finds a common denominator but forgets to scale the numerators has now appeared for L12 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Whatever you multiply the bottom by, you must multiply the top by the same amount, or you have changed the size of the fraction.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M05-L05",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L05 on Simplifies by subtracting instead of dividing",
+        "node_id": "M05",
+        "learner_ids": [
+          "L05"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.7,
+        "justification": "Simplifies by subtracting instead of dividing has now appeared for L05 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Simplifying means splitting into equal groups, so we divide top and bottom by the same number, never subtract.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M05-L10",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L10 on Simplifies by subtracting instead of dividing",
+        "node_id": "M05",
+        "learner_ids": [
+          "L10"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.7,
+        "justification": "Simplifies by subtracting instead of dividing has now appeared for L10 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Simplifying means splitting into equal groups, so we divide top and bottom by the same number, never subtract.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M13-L08",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L08 on Divides the total by the number of parts named rather than the total share count",
+        "node_id": "M13",
+        "learner_ids": [
+          "L08"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.7,
+        "justification": "Divides the total by the number of parts named rather than the total share count has now appeared for L08 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Add the ratio numbers together first to find how many equal shares exist, then divide.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M14-L07",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L07 on Arithmetic slip while scaling to a percentage",
+        "node_id": "M14",
+        "learner_ids": [
+          "L07"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.7,
+        "justification": "Arithmetic slip while scaling to a percentage has now appeared for L07 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "The method is right. Ask the learner to recompute the final multiplication only.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M16-L08",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L08 on Mishandles subtraction of a negative number",
+        "node_id": "M16",
+        "learner_ids": [
+          "L08"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.7,
+        "justification": "Mishandles subtraction of a negative number has now appeared for L08 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Taking away a debt leaves you better off. Two minus signs together become a plus.",
+        "scheduled": false,
+        "drop_reason": "budget exhausted"
+      },
+      {
+        "action_id": "IF-M19-L06",
+        "type": "individual_followup",
+        "title": "Individual follow-up: L06 on Ignores brackets",
+        "node_id": "M19",
+        "learner_ids": [
+          "L06"
+        ],
+        "cost_minutes": 20,
+        "severity": 0.7,
+        "justification": "Ignores brackets has now appeared for L06 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+        "facilitator_script": "Whatever is inside the brackets is one single value. Work it out and write it down before anything else.",
         "scheduled": false,
         "drop_reason": "budget exhausted"
       },
@@ -5902,67 +5994,6 @@
         "facilitator_script": "Read the draft, change anything that does not sound like you, then approve.",
         "scheduled": false,
         "drop_reason": "budget exhausted"
-      },
-      {
-        "action_id": "A08",
-        "type": "peer_pairing",
-        "title": "Pair learners to explain simplifying fractions correctly (M05)",
-        "node_id": "M05",
-        "learner_ids": [
-          "L05",
-          "L10"
-        ],
-        "cost_minutes": 15,
-        "severity": 0.17,
-        "justification": "Two learners have recurring procedural misconception M05 about simplifying fractions by dividing, not subtracting.",
-        "facilitator_script": "Explain why simplifying means dividing top and bottom by the same number, not subtracting. Focus on the method.",
-        "scheduled": false,
-        "drop_reason": "budget exhausted"
-      },
-      {
-        "action_id": "A06",
-        "type": "peer_pairing",
-        "title": "Pair learners to explain decimal place shifting (M09)",
-        "node_id": "M09",
-        "learner_ids": [
-          "L09"
-        ],
-        "cost_minutes": 15,
-        "severity": 0.08,
-        "justification": "Learner L09 has an emerging computational slip M09 on decimal place shifting.",
-        "facilitator_script": "Explain how to count zeros to move the decimal point correctly. Focus on the method, not giving the answer.",
-        "scheduled": false,
-        "drop_reason": "budget exhausted"
-      },
-      {
-        "action_id": "A10",
-        "type": "peer_pairing",
-        "title": "Pair learners to explain subtraction of negatives (M16)",
-        "node_id": "M16",
-        "learner_ids": [
-          "L08"
-        ],
-        "cost_minutes": 15,
-        "severity": 0.08,
-        "justification": "Learner L08 has recurring procedural misconception M16 on subtracting negatives.",
-        "facilitator_script": "Explain why subtracting a negative is like adding. Focus on the method, not giving the answer.",
-        "scheduled": false,
-        "drop_reason": "budget exhausted"
-      },
-      {
-        "action_id": "A07",
-        "type": "individual_followup",
-        "title": "Individual follow-up for learner L04 on percentage sign confusion (M10)",
-        "node_id": "M10",
-        "learner_ids": [
-          "L04"
-        ],
-        "cost_minutes": 20,
-        "severity": 0.08,
-        "justification": "Learner L04 has recurring conceptual misconception M10 treating % as decimal point, needs restart support.",
-        "facilitator_script": "Let's work together on what per cent means and why it means dividing by 100.",
-        "scheduled": false,
-        "drop_reason": "budget exhausted"
       }
     ],
     "feedback": [
@@ -5972,7 +6003,7 @@
         "node_ids": [
           "M18"
         ],
-        "body": "Thabo, in your calculation, you worked from left to right without following the rule that multiplication and division come before addition and subtraction. This means the order in which operations are done was not quite right. To improve, try to do all the multiplication and division first, then add or subtract the results. This will help you get the correct answer next time.",
+        "body": "Thabo M., there is one idea here worth going back over. In your answer you wrote \"20\". Next step: Multiplication and division are done before addition and subtraction, no matter where they appear in the line. Your marks are not final until your teacher has checked them.",
         "approved": false
       },
       {
@@ -5983,18 +6014,16 @@
           "M01",
           "M12"
         ],
-        "body": "Nomsa, when adding fractions you added the top numbers and bottom numbers separately, which does not give the correct answer. Try cutting two paper strips into different numbers of equal pieces and see how you can only add the pieces if they are the same size. Also, remember that a ratio shows a multiplication relationship, not just a difference. For example, if a recipe doubles, every ingredient doubles as well, not just a small amount added.",
+        "body": "Nomsa D., there is one idea here worth going back over. In your answer you wrote \"2/7\". Next step: Cut two paper strips into different numbers of equal pieces and try to add the pieces. The pieces must be the same size before you can count them together. The same thing shows up in 2 other answers. Your marks are not final until your teacher has checked them.",
         "approved": false
       },
       {
         "learner_id": "L03",
         "learner_name": "Ravi P.",
         "node_ids": [
-          "M15",
-          "M08",
-          "M02"
+          "M15"
         ],
-        "body": "Ravi, when ordering negative numbers, it's important to remember that numbers further to the left on the number line are smaller. Try drawing a number line and placing the numbers to see their order clearly. Also, when adding decimals, make sure to line up the decimal points vertically and fill any empty places with zeros to keep the numbers aligned. Finally, when finding a common denominator for fractions, remember to multiply both the numerator and denominator by the same number to keep the fraction's value the same. Practicing these steps should help you improve your accuracy.",
+        "body": "Ravi P., there is one idea here worth going back over. In your answer you wrote \"-8\". Next step: Draw a number line and step left of zero. The further left you go, the smaller the number. Your marks are not final until your teacher has checked them.",
         "approved": false
       },
       {
@@ -6005,7 +6034,7 @@
           "M01",
           "M01"
         ],
-        "body": "Fatima, it seems you are reading the percentage sign as if it were a decimal point. Remember, percent means out of one hundred, so you should divide by 100 first. Also, when adding fractions, you cannot simply add the top numbers and the bottom numbers separately. Try cutting two paper strips into equal pieces to see how the pieces need to be the same size before you can add them together. This hands-on activity will help you understand how to add fractions correctly.",
+        "body": "Fatima S., there is one idea here worth going back over. In your answer you wrote \"0.6%\". Next step: Per cent means out of one hundred. Always divide by one hundred first, so 45 percent is 45 out of 100. The same thing shows up in 2 other answers. Your marks are not final until your teacher has checked them.",
         "approved": false
       },
       {
@@ -6015,7 +6044,7 @@
           "M05",
           "M07"
         ],
-        "body": "Chen, I noticed that when simplifying fractions, you subtracted the numbers instead of dividing them. Simplifying means dividing the top and bottom by the same number to make the fraction smaller. Also, when comparing decimals, it's important to write both numbers with the same number of decimal places before comparing each digit. Your next step is to practice dividing both parts of a fraction to simplify and aligning decimal places when comparing decimals.",
+        "body": "Chen W., there is one idea here worth going back over. In your answer you wrote \"4/6\". Next step: Simplifying means splitting into equal groups, so we divide top and bottom by the same number, never subtract. The same thing shows up in 1 other answer. Your marks are not final until your teacher has checked them.",
         "approved": false
       },
       {
@@ -6024,10 +6053,9 @@
         "node_ids": [
           "M19",
           "M03",
-          "M01",
-          "M12"
+          "M01"
         ],
-        "body": "Kwame, you have some good ideas in your work, but there are a few things to look at more carefully. For example, when you see brackets, the values inside should be worked out first and treated as one number; try writing down the result inside the brackets before doing anything else. Also, when adding fractions, you cannot just add the top numbers and the bottom numbers separately; try using paper strips cut into equal pieces to visualize how to add fractions properly. Focus on these steps and redo your last calculation to check for small addition errors.",
+        "body": "Kwame A., there is one idea here worth going back over. In your answer you wrote \"10\". Next step: Whatever is inside the brackets is one single value. Work it out and write it down before anything else. The same thing shows up in 2 other answers. Your marks are not final until your teacher has checked them.",
         "approved": false
       },
       {
@@ -6038,7 +6066,7 @@
           "M01",
           "M01"
         ],
-        "body": "Amira, I see that when you scaled to a percentage, the final multiplication gave a slightly incorrect result. Your method was correct, so please try multiplying that last step again carefully. Also, when adding fractions, you added the top numbers and the bottom numbers separately, which isn't the right way to do it. To help understand this better, you can cut two paper strips into different numbers of equal pieces and try adding them together, making sure the pieces are the same size before counting them.",
+        "body": "Amira K., there is one idea here worth going back over. In your answer you wrote \"35%\". Next step: The method is right. Ask the learner to recompute the final multiplication only. The same thing shows up in 2 other answers. Your marks are not final until your teacher has checked them.",
         "approved": false
       },
       {
@@ -6047,10 +6075,9 @@
         "node_ids": [
           "M20",
           "M16",
-          "M02",
           "M13"
         ],
-        "body": "Grace, when you rewrite expressions, it\u2019s important to keep the brackets until you have fully worked out the values inside them. Also, when subtracting a negative number, remember two minus signs together change into a plus. You found a common denominator correctly, but you need to multiply the numerator by the same amount as the denominator to keep the fraction\u2019s size the same. Finally, when dividing according to a ratio, add all parts of the ratio first to find the total number of shares before dividing the total quantity.",
+        "body": "Grace O., there is one idea here worth going back over. In your answer you wrote \"9\". Next step: Understanding is there. Show that the brackets must be carried down to every line until the value inside is worked out. The same thing shows up in 2 other answers. Your marks are not final until your teacher has checked them.",
         "approved": false
       },
       {
@@ -6060,10 +6087,9 @@
           "M06",
           "M01",
           "M09",
-          "M01",
-          "M12"
+          "M01"
         ],
-        "body": "Ibrahim, I noticed that you wrote a fraction instead of a mixed number where it was asked, and you also added numerators and denominators separately, which is not how fractions add up. When multiplying decimals, it looks like the decimal point was moved too far. Also, in ratio problems, remember that ratios show multiplication, not subtraction. For your next step, try cutting paper strips into equal pieces to practice adding fractions properly and work on converting improper fractions into mixed numbers by grouping the whole parts correctly.",
+        "body": "Ibrahim N., there is one idea here worth going back over. In your answer you wrote \"6/8\". Next step: The value is correct. Show how to trade full groups out of the top number to write it as a whole number and a leftover. The same thing shows up in 3 other answers. Your marks are not final until your teacher has checked them.",
         "approved": false
       },
       {
@@ -6073,7 +6099,7 @@
           "M18",
           "M05"
         ],
-        "body": "Sofia, I noticed that you worked through the problem strictly from left to right and did not follow the rule that multiplication and division come before addition and subtraction. Also, when simplifying fractions, you subtracted numbers instead of dividing both the numerator and denominator by the same number. To improve, please practice the order of operations by remembering that multiplication and division are done first, and when simplifying fractions, divide both top and bottom by their common factors instead of subtracting.",
+        "body": "Sofia R., there is one idea here worth going back over. In your answer you wrote \"20\". Next step: Multiplication and division are done before addition and subtraction, no matter where they appear in the line. The same thing shows up in 1 other answer. Your marks are not final until your teacher has checked them.",
         "approved": false
       },
       {
@@ -6084,20 +6110,119 @@
           "M02",
           "M02"
         ],
-        "body": "Daniel, you correctly found a common denominator, but you missed scaling the numerators to match the new denominator. Also, when rewriting expressions, it's important to carry brackets through each step until you've fully simplified inside them. This helps keep the expression clear and correct. Try practicing rewriting each step with brackets intact and remember to multiply both numerator and denominator when finding common denominators.",
+        "body": "Daniel M., there is one idea here worth going back over. In your answer you wrote \"9\". Next step: Understanding is there. Show that the brackets must be carried down to every line until the value inside is worked out. The same thing shows up in 2 other answers. Your marks are not final until your teacher has checked them.",
         "approved": false
       }
     ],
     "goal": "Maximise misconceptions resolved in the next week within the facilitator time available.",
-    "generated_at": "2026-09-18T15:48:02+00:00"
+    "generated_at": "2026-09-18T16:58:44+00:00"
   },
-  "escalations": [],
+  "escalations": [
+    {
+      "escalation_id": "E-DIAG-L03-A3Q2",
+      "reason_code": "AMBIGUOUS_DIAGNOSIS",
+      "raised_by": "diagnostician",
+      "learner_id": "L03",
+      "question_id": "A3Q2",
+      "subject": "L03 A3Q2",
+      "reasoning": "Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
+      "candidate_a": null,
+      "candidate_b": null,
+      "would_have_decided": "Record no node at confidence 0.25.",
+      "resolved": false,
+      "resolution": null
+    },
+    {
+      "escalation_id": "E-LANG-L11-A3Q4",
+      "reason_code": "LANGUAGE_BARRIER",
+      "raised_by": "diagnostician",
+      "learner_id": "L11",
+      "question_id": "A3Q4",
+      "subject": "L11 A3Q4",
+      "reasoning": "The final value is correct, so the mathematics holds. The marks lost are in how the working is written, which is a language issue, not a misconception.",
+      "candidate_a": "M21",
+      "candidate_b": null,
+      "would_have_decided": "Record no conceptual misconception. Route to language support rather than re-teaching the mathematics.",
+      "resolved": false,
+      "resolution": null
+    },
+    {
+      "escalation_id": "E-DIAG-L06-A3Q6",
+      "reason_code": "AMBIGUOUS_DIAGNOSIS",
+      "raised_by": "diagnostician",
+      "learner_id": "L06",
+      "question_id": "A3Q6",
+      "subject": "L06 A3Q6",
+      "reasoning": "Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
+      "candidate_a": null,
+      "candidate_b": null,
+      "would_have_decided": "Record no node at confidence 0.25.",
+      "resolved": false,
+      "resolution": null
+    },
+    {
+      "escalation_id": "E-DIAG-L09-A3Q6",
+      "reason_code": "AMBIGUOUS_DIAGNOSIS",
+      "raised_by": "diagnostician",
+      "learner_id": "L09",
+      "question_id": "A3Q6",
+      "subject": "L09 A3Q6",
+      "reasoning": "Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
+      "candidate_a": null,
+      "candidate_b": null,
+      "would_have_decided": "Record no node at confidence 0.25.",
+      "resolved": false,
+      "resolution": null
+    },
+    {
+      "escalation_id": "E-BUD-IF-M15-L03",
+      "reason_code": "BUDGET_OVERFLOW",
+      "raised_by": "planner",
+      "learner_id": "L03",
+      "question_id": null,
+      "subject": "Individual follow-up: L03 on Treats a negative number as its absolute value when ordering",
+      "reasoning": "Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Treats a negative number as its absolute value when ordering has now appeared for L03 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+      "candidate_a": "Schedule it and drop something else",
+      "candidate_b": "Leave it unscheduled until next week",
+      "would_have_decided": "Leave Individual follow-up: L03 on Treats a negative number as its absolute value when ordering unscheduled. The facilitator should decide whether to extend the budget or displace another action.",
+      "resolved": false,
+      "resolution": null
+    },
+    {
+      "escalation_id": "E-BUD-IF-M18-L01",
+      "reason_code": "BUDGET_OVERFLOW",
+      "raised_by": "planner",
+      "learner_id": "L01",
+      "question_id": null,
+      "subject": "Individual follow-up: L01 on Evaluates strictly left to right ignoring precedence",
+      "reasoning": "Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Evaluates strictly left to right ignoring precedence has now appeared for L01 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+      "candidate_a": "Schedule it and drop something else",
+      "candidate_b": "Leave it unscheduled until next week",
+      "would_have_decided": "Leave Individual follow-up: L01 on Evaluates strictly left to right ignoring precedence unscheduled. The facilitator should decide whether to extend the budget or displace another action.",
+      "resolved": false,
+      "resolution": null
+    },
+    {
+      "escalation_id": "E-BUD-IF-M18-L10",
+      "reason_code": "BUDGET_OVERFLOW",
+      "raised_by": "planner",
+      "learner_id": "L10",
+      "question_id": null,
+      "subject": "Individual follow-up: L10 on Evaluates strictly left to right ignoring precedence",
+      "reasoning": "Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Evaluates strictly left to right ignoring precedence has now appeared for L10 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+      "candidate_a": "Schedule it and drop something else",
+      "candidate_b": "Leave it unscheduled until next week",
+      "would_have_decided": "Leave Individual follow-up: L10 on Evaluates strictly left to right ignoring precedence unscheduled. The facilitator should decide whether to extend the budget or displace another action.",
+      "resolved": false,
+      "resolution": null
+    }
+  ],
   "trace": [
     {
       "agent": "intake",
       "action": "start",
       "detail": "Loading submissions for A3 from the LMS connector",
-      "timestamp": "2026-09-18T15:47:41.482+00:00",
+      "timestamp": "2026-09-18T16:58:44.487+00:00",
       "duration_ms": 0,
       "level": "info"
     },
@@ -6105,7 +6230,7 @@
       "agent": "intake",
       "action": "history",
       "detail": "12 learners on roll. Returners: L07, L09, L12. Sparse history (<50 percent of expected assessments): none",
-      "timestamp": "2026-09-18T15:47:41.484+00:00",
+      "timestamp": "2026-09-18T16:58:44.488+00:00",
       "duration_ms": 0,
       "level": "info"
     },
@@ -6113,95 +6238,23 @@
       "agent": "intake",
       "action": "end",
       "detail": "96 responses from 12 learners ready to mark",
-      "timestamp": "2026-09-18T15:47:41.484+00:00",
-      "duration_ms": 2,
+      "timestamp": "2026-09-18T16:58:44.488+00:00",
+      "duration_ms": 1,
       "level": "info"
     },
     {
       "agent": "marker",
       "action": "start",
-      "detail": "Marking 96 responses against the scheme (QuantumBlack Azure gateway, gpt-4.1-mini and gpt-4.1-mini)",
-      "timestamp": "2026-09-18T15:47:41.484+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "marker",
-      "action": "progress",
-      "detail": "Marked 4 of 36 written responses against the scheme.",
-      "timestamp": "2026-09-18T15:47:44.739+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "marker",
-      "action": "progress",
-      "detail": "Marked 8 of 36 written responses against the scheme.",
-      "timestamp": "2026-09-18T15:47:44.740+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "marker",
-      "action": "progress",
-      "detail": "Marked 12 of 36 written responses against the scheme.",
-      "timestamp": "2026-09-18T15:47:45.407+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "marker",
-      "action": "progress",
-      "detail": "Marked 16 of 36 written responses against the scheme.",
-      "timestamp": "2026-09-18T15:47:45.466+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "marker",
-      "action": "progress",
-      "detail": "Marked 20 of 36 written responses against the scheme.",
-      "timestamp": "2026-09-18T15:47:45.506+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "marker",
-      "action": "progress",
-      "detail": "Marked 24 of 36 written responses against the scheme.",
-      "timestamp": "2026-09-18T15:47:45.530+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "marker",
-      "action": "progress",
-      "detail": "Marked 28 of 36 written responses against the scheme.",
-      "timestamp": "2026-09-18T15:47:45.713+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "marker",
-      "action": "progress",
-      "detail": "Marked 32 of 36 written responses against the scheme.",
-      "timestamp": "2026-09-18T15:47:45.882+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "marker",
-      "action": "progress",
-      "detail": "Marked 36 of 36 written responses against the scheme.",
-      "timestamp": "2026-09-18T15:47:46.034+00:00",
+      "detail": "Marking 96 responses against the scheme (offline deterministic rules)",
+      "timestamp": "2026-09-18T16:58:44.488+00:00",
       "duration_ms": 0,
       "level": "info"
     },
     {
       "agent": "marker",
       "action": "marked",
-      "detail": "96 provisional marks. 60 deterministic, 36 from the model, 0 from the rule fallback. 9 model calls.",
-      "timestamp": "2026-09-18T15:47:46.035+00:00",
+      "detail": "96 provisional marks. 60 deterministic, 0 from the model, 36 from the rule fallback. 0 model calls.",
+      "timestamp": "2026-09-18T16:58:44.489+00:00",
       "duration_ms": 0,
       "level": "info"
     },
@@ -6209,159 +6262,71 @@
       "agent": "marker",
       "action": "end",
       "detail": "96 marks passed the reviewer gate, 0 escalated for human marking",
-      "timestamp": "2026-09-18T15:47:46.035+00:00",
-      "duration_ms": 4550,
+      "timestamp": "2026-09-18T16:58:44.489+00:00",
+      "duration_ms": 0,
       "level": "info"
     },
     {
       "agent": "diagnostician",
       "action": "start",
-      "detail": "33 of 96 responses lost marks and need a diagnosis (QuantumBlack Azure gateway, gpt-4.1-mini and gpt-4.1-mini)",
-      "timestamp": "2026-09-18T15:47:46.035+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 1 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:48.760+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 2 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:49.141+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 3 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:49.155+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 4 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:49.272+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 5 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:49.550+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 6 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:49.558+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 7 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:49.565+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 8 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:49.599+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 9 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:49.608+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 10 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:50.143+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 11 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:50.494+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 12 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:51.185+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 13 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:51.652+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 14 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:51.654+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "diagnostician",
-      "action": "progress",
-      "detail": "Named the misconception behind 15 of 15 written errors, each with a span quoted from the learner's own answer.",
-      "timestamp": "2026-09-18T15:47:51.655+00:00",
+      "detail": "32 of 96 responses lost marks and need a diagnosis (offline deterministic rules)",
+      "timestamp": "2026-09-18T16:58:44.489+00:00",
       "duration_ms": 0,
       "level": "info"
     },
     {
       "agent": "diagnostician",
       "action": "diagnosed",
-      "detail": "33 diagnoses. 18 from the distractor map with no model call, 15 model calls. 0 flagged as a language barrier rather than a misconception.",
-      "timestamp": "2026-09-18T15:47:51.656+00:00",
+      "detail": "32 diagnoses. 18 from the distractor map with no model call, 0 model calls. 1 flagged as a language barrier rather than a misconception.",
+      "timestamp": "2026-09-18T16:58:44.490+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
     {
+      "agent": "reviewer",
+      "action": "AMBIGUOUS_DIAGNOSIS",
+      "detail": "L03 A3Q2: Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
+      "timestamp": "2026-09-18T16:58:44.490+00:00",
+      "duration_ms": 0,
+      "level": "escalation"
+    },
+    {
+      "agent": "reviewer",
+      "action": "LANGUAGE_BARRIER",
+      "detail": "L11 A3Q4: The final value is correct, so the mathematics holds. The marks lost are in how the working is written, which is a language issue, not a misconception.",
+      "timestamp": "2026-09-18T16:58:44.490+00:00",
+      "duration_ms": 0,
+      "level": "escalation"
+    },
+    {
+      "agent": "reviewer",
+      "action": "AMBIGUOUS_DIAGNOSIS",
+      "detail": "L06 A3Q6: Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
+      "timestamp": "2026-09-18T16:58:44.490+00:00",
+      "duration_ms": 0,
+      "level": "escalation"
+    },
+    {
+      "agent": "reviewer",
+      "action": "AMBIGUOUS_DIAGNOSIS",
+      "detail": "L09 A3Q6: Confidence 0.25 is below the 0.65 floor. Marks were lost but the working does not match any misconception pattern for this topic. It may be a one-off slip rather than a misconception, which is a judgement for a person.",
+      "timestamp": "2026-09-18T16:58:44.490+00:00",
+      "duration_ms": 0,
+      "level": "escalation"
+    },
+    {
       "agent": "diagnostician",
       "action": "end",
-      "detail": "33 diagnoses passed the reviewer gate, 0 escalated to a human",
-      "timestamp": "2026-09-18T15:47:51.656+00:00",
-      "duration_ms": 5620,
+      "detail": "28 diagnoses passed the reviewer gate, 4 escalated to a human",
+      "timestamp": "2026-09-18T16:58:44.490+00:00",
+      "duration_ms": 0,
       "level": "decision"
     },
     {
       "agent": "cohort_analyst",
       "action": "start",
-      "detail": "Aggregating 33 surviving diagnoses across 12 learners",
-      "timestamp": "2026-09-18T15:47:51.657+00:00",
+      "detail": "Aggregating 28 surviving diagnoses across 12 learners",
+      "timestamp": "2026-09-18T16:58:44.490+00:00",
       "duration_ms": 0,
       "level": "info"
     },
@@ -6369,15 +6334,15 @@
       "agent": "cohort_analyst",
       "action": "teaching_problem",
       "detail": "M01 Adds numerators and denominators separately is held by 5 of 12 learners (42%), at or above the 40% threshold. This is a teaching problem, not 5 individual problems.",
-      "timestamp": "2026-09-18T15:47:51.657+00:00",
+      "timestamp": "2026-09-18T16:58:44.490+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
     {
       "agent": "cohort_analyst",
       "action": "end",
-      "detail": "17 nodes analysed. 1 shared, 11 recurring, 5 emerging, 0 topics with too little data to call",
-      "timestamp": "2026-09-18T15:47:51.657+00:00",
+      "detail": "16 nodes analysed. 1 shared, 11 recurring, 4 emerging, 0 topics with too little data to call",
+      "timestamp": "2026-09-18T16:58:44.490+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6385,7 +6350,7 @@
       "agent": "planner",
       "action": "start",
       "detail": "Goal: maximise misconceptions resolved next week. Hard constraint: 120 facilitator minutes.",
-      "timestamp": "2026-09-18T15:47:51.658+00:00",
+      "timestamp": "2026-09-18T16:58:44.490+00:00",
       "duration_ms": 0,
       "level": "info"
     },
@@ -6393,135 +6358,143 @@
       "agent": "planner",
       "action": "proposing",
       "detail": "Asking for candidate actions against the cohort patterns, and drafting learner feedback at the same time.",
-      "timestamp": "2026-09-18T15:47:51.658+00:00",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
       "level": "info"
-    },
-    {
-      "agent": "planner",
-      "action": "progress",
-      "detail": "Drafted feedback for 1 of 11 learners.",
-      "timestamp": "2026-09-18T15:47:54.296+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "planner",
-      "action": "progress",
-      "detail": "Drafted feedback for 2 of 11 learners.",
-      "timestamp": "2026-09-18T15:47:54.799+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "planner",
-      "action": "progress",
-      "detail": "Drafted feedback for 3 of 11 learners.",
-      "timestamp": "2026-09-18T15:47:54.799+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "planner",
-      "action": "progress",
-      "detail": "Drafted feedback for 4 of 11 learners.",
-      "timestamp": "2026-09-18T15:47:54.801+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "planner",
-      "action": "progress",
-      "detail": "Drafted feedback for 5 of 11 learners.",
-      "timestamp": "2026-09-18T15:47:54.878+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "planner",
-      "action": "progress",
-      "detail": "Drafted feedback for 6 of 11 learners.",
-      "timestamp": "2026-09-18T15:47:54.929+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "planner",
-      "action": "progress",
-      "detail": "Drafted feedback for 7 of 11 learners.",
-      "timestamp": "2026-09-18T15:47:54.985+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "planner",
-      "action": "progress",
-      "detail": "Drafted feedback for 8 of 11 learners.",
-      "timestamp": "2026-09-18T15:47:54.986+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "planner",
-      "action": "progress",
-      "detail": "Drafted feedback for 9 of 11 learners.",
-      "timestamp": "2026-09-18T15:47:54.999+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "planner",
-      "action": "progress",
-      "detail": "Drafted feedback for 10 of 11 learners.",
-      "timestamp": "2026-09-18T15:47:55.080+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "planner",
-      "action": "progress",
-      "detail": "Drafted feedback for 11 of 11 learners.",
-      "timestamp": "2026-09-18T15:47:55.081+00:00",
-      "duration_ms": 0,
-      "level": "info"
-    },
-    {
-      "agent": "planner",
-      "action": "guaranteed",
-      "detail": "3 restart points for learners returning after a gap were added to the model's proposal. A returner is never dropped from a plan.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
-      "duration_ms": 0,
-      "level": "decision"
     },
     {
       "agent": "planner",
       "action": "candidates",
-      "detail": "22 candidate actions proposed, 270 minutes of work against a 120 minute budget. The budget cannot hold all of it.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "detail": "32 candidate actions proposed, 465 minutes of work against a 120 minute budget. The budget cannot hold all of it.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
       "level": "info"
     },
     {
       "agent": "planner",
       "action": "dropped",
-      "detail": "Dropped Reteach order of operations and brackets (M18, M19) (severity 0.34, 30 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "detail": "Dropped Individual follow-up: L03 on Treats a negative number as its absolute value when ordering (severity 0.78, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
     {
       "agent": "planner",
       "action": "dropped",
-      "detail": "Dropped Review drafted feedback for Thabo M. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "detail": "Dropped Individual follow-up: L01 on Evaluates strictly left to right ignoring precedence (severity 0.78, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
     {
       "agent": "planner",
       "action": "dropped",
-      "detail": "Dropped Review drafted feedback for Nomsa D. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "detail": "Dropped Individual follow-up: L10 on Evaluates strictly left to right ignoring precedence (severity 0.78, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Peer pairing: L04 explains the method for Finds a common denominator but forgets to scale the numerators to L12 (severity 0.74, 15 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Peer pairing: L03 explains the method for Simplifies by subtracting instead of dividing to L05 (severity 0.74, 15 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Peer pairing: L03 explains the method for Reads the percentage sign as a decimal point to L04 (severity 0.74, 15 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Peer pairing: L03 explains the method for Evaluates strictly left to right ignoring precedence to L01 (severity 0.74, 15 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Restart point for Amira K., returning after a gap (severity 0.73, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Restart point for Daniel M., returning after a gap (severity 0.73, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L12 on Finds a common denominator but forgets to scale the numerators (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L05 on Simplifies by subtracting instead of dividing (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L10 on Simplifies by subtracting instead of dividing (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L08 on Divides the total by the number of parts named rather than the total share count (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L07 on Arithmetic slip while scaling to a percentage (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L08 on Mishandles subtraction of a negative number (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
+      "duration_ms": 0,
+      "level": "decision"
+    },
+    {
+      "agent": "planner",
+      "action": "dropped",
+      "detail": "Dropped Individual follow-up: L06 on Ignores brackets (severity 0.70, 20 min): budget exhausted at 120 of 120 minutes.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6529,7 +6502,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Ravi P. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6537,7 +6510,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Fatima S. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6545,7 +6518,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Chen W. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6553,7 +6526,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Kwame A. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6561,7 +6534,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Amira K. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6569,7 +6542,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Grace O. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6577,7 +6550,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Ibrahim N. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6585,7 +6558,7 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Sofia R. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
@@ -6593,48 +6566,40 @@
       "agent": "planner",
       "action": "dropped",
       "detail": "Dropped Review drafted feedback for Daniel M. (severity 0.32, 5 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
       "level": "decision"
     },
     {
-      "agent": "planner",
-      "action": "dropped",
-      "detail": "Dropped Pair learners to explain simplifying fractions correctly (M05) (severity 0.17, 15 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "agent": "reviewer",
+      "action": "BUDGET_OVERFLOW",
+      "detail": "Individual follow-up: L03 on Treats a negative number as its absolute value when ordering: Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Treats a negative number as its absolute value when ordering has now appeared for L03 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
-      "level": "decision"
+      "level": "escalation"
     },
     {
-      "agent": "planner",
-      "action": "dropped",
-      "detail": "Dropped Pair learners to explain decimal place shifting (M09) (severity 0.08, 15 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "agent": "reviewer",
+      "action": "BUDGET_OVERFLOW",
+      "detail": "Individual follow-up: L01 on Evaluates strictly left to right ignoring precedence: Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Evaluates strictly left to right ignoring precedence has now appeared for L01 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
-      "level": "decision"
+      "level": "escalation"
     },
     {
-      "agent": "planner",
-      "action": "dropped",
-      "detail": "Dropped Pair learners to explain subtraction of negatives (M16) (severity 0.08, 15 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
+      "agent": "reviewer",
+      "action": "BUDGET_OVERFLOW",
+      "detail": "Individual follow-up: L10 on Evaluates strictly left to right ignoring precedence: Severity 0.78 is at or above the 0.75 threshold but the action needed 20 minutes that the budget did not have. Evaluates strictly left to right ignoring precedence has now appeared for L10 in more than one assessment. Repeating an explanation to the whole group has not shifted it.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
       "duration_ms": 0,
-      "level": "decision"
-    },
-    {
-      "agent": "planner",
-      "action": "dropped",
-      "detail": "Dropped Individual follow-up for learner L04 on percentage sign confusion (M10) (severity 0.08, 20 min): budget exhausted at 120 of 120 minutes.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
-      "duration_ms": 0,
-      "level": "decision"
+      "level": "escalation"
     },
     {
       "agent": "planner",
       "action": "end",
-      "detail": "6 actions scheduled using 120 of 120 minutes. 16 dropped for want of time. 11 feedback notes drafted.",
-      "timestamp": "2026-09-18T15:48:02.161+00:00",
-      "duration_ms": 10503,
+      "detail": "7 actions scheduled using 120 of 120 minutes. 25 dropped for want of time. 11 feedback notes drafted.",
+      "timestamp": "2026-09-18T16:58:44.491+00:00",
+      "duration_ms": 0,
       "level": "decision"
     }
   ],

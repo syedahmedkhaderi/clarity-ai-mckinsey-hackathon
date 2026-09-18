@@ -38,7 +38,15 @@ export function HomePage() {
         blockedReason={selected ? s.runBlockedReason(selected) : null}
       />
 
-      {s.running && <RunProgress trace={s.trace} status={s.status} elapsedMs={s.elapsedMs} />}
+      {s.running && (
+        <RunProgress
+          trace={s.trace}
+          status={s.status}
+          elapsedMs={s.elapsedMs}
+          stalledMs={s.stalledMs}
+          onCancel={s.cancelRun}
+        />
+      )}
 
       {s.batch ? (
         <HomeSummary batch={s.batch} />

@@ -20,7 +20,8 @@ from pydantic import BaseModel, Field
 
 from backend import llm
 from backend.agents import reviewer
-from backend.agents.offline_rules import diagnose_mcq, diagnose_offline, is_demo
+from backend.agents.offline_rules import (diagnose_mcq, diagnose_offline, is_demo,
+                                          mathematics_is_correct)
 from backend.lms import mock_api
 from backend.models import Diagnosis, Mark
 from backend.prompts import diagnosis as diagnosis_prompt
@@ -61,10 +62,15 @@ def run(state: LoopState) -> LoopState:
               f"Named the misconception behind {done} of {total} written errors, "
               f"each with a span quoted from the learner's own answer.")
 
+    def timed_out(missing: int, total: int) -> None:
+        trace(state, AGENT, "timeout",
+              f"{missing} of {total} diagnosis calls did not return in time. Those errors "
+              f"were diagnosed by the deterministic rules instead.", level="warning")
+
     outputs = llm.call_many(
         diagnosis_prompt.SYSTEM,
         [_build_prompt(q, sub, mark) for q, sub, mark in written],
-        _DiagnosisOut, smart=True, on_progress=progress,
+        _DiagnosisOut, smart=True, on_progress=progress, on_timeout=timed_out,
     ) if llm.available() else [None] * len(written)
 
     model_calls = sum(1 for o in outputs if o is not None)
@@ -195,6 +201,24 @@ def _resolve(question: dict[str, Any], sub: Any, mark: Mark,
         return fallback, span_ok
 
     meta = next((n for n in nodes if n["id"] == out.taxonomy_node), {})
+    language = out.language_flag or meta.get("error_class") == "language"
+
+    # The language rule, enforced rather than requested. If the learner reached
+    # the value the scheme asks for, the mathematics held, so a conceptual,
+    # procedural or computational node cannot be the explanation no matter how
+    # confident the model is. Observed in practice: a learner whose answer was
+    # "Answer is 7/12 km" with broken word order was diagnosed as a procedural
+    # misconception at 0.9 confidence. That is the exact failure this product
+    # exists to prevent, so it is a check in code, not a line in a prompt.
+    if not language and mathematics_is_correct(question, sub.answer):
+        language = True
+        out.reasoning = (
+            "The final value is correct, so the mathematics held. What the marks "
+            "were lost on is how the working is written, which is a language "
+            "issue rather than a misconception. "
+            + (out.reasoning or "")
+        ).strip()
+
     return Diagnosis(
         question_id=question["question_id"], learner_id=sub.learner_id,
         taxonomy_node=out.taxonomy_node,
@@ -203,8 +227,7 @@ def _resolve(question: dict[str, Any], sub: Any, mark: Mark,
                                 if out.alternative_node in valid_ids else 0.0),
         error_class=meta.get("error_class", "unclassified"),
         confidence=out.confidence, evidence_span=span,
-        reasoning=out.reasoning, language_flag=out.language_flag or
-        meta.get("error_class") == "language",
+        reasoning=out.reasoning, language_flag=language,
         source="model", topic=question["topic"],
     ), True
 
