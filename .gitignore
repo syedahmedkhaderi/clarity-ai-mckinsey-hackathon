@@ -10,3 +10,7 @@ loop.db
 *.log
 .DS_Store
 .pytest_cache/
+
+# Gateway credentials. Never commit these.
+qb_gateway/
+secret

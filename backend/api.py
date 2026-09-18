@@ -59,7 +59,8 @@ class ResolveRequest(BaseModel):
 def health() -> dict[str, Any]:
     return {
         "status": "ok",
-        "mode": "model" if llm.available() else "offline deterministic rules",
+        "mode": llm.describe(),
+        "provider": config.PROVIDER,
         "model_fast": config.MODEL_FAST if llm.available() else None,
         "model_smart": config.MODEL_SMART if llm.available() else None,
         "graph": {"nodes": GRAPH_NODES, "edges": GRAPH_EDGES,

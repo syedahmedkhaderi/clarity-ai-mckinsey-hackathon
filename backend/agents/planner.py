@@ -15,6 +15,7 @@ thing worth showing.
 from __future__ import annotations
 
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from typing import Any
 
@@ -62,7 +63,13 @@ def run(state: LoopState) -> LoopState:
           f"Goal: maximise misconceptions resolved next week. "
           f"Hard constraint: {budget} facilitator minutes.")
 
-    candidates = _propose(state, patterns.nodes if patterns else [])
+    # Drafting a learner's feedback depends on the diagnoses, not on the plan, so
+    # it runs while the candidate actions are being proposed and fitted.
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        pending_drafts = pool.submit(_draft_feedback, state)
+        candidates = _propose(state, patterns.nodes if patterns else [])
+        drafts = pending_drafts.result()
+
     trace(state, AGENT, "candidates",
           f"{len(candidates)} candidate actions proposed, "
           f"{sum(c.cost_minutes for c in candidates)} minutes of work against a "
@@ -75,7 +82,6 @@ def run(state: LoopState) -> LoopState:
               f"{action.cost_minutes} min): budget exhausted at {used} of {budget} minutes.",
               level="decision")
 
-    drafts = _draft_feedback(state)
     plan = InterventionPlan(
         batch_id=state["batch_id"], budget_minutes=budget, minutes_used=used,
         scheduled=scheduled, dropped=dropped, feedback=drafts,
@@ -120,8 +126,32 @@ def _propose(state: LoopState, nodes: list[NodePattern]) -> list[PlannedAction]:
             title=a.title, node_id=a.node_id, learner_ids=a.learner_ids,
             cost_minutes=config.ACTION_COSTS[a.type], severity=a.severity,
             justification=a.justification, facilitator_script=a.facilitator_script))
-    reviews = [a for a in rule_actions if a.type == "feedback_review"]
-    return proposed + reviews if proposed else rule_actions
+    if not proposed:
+        return rule_actions
+    return _merge_guarantees(proposed, rule_actions, state)
+
+
+def _merge_guarantees(proposed: list[PlannedAction], rule_actions: list[PlannedAction],
+                      state: LoopState) -> list[PlannedAction]:
+    """Adds back the commitments the model is not allowed to drop.
+
+    The model proposes freely, but two things are promises the product makes
+    rather than suggestions it weighs: every learner with a diagnosis gets a
+    drafted feedback note reviewed, and every learner returning after a gap gets
+    a restart point. A plan that quietly omits a returner is exactly the failure
+    Meridian described, so the rule-generated versions are merged in and the
+    model's near-duplicates are dropped in their favour.
+    """
+    guarantees = [a for a in rule_actions
+                  if a.type == "feedback_review" or a.action_id.startswith("RS-")]
+    covered = {(a.type, tuple(sorted(a.learner_ids))) for a in guarantees}
+    kept = [a for a in proposed if (a.type, tuple(sorted(a.learner_ids))) not in covered]
+    restarts = [a for a in guarantees if a.action_id.startswith("RS-")]
+    if restarts:
+        trace(state, AGENT, "guaranteed",
+              f"{len(restarts)} restart points for learners returning after a gap were added to "
+              f"the model's proposal. A returner is never dropped from a plan.", level="decision")
+    return kept + guarantees
 
 
 def _rule_candidates(state: LoopState, nodes: list[NodePattern]) -> list[PlannedAction]:
@@ -242,22 +272,29 @@ def _draft_feedback(state: LoopState) -> list[DraftedFeedback]:
         if d.taxonomy_node:
             by_learner.setdefault(d.learner_id, []).append(d)
 
-    drafts: list[DraftedFeedback] = []
-    for learner_id, items in sorted(by_learner.items()):
+    ordered = sorted(by_learner.items())
+    names, payloads = [], []
+    for learner_id, items in ordered:
         ctx = contexts.get(learner_id)
-        name = ctx.learner_name if ctx else learner_id
-        payload = [{"label": _label(d.taxonomy_node), "error_class": d.error_class,
-                    "evidence_span": d.evidence_span, "remediation_hint": _hint(d.taxonomy_node)}
-                   for d in items]
-        body = None
-        if llm.available():
-            out = llm.call(feedback_prompt.SYSTEM, feedback_prompt.build(name, payload),
-                           _FeedbackOut, smart=True)
-            body = out.body if out else None
+        names.append(ctx.learner_name if ctx else learner_id)
+        payloads.append([{"label": _label(d.taxonomy_node), "error_class": d.error_class,
+                          "evidence_span": d.evidence_span,
+                          "remediation_hint": _hint(d.taxonomy_node)} for d in items])
+
+    # One learner's feedback does not depend on another's, so they are drafted
+    # together rather than one at a time.
+    outs = llm.call_many(
+        feedback_prompt.SYSTEM,
+        [feedback_prompt.build(n, p) for n, p in zip(names, payloads)],
+        _FeedbackOut, smart=True,
+    )
+
+    drafts: list[DraftedFeedback] = []
+    for (learner_id, items), name, payload, out in zip(ordered, names, payloads, outs):
         drafts.append(DraftedFeedback(
             learner_id=learner_id, learner_name=name,
             node_ids=[d.taxonomy_node for d in items if d.taxonomy_node],
-            body=body or _rule_feedback(name, payload)))
+            body=(out.body if out else None) or _rule_feedback(name, payload)))
     return drafts
 
 

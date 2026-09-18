@@ -25,10 +25,28 @@ Then open http://localhost:5173.
 data, seeds the learner history, rebuilds the frontend fixtures and runs the
 tests. It refuses to finish if the tests fail.
 
-**No API key is needed.** Without `OPENAI_API_KEY`, LOOP runs in offline mode: a
-deterministic rule engine that produces the same shapes as the model path, so the
-whole system is demoable with no key and no network. Add a key to `.env` to run
-the model path.
+### Which model it uses
+
+LOOP picks its provider automatically, and `/api/health` reports which one is
+live:
+
+| Credentials present | Provider | Models |
+|---|---|---|
+| `QB_CLIENT_ID` + `QB_CLIENT_SECRET` | QuantumBlack Azure AI gateway | `gpt-4o-mini` for marking, `gpt-5.4` for diagnosis, planning and feedback |
+| `OPENAI_API_KEY` | OpenAI directly | `gpt-4o-mini` and `gpt-4o` |
+| neither | Offline deterministic rules | none |
+
+A `qb_gateway/.env` sitting next to this project is read automatically, so
+gateway credentials never need copying into the repo. `qb_gateway/` is
+gitignored.
+
+**No API key is needed to run it.** Offline mode is a deterministic rule engine
+producing the same shapes as the model path, so the whole system is demoable
+with no key and no network. It is also the crash floor: any provider failure
+falls back to it rather than showing a stack trace.
+
+Set `LOOP_OFFLINE=1` to force the rules even when credentials are present. The
+test suite does this, so tests stay fast, free and repeatable.
 
 ## What it does
 
@@ -106,8 +124,22 @@ whether it flatters the system or not.
 
 `eval/results.md` states which mode produced the numbers. In offline mode the
 rules encode the same mathematics the generator used to inject the errors, so
-the recovery rate is a wiring check, not a measurement of model quality. A
-meaningful number requires an API key.
+the recovery rate is a wiring check, not a measurement of model quality.
+
+Measured on the QuantumBlack gateway with `gpt-5.4`, assessment A3:
+
+| Metric | Result |
+|---|---|
+| Misconception recovery | 92% (23 of 25) |
+| Recovery before the reviewer gate | 96% (24 of 25) |
+| **Language separation gap** | **+11.4%**, small |
+| Recovery on second-language learners, pre-gate | 100% (6 of 6) |
+| Evidence span validity | 100% (29 of 29) |
+| Returner handling | 100% (3 of 3) restart points proposed |
+
+The language gap is the number that matters: it is small, and every genuine
+misconception held by a second-language learner was still recovered. Grammatical
+noise is not being read as conceptual weakness.
 
 ## The independence rule
 
@@ -188,5 +220,5 @@ connector is the integration work. It is not a rewrite.
 ## Working on it
 
 `AGENTS.md` is the contributor guide, shared by every coding agent and symlinked
-to `CLAUDE.md` and `.cursorrules`. It lists ten invariants that each have a test
+to `CLAUDE.md` and `.cursorrules`. It lists eleven invariants that each have a test
 behind them. Read it before changing anything.

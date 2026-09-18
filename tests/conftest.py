@@ -20,6 +20,13 @@ if str(ROOT) not in sys.path:
 
 _TMP_DB_DIR = tempfile.mkdtemp(prefix="loop-tests-")
 os.environ.setdefault("LOOP_TEST_DB_DIR", _TMP_DB_DIR)
+# Tests exercise the graph, the gates and the invariants. They must not depend
+# on a paid gateway being reachable, and they must give the same answer twice,
+# so the model path is forced off here. eval/evaluate.py is where the model is
+# measured. This must run before backend.config is imported, since config reads
+# the environment at import time.
+os.environ["LOOP_OFFLINE"] = "1"
+
 os.environ["LOOP_DB_PATH"] = str(Path(_TMP_DB_DIR) / "loop-tests.db")
 
 import pytest  # noqa: E402

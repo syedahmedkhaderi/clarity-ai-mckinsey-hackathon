@@ -43,12 +43,12 @@ def run(state: LoopState) -> LoopState:
     started = time.perf_counter()
     lost = [m for m in state["marks"] if m.awarded < m.max_marks]
     trace(state, AGENT, "start",
-          f"{len(lost)} of {len(state['marks'])} responses lost marks and need a diagnosis")
+          f"{len(lost)} of {len(state['marks'])} responses lost marks and need a diagnosis "
+          f"({llm.describe()})")
 
     subs = {(s.learner_id, s.question_id): s for s in state["submissions"]}
     diagnoses: list[Diagnosis] = []
-    model_calls = 0
-    rejected_spans = 0
+    written: list[tuple[dict[str, Any], Any, Mark]] = []
 
     for mark in lost:
         sub = subs.get((mark.learner_id, mark.question_id))
@@ -60,8 +60,21 @@ def run(state: LoopState) -> LoopState:
             if d:
                 diagnoses.append(d)
             continue
-        d, used_model, span_ok = _diagnose_written(question, sub, mark)
-        model_calls += int(used_model)
+        written.append((question, sub, mark))
+
+    # Each written diagnosis is independent of the others, so they go out
+    # together. Serially at a few seconds a call this is the slowest node in the
+    # graph by an order of magnitude.
+    outputs = llm.call_many(
+        diagnosis_prompt.SYSTEM,
+        [_build_prompt(q, sub, mark) for q, sub, mark in written],
+        _DiagnosisOut, smart=True,
+    ) if llm.available() else [None] * len(written)
+
+    model_calls = sum(1 for o in outputs if o is not None)
+    rejected_spans = 0
+    for (question, sub, mark), out in zip(written, outputs):
+        d, span_ok = _resolve(question, sub, mark, out)
         rejected_spans += int(not span_ok)
         diagnoses.append(d)
 
@@ -87,19 +100,46 @@ def run(state: LoopState) -> LoopState:
     return state
 
 
-def _diagnose_written(question: dict[str, Any], sub: Any,
-                      mark: Mark) -> tuple[Diagnosis, bool, bool]:
-    nodes = [n for n in mock_api.taxonomy()["nodes"] if n["topic"] == question["topic"]]
-    valid_ids = {n["id"] for n in nodes}
+def _topic_nodes(question: dict[str, Any]) -> list[dict[str, Any]]:
+    return [n for n in mock_api.taxonomy()["nodes"] if n["topic"] == question["topic"]]
+
+
+def _build_prompt(question: dict[str, Any], sub: Any, mark: Mark) -> str:
     summary = (f"awarded {mark.awarded} of {mark.max_marks}, "
                f"criteria missed: {'; '.join(mark.criteria_missed) or 'none'}")
-    out = llm.call(diagnosis_prompt.SYSTEM,
-                   diagnosis_prompt.build(question, sub.answer, nodes, summary),
-                   _DiagnosisOut)
-    if out is None:
-        return diagnose_offline(question, sub, mark), False, True
+    return diagnosis_prompt.build(question, sub.answer, _topic_nodes(question), summary)
 
-    span_ok = bool(out.evidence_span) and out.evidence_span in sub.answer
+
+def normalise_span(span: str) -> str:
+    """Trims whitespace and one layer of wrapping quotes.
+
+    Models often hand back a quotation with the quote marks included. Those marks
+    are not part of the learner's answer, so the span would fail the verbatim
+    check on punctuation the model added rather than on anything it invented.
+    The text inside still has to match exactly.
+    """
+    span = span.strip()
+    for quote in ('"', "'", "\u201c", "\u2018"):
+        if span.startswith(quote):
+            span = span[1:].strip()
+            break
+    for quote in ('"', "'", "\u201d", "\u2019"):
+        if span.endswith(quote):
+            span = span[:-1].strip()
+            break
+    return span
+
+
+def _resolve(question: dict[str, Any], sub: Any, mark: Mark,
+             out: "_DiagnosisOut | None") -> tuple[Diagnosis, bool]:
+    """Turns one model response into a Diagnosis, or falls back to the rules."""
+    nodes = _topic_nodes(question)
+    valid_ids = {n["id"] for n in nodes}
+    if out is None:
+        return diagnose_offline(question, sub, mark), True
+
+    span = normalise_span(out.evidence_span)
+    span_ok = bool(span) and span in sub.answer
     node_ok = out.taxonomy_node in valid_ids if out.taxonomy_node else True
     if not span_ok or not node_ok:
         fallback = diagnose_offline(question, sub, mark)
@@ -110,7 +150,7 @@ def _diagnose_written(question: dict[str, Any], sub: Any,
             if not span_ok else
             f"The model proposed a node outside topic {question['topic']}, "
             f"so its diagnosis was rejected. " + fallback.reasoning)
-        return fallback, True, span_ok
+        return fallback, span_ok
 
     meta = next((n for n in nodes if n["id"] == out.taxonomy_node), {})
     return Diagnosis(
@@ -120,11 +160,11 @@ def _diagnose_written(question: dict[str, Any], sub: Any,
         alternative_confidence=(out.alternative_confidence
                                 if out.alternative_node in valid_ids else 0.0),
         error_class=meta.get("error_class", "unclassified"),
-        confidence=out.confidence, evidence_span=out.evidence_span,
+        confidence=out.confidence, evidence_span=span,
         reasoning=out.reasoning, language_flag=out.language_flag or
         meta.get("error_class") == "language",
         source="model", topic=question["topic"],
-    ), True, True
+    ), True
 
 
 def _ms(started: float) -> int:

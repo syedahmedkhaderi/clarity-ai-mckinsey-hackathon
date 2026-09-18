@@ -151,9 +151,28 @@ Marking a mark as final is not a decision the agent can make at all. Every
 if the span is not found, falling back to the rule engine at reduced confidence.
 `tests/test_evidence_spans.py` asserts the property holds across a full run.
 
-## Offline mode
+## Providers and offline mode
 
-With no `OPENAI_API_KEY`, `backend/config.py::OFFLINE` is true and every model
+`backend/config.py::PROVIDER` resolves once at import:
+
+| Credentials | Provider | Fast model | Smart model |
+|---|---|---|---|
+| `QB_CLIENT_ID` + `QB_CLIENT_SECRET` | `azure` | `gpt-4o-mini` | `gpt-5.4-2026-03-05` |
+| `OPENAI_API_KEY` | `openai` | `gpt-4o-mini` | `gpt-4o` |
+| neither, or `LOOP_OFFLINE=1` | `offline` | none | none |
+
+Marking uses the fast model: it checks a response against criteria that are
+already written down. Diagnosis, planning and feedback use the smart model,
+because those are the judgement calls.
+
+`backend/llm.py` is the only module that knows which provider is in use, and it
+exposes `call` for a single request and `call_many` for independent requests,
+which are fanned out across a thread pool. Marking a cohort, diagnosing every
+error and drafting every learner's feedback are all independent, so they run
+concurrently. Serially at a few seconds a call, a full run took 190 seconds; it
+now takes about 50.
+
+With no credentials, `backend/config.py::OFFLINE` is true and every model
 call returns `None`. Each agent falls back to `backend/agents/offline_rules.py`,
 a deterministic engine that reads the marking scheme and the taxonomy. The
 system runs end to end with no key and no network.

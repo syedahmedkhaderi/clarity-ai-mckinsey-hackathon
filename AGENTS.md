@@ -56,24 +56,32 @@ Breaking any of these is a defect, not a trade-off. Each has a test.
    `backend/agents/reviewer.py`. If you weaken either, `eval/results.md` will
    show a language separation gap and you have regressed the product.
 
-7. **The planner does not fit its own plan to the budget.** A model proposes and
+7. **The model may propose, but it may not drop a guarantee.** Every learner
+   with a diagnosis gets a drafted feedback note, and every learner returning
+   after a gap gets a restart point. `planner._merge_guarantees` adds these back
+   after the model proposes, because a plan that quietly omits a returner is the
+   exact failure Meridian described. Verified by the returner metric in
+   `eval/results.md`, which went to zero the first time the model path replaced
+   the rule candidates outright.
+
+8. **The planner does not fit its own plan to the budget.** A model proposes and
    scores; `planner._fit_budget` fills the budget in code and records every
    dropped item with its severity and reason. An agent that silently trims to fit
    hides the trade-off, and the trade-off is the thing worth showing.
 
-8. **The diagram matches the graph.** `architecture.md` contains a mermaid block
+9. **The diagram matches the graph.** `architecture.md` contains a mermaid block
    whose edges are asserted equal to `backend.graph.GRAPH_EDGES` by
    `tests/test_graph_matches_docs.py`. If you change the graph, update
    `GRAPH_EDGES` and the diagram in the same commit. A diagram that contradicts
    the code is a scored failure and it is the first thing a technical judge
    checks.
 
-9. **No model call can crash the graph.** `backend/llm.py::call` catches
+10. **No model call can crash the graph.** `backend/llm.py::call` catches
    everything and returns `None`. Every caller has a deterministic fallback that
    escalates rather than inventing an answer. The demo must never show a stack
    trace.
 
-10. **The override re-plan works.** Overriding a diagnosis re-enters the graph at
+11. **The override re-plan works.** Overriding a diagnosis re-enters the graph at
     `cohort_analyst`, not at `intake`. Marks below the override are not re-run.
     `tests/test_override_replan.py` guards this end to end.
 
@@ -87,6 +95,22 @@ Breaking any of these is a defect, not a trade-off. Each has a test.
 .venv/bin/python eval/evaluate.py
 cd frontend && npm run typecheck
 ```
+
+**Providers.** `backend/config.py::PROVIDER` resolves to `azure` when
+`QB_CLIENT_ID` and `QB_CLIENT_SECRET` are present (the QuantumBlack gateway,
+read automatically from `qb_gateway/.env`), `openai` for a plain
+`OPENAI_API_KEY`, and `offline` otherwise. `backend/llm.py` is the only module
+that branches on it.
+
+**Tests always run offline.** `tests/conftest.py` sets `LOOP_OFFLINE=1` before
+any backend import. Tests verify wiring and invariants, so they must be fast,
+free and repeatable. `eval/evaluate.py` is where the model is measured. Do not
+let a test depend on a live gateway.
+
+**A blank value in `.env` means unset.** `.env.example` ships every key empty so
+the file documents itself. `config._env` treats blank as absent. Never read an
+optional setting with a bare `os.getenv(name, default)`; the empty string will
+mask the default and the failure looks like a network error.
 
 Always use `.venv/bin/python`, never a bare `python3`. The venv is Python 3.11.
 

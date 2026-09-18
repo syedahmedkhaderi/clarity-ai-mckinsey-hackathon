@@ -36,7 +36,7 @@ class _MarkBatch(BaseModel):
 
 def run(state: LoopState) -> LoopState:
     started = time.perf_counter()
-    mode = "model" if llm.available() else "deterministic rules"
+    mode = llm.describe()
     trace(state, AGENT, "start",
           f"Marking {len(state['submissions'])} responses against the scheme ({mode})")
 
@@ -45,7 +45,7 @@ def run(state: LoopState) -> LoopState:
         by_question.setdefault(sub.question_id, []).append(sub)
 
     marks: list[Mark] = []
-    llm_calls = 0
+    written: list[tuple[dict[str, Any], list[Any]]] = []
     for question_id, subs in sorted(by_question.items()):
         question = mock_api.get_question(question_id)
         if question is None:
@@ -53,9 +53,16 @@ def run(state: LoopState) -> LoopState:
         if question["type"] == "mcq":
             marks.extend(_mark_mcq(question, subs))
         else:
-            batch, used_model = _mark_written(question, subs)
-            marks.extend(batch)
-            llm_calls += int(used_model)
+            written.append((question, subs))
+
+    # One call per written question, all learners batched into it, and the
+    # questions themselves sent concurrently. Live demo latency matters.
+    prompts = [marking.build(q, [{"learner_id": s.learner_id, "answer": s.answer} for s in subs])
+               for q, subs in written]
+    outputs = llm.call_many(marking.SYSTEM, prompts, _MarkBatch)
+    llm_calls = sum(1 for o in outputs if o is not None)
+    for (question, subs), out in zip(written, outputs):
+        marks.extend(_resolve_written(question, subs, out))
 
     trace(state, AGENT, "marked",
           f"{len(marks)} provisional marks. "
@@ -91,15 +98,17 @@ def _mark_mcq(question: dict[str, Any], subs: list[Any]) -> list[Mark]:
     return out
 
 
-def _mark_written(question: dict[str, Any], subs: list[Any]) -> tuple[list[Mark], bool]:
-    """One model call for all learners on this question, with a rule fallback."""
-    payload = [{"learner_id": s.learner_id, "answer": s.answer} for s in subs]
-    result = llm.call(marking.SYSTEM, marking.build(question, payload), _MarkBatch)
+def _resolve_written(question: dict[str, Any], subs: list[Any],
+                     result: "_MarkBatch | None") -> list[Mark]:
+    """Uses the model's marks when it covered every learner, rules otherwise.
+
+    A partial response is discarded rather than mixed, so a question is never
+    marked half by the model and half by the rules on different criteria."""
     if result is not None:
         by_learner = {m.learner_id: m for m in result.marks}
         if all(s.learner_id in by_learner for s in subs):
-            return [_from_model(question, s, by_learner[s.learner_id]) for s in subs], True
-    return [mark_written_offline(question, s) for s in subs], False
+            return [_from_model(question, s, by_learner[s.learner_id]) for s in subs]
+    return [mark_written_offline(question, s) for s in subs]
 
 
 def _from_model(question: dict[str, Any], sub: Any, out: _MarkOut) -> Mark:

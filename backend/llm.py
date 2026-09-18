@@ -1,22 +1,28 @@
 """Single point of contact with the model provider.
 
-Two guarantees the rest of the backend relies on:
+Three guarantees the rest of the backend relies on:
 
 1. Structured output only. Every call parses into a Pydantic model. Nothing
    regexes a model response.
-2. No call can crash the graph. Any exception, missing key or malformed
+2. No call can crash the graph. Any exception, missing credential or malformed
    response returns None, and the calling agent falls back to its deterministic
    path and escalates rather than inventing an answer.
+3. Independent calls are fanned out. A cohort marked one response at a time at
+   three seconds a call is not a live demo.
+
+This is also the only module that knows which provider is in use. Swapping
+providers is a change here and nowhere else.
 """
 
 from __future__ import annotations
 
 import logging
-from typing import Any, TypeVar
+from concurrent.futures import ThreadPoolExecutor
+from typing import Any, Sequence, TypeVar
 
 from pydantic import BaseModel
 
-from backend.config import MODEL_FAST, MODEL_SMART, OFFLINE, OPENAI_API_KEY
+from backend import config
 
 log = logging.getLogger("loop.llm")
 
@@ -26,18 +32,47 @@ _CLIENTS: dict[str, Any] = {}
 
 
 def available() -> bool:
-    return not OFFLINE
+    return not config.OFFLINE
+
+
+def describe() -> str:
+    """Human-readable mode, shown in the API health endpoint and the UI."""
+    if config.OFFLINE:
+        return "offline deterministic rules"
+    if config.PROVIDER == "azure":
+        return f"QuantumBlack Azure gateway, {config.MODEL_FAST} and {config.MODEL_SMART}"
+    return f"OpenAI, {config.MODEL_FAST} and {config.MODEL_SMART}"
+
+
+def _build(model: str) -> Any | None:
+    """Creates the chat client for the detected provider."""
+    common = {"timeout": config.LLM_TIMEOUT_SECONDS, "max_retries": 2}
+    if config.PROVIDER == "azure":
+        from langchain_openai import AzureChatOpenAI
+
+        # Temperature is deliberately not set. The gateway's current models
+        # reject anything but the default, and structured output plus a fixed
+        # prompt is what makes a run repeatable, not temperature.
+        return AzureChatOpenAI(
+            azure_endpoint=config.AZURE_ENDPOINT,
+            api_key=config.AZURE_CREDENTIAL,
+            api_version=config.AZURE_API_VERSION,
+            azure_deployment=model,
+            **common,
+        )
+    from langchain_openai import ChatOpenAI
+
+    return ChatOpenAI(model=model, api_key=config.OPENAI_API_KEY, temperature=0, **common)
 
 
 def _client(model: str, schema: type[BaseModel]) -> Any | None:
-    key = f"{model}:{schema.__name__}"
+    key = f"{config.PROVIDER}:{model}:{schema.__name__}"
     if key in _CLIENTS:
         return _CLIENTS[key]
     try:
-        from langchain_openai import ChatOpenAI
-
-        llm = ChatOpenAI(model=model, api_key=OPENAI_API_KEY, temperature=0, timeout=60,
-                         max_retries=1)
+        llm = _build(model)
+        if llm is None:
+            return None
         _CLIENTS[key] = llm.with_structured_output(schema)
         return _CLIENTS[key]
     except Exception as exc:  # pragma: no cover - provider or import failure
@@ -47,9 +82,9 @@ def _client(model: str, schema: type[BaseModel]) -> Any | None:
 
 def call(system: str, user: str, schema: type[T], smart: bool = False) -> T | None:
     """Returns a parsed model instance, or None if the call could not be trusted."""
-    if OFFLINE:
+    if config.OFFLINE:
         return None
-    model = MODEL_SMART if smart else MODEL_FAST
+    model = config.MODEL_SMART if smart else config.MODEL_FAST
     runnable = _client(model, schema)
     if runnable is None:
         return None
@@ -61,3 +96,17 @@ def call(system: str, user: str, schema: type[T], smart: bool = False) -> T | No
     except Exception as exc:
         log.warning("llm call failed (%s): %s", model, exc)
         return None
+
+
+def call_many(system: str, users: Sequence[str], schema: type[T],
+              smart: bool = False) -> list[T | None]:
+    """Runs independent calls concurrently, preserving input order.
+
+    A failure in one call is a None in that slot, never an exception, so one bad
+    response cannot take down a whole batch.
+    """
+    if config.OFFLINE or not users:
+        return [None] * len(users)
+    workers = max(1, min(config.LLM_CONCURRENCY, len(users)))
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        return list(pool.map(lambda u: call(system, u, schema, smart), users))
