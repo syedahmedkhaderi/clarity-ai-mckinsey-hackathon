@@ -166,20 +166,35 @@ def _diff_plans(old: dict[str, Any] | None, new: dict[str, Any] | None) -> list[
     if not old:
         return [PlanChange(kind="added", detail=f"First plan produced: "
                                                 f"{len(new['scheduled'])} actions.")]
+    every = old["scheduled"] + old["dropped"] + new["scheduled"] + new["dropped"]
+    titles = {a["action_id"]: a["title"] for a in every}
+    kinds = {a["action_id"]: a["type"] for a in every}
     old_ids = {a["action_id"] for a in old["scheduled"]}
     new_ids = {a["action_id"] for a in new["scheduled"]}
-    titles = {a["action_id"]: a["title"] for a in old["scheduled"] + old["dropped"] +
-              new["scheduled"] + new["dropped"]}
+
+    # Feedback reviews are five-minute fillers that shuffle whenever anything
+    # larger moves. Listing each one individually would bury the change that
+    # actually matters, so they are summarised on one line.
+    def is_filler(aid: str) -> bool:
+        return kinds.get(aid) == "feedback_review"
+
     changes: list[PlanChange] = []
-    for aid in sorted(old_ids - new_ids):
+    for aid in sorted(a for a in old_ids - new_ids if not is_filler(a)):
         changes.append(PlanChange(kind="removed", action_id=aid,
                                   detail=f"Withdrawn: {titles.get(aid, aid)}"))
-    for aid in sorted(new_ids - old_ids):
+    for aid in sorted(a for a in new_ids - old_ids if not is_filler(a)):
         was_dropped = any(a["action_id"] == aid for a in old["dropped"])
         changes.append(PlanChange(
             kind="rescheduled" if was_dropped else "added", action_id=aid,
             detail=(f"Now scheduled with the freed time: {titles.get(aid, aid)}"
                     if was_dropped else f"Newly scheduled: {titles.get(aid, aid)}")))
+    before = sum(1 for a in old["scheduled"] if a["type"] == "feedback_review")
+    after = sum(1 for a in new["scheduled"] if a["type"] == "feedback_review")
+    if before != after:
+        changes.append(PlanChange(
+            kind="rescheduled" if after > before else "removed",
+            detail=f"Feedback reviews that fit the remaining time moved from {before} to "
+                   f"{after}. Drafts are still written for every learner."))
     if old["minutes_used"] != new["minutes_used"]:
         changes.append(PlanChange(
             kind="budget",
@@ -198,7 +213,9 @@ def _rehydrate(payload: dict[str, Any]) -> LoopState:
         "submissions": [Submission(**s) for s in payload.get("submissions") or []],
         "learners": [LearnerContext(**c) for c in payload.get("learners") or []],
         "marks": [Mark(**m) for m in payload.get("marks") or []],
+        "all_marks": [Mark(**m) for m in payload.get("all_marks") or []],
         "diagnoses": [Diagnosis(**d) for d in payload.get("diagnoses") or []],
+        "all_diagnoses": [Diagnosis(**d) for d in payload.get("all_diagnoses") or []],
         "patterns": CohortPatterns(**payload["patterns"]) if payload.get("patterns") else None,
         "plan": InterventionPlan(**payload["plan"]) if payload.get("plan") else None,
         "escalations": [Escalation(**e) for e in payload.get("escalations") or []],

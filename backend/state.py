@@ -26,8 +26,10 @@ class LoopState(TypedDict, total=False):
     facilitator_minutes: int
     submissions: list[Submission]
     learners: list[LearnerContext]
-    marks: list[Mark]
-    diagnoses: list[Diagnosis]
+    marks: list[Mark]                 # survivors of the reviewer gate
+    all_marks: list[Mark]             # every mark, including the escalated ones
+    diagnoses: list[Diagnosis]        # survivors of the reviewer gate
+    all_diagnoses: list[Diagnosis]    # every diagnosis, including the escalated ones
     patterns: CohortPatterns | None
     plan: InterventionPlan | None
     escalations: list[Escalation]
@@ -44,7 +46,8 @@ def new_state(batch_id: str, assessment_id: str, cohort_id: str,
         assessment_id=assessment_id,
         cohort_id=cohort_id,
         facilitator_minutes=facilitator_minutes,
-        submissions=[], learners=[], marks=[], diagnoses=[],
+        submissions=[], learners=[], marks=[], all_marks=[],
+        diagnoses=[], all_diagnoses=[],
         patterns=None, plan=None,
         escalations=[], trace=[], overrides=[], changes=[],
         status="running",

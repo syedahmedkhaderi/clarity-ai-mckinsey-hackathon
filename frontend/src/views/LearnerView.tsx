@@ -1,20 +1,8 @@
 import { useMemo, useState } from "react";
-import type { BatchResult, Question, Taxonomy } from "../types";
+import type { BatchResult, ProfileEntry, Question, Taxonomy } from "../types";
 import { LearnerCard } from "../components/LearnerCard";
 import { DiagnosisDetail } from "../components/DiagnosisDetail";
 import { pct } from "../lib/format";
-
-interface ProfileEntry {
-  learner_id: string;
-  assessment_id: string;
-  question_id: string;
-  taxonomy_node: string;
-  error_class: string;
-  confidence: number;
-  evidence_span: string;
-  reasoning: string;
-  language_flag: number;
-}
 
 export function LearnerView({
   batch,

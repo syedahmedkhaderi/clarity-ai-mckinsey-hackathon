@@ -29,9 +29,11 @@ Other rules:
   find a span that supports your choice, return an empty evidence_span.
 - alternative_node is the second most likely node. It must differ from
   taxonomy_node. If nothing else is plausible, leave it null.
-- confidence is 0.0 to 1.0 for your chosen node. If your top two candidates are
-  close, say so by keeping confidence low. A close call goes to a human, which
-  is the correct outcome.
+- confidence is 0.0 to 1.0 for your chosen node. alternative_confidence is the
+  same scale for the runner-up. Score them independently and honestly. If the two
+  readings genuinely fit the evidence about equally, give them similar numbers.
+  A close call goes to a human, which is the correct outcome, and the gap between
+  these two numbers is what decides that.
 - reasoning is one or two sentences a facilitator who is not a mathematics
   specialist can read and act on.
 """

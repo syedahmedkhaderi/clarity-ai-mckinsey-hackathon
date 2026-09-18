@@ -67,7 +67,7 @@ def run(state: LoopState) -> LoopState:
     survivors = reviewer.gate_marks(state, marks)
     dropped = len(marks) - len(survivors)
     state["marks"] = survivors
-    state["all_marks"] = marks  # type: ignore[typeddict-unknown-key]
+    state["all_marks"] = marks
     trace(state, AGENT, "end",
           f"{len(survivors)} marks passed the reviewer gate, {dropped} escalated for human marking",
           duration_ms=_ms(started), level="decision" if dropped else "info")

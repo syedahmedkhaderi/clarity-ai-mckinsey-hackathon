@@ -225,6 +225,29 @@ export interface Question {
   distractor_map?: Record<string, string>;
 }
 
+/** A row of backend/db.py error_profile, as returned by /api/learner/{id}/profile. */
+export interface ProfileEntry {
+  learner_id: string;
+  assessment_id: string;
+  question_id: string;
+  taxonomy_node: string;
+  error_class: string;
+  confidence: number;
+  evidence_span: string;
+  reasoning: string;
+  language_flag: number;
+  batch_id: string;
+}
+
+export interface LearnerProfile {
+  learner_id: string;
+  name: string;
+  context: LearnerContext | null;
+  assessments: Record<string, ProfileEntry[]>;
+  recurring_nodes: string[];
+  entries: ProfileEntry[];
+}
+
 export interface Health {
   status: string;
   mode: string;

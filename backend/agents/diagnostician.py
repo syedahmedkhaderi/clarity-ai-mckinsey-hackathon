@@ -33,6 +33,7 @@ class _DiagnosisOut(BaseModel):
     taxonomy_node: str | None = None
     alternative_node: str | None = None
     confidence: float = Field(default=0.0, ge=0.0, le=1.0)
+    alternative_confidence: float = Field(default=0.0, ge=0.0, le=1.0)
     evidence_span: str = ""
     reasoning: str = ""
     language_flag: bool = False
@@ -78,7 +79,7 @@ def run(state: LoopState) -> LoopState:
 
     survivors = reviewer.gate_diagnoses(state, diagnoses)
     state["diagnoses"] = survivors
-    state["all_diagnoses"] = diagnoses  # type: ignore[typeddict-unknown-key]
+    state["all_diagnoses"] = diagnoses
     trace(state, AGENT, "end",
           f"{len(survivors)} diagnoses passed the reviewer gate, "
           f"{len(diagnoses) - len(survivors)} escalated to a human",
@@ -116,6 +117,8 @@ def _diagnose_written(question: dict[str, Any], sub: Any,
         question_id=question["question_id"], learner_id=sub.learner_id,
         taxonomy_node=out.taxonomy_node,
         alternative_node=out.alternative_node if out.alternative_node in valid_ids else None,
+        alternative_confidence=(out.alternative_confidence
+                                if out.alternative_node in valid_ids else 0.0),
         error_class=meta.get("error_class", "unclassified"),
         confidence=out.confidence, evidence_span=out.evidence_span,
         reasoning=out.reasoning, language_flag=out.language_flag or

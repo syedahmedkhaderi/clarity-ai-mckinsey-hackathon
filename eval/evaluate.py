@@ -243,7 +243,7 @@ def _score_evidence(report: Report, batch: dict[str, Any]) -> None:
     answers = {(s["learner_id"], s["question_id"]): s["answer"]
                for s in batch.get("submissions") or []}
     for d in batch.get("diagnoses") or []:
-        if d.get("source") not in ("model", "fallback"):
+        if d.get("source") not in ("model", "fallback", "distractor_map"):
             continue
         span = d.get("evidence_span") or ""
         answer = answers.get((d["learner_id"], d["question_id"]), "")
@@ -333,7 +333,7 @@ def _metric_rows(report: Report) -> list[tuple[str, str, str]]:
         ("Returner restart points scheduled", report.returners_scheduled.render(),
          "The subset that survived the time budget"),
         ("Evidence span validity", report.evidence_valid.render(),
-         "Written diagnoses whose evidence span is verbatim text from the learner's answer"),
+         "Diagnoses whose evidence span is verbatim text from the learner's own answer"),
         ("Diagnosis coverage", report.coverage.render(),
          "Injected misconceptions that received a surviving diagnosis rather than an escalation"),
     ]

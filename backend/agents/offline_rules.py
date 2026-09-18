@@ -22,6 +22,9 @@ from backend.lms import mock_api
 from backend.models import Diagnosis, Mark
 
 LANGUAGE_CLASS_NODES = {"M21", "M22", "M23", "M24"}
+NO_PATTERN = ("Marks were lost but the working does not match any misconception pattern for "
+              "this topic. It may be a one-off slip rather than a misconception, which is a "
+              "judgement for a person.")
 PLACE_VALUE_WORDS = ("line up", "lining", "lined", "two places", "tenths", "hundredths",
                      "column", "decimal point", "points under", "place value")
 
@@ -119,6 +122,9 @@ def diagnose_offline(question: dict[str, Any], sub: Any, mark: Mark) -> Diagnosi
     return Diagnosis(
         question_id=question["question_id"], learner_id=sub.learner_id,
         taxonomy_node=node, alternative_node=alt,
+        # The rules match one signature exactly, so the runner-up is genuinely far
+        # behind. It is named for the facilitator's benefit, not because it is close.
+        alternative_confidence=round(max(0.0, 1.0 - confidence) * 0.35, 2) if alt else 0.0,
         error_class=meta.get("error_class", "unclassified"),
         confidence=confidence, evidence_span=span, reasoning=reason,
         language_flag=node in LANGUAGE_CLASS_NODES if node else False,
@@ -149,9 +155,7 @@ def _diag_q4(question: dict[str, Any], answer: str) -> tuple:
             return ("M03", "M02", 0.84, _span(answer, f"{a2 + c2 + offset}/{lcm}"),
                     "The common denominator and both conversions are right, so only the "
                     "final addition slipped.")
-    return (None, None, 0.25, "", "Marks were lost but the working does not match any misconception pattern for "
-            "this topic. It may be a one-off slip rather than a misconception, which is "
-            "a judgement for a person.")
+    return (None, None, 0.25, "", NO_PATTERN)
 
 
 def _diag_q2(question: dict[str, Any], answer: str) -> tuple:
@@ -176,9 +180,7 @@ def _diag_q2(question: dict[str, Any], answer: str) -> tuple:
         return ("M24", None, 0.8, _span(answer, f"{total:g}"),
                 "The value is right. What was lost is the form the question asked for, "
                 "which points at the instruction wording rather than the mathematics.")
-    return (None, None, 0.25, "", "Marks were lost but the working does not match any misconception pattern for "
-            "this topic. It may be a one-off slip rather than a misconception, which is "
-            "a judgement for a person.")
+    return (None, None, 0.25, "", NO_PATTERN)
 
 
 def _diag_q6(question: dict[str, Any], answer: str) -> tuple:
@@ -196,16 +198,15 @@ def _diag_q6(question: dict[str, Any], answer: str) -> tuple:
         return ("M12", "M13", 0.86, _span(answer, str(r1 + (total - r1 - r2) // 2)),
                 "The ratio numbers were handed out as absolute amounts and the remainder "
                 "split evenly, which treats the ratio as a difference.")
-    return (None, None, 0.25, "", "Marks were lost but the working does not match any misconception pattern for "
-            "this topic. It may be a one-off slip rather than a misconception, which is "
-            "a judgement for a person.")
+    return (None, None, 0.25, "", NO_PATTERN)
 
 
 def diagnose_mcq(question: dict[str, Any], sub: Any) -> Diagnosis | None:
     """No model call. The distractor map is authored alongside the question."""
-    chosen = sub.answer.strip()
+    chosen = getattr(sub, "selected_option", None) or sub.answer.strip()
     if chosen not in question.get("options", {}):
-        chosen = next((k for k, v in question["options"].items() if v == chosen), chosen)
+        chosen = next((k for k, v in question["options"].items() if v == sub.answer.strip()),
+                      chosen)
     node = question.get("distractor_map", {}).get(chosen)
     meta = _node_meta(node)
     if not node:

@@ -6,15 +6,16 @@ span were not verbatim text from that answer the highlight would be a
 fabrication a judge could read off the screen, which is the worst failure this
 demo has available to it.
 
-MCQ diagnoses are excluded on purpose: their evidence is the option text from
-the marking scheme, and the learner's answer is a single option letter.
+This now covers MCQ diagnoses too. A submission records the option text the
+learner chose rather than a bare option letter, so a distractor-map diagnosis
+quotes the answer verbatim like every other one.
 """
 
 from __future__ import annotations
 
 from typing import Any
 
-MODEL_SOURCES = ("model", "fallback")
+MODEL_SOURCES = ("model", "fallback", "distractor_map")
 
 
 def _written_diagnoses(batch: dict[str, Any]) -> list[dict[str, Any]]:
@@ -23,7 +24,13 @@ def _written_diagnoses(batch: dict[str, Any]) -> list[dict[str, Any]]:
 
 def test_there_are_written_diagnoses_to_check(pipeline: dict[str, Any]) -> None:
     assert _written_diagnoses(pipeline), (
-        "no model or fallback diagnoses in this run, so the guarantee is untested")
+        "no diagnoses in this run, so the guarantee is untested")
+
+
+def test_every_diagnosis_source_is_covered(pipeline: dict[str, Any]) -> None:
+    """No diagnosis may sit outside the guarantee by having an unexpected source."""
+    sources = {d["source"] for d in pipeline["diagnoses"]}
+    assert sources <= set(MODEL_SOURCES), f"unchecked diagnosis sources: {sources}"
 
 
 def test_evidence_spans_are_verbatim(pipeline: dict[str, Any],

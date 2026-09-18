@@ -68,16 +68,17 @@ def gate_diagnoses(state: LoopState, diagnoses: list[Diagnosis]) -> list[Diagnos
                 would_have_decided="Record no conceptual misconception. Route to language "
                                    "support rather than re-teaching the mathematics."))
             continue
-        gap = d.confidence - _runner_up_confidence(d)
+        gap = d.confidence - d.alternative_confidence
         if d.alternative_node and gap < config.AMBIGUITY_GAP:
             _add(state, Escalation(
                 escalation_id=f"E-AMB-{d.learner_id}-{d.question_id}",
                 reason_code="AMBIGUOUS_DIAGNOSIS", raised_by="diagnostician",
                 learner_id=d.learner_id, question_id=d.question_id,
                 subject=f"{d.learner_id} {d.question_id}",
-                reasoning=f"Top two candidates are within {gap:.2f}, under the "
-                          f"{config.AMBIGUITY_GAP:.2f} separation required. "
-                          f"{d.reasoning}",
+                reasoning=f"{d.taxonomy_node} at {d.confidence:.2f} and {d.alternative_node} "
+                          f"at {d.alternative_confidence:.2f} are within {gap:.2f}, under the "
+                          f"{config.AMBIGUITY_GAP:.2f} separation required to choose between "
+                          f"them. {d.reasoning}",
                 candidate_a=d.taxonomy_node, candidate_b=d.alternative_node,
                 would_have_decided=f"Record {d.taxonomy_node} at confidence {d.confidence:.2f}."))
             continue
@@ -136,7 +137,3 @@ def gate_plan(state: LoopState, dropped: list[PlannedAction]) -> None:
                                f"decide whether to extend the budget or displace another action."))
 
 
-def _runner_up_confidence(d: Diagnosis) -> float:
-    """The runner-up's implied confidence. Absent a second candidate the gap is
-    the full confidence, so a single clear candidate never trips the gate."""
-    return (1.0 - d.confidence) if d.alternative_node else 0.0

@@ -8,7 +8,7 @@ import { LearnerView } from "./views/LearnerView";
 import { CohortView } from "./views/CohortView";
 import { PlanView } from "./views/PlanView";
 import { QueueView } from "./views/QueueView";
-import type { BatchResult, Escalation, TraceEvent } from "./types";
+import type { BatchResult, Escalation, LearnerProfile, ProfileEntry, TraceEvent } from "./types";
 
 const POLL_MS = 400;
 
@@ -21,7 +21,7 @@ export default function App() {
   const [trace, setTrace] = useState<TraceEvent[]>([]);
   const [status, setStatus] = useState("idle");
   const [batch, setBatch] = useState<BatchResult | null>(null);
-  const [profiles, setProfiles] = useState<Record<string, never[]>>({});
+  const [profiles, setProfiles] = useState<Record<string, ProfileEntry[]>>({});
   const [override, setOverride] = useState<OverrideTarget | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -45,7 +45,9 @@ export default function App() {
       setBatch(result);
       const entries = await Promise.all(
         result.learners.map(async (l) => {
-          const p = await fetch(`/api/learner/${l.learner_id}/profile`).then((r) => r.json());
+          const p = (await fetch(`/api/learner/${l.learner_id}/profile`).then((r) =>
+            r.json(),
+          )) as LearnerProfile;
           return [l.learner_id, p.entries] as const;
         }),
       );
@@ -189,7 +191,7 @@ export default function App() {
           batch={batch}
           taxonomy={taxonomy.data ?? null}
           questions={questions.data ?? []}
-          profiles={profiles as never}
+          profiles={profiles}
           onOverrideDiagnosis={(learnerId, questionId) =>
             setOverride({
               type: "diagnosis",

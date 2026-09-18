@@ -30,7 +30,7 @@ Assessment scored: **A3**. Mode: **offline deterministic rules**. Ground truth: 
 | Language separation gap | +16.7% | Everyone else minus second-language. A large positive gap is the failure mode |
 | Returner handling | 100.0% (3 of 3) | Returners for whom the plan produced a restart point, scheduled or dropped |
 | Returner restart points scheduled | 33.3% (1 of 3) | The subset that survived the time budget |
-| Evidence span validity | 100.0% (10 of 10) | Written diagnoses whose evidence span is verbatim text from the learner's answer |
+| Evidence span validity | 100.0% (28 of 28) | Diagnoses whose evidence span is verbatim text from the learner's own answer |
 | Diagnosis coverage | 96.0% (24 of 25) | Injected misconceptions that received a surviving diagnosis rather than an escalation |
 
 ## Language separation

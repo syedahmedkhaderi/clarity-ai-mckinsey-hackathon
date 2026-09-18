@@ -9,6 +9,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -18,16 +20,17 @@ from backend.graph import GRAPH_EDGES, GRAPH_NODES, REPLAN_ENTRY, REVIEWER_GATED
 from backend.lms import mock_api
 from backend.models import Override
 
-app = FastAPI(title="LOOP", version="1.0",
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    db.init_db()
+    yield
+
+
+app = FastAPI(title="LOOP", version="1.0", lifespan=lifespan,
               description="Agentic marking, diagnosis and intervention planning for "
                           "Meridian Foundation learning centres.")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"],
                    allow_headers=["*"])
-
-
-@app.on_event("startup")
-def _startup() -> None:
-    db.init_db()
 
 
 class RunRequest(BaseModel):

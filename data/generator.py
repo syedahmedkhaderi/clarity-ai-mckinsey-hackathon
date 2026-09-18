@@ -240,16 +240,21 @@ def _invert_clause(text: str, level: float, rng: random.Random) -> str:
 # --- generation -------------------------------------------------------------
 
 def choose_mcq_option(q: dict[str, Any], nodes: list[str], careless: bool,
-                      rng: random.Random) -> tuple[str, str | None, str]:
-    """Returns (chosen option letter, injected node, kind)."""
+                      rng: random.Random) -> tuple[str, str, str | None, str]:
+    """Returns (option letter, option text, injected node, kind).
+
+    The submission records the option text, not the bare letter, because that is
+    what the learner sees on the paper and it is what an evidence span has to
+    quote verbatim."""
     reverse = {node: ltr for ltr, node in q.get("distractor_map", {}).items()}
     for node in nodes:
         if node in reverse and rng.random() < MISCONCEPTION_RATE:
-            return reverse[node], node, "misconception"
+            return reverse[node], q["options"][reverse[node]], node, "misconception"
     if careless:
         wrong = [l for l in q["options"] if l != q["correct"]]
-        return rng.choice(wrong), None, "careless"
-    return q["correct"], None, "correct"
+        chosen = rng.choice(wrong)
+        return chosen, q["options"][chosen], None, "careless"
+    return q["correct"], q["options"][q["correct"]], None, "correct"
 
 
 def build_written(q: dict[str, Any], nodes: list[str], careless: bool,
@@ -284,9 +289,10 @@ def generate() -> None:
             for q in scheme["questions"]:
                 relevant = [n for n in assigned if _node_topic(taxonomy, n) == q["topic"]]
                 careless = rng.random() < traits["careless_rate"]
+                selected = None
                 if q["type"] == "mcq":
-                    answer, node, kind = choose_mcq_option(q, relevant, careless, rng)
-                    text, noisy = answer, False
+                    selected, answer, node, kind = choose_mcq_option(q, relevant, careless, rng)
+                    noisy = False
                 else:
                     text, node, kind = build_written(q, relevant, careless, rng, params[aid])
                     noisy = traits["second_language"] and traits["language_noise_level"] > 0
@@ -302,6 +308,7 @@ def generate() -> None:
                     "learner_id": lid, "learner_name": learner["name"],
                     "assessment_id": aid, "question_id": q["question_id"],
                     "topic": q["topic"], "type": q["type"], "answer": answer,
+                    "selected_option": selected,
                     "submitted_at": f"2026-0{scheme['assessment_id'][1]}-12T09:00:00Z",
                 })
                 truth_rows.append({

@@ -86,7 +86,7 @@ def _replay_assessment(learner: dict[str, Any], scheme: dict[str, Any], taxonomy
                     if generator._node_topic(taxonomy, n) == q["topic"]]
         careless = rng.random() < traits["careless_rate"]
         if q["type"] == "mcq":
-            answer, node, _ = generator.choose_mcq_option(q, relevant, careless, rng)
+            _letter, answer, node, _ = generator.choose_mcq_option(q, relevant, careless, rng)
             clean = answer
         else:
             clean, node, _ = generator.build_written(q, relevant, careless, rng, params)

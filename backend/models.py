@@ -28,6 +28,7 @@ class Submission(BaseModel):
     topic: str
     type: Literal["mcq", "written"]
     answer: str
+    selected_option: str | None = None   # MCQ only, the option letter
     submitted_at: str
 
 
@@ -63,6 +64,7 @@ class Diagnosis(BaseModel):
     learner_id: str
     taxonomy_node: str | None = None
     alternative_node: str | None = None
+    alternative_confidence: float = 0.0   # the runner-up's own confidence
     error_class: str = "unclassified"
     confidence: float = 0.0
     evidence_span: str = ""

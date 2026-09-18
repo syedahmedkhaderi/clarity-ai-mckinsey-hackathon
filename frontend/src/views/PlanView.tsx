@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { BatchResult } from "../types";
+import type { BatchResult, PlanChange } from "../types";
 import { ActionCard, BudgetBar, ChangeList } from "../components/InterventionPlan";
 
 export function PlanView({
@@ -20,7 +20,9 @@ export function PlanView({
       </div>
     );
   }
-  const changed = new Map(batch.changes.map((c) => [c.action_id, c.kind]));
+  const changed = new Map<string, PlanChange["kind"]>(
+    batch.changes.filter((c) => c.action_id).map((c) => [c.action_id as string, c.kind]),
+  );
 
   return (
     <div className="space-y-5">
@@ -47,11 +49,7 @@ export function PlanView({
         <h2 className="text-sm font-semibold text-ink mb-2">Scheduled</h2>
         <div className="grid gap-3 md:grid-cols-2">
           {plan.scheduled.map((a) => (
-            <ActionCard
-              key={a.action_id}
-              action={a}
-              changed={changed.get(a.action_id) as never}
-            />
+            <ActionCard key={a.action_id} action={a} changed={changed.get(a.action_id)} />
           ))}
         </div>
       </section>
