@@ -31,7 +31,8 @@ function keepCase(replacement: string, original: string): string {
 
 export function plainText(text: string | null | undefined, lookups: PlainLookups): string {
   if (!text) return "";
-  let out = text;
+  let out = text.replace(/\s*\(\s*M\d{2}\s*\)/g, "");
+  out = out.replace(/\bReteach\b/g, "Re-teach").replace(/\breteach\b/g, "re-teach");
   out = out.replace(/\b(?:[A-Z]\d{1,2}|U\d{2})Q\d{1,2}\b/g, (id) => lookups.questionName(id));
   out = out.replace(/\bM\d{2}\b/g, (id) => lookups.patternName(id));
   out = out.replace(/\b(?:L\d{2}|C\d{2}-S\d{2})\b/g, (id) => lookups.learnerName(id));

@@ -161,41 +161,12 @@ export const PLAN_CHANGE_PLAIN_LABELS: Record<PlanChange["kind"], string> = {
   budget: "Time",
 };
 
-/** Lookups plainText uses to turn ids into words. Each falls back to the id itself. */
-export interface PlainNames {
-  pattern: (nodeId: string) => string;
-  learner: (learnerId: string) => string;
-}
-
 /**
- * Old: "Reteach adding fractions (M01)", "42% of learners hold misconception M01",
- * "Learner L04". The backend writes these sentences with ids and developer words
- * in them, and this turns them into words a teacher would use.
+ * Old: "Reteach adding fractions (M01)". The backend appends the pattern id to a
+ * title that already names the pattern, so the id is dropped before display.
  */
-export function plainText(text: string, names: PlainNames): string {
-  return text
-    .replace(/\b(?:[Ll]earner|[Ss]tudent)\s+((?:L\d{2}|C\d{2}-S\d{2}))\b/g, (_, id: string) =>
-      names.learner(id),
-    )
-    .replace(/\b(?:L\d{2}|C\d{2}-S\d{2})\b/g, (id) => names.learner(id))
-    .replace(/\s*\(M\d{2}(?:\s*,\s*M\d{2})*\)/g, "")
-    .replace(/\bM\d{2}\b/g, (id) => {
-      const name = names.pattern(id);
-      return name === id ? id : `‘${name}’`;
-    })
-    .replace(/\bMisconceptions\b/g, "Mistake patterns")
-    .replace(/\bmisconceptions\b/g, "mistake patterns")
-    .replace(/\bMisconception\b/g, "Mistake pattern")
-    .replace(/\bmisconception\b/g, "mistake pattern")
-    .replace(/\bLearners\b/g, "Students")
-    .replace(/\blearners\b/g, "students")
-    .replace(/\bLearner\b/g, "Student")
-    .replace(/\blearner\b/g, "student")
-    .replace(/\bFacilitator\b/g, "Teacher")
-    .replace(/\bfacilitator\b/g, "teacher")
-    .replace(/\bReteach\b/g, "Re-teach")
-    .replace(/\s{2,}/g, " ")
-    .trim();
+export function stripNodeIds(text: string): string {
+  return text.replace(/\s*\(M\d{2}(?:\s*,\s*M\d{2})*\)/g, "").replace(/\bReteach\b/g, "Re-teach");
 }
 
 /** Old: "budget exhausted". */

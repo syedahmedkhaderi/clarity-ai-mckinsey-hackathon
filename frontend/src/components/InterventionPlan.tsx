@@ -6,7 +6,7 @@ import {
   PLAN_CHANGE_PLAIN_LABELS,
   dropReasonText,
   planChangeTitle,
-  plainText,
+  stripNodeIds,
   severityLabel,
   severityLevel,
 } from "../lib/format";
@@ -35,8 +35,8 @@ function Expander({ label, children }: { label: string; children: ReactNode }) {
 }
 
 function usePlain() {
-  const { patternName, learnerName } = useSession();
-  return (text: string) => plainText(text, { pattern: patternName, learner: learnerName });
+  const { plain } = useSession();
+  return (text: string) => plain(stripNodeIds(text));
 }
 
 function StudentNames({ ids }: { ids: string[] }) {
@@ -110,7 +110,7 @@ export function ActionCard({
         <span className="text-ink-faint">Why: </span>
         {plain(action.justification)}
       </p>
-      {dropped && <p className="mt-2 text-xs text-flag">{dropReasonText(action.drop_reason)}</p>}
+      {dropped && <p className="mt-2 text-xs text-flag">{plain(dropReasonText(action.drop_reason))}</p>}
       {action.facilitator_script && (
         <Expander label="What to say or do">
           <p className="text-sm text-ink-muted border-l-2 border-line-strong pl-3">

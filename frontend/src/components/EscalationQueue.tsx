@@ -3,9 +3,9 @@ import type { BatchResult, Diagnosis, Escalation, Mark, ReasonCode } from "../ty
 import {
   REASON_LABELS,
   pct,
-  plainText,
   scoreText,
   severityLabel,
+  stripNodeIds,
   sure,
 } from "../lib/format";
 import { useSession } from "../hooks/useSession";
@@ -137,8 +137,7 @@ function Item({
 }) {
   const s = useSession();
   const { answer, diagnosis, mark } = evidenceFor(s.batch, e);
-  const plain = (text: string) =>
-    plainText(text, { pattern: s.patternName, learner: s.learnerName });
+  const plain = (text: string) => s.plain(stripNodeIds(text));
   const readings = readingsFor(e, diagnosis, mark, s.patternName, plain);
   const why = whyFor(e, diagnosis, s.batch, s.highSeverityFloor, s.learnerName, plain);
   const isBudget = e.reason_code === "BUDGET_OVERFLOW";
