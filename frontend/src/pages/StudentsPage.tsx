@@ -1,30 +1,26 @@
 import { useMemo, useState } from "react";
-import type { BatchResult, ProfileEntry, Question, Taxonomy } from "../types";
-import { LearnerCard } from "../components/LearnerCard";
 import { DiagnosisDetail } from "../components/DiagnosisDetail";
-import { pct } from "../lib/format";
+import { LearnerCard } from "../components/LearnerCard";
+import { StudentEmail } from "../features/email/StudentEmail";
+import { useSession } from "../hooks/useSession";
+import { PATTERN_KIND_LABELS, REASON_LABELS, pct } from "../lib/format";
+import type { BatchResult, ProfileEntry } from "../types";
 
-export function LearnerView({
-  batch,
-  taxonomy,
-  questions,
-  profiles,
-  onOverrideDiagnosis,
-}: {
-  batch: BatchResult;
-  taxonomy: Taxonomy | null;
-  questions: Question[];
-  profiles: Record<string, ProfileEntry[]>;
-  onOverrideDiagnosis: (learnerId: string, questionId: string) => void;
-}) {
+export function StudentsPage() {
+  const { batch } = useSession();
+  return batch ? <StudentsView batch={batch} /> : null;
+}
+
+function StudentsView({ batch }: { batch: BatchResult }) {
+  const s = useSession();
   const [selectedId, setSelectedId] = useState(batch.learners[0]?.learner_id ?? "");
   const learner = batch.learners.find((l) => l.learner_id === selectedId);
-  const nodeMeta = (id: string) => taxonomy?.nodes.find((n) => n.id === id);
+  const nodeMeta = (id: string) => s.taxonomy?.nodes.find((n) => n.id === id);
 
   const counts = useMemo(() => {
     const map: Record<string, { errors: number; recurring: number }> = {};
     for (const l of batch.learners) {
-      const entries = profiles[l.learner_id] ?? [];
+      const entries = s.profiles[l.learner_id] ?? [];
       const here = batch.diagnoses.filter((d) => d.learner_id === l.learner_id);
       const seen: Record<string, number> = {};
       for (const e of entries) seen[e.taxonomy_node] = (seen[e.taxonomy_node] ?? 0) + 1;
@@ -34,11 +30,11 @@ export function LearnerView({
       };
     }
     return map;
-  }, [batch, profiles]);
+  }, [batch, s.profiles]);
 
-  if (!learner) return <p className="text-sm text-ink-muted">No learners in this run.</p>;
+  if (!learner) return <p className="text-sm text-ink-muted">There are no students in this analysis.</p>;
 
-  const history = profiles[learner.learner_id] ?? [];
+  const history = s.profiles[learner.learner_id] ?? [];
   const byAssessment = history.reduce<Record<string, ProfileEntry[]>>((acc, e) => {
     (acc[e.assessment_id] ||= []).push(e);
     return acc;
@@ -49,12 +45,13 @@ export function LearnerView({
   }, {});
   const current = batch.diagnoses.filter((d) => d.learner_id === learner.learner_id);
   const escalated = batch.escalations.filter((e) => e.learner_id === learner.learner_id);
+  const thisTest = s.testName(batch.assessment_id);
 
   return (
     <div className="grid gap-5 lg:grid-cols-[240px_minmax(0,1fr)]">
       <aside className="panel h-fit sticky top-6">
         <div className="panel-head">
-          <div className="panel-title">Learners</div>
+          <div className="panel-title">Students</div>
           <span className="panel-sub">{batch.learners.length}</span>
         </div>
         <div className="py-1 max-h-[70vh] overflow-y-auto">
@@ -75,8 +72,8 @@ export function LearnerView({
         <header>
           <h1 className="text-lg font-semibold text-ink">{learner.learner_name}</h1>
           <p className="text-sm text-ink-muted mt-0.5">
-            {learner.assessments_present.length} of {learner.assessments_expected.length}{" "}
-            assessments on record.
+            {learner.assessments_present.length} of {learner.assessments_expected.length} tests on
+            record.
             {learner.returner && ` ${learner.note}`}
           </p>
         </header>
@@ -86,7 +83,7 @@ export function LearnerView({
             <div className="px-4 py-3 flex items-center gap-4">
               <div>
                 <div className="text-2xs uppercase tracking-wide text-ink-faint">
-                  History completeness
+                  Earlier tests on record
                 </div>
                 <div className="num text-lg text-ink">{pct(learner.history_completeness)}</div>
               </div>
@@ -100,14 +97,18 @@ export function LearnerView({
                           ? "flex-1 h-1.5 rounded-full bg-agent"
                           : "flex-1 h-1.5 rounded-full bg-line-strong"
                       }
-                      title={learner.assessments_present.includes(a) ? `${a} present` : `${a} missing`}
+                      title={
+                        learner.assessments_present.includes(a)
+                          ? `${s.testName(a)} is on record`
+                          : `${s.testName(a)} is missing`
+                      }
                     />
                   ))}
                 </div>
                 <p className="text-xs text-ink-muted">
                   {learner.low_confidence_history
-                    ? "Below half the expected record. Recurrence claims for this learner are downweighted and sent for confirmation."
-                    : "Gaps in the record are accounted for. This learner was never dropped from the batch."}
+                    ? "Less than half of the earlier tests are on record, so any claim that a mistake keeps happening is treated with care and handed to you."
+                    : "The gaps in the record are allowed for. This student was not left out."}
                 </p>
               </div>
             </div>
@@ -117,24 +118,23 @@ export function LearnerView({
         <div className="panel">
           <div className="panel-head">
             <div>
-              <div className="panel-title">Error profile across assessments</div>
+              <div className="panel-title">Mistakes across tests</div>
               <div className="panel-sub">
-                This is what a score sheet cannot tell you: whether it is the same mistake again.
+                This is what a score sheet cannot show: whether it is the same mistake again.
               </div>
             </div>
           </div>
           {Object.keys(nodeFrequency).length === 0 ? (
             <p className="px-4 py-6 text-sm text-ink-muted">
-              No diagnosed errors on record for this learner.
+              No mistake patterns are on record for this student.
             </p>
           ) : (
             <table>
               <thead>
                 <tr>
-                  <th className="w-16">Node</th>
-                  <th>Misconception</th>
-                  <th className="w-40">Seen in</th>
-                  <th className="w-24">Status</th>
+                  <th>Mistake pattern</th>
+                  <th className="w-56">Seen in</th>
+                  <th className="w-40">How often</th>
                 </tr>
               </thead>
               <tbody>
@@ -142,19 +142,18 @@ export function LearnerView({
                   .sort((a, b) => b[1].length - a[1].length)
                   .map(([node, assessments]) => (
                     <tr key={node}>
-                      <td className="num text-ink-muted">{node}</td>
-                      <td className="text-sm">{nodeMeta(node)?.label ?? node}</td>
-                      <td className="num text-ink-muted">
-                        {[...new Set(assessments)].sort().join(", ")}
+                      <td className="text-sm">{s.patternName(node)}</td>
+                      <td className="text-xs text-ink-muted">
+                        {[...new Set(assessments)].sort().map(s.testName).join(", ")}
                       </td>
                       <td>
                         {new Set(assessments).size > 1 ? (
                           <span className="tag border-agent-line bg-agent-soft text-agent">
-                            recurring
+                            {PATTERN_KIND_LABELS.recurring}
                           </span>
                         ) : (
                           <span className="tag border-line bg-surface-sunken text-ink-muted">
-                            once
+                            Once
                           </span>
                         )}
                       </td>
@@ -167,9 +166,10 @@ export function LearnerView({
 
         <div className="panel">
           <div className="panel-head">
-            <div className="panel-title">This assessment, {batch.assessment_id}</div>
+            <div className="panel-title">This test, {thisTest}</div>
             <span className="panel-sub">
-              {current.length} diagnosed, {escalated.length} sent to you
+              {current.length} {current.length === 1 ? "mistake" : "mistakes"} found,{" "}
+              {escalated.length} need your call
             </span>
           </div>
           <div className="p-4 space-y-3">
@@ -181,35 +181,37 @@ export function LearnerView({
                 <DiagnosisDetail
                   key={d.question_id}
                   diagnosis={d}
-                  question={questions.find((q) => q.question_id === d.question_id)}
+                  question={s.questions.find((q) => q.question_id === d.question_id)}
                   answer={
                     batch.submissions.find(
-                      (s) => s.learner_id === d.learner_id && s.question_id === d.question_id,
+                      (x) => x.learner_id === d.learner_id && x.question_id === d.question_id,
                     )?.answer ?? ""
                   }
                   node={nodeMeta(d.taxonomy_node ?? "")}
                   alternative={nodeMeta(d.alternative_node ?? "")}
                   awarded={mark ? `${mark.awarded} of ${mark.max_marks}` : undefined}
-                  onOverride={() => onOverrideDiagnosis(d.learner_id, d.question_id)}
+                  onOverride={() => s.overrideDiagnosis(d.learner_id, d.question_id)}
                 />
               );
             })}
             {escalated.map((e) => (
               <div key={e.escalation_id} className="rounded-md border border-flag-line bg-flag-soft p-3">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="tag border-flag-line bg-surface text-flag">{e.reason_code}</span>
+                  <span className="tag border-flag-line bg-surface text-flag">
+                    {REASON_LABELS[e.reason_code] ?? e.reason_code}
+                  </span>
                   <span className="text-sm font-medium text-ink">{e.subject}</span>
                 </div>
                 <p className="text-sm text-ink-muted">{e.reasoning}</p>
                 <p className="text-xs text-ink-muted mt-1.5">
-                  <span className="text-ink-faint">If forced: </span>
+                  <span className="text-ink-faint">If it had to choose: </span>
                   {e.would_have_decided}
                 </p>
               </div>
             ))}
             {current.length === 0 && escalated.length === 0 && (
               <p className="text-sm text-ink-muted">
-                Nothing lost marks for this learner on {batch.assessment_id}.
+                This student did not lose marks on {thisTest}.
               </p>
             )}
           </div>
@@ -218,15 +220,14 @@ export function LearnerView({
         {Object.keys(byAssessment).length > 1 && (
           <div className="panel">
             <div className="panel-head">
-              <div className="panel-title">Earlier assessments</div>
+              <div className="panel-title">Earlier tests</div>
             </div>
             <table>
               <thead>
                 <tr>
-                  <th className="w-20">Assessment</th>
-                  <th className="w-20">Question</th>
-                  <th className="w-16">Node</th>
-                  <th>What the agent said at the time</th>
+                  <th className="w-56">Question</th>
+                  <th className="w-56">Mistake pattern</th>
+                  <th>What the system said at the time</th>
                 </tr>
               </thead>
               <tbody>
@@ -234,9 +235,8 @@ export function LearnerView({
                   .filter((e) => e.assessment_id !== batch.assessment_id)
                   .map((e, i) => (
                     <tr key={i}>
-                      <td className="num text-ink-muted">{e.assessment_id}</td>
-                      <td className="num text-ink-muted">{e.question_id}</td>
-                      <td className="num text-ink-muted">{e.taxonomy_node}</td>
+                      <td className="text-xs text-ink-muted">{s.questionName(e.question_id)}</td>
+                      <td className="text-xs text-ink-muted">{s.patternName(e.taxonomy_node)}</td>
                       <td className="text-xs text-ink-muted">{e.reasoning}</td>
                     </tr>
                   ))}
@@ -244,6 +244,8 @@ export function LearnerView({
             </table>
           </div>
         )}
+
+        <StudentEmail learnerId={learner.learner_id} />
       </div>
     </div>
   );

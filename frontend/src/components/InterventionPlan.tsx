@@ -1,30 +1,7 @@
 import clsx from "clsx";
-import type { InterventionPlan as Plan, PlanChange, PlannedAction } from "../types";
-import { ACTION_LABELS } from "../lib/format";
-
-export function BudgetBar({ plan }: { plan: Plan }) {
-  const used = Math.min(plan.minutes_used, plan.budget_minutes);
-  const droppedMinutes = plan.dropped.reduce((s, a) => s + a.cost_minutes, 0);
-  return (
-    <div>
-      <div className="flex items-baseline justify-between text-xs mb-1.5">
-        <span className="text-ink-muted">
-          <span className="num text-ink font-medium">{plan.minutes_used}</span> of{" "}
-          <span className="num">{plan.budget_minutes}</span> facilitator minutes scheduled
-        </span>
-        <span className="text-ink-faint">
-          <span className="num">{droppedMinutes}</span> minutes of work did not fit
-        </span>
-      </div>
-      <div className="h-2 rounded-full bg-surface-sunken border border-line overflow-hidden flex">
-        <div
-          className="bg-agent h-full"
-          style={{ width: `${(used / plan.budget_minutes) * 100}%` }}
-        />
-      </div>
-    </div>
-  );
-}
+import type { PlanChange, PlannedAction } from "../types";
+import { ACTION_LABELS, PLAN_CHANGE_LABELS, severityLabel } from "../lib/format";
+import { useSession } from "../hooks/useSession";
 
 export function ActionCard({
   action,
@@ -35,6 +12,7 @@ export function ActionCard({
   changed?: PlanChange["kind"];
   dropped?: boolean;
 }) {
+  const { highSeverityFloor, patternName } = useSession();
   return (
     <div
       className={clsx(
@@ -55,13 +33,11 @@ export function ActionCard({
           {ACTION_LABELS[action.type] ?? action.type}
         </span>
         <span className="num text-ink-muted">{action.cost_minutes} min</span>
-        <span className="num text-ink-faint" title="Severity, 0.00 to 1.00">
-          sev {action.severity.toFixed(2)}
-        </span>
-        {action.node_id && <span className="num text-ink-faint">{action.node_id}</span>}
+        <span className="text-xs text-ink-faint">{severityLabel(action.severity, highSeverityFloor)}</span>
+        {action.node_id && <span className="text-xs text-ink-faint">{patternName(action.node_id)}</span>}
         {changed === "rescheduled" && (
           <span className="tag border-agent-line bg-agent-soft text-agent">
-            Now scheduled after the override
+            Now planned after your correction
           </span>
         )}
         {changed === "added" && (
@@ -81,7 +57,7 @@ export function ActionCard({
         </p>
       )}
       {dropped && action.drop_reason && (
-        <p className="mt-1.5 text-xs text-flag">Not scheduled: {action.drop_reason}.</p>
+        <p className="mt-1.5 text-xs text-flag">Left out: {action.drop_reason}.</p>
       )}
     </div>
   );
@@ -93,10 +69,10 @@ export function ChangeList({ changes }: { changes: PlanChange[] }) {
     <div className="panel border-agent-line">
       <div className="panel-head bg-agent-soft border-agent-line">
         <div>
-          <div className="panel-title text-agent">The plan changed after your override</div>
+          <div className="panel-title text-agent">The plan changed after your correction</div>
           <div className="panel-sub text-agent/70">
-            The agent re-entered the graph at the cohort analyst. Marks below the override
-            were not re-run.
+            The class picture was worked out again and the plan rebuilt. Marks were not read
+            again.
           </div>
         </div>
       </div>
@@ -111,7 +87,7 @@ export function ChangeList({ changes }: { changes: PlanChange[] }) {
                   : "border-agent-line bg-agent-soft text-agent",
               )}
             >
-              {c.kind}
+              {PLAN_CHANGE_LABELS[c.kind] ?? c.kind}
             </span>
             <span className="text-ink-muted">{c.detail}</span>
           </li>

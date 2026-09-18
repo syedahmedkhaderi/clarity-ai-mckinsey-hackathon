@@ -3,28 +3,14 @@ import type {
   BatchResult,
   Course,
   Health,
+  LearnerProfile,
   Question,
   Taxonomy,
   TraceEvent,
 } from "../types";
+import { get, post } from "./http";
 
-const BASE = "/api";
-
-async function get<T>(path: string): Promise<T> {
-  const res = await fetch(`${BASE}${path}`);
-  if (!res.ok) throw new Error(`${res.status} on ${path}`);
-  return res.json() as Promise<T>;
-}
-
-async function post<T>(path: string, body: unknown): Promise<T> {
-  const res = await fetch(`${BASE}${path}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) throw new Error(`${res.status} on ${path}`);
-  return res.json() as Promise<T>;
-}
+export { ApiError } from "./http";
 
 export const api = {
   health: () => get<Health>("/health"),
@@ -32,6 +18,7 @@ export const api = {
   assignments: (courseId: string) => get<Assignment[]>(`/lms/courses/${courseId}/assignments`),
   taxonomy: () => get<Taxonomy>("/taxonomy"),
   questions: (assessmentId: string) => get<Question[]>(`/assessments/${assessmentId}/questions`),
+  profile: (learnerId: string) => get<LearnerProfile>(`/learner/${learnerId}/profile`),
 
   runBatch: (assessment_id: string, cohort_id: string, facilitator_minutes: number) =>
     post<{ batch_id: string; status: string }>("/batch/run", {

@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import type { LearnerContext } from "../types";
-import { pct } from "../lib/format";
+import { PATTERN_KIND_LABELS, pct } from "../lib/format";
 
 export function LearnerCard({
   learner,
@@ -25,17 +25,17 @@ export function LearnerCard({
           : "border-transparent hover:bg-surface-sunken",
       )}
     >
-      <div className="flex items-baseline justify-between gap-2">
-        <span className="text-sm font-medium text-ink">{learner.learner_name}</span>
-        <span className="num text-ink-faint">{learner.learner_id}</span>
-      </div>
+      <div className="text-sm font-medium text-ink">{learner.learner_name}</div>
       <div className="mt-0.5 flex flex-wrap items-center gap-1.5">
         <span className="text-2xs text-ink-muted">
-          {errorCount} {errorCount === 1 ? "error" : "errors"}
+          {errorCount} {errorCount === 1 ? "mistake" : "mistakes"}
         </span>
         {recurringCount > 0 && (
-          <span className="tag border-agent-line bg-agent-soft text-agent">
-            {recurringCount} recurring
+          <span
+            className="tag border-agent-line bg-agent-soft text-agent"
+            title={`${recurringCount} ${recurringCount === 1 ? "pattern" : "patterns"}`}
+          >
+            {PATTERN_KIND_LABELS.recurring}
           </span>
         )}
         {learner.returner && (
@@ -48,7 +48,7 @@ export function LearnerCard({
             )}
             title={learner.note ?? undefined}
           >
-            history {pct(learner.history_completeness)}
+            {pct(learner.history_completeness)} of earlier tests on record
           </span>
         )}
       </div>

@@ -1,10 +1,11 @@
 import clsx from "clsx";
+import { pct } from "../lib/format";
 import type { CohortPatterns, LearnerContext } from "../types";
 
 /**
- * Learners on one axis, misconception nodes on the other. A column above the
- * shared threshold is labelled a teaching problem, which is the distinction the
- * whole cohort view exists to make.
+ * Students on one axis, mistake patterns on the other. A column at or above the
+ * whole-class line is marked, which is the distinction the class page exists to
+ * make.
  */
 export function CohortHeatmap({
   patterns,
@@ -25,14 +26,17 @@ export function CohortHeatmap({
       <table className="min-w-full">
         <thead>
           <tr>
-            <th className="sticky left-0 z-10 bg-surface-raised w-44">Learner</th>
+            <th className="sticky left-0 z-10 bg-surface-raised w-44">Student</th>
             {ordered.map((n) => (
-              <th key={n.node_id} className="w-11 text-center px-1">
+              <th key={n.node_id} className="w-11 text-center px-1 align-bottom">
                 <div
-                  className={clsx("num", n.teaching_problem ? "text-agent font-semibold" : "text-ink-muted")}
-                  title={`${n.node_id} ${n.label}`}
+                  className={clsx(
+                    "text-2xs normal-case tracking-normal h-28 mx-auto [writing-mode:vertical-rl] rotate-180 text-left",
+                    n.teaching_problem ? "text-agent font-semibold" : "text-ink-muted",
+                  )}
+                  title={n.label}
                 >
-                  {n.node_id}
+                  {n.label}
                 </div>
               </th>
             ))}
@@ -45,7 +49,7 @@ export function CohortHeatmap({
                 {l.learner_name}
                 {l.returner && (
                   <span className="ml-1.5 text-2xs text-ink-faint" title={l.note ?? undefined}>
-                    returner
+                    back after a gap
                   </span>
                 )}
               </td>
@@ -78,7 +82,7 @@ export function CohortHeatmap({
           ))}
           <tr>
             <td className="sticky left-0 z-10 bg-surface-raised text-xs font-medium text-ink-muted">
-              Share of cohort
+              Share of class (%)
             </td>
             {ordered.map((n) => (
               <td
@@ -98,15 +102,15 @@ export function CohortHeatmap({
       <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 mt-3 text-2xs text-ink-faint">
         <span className="inline-flex items-center gap-1.5">
           <span className="h-3 w-3 rounded-sm bg-agent-soft border border-agent-line" />
-          Diagnosed this assessment
+          Found in this test
         </span>
         <span className="inline-flex items-center gap-1.5">
           <span className="h-3 w-3 rounded-sm bg-agent" />
-          Recurring across assessments
+          Keeps happening across tests
         </span>
         <span>
-          A node held by {Math.round(threshold * 100)} percent or more of the cohort is treated as a
-          teaching problem, not a set of individual problems.
+          A pattern shared by {pct(threshold)} or more of the class is a whole-class problem, not a
+          set of individual ones.
         </span>
       </div>
     </div>

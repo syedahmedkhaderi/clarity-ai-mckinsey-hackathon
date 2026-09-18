@@ -1,18 +1,11 @@
 import clsx from "clsx";
+import { pct, sure } from "../lib/format";
 
 /**
  * Confidence is always shown as a number. A bare colour would invite the
  * question "what does amber mean", and there would be no good answer.
  */
-export function ConfidenceBadge({
-  value,
-  floor,
-  label = "conf",
-}: {
-  value: number;
-  floor?: number;
-  label?: string;
-}) {
+export function ConfidenceBadge({ value, floor }: { value: number; floor?: number }) {
   const below = floor !== undefined && value < floor;
   return (
     <span
@@ -22,11 +15,11 @@ export function ConfidenceBadge({
       )}
       title={
         below
-          ? `Below the ${floor?.toFixed(2)} threshold, so this item was sent to a human`
-          : "Agent confidence, 0.00 to 1.00"
+          ? `Below the ${pct(floor)} the system needs, so this was handed to you`
+          : "How sure the system is about this reading"
       }
     >
-      {label} {value.toFixed(2)}
+      {sure(value)}
     </span>
   );
 }

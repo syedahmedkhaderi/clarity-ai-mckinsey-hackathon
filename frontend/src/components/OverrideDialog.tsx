@@ -1,15 +1,17 @@
 import { useState } from "react";
+import { useSession } from "../hooks/useSession";
 import type { Taxonomy } from "../types";
 
 export interface OverrideTarget {
   type: "diagnosis" | "mark" | "learner_unavailable";
   learnerId: string;
+  learnerName?: string;
   questionId?: string;
   currentNode?: string | null;
 }
 
 /**
- * The facilitator correcting the agent. This is the behaviour the product rests
+ * The teacher correcting the system. This is the behaviour the product rests
  * on, so the dialog says plainly what will happen next.
  */
 export function OverrideDialog({
@@ -27,7 +29,9 @@ export function OverrideDialog({
 }) {
   const [node, setNode] = useState<string>("");
   const [reason, setReason] = useState("");
+  const { questionName } = useSession();
   const nodes = taxonomy?.nodes ?? [];
+  const currentLabel = nodes.find((n) => n.id === target.currentNode)?.label ?? target.currentNode;
 
   return (
     <div className="fixed inset-0 z-50 bg-ink/40 grid place-items-center p-6">
@@ -36,12 +40,12 @@ export function OverrideDialog({
           <div>
             <div className="panel-title">
               {target.type === "learner_unavailable"
-                ? `Mark ${target.learnerId} unavailable`
-                : `Override the diagnosis on ${target.questionId}`}
+                ? `Mark ${target.learnerName ?? "this student"} as unavailable`
+                : `Correct why marks were lost, ${questionName(target.questionId ?? "")}`}
             </div>
             <div className="panel-sub">
-              LOOP will take your correction as fact, recompute the cohort picture underneath it
-              and rebuild the plan. Marks below this point are not re-run.
+              Your correction is treated as fact. The class picture and the action plan are
+              rebuilt from it. Marks are not read again.
             </div>
           </div>
         </div>
@@ -57,16 +61,16 @@ export function OverrideDialog({
                 onChange={(e) => setNode(e.target.value)}
                 className="w-full rounded border border-line-strong px-2 py-1.5 text-sm bg-surface"
               >
-                <option value="">Not a misconception at all, remove it</option>
+                <option value="">Not a mistake pattern at all, remove it</option>
                 {nodes.map((n) => (
                   <option key={n.id} value={n.id}>
-                    {n.id} {n.label}
+                    {n.label}
                   </option>
                 ))}
               </select>
               {target.currentNode && (
                 <span className="block text-2xs text-ink-faint mt-1">
-                  The agent said {target.currentNode}.
+                  The system said: {currentLabel}.
                 </span>
               )}
             </label>
@@ -80,7 +84,7 @@ export function OverrideDialog({
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               rows={3}
-              placeholder="This is recorded against the override so the next facilitator can see your reasoning."
+              placeholder="This is kept with your correction so the next teacher can see your reasoning."
               className="w-full rounded border border-line-strong px-2 py-1.5 text-sm resize-none"
             />
           </label>
@@ -95,7 +99,7 @@ export function OverrideDialog({
             onClick={() => onSubmit(node || null, reason)}
             disabled={busy}
           >
-            {busy ? "Re-planning" : "Apply and re-plan"}
+            {busy ? "Rebuilding the plan" : "Apply and rebuild the plan"}
           </button>
         </div>
       </div>

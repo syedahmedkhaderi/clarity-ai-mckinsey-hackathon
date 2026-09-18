@@ -1,18 +1,22 @@
 import clsx from "clsx";
 import { useMemo } from "react";
 import type { TraceEvent } from "../types";
-import { AGENT_LABELS, shortTime } from "../lib/format";
+import { AGENT_LABELS, REASON_LABELS, shortTime } from "../lib/format";
+import type { ReasonCode } from "../types";
 
 const PIPELINE = ["intake", "marker", "diagnostician", "cohort_analyst", "planner"];
 
-/** What each agent is actually doing, in words a facilitator would use. */
+/** What each step is actually doing, in words a teacher would use. */
 const STAGE_BLURB: Record<string, string> = {
-  intake: "Reading the batch from the learning portal and pulling each learner's history",
-  marker: "Marking every response against the scheme, provisionally",
-  diagnostician: "Naming the misconception behind each error, quoting the learner's own words",
-  cohort_analyst: "Working out which errors are one learner's problem and which are the room's",
+  intake: "Reading the class's answers and pulling each student's earlier results",
+  marker: "Marking every answer against the scheme, as a draft",
+  diagnostician: "Finding the mistake pattern behind each lost mark, quoting the student's own words",
+  cohort_analyst: "Working out which mistakes belong to one student and which to the whole class",
   planner: "Deciding how to spend your time, and what it has to leave out",
 };
+
+/** Reason codes are shown as their plain label; anything else is left as it is. */
+const actionLabel = (action: string) => REASON_LABELS[action as ReasonCode] ?? action;
 
 /** Which reason codes each gated node can raise, mirroring agents/reviewer.py. */
 const GATE_CODES: Record<string, string[]> = {
@@ -61,10 +65,9 @@ export function AgentTrace({
     <div className="panel">
       <div className="panel-head">
         <div className="min-w-0">
-          <div className="panel-title">Agent pipeline</div>
+          <div className="panel-title">Steps</div>
           <div className="panel-sub">
-            LangGraph state machine. The reviewer gate runs at the end of marker,
-            diagnostician and planner.
+            The safety check runs after marking, finding mistakes and planning.
           </div>
         </div>
         <span
@@ -90,7 +93,7 @@ export function AgentTrace({
               {running && current
                 ? STAGE_BLURB[current]
                 : status === "complete"
-                  ? "Finished. Every mark below is provisional until you approve it."
+                  ? "Finished. Every mark is a draft until you confirm it."
                   : "Stopped early. Everything completed before that point is kept."}
             </span>
             <span className="num text-ink-faint shrink-0 ml-3">
@@ -169,7 +172,7 @@ export function AgentTrace({
                             e.level === "warning" ? "text-flag" : "text-ink-faint",
                           )}
                         >
-                          {e.action}
+                          {actionLabel(e.action)}
                         </span>
                         {e.detail}
                       </div>
@@ -184,7 +187,7 @@ export function AgentTrace({
 
         {events.length === 0 && status !== "running" && (
           <p className="text-sm text-ink-faint">
-            No run yet. Start an analysis to watch the agents work.
+            Nothing has run yet. Start an analysis to watch the steps happen.
           </p>
         )}
         {events.length === 0 && status === "running" && (
@@ -202,17 +205,17 @@ function GateBranch({ agent, events }: { agent: string; events: TraceEvent[] }) 
   return (
     <div className="mt-1.5 ml-1 border-l-2 border-dashed border-flag-line pl-3">
       <div className="text-2xs font-medium uppercase tracking-wide text-flag">
-        Reviewer gate, {relevant.length} sent to you
+        Safety check, {relevant.length} handed to you
       </div>
       {relevant.slice(0, 3).map((e, i) => (
         <div key={i} className="text-xs text-ink-muted">
-          <span className="num text-flag">{e.action}</span>{" "}
+          <span className="text-flag">{actionLabel(e.action)}</span>{" "}
           {e.detail.length > 110 ? `${e.detail.slice(0, 110)}...` : e.detail}
         </div>
       ))}
       {relevant.length > 3 && (
         <div className="text-2xs text-ink-faint">
-          and {relevant.length - 3} more in the review queue
+          and {relevant.length - 3} more in To review
         </div>
       )}
     </div>
@@ -223,7 +226,7 @@ export function TraceLog({ events }: { events: TraceEvent[] }) {
   return (
     <div className="panel">
       <div className="panel-head">
-        <div className="panel-title">Full trace</div>
+        <div className="panel-title">Full activity log</div>
         <span className="panel-sub">{events.length} events</span>
       </div>
       <div className="max-h-80 overflow-y-auto">
@@ -252,7 +255,7 @@ export function TraceLog({ events }: { events: TraceEvent[] }) {
                           : "text-ink-faint",
                     )}
                   >
-                    {e.action}
+                    {actionLabel(e.action)}
                   </span>
                 </td>
                 <td className="text-xs text-ink-muted">{e.detail}</td>

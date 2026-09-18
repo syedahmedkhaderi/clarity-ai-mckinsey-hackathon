@@ -210,6 +210,12 @@ export interface Assignment {
   expected_count: number;
   topics: string[];
   due_at: string;
+  /** What the teacher sees: "Test 3" for a demo test, the given name for an upload. */
+  display_name: string;
+  source: "demo" | "uploaded";
+  /** True when only the AI can analyse this test (uploaded tests). */
+  needs_ai: boolean;
+  class_id: string;
 }
 
 export interface Question {
@@ -258,5 +264,8 @@ export interface Health {
     reviewer_gated: string[];
     replan_entry: string;
   };
+  /** Includes shared_misconception_share and high_severity_floor. */
   thresholds: Record<string, number>;
+  ai_available: boolean;
+  email_configured: boolean;
 }
