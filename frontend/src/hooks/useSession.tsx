@@ -10,6 +10,7 @@ import {
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ApiError, api } from "../api/client";
 import type { OverrideTarget } from "../components/OverrideDialog";
+import { plainText } from "../lib/plain";
 import {
   AI_KEY_REQUIRED_SENTENCE,
   DEFAULT_HIGH_SEVERITY_FLOOR,
@@ -86,6 +87,8 @@ export interface Session {
   patternName: (nodeId: string | null | undefined) => string;
   topicName: (topicId: string) => string;
   learnerName: (learnerId: string) => string;
+  /** Rewrites ids and old jargon inside backend-written text into plain words. */
+  plain: (text: string | null | undefined) => string;
 
   error: string | null;
   clearError: () => void;
@@ -314,6 +317,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const testName = (assessmentId: string) =>
     testList.find((t) => t.id === assessmentId)?.display_name ?? testLabel(assessmentId);
 
+  const questionName = (questionId: string) =>
+    questionLabel(questionId, testName(assessmentOfQuestion(questionId)) || undefined);
+  const patternName = (nodeId: string | null | undefined) =>
+    nodeId ? (taxonomyData?.nodes.find((n) => n.id === nodeId)?.label ?? nodeId) : "";
+
   const value: Session = {
     health: healthData,
     tests: testList,
@@ -345,12 +353,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     sharedThreshold: healthData?.thresholds.shared_misconception_share ?? 0.4,
     highSeverityFloor: healthData?.thresholds.high_severity_floor ?? DEFAULT_HIGH_SEVERITY_FLOOR,
     testName,
-    questionName: (questionId) =>
-      questionLabel(questionId, testName(assessmentOfQuestion(questionId)) || undefined),
-    patternName: (nodeId) =>
-      nodeId ? (taxonomyData?.nodes.find((n) => n.id === nodeId)?.label ?? nodeId) : "",
+    questionName,
+    patternName,
     topicName: (topicId) => taxonomyData?.topics.find((t) => t.id === topicId)?.label ?? topicId,
     learnerName,
+    plain: (text) => plainText(text, { patternName, learnerName, questionName, testName }),
     error,
     clearError: () => setError(null),
   };
