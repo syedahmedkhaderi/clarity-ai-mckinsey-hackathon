@@ -1,16 +1,14 @@
+# Never commit these. The repository is public and these hold live credentials.
+.env
+qb_gateway/.env
+qb_gateway/secret
+
+# Environments and caches
 __pycache__/
 *.py[cod]
 .venv/
 venv/
-.env
 node_modules/
-frontend/dist/
-data/generated/*.json
-loop.db
-*.log
-.DS_Store
 .pytest_cache/
-
-# Gateway credentials. Never commit these.
-qb_gateway/
-secret
+.DS_Store
+*.log
