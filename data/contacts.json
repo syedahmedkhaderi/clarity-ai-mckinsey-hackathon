@@ -1,0 +1,65 @@
+{
+  "class_id": "C1",
+  "students": [
+    {
+      "learner_id": "L01",
+      "name": "Thabo M.",
+      "email": "thabo.m@example.com"
+    },
+    {
+      "learner_id": "L02",
+      "name": "Nomsa D.",
+      "email": "nomsa.d@example.com"
+    },
+    {
+      "learner_id": "L03",
+      "name": "Ravi P.",
+      "email": "ravi.p@example.com"
+    },
+    {
+      "learner_id": "L04",
+      "name": "Fatima S.",
+      "email": "fatima.s@example.com"
+    },
+    {
+      "learner_id": "L05",
+      "name": "Chen W.",
+      "email": "chen.w@example.com"
+    },
+    {
+      "learner_id": "L06",
+      "name": "Kwame A.",
+      "email": "kwame.a@example.com"
+    },
+    {
+      "learner_id": "L07",
+      "name": "Amira K.",
+      "email": "amira.k@example.com"
+    },
+    {
+      "learner_id": "L08",
+      "name": "Grace O.",
+      "email": "grace.o@example.com"
+    },
+    {
+      "learner_id": "L09",
+      "name": "Ibrahim N.",
+      "email": "ibrahim.n@example.com"
+    },
+    {
+      "learner_id": "L10",
+      "name": "Sofia R.",
+      "email": "sofia.r@example.com"
+    },
+    {
+      "learner_id": "L11",
+      "name": "Liu Y.",
+      "email": "liu.y@example.com"
+    },
+    {
+      "learner_id": "L12",
+      "name": "Daniel M.",
+      "email": "daniel.m@example.com"
+    }
+  ]
+}

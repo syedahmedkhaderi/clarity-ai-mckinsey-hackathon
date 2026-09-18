@@ -19,6 +19,7 @@ from backend import config, db, llm, service
 from backend.graph import GRAPH_EDGES, GRAPH_NODES, REPLAN_ENTRY, REVIEWER_GATED_NODES
 from backend.lms import mock_api
 from backend.models import Override
+from backend.routers import chat, email, insights, uploads
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
@@ -31,6 +32,8 @@ app = FastAPI(title="LOOP", version="1.0", lifespan=lifespan,
                           "Meridian Foundation learning centres.")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"],
                    allow_headers=["*"])
+for _router in (uploads.router, email.router, chat.router, insights.router):
+    app.include_router(_router)
 
 
 class RunRequest(BaseModel):
@@ -63,6 +66,8 @@ def health() -> dict[str, Any]:
         "provider": config.PROVIDER,
         "model_fast": config.MODEL_FAST if llm.available() else None,
         "model_smart": config.MODEL_SMART if llm.available() else None,
+        "ai_available": llm.available(),
+        "email_configured": bool(config.GMAIL_USER and config.GMAIL_APP_PASSWORD),
         "graph": {"nodes": GRAPH_NODES, "edges": GRAPH_EDGES,
                   "reviewer_gated": REVIEWER_GATED_NODES, "replan_entry": REPLAN_ENTRY},
         "thresholds": {
@@ -71,6 +76,7 @@ def health() -> dict[str, Any]:
             "ambiguity_gap": config.AMBIGUITY_GAP,
             "shared_misconception_share": config.SHARED_MISCONCEPTION_SHARE,
             "min_learners_for_pattern": config.MIN_LEARNERS_FOR_PATTERN,
+            "high_severity_floor": config.HIGH_SEVERITY_FLOOR,
         },
     }
 
@@ -102,7 +108,12 @@ def questions(assessment_id: str) -> list[dict[str, Any]]:
 
 @app.post("/api/batch/run")
 def run_batch(req: RunRequest) -> dict[str, Any]:
-    batch_id = service.start_batch(req.assessment_id, req.cohort_id, req.facilitator_minutes)
+    try:
+        cohort_id = mock_api.resolve_run(req.assessment_id, req.cohort_id)
+    except mock_api.RunRefused as refusal:
+        raise HTTPException(refusal.status, detail={"code": refusal.code,
+                                                    "message": refusal.message})
+    batch_id = service.start_batch(req.assessment_id, cohort_id, req.facilitator_minutes)
     return {"batch_id": batch_id, "status": "running"}
 
 

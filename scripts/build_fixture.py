@@ -40,7 +40,7 @@ def main() -> None:
     _write("questions.json", {a["assessment_id"]: a["questions"]
                               for a in mock_api.schemes()["assessments"]})
     profiles = {l["learner_id"]: db.full_profile(l["learner_id"])
-                for l in mock_api.get_roster()}
+                for l in mock_api.get_roster("C1")}
     _write("learner_profiles.json", profiles)
     print(f"fixtures written to {FIXTURES}")
 

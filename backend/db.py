@@ -62,6 +62,55 @@ CREATE TABLE IF NOT EXISTS overrides (
 
 CREATE INDEX IF NOT EXISTS idx_profile_learner ON error_profile (learner_id);
 CREATE INDEX IF NOT EXISTS idx_marks_learner ON marks (learner_id);
+
+CREATE TABLE IF NOT EXISTS classes (
+    class_id       TEXT PRIMARY KEY,
+    name           TEXT NOT NULL,
+    created_at     TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS uploaded_tests (
+    assessment_id  TEXT PRIMARY KEY,
+    class_id       TEXT NOT NULL,
+    seq            INTEGER NOT NULL,
+    name           TEXT NOT NULL,
+    due_at         TEXT NOT NULL,
+    created_at     TEXT NOT NULL,
+    spec_json      TEXT NOT NULL,
+    files_json     TEXT NOT NULL DEFAULT '[]'
+);
+
+CREATE TABLE IF NOT EXISTS uploaded_answers (
+    assessment_id   TEXT NOT NULL,
+    learner_id      TEXT NOT NULL,
+    question_id     TEXT NOT NULL,
+    answer          TEXT NOT NULL,
+    selected_option TEXT,
+    submitted_at    TEXT NOT NULL,
+    PRIMARY KEY (assessment_id, learner_id, question_id)
+);
+
+CREATE TABLE IF NOT EXISTS students (
+    learner_id     TEXT PRIMARY KEY,
+    class_id       TEXT NOT NULL,
+    ref            TEXT NOT NULL DEFAULT '',
+    name           TEXT NOT NULL,
+    email          TEXT NOT NULL DEFAULT '',
+    origin         TEXT NOT NULL DEFAULT 'demo'
+);
+
+CREATE TABLE IF NOT EXISTS sent_emails (
+    email_id       INTEGER PRIMARY KEY AUTOINCREMENT,
+    batch_id       TEXT NOT NULL,
+    learner_id     TEXT NOT NULL,
+    kind           TEXT NOT NULL,
+    to_address     TEXT NOT NULL,
+    subject        TEXT NOT NULL,
+    body           TEXT NOT NULL,
+    status         TEXT NOT NULL,
+    reason         TEXT NOT NULL DEFAULT '',
+    created_at     TEXT NOT NULL
+);
 """
 
 
@@ -74,6 +123,10 @@ def connect(path: Path | None = None) -> sqlite3.Connection:
 def init_db(path: Path | None = None) -> None:
     with connect(path) as conn:
         conn.executescript(SCHEMA)
+    # Imported here because backend.students reads this module's connect().
+    from backend import students
+
+    students.seed_demo_students(path)
 
 
 def save_batch(state: dict[str, Any], created_at: str) -> None:

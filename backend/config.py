@@ -155,3 +155,36 @@ ACTION_LABELS: Final[dict[str, str]] = {
     "individual_followup": "Individual follow-up",
     "feedback_review": "Drafted feedback review",
 }
+
+# --- Email -------------------------------------------------------------------
+# Gmail over SMTP_SSL with an app password. Both blank is a supported state: the
+# email is then saved, shown as "Saved, not delivered", and never as sent.
+GMAIL_USER: Final[str] = _env("GMAIL_USER")
+GMAIL_APP_PASSWORD: Final[str] = _env("GMAIL_APP_PASSWORD")
+SMTP_HOST: Final[str] = _env("SMTP_HOST", "smtp.gmail.com")
+SMTP_PORT: Final[int] = int(_env("SMTP_PORT", "465"))
+SMTP_TIMEOUT_SECONDS: Final[int] = int(_env("SMTP_TIMEOUT_SECONDS", "15"))
+
+# Addresses that can never deliver. A domain is reserved when it equals one of
+# RESERVED_EMAIL_DOMAINS or ends with one of RESERVED_EMAIL_SUFFIXES (the second
+# list already carries its leading dot). Demo students use example.com so a demo
+# can never email a real person.
+RESERVED_EMAIL_DOMAINS: Final[tuple[str, ...]] = ("example.com", "example.org", "example.net")
+RESERVED_EMAIL_SUFFIXES: Final[tuple[str, ...]] = (".test", ".invalid", ".example", ".localhost")
+
+# --- Uploads -----------------------------------------------------------------
+# Sized for one teacher's class, not for a school. A file over the byte limit is
+# refused before it is parsed.
+UPLOAD_MAX_BYTES: Final[int] = 2_000_000
+UPLOAD_MAX_STUDENTS: Final[int] = 60
+UPLOAD_MAX_QUESTIONS: Final[int] = 40
+UPLOAD_MAX_TESTS: Final[int] = 99
+# Below this a class-wide pattern cannot be told from coincidence, so the upload
+# warns rather than refuses. It mirrors MIN_LEARNERS_FOR_PATTERN by design.
+UPLOAD_MIN_STUDENTS: Final[int] = 4
+
+# --- Chat --------------------------------------------------------------------
+CHAT_TOP_K: Final[int] = 6
+CHAT_MAX_QUESTION_CHARS: Final[int] = 500
+BM25_K1: Final[float] = 1.5
+BM25_B: Final[float] = 0.75
