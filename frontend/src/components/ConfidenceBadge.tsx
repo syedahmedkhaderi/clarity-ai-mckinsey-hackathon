@@ -15,8 +15,8 @@ export function ConfidenceBadge({ value, floor }: { value: number; floor?: numbe
       )}
       title={
         below
-          ? `Below the ${pct(floor)} the system needs, so this was handed to you`
-          : "How sure the system is about this reading"
+          ? `Below the ${pct(floor)} needed, so this was handed to you`
+          : "How sure the system is about this finding"
       }
     >
       {sure(value)}

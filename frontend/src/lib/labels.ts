@@ -145,8 +145,15 @@ export function scoreText(value: number): string {
  * One plain sentence about a student's main mistake, built from the taxonomy's own
  * label so it can never drift from what the rest of the screen says.
  */
-export function mistakeHeadline(name: string, patternLabel: string | null, keeps: boolean): string {
+export function mistakeHeadline(
+  name: string,
+  patternLabel: string | null,
+  keeps: boolean,
+  wording = false,
+): string {
   if (!patternLabel) return `${name} has no mistake pattern to work on in this test.`;
+  // A student who understands the maths but writes it badly is never called weak at maths.
+  if (wording) return `For ${name}, the wording, not the maths, may be the problem.`;
   const pattern = patternLabel.charAt(0).toLowerCase() + patternLabel.slice(1).replace(/\.$/, "");
   return keeps
     ? `${name} keeps making the same mistake: ${pattern}.`
