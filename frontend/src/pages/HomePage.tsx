@@ -48,6 +48,15 @@ export function HomePage() {
         />
       )}
 
+      {s.preloaded && !s.running && (
+        <div className="panel border-agent-line bg-agent-soft px-4 py-3">
+          <p className="text-sm text-agent">
+            This is a worked example, ready so you can look around. It uses sample answers from a
+            practice class. Choose a test above and press Analyse this test to run it on your own.
+          </p>
+        </div>
+      )}
+
       {s.batch ? (
         <HomeSummary batch={s.batch} />
       ) : (

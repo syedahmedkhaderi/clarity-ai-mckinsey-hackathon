@@ -78,8 +78,16 @@ def run(state: LoopState) -> LoopState:
               f"were marked by the deterministic rules instead, so the run continues.",
               level="warning")
 
+
+    def tripped(detail: str) -> None:
+        trace(state, AGENT, "provider_down",
+              f"The model provider stopped answering ({detail}). Switching to the "
+              f"deterministic rules for the rest of this run. Marks still come out, from "
+              f"the marking scheme rather than the model.",
+              level="warning")
+
     outputs = llm.call_many(marking.SYSTEM, prompts, _MarkBatch,
-                            on_progress=progress, on_timeout=timed_out)
+                            on_progress=progress, on_timeout=timed_out, on_trip=tripped)
     llm_calls = sum(1 for o in outputs if o is not None)
     for (question, part), out in zip(chunks, outputs):
         marks.extend(_resolve_written(question, part, out))

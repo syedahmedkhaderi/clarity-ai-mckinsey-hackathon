@@ -130,6 +130,18 @@ LLM_TIMEOUT_SECONDS: Final[int] = int(_env("LOOP_LLM_TIMEOUT", "30"))
 # over for those items. A provider stall degrades the run, it never hangs it.
 LLM_STAGE_BUDGET_SECONDS: Final[int] = int(_env("LOOP_LLM_STAGE_BUDGET", "75"))
 
+# Circuit breaker. After this many consecutive failures the provider is treated
+# as down and the rest of the run goes straight to the deterministic rules. A
+# dead endpoint would otherwise cost a full timeout on every remaining call, so
+# a run that should degrade in seconds would instead crawl for minutes.
+LLM_FAILURE_THRESHOLD: Final[int] = int(_env("LOOP_LLM_FAILURE_THRESHOLD", "3"))
+# How long the breaker stays open before one call is allowed through to test it.
+LLM_BREAKER_COOLDOWN_SECONDS: Final[int] = int(_env("LOOP_LLM_BREAKER_COOLDOWN", "60"))
+
+# Pre-load a finished analysis at startup so the app is never empty on first
+# open. Uses the deterministic rules, so it is instant and costs nothing.
+SEED_DEMO: Final[bool] = _env("LOOP_SEED_DEMO", "1").lower() in ("1", "true", "yes")
+
 # Reviewer gate thresholds. Each maps to one reason code in agents/reviewer.py.
 MARK_CONFIDENCE_FLOOR: Final[float] = 0.60
 DIAGNOSIS_CONFIDENCE_FLOOR: Final[float] = 0.65

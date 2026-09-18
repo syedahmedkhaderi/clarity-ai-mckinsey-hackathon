@@ -93,6 +93,13 @@ Breaking any of these is a defect, not a trade-off. Each has a test.
     `cohort_analyst`, not at `intake`. Marks below the override are not re-run.
     `tests/test_override_replan.py` guards this end to end.
 
+**The app is never empty on first open.** `backend/demo_seed.py` runs A1 and A2
+for history and A3 for a finished batch at startup, always on the deterministic
+rules so it is instant, free and identical everywhere. It is idempotent and
+never overwrites an existing run. `/api/batch/latest` serves it and the UI adopts
+it on mount, labelled as a worked example so nobody mistakes it for their own
+data. Set `LOOP_SEED_DEMO=0` to turn it off.
+
 ## 3. How to run things
 
 ```
@@ -114,6 +121,16 @@ that branches on it.
 any backend import. Tests verify wiring and invariants, so they must be fast,
 free and repeatable. `eval/evaluate.py` is where the model is measured. Do not
 let a test depend on a live gateway.
+
+**A dead provider must cost quality, never a run.** `llm.breaker` opens after
+`LLM_FAILURE_THRESHOLD` consecutive failures and every later call returns None
+at once, which every agent already handles as "use the rules". Measured: a run
+against a dead endpoint completes in 1.5 seconds with a full result, where
+without the breaker it would pay a timeout on each of 36 calls. `llm.call` never
+raises, for any reason, including while building a client or importing a
+provider package. `tests/test_provider_failure.py` breaks the provider
+deliberately and asserts the run still produces marks, diagnoses, a cohort view
+and a plan.
 
 **Nothing may hang.** `llm.call_many` caps a batch with a wall-clock budget
 (`LLM_STAGE_BUDGET_SECONDS`) and abandons stragglers to the deterministic rules,

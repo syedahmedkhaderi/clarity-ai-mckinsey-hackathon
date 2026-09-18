@@ -318,6 +318,11 @@ def _draft_feedback(state: LoopState) -> list[DraftedFeedback]:
         feedback_prompt.SYSTEM,
         [feedback_prompt.build(n, p) for n, p in zip(names, payloads)],
         _FeedbackOut, smart=config.PLANNER_SMART, on_progress=progress,
+        on_trip=lambda detail: trace(
+            state, AGENT, "provider_down",
+            f"The model provider stopped answering ({detail}). Feedback for the remaining "
+            f"learners is written from the taxonomy's remediation hints instead.",
+            level="warning"),
         on_timeout=lambda missing, total: trace(
             state, AGENT, "timeout",
             f"{missing} of {total} feedback drafts did not return in time. Those learners "

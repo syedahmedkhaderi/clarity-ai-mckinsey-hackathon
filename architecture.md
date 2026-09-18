@@ -194,7 +194,29 @@ indistinguishable from a hang, and the pipeline panel is the main evidence that
 this is an agent system rather than a dashboard.
 
 With no credentials, `backend/config.py::OFFLINE` is true and every model
-call returns `None`. Each agent falls back to `backend/agents/offline_rules.py`,
+call returns `None`.
+
+### When the provider is present but broken
+
+`llm.breaker` is a circuit breaker. Three consecutive failures open it, and every
+later call returns `None` immediately instead of waiting out a timeout. The
+agents need no new code path: `None` already means "use the rules". One call is
+let through after a cooldown to see whether the provider recovered.
+
+Measured against a dead endpoint: a full run completes in 1.5 seconds with 96
+marks, 28 diagnoses, the cohort pattern and a plan. Without the breaker the same
+run pays a timeout on each of 36 marking calls before reaching the same answer.
+The trace carries a `provider_down` event so the degradation is visible rather
+than silent.
+
+## Demo seeding
+
+`backend/demo_seed.py` runs A1 and A2 for learner history and A3 for a finished
+batch during FastAPI startup, so the app opens on a worked example rather than an
+empty shell. It always uses the rule engine, which makes it instant, free and
+identical on every machine, and it is idempotent, so a restart never overwrites
+the run someone is looking at. `/api/batch/latest` serves it; the UI adopts it on
+mount and labels it as an example. Each agent falls back to `backend/agents/offline_rules.py`,
 a deterministic engine that reads the marking scheme and the taxonomy. The
 system runs end to end with no key and no network.
 

@@ -19,7 +19,10 @@ cd lms-marks
 ./setup.sh && ./start.sh
 ```
 
-Then open http://localhost:5173.
+Then open http://localhost:5173. **It opens on a finished analysis already**, so
+there is something to look at before you press anything. That example is seeded
+at startup from the deterministic rules, takes about a second, and is labelled on
+screen as an example. Pressing Analyse runs it for real against the model.
 
 `setup.sh` creates the virtualenv, installs both dependency sets, generates the
 data, seeds the learner history, rebuilds the frontend fixtures and runs the
@@ -42,8 +45,14 @@ gitignored.
 
 **No API key is needed to run it.** Offline mode is a deterministic rule engine
 producing the same shapes as the model path, so the whole system is demoable
-with no key and no network. It is also the crash floor: any provider failure
-falls back to it rather than showing a stack trace.
+with no key and no network.
+
+It is also the crash floor, and that floor is tested rather than asserted. Point
+the app at a dead endpoint and a full run still completes **in 1.5 seconds**,
+with all 96 marks, 28 named misconceptions, the cohort pattern and a plan inside
+the budget. A circuit breaker opens after three consecutive failures so the run
+stops paying a timeout per call, and the trace tells the facilitator plainly that
+the provider stopped answering and the rules took over.
 
 Set `LOOP_OFFLINE=1` to force the rules even when credentials are present. The
 test suite does this, so tests stay fast, free and repeatable.

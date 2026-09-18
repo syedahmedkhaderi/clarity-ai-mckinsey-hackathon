@@ -147,9 +147,12 @@ def load_batch(batch_id: str) -> dict[str, Any] | None:
 
 def list_batches() -> list[dict[str, Any]]:
     with connect() as conn:
+        # rowid breaks the tie. created_at has one second resolution, and the
+        # startup seed writes three batches inside the same second, so ordering
+        # on the timestamp alone made "the latest run" ambiguous.
         rows = conn.execute(
             "SELECT batch_id, assessment_id, cohort_id, minutes, status, created_at "
-            "FROM batches ORDER BY created_at DESC"
+            "FROM batches ORDER BY created_at DESC, rowid DESC"
         ).fetchall()
     return [dict(r) for r in rows]
 

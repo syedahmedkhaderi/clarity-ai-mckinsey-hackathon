@@ -67,10 +67,18 @@ def run(state: LoopState) -> LoopState:
               f"{missing} of {total} diagnosis calls did not return in time. Those errors "
               f"were diagnosed by the deterministic rules instead.", level="warning")
 
+    def tripped(detail: str) -> None:
+        trace(state, AGENT, "provider_down",
+              f"The model provider stopped answering ({detail}). Switching to the "
+              f"deterministic rules for the rest of this run. Misconceptions are still "
+              f"named, by rule rather than by model.",
+              level="warning")
+
     outputs = llm.call_many(
         diagnosis_prompt.SYSTEM,
         [_build_prompt(q, sub, mark) for q, sub, mark in written],
         _DiagnosisOut, smart=True, on_progress=progress, on_timeout=timed_out,
+        on_trip=tripped,
     ) if llm.available() else [None] * len(written)
 
     model_calls = sum(1 for o in outputs if o is not None)

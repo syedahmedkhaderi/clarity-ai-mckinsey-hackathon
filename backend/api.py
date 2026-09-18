@@ -15,7 +15,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from backend import config, db, llm, service
+from backend import config, db, demo_seed, llm, service
 from backend.graph import GRAPH_EDGES, GRAPH_NODES, REPLAN_ENTRY, REVIEWER_GATED_NODES
 from backend.lms import mock_api
 from backend.models import Override
@@ -24,6 +24,11 @@ from backend.routers import chat, email, insights, uploads
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     db.init_db()
+    if config.SEED_DEMO:
+        # Synchronous on purpose. It takes well under a second on the rule
+        # engine, and a request arriving mid-seed would otherwise see an empty
+        # app for no good reason.
+        demo_seed.seed()
     yield
 
 
@@ -120,6 +125,24 @@ def run_batch(req: RunRequest) -> dict[str, Any]:
 @app.get("/api/batches")
 def batches() -> list[dict[str, Any]]:
     return service.list_batches()
+
+
+@app.get("/api/batch/latest")
+def latest_batch(cohort_id: str | None = None) -> dict[str, Any]:
+    """The most recent finished run, so the app opens on a worked example.
+
+    Declared before /api/batch/{batch_id} because FastAPI matches in order and
+    "latest" would otherwise be read as a batch id.
+    """
+    for row in service.list_batches():
+        if row.get("status") != "complete":
+            continue
+        if cohort_id and row.get("cohort_id") != cohort_id:
+            continue
+        state = service.get_batch(row["batch_id"])
+        if state:
+            return state
+    raise HTTPException(404, "No completed run yet")
 
 
 @app.get("/api/batch/{batch_id}")
