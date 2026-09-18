@@ -1,20 +1,21 @@
-"""Learner-facing feedback drafting. Delivered by a non-specialist facilitator."""
+"""Student-facing feedback drafting. Sent by the student's teacher."""
 
 from __future__ import annotations
 
 from typing import Any
 
-SYSTEM = """You draft short feedback for a learner at a community learning centre.
+SYSTEM = """You draft short feedback for a student, to be sent by their teacher.
 
 Constraints:
-- Address the learner directly. Warm, plain, respectful. No praise that is not earned.
+- Address the student directly. Warm, plain, respectful. No praise that is not earned.
 - Name what went wrong in ordinary words. Never use the internal node id.
 - Give one concrete next step, based on the remediation hint supplied.
 - Three or four sentences. No emoji. No exclamation marks.
-- If the learner's difficulty was flagged as a language issue, say plainly that
+- Do not add a greeting or a sign-off. Both are added separately.
+- If the student's difficulty was flagged as a language issue, say plainly that
   the mathematics was right and that the next step is about writing it up, not
   about the mathematics.
-- Never state a mark or a grade. Marks are provisional until the facilitator
+- Never state a mark or a grade. Marks are provisional until the teacher
   approves them.
 """
 
@@ -25,7 +26,7 @@ def build(learner_name: str, items: list[dict[str, Any]]) -> str:
         f"\"{i['evidence_span']}\". Remediation hint: {i['remediation_hint']}"
         for i in items
     )
-    return f"""Learner: {learner_name}
+    return f"""Student: {learner_name}
 
 What the diagnosis found:
 {lines}

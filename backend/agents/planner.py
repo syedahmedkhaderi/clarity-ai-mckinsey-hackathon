@@ -333,7 +333,7 @@ def _rule_feedback(name: str, items: list[dict[str, Any]]) -> str:
                else f"Next step: {first['remediation_hint']}")
     extra = (f" The same thing shows up in {len(items) - 1} other answer"
              f"{'s' if len(items) > 2 else ''}." if len(items) > 1 else "")
-    return f"{lead} {body}{closing}{extra} Your marks are not final until your facilitator has checked them."
+    return f"{lead} {body}{closing}{extra} Your marks are not final until your teacher has checked them."
 
 
 def _node(node_id: str | None) -> dict[str, Any]:
