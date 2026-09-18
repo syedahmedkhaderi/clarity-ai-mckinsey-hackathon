@@ -129,9 +129,28 @@ def _propose(state: LoopState, nodes: list[NodePattern]) -> list[PlannedAction]:
             title=a.title, node_id=a.node_id, learner_ids=a.learner_ids,
             cost_minutes=config.ACTION_COSTS[a.type], severity=a.severity,
             justification=a.justification, facilitator_script=a.facilitator_script))
+    proposed = _bound_group_actions(proposed, nodes, state)
     if not proposed:
         return rule_actions
     return _merge_guarantees(proposed, rule_actions, state)
+
+
+def _bound_group_actions(proposed: list[PlannedAction], nodes: list[NodePattern],
+                         state: LoopState) -> list[PlannedAction]:
+    """A group re-teach is only justified by a shared misconception.
+
+    The cohort analyst decides what counts as one, from a threshold in config.
+    Without this bound the model could schedule a re-teach for a pattern the
+    facilitator had just overridden below that threshold, and the override
+    re-plan would appear to change nothing.
+    """
+    shared = {n.node_id for n in nodes if n.teaching_problem}
+    kept = [a for a in proposed if a.type != "group_reteach" or a.node_id in shared]
+    if len(kept) != len(proposed):
+        trace(state, AGENT, "bounded",
+              f"{len(proposed) - len(kept)} proposed group re-teach actions were removed because "
+              f"the pattern is not shared by enough of the class.", level="decision")
+    return kept
 
 
 def _merge_guarantees(proposed: list[PlannedAction], rule_actions: list[PlannedAction],
