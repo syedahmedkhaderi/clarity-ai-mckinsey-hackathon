@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { useMemo } from "react";
 import type { TraceEvent } from "../types";
+import { useSession } from "../hooks/useSession";
 import { AGENT_LABELS, REASON_LABELS, shortTime } from "../lib/format";
 import type { ReasonCode } from "../types";
 
@@ -44,6 +45,7 @@ export function AgentTrace({
   status: string;
   elapsedMs: number;
 }) {
+  const { plain } = useSession();
   const byAgent = useMemo(() => {
     const map: Record<string, TraceEvent[]> = {};
     for (const e of events) (map[e.agent] ||= []).push(e);
@@ -159,7 +161,7 @@ export function AgentTrace({
                   <div className="mt-0.5 text-xs text-ink-faint">{STAGE_BLURB[agent]}</div>
                 )}
                 {st === "running" && latest && (
-                  <div className="mt-0.5 text-xs text-ink-muted">{latest.detail}</div>
+                  <div className="mt-0.5 text-xs text-ink-muted">{plain(latest.detail)}</div>
                 )}
                 {st === "done" &&
                   list
@@ -174,11 +176,11 @@ export function AgentTrace({
                         >
                           {actionLabel(e.action)}
                         </span>
-                        {e.detail}
+                        {plain(e.detail)}
                       </div>
                     ))}
                 {gated && st === "done" && (
-                  <GateBranch agent={agent} events={byAgent["reviewer"] || []} />
+                  <GateBranch agent={agent} events={byAgent["reviewer"] || []} plain={plain} />
                 )}
               </li>
             );
@@ -198,7 +200,15 @@ export function AgentTrace({
   );
 }
 
-function GateBranch({ agent, events }: { agent: string; events: TraceEvent[] }) {
+function GateBranch({
+  agent,
+  events,
+  plain,
+}: {
+  agent: string;
+  events: TraceEvent[];
+  plain: (text: string | null | undefined) => string;
+}) {
   const codes = GATE_CODES[agent] ?? [];
   const relevant = events.filter((e) => codes.includes(e.action));
   if (!relevant.length) return null;
@@ -207,12 +217,15 @@ function GateBranch({ agent, events }: { agent: string; events: TraceEvent[] }) 
       <div className="text-2xs font-medium uppercase tracking-wide text-flag">
         Safety check, {relevant.length} handed to you
       </div>
-      {relevant.slice(0, 3).map((e, i) => (
-        <div key={i} className="text-xs text-ink-muted">
-          <span className="text-flag">{actionLabel(e.action)}</span>{" "}
-          {e.detail.length > 110 ? `${e.detail.slice(0, 110)}...` : e.detail}
-        </div>
-      ))}
+      {relevant.slice(0, 3).map((e, i) => {
+        const detail = plain(e.detail);
+        return (
+          <div key={i} className="text-xs text-ink-muted">
+            <span className="text-flag">{actionLabel(e.action)}</span>{" "}
+            {detail.length > 110 ? `${detail.slice(0, 110)}...` : detail}
+          </div>
+        );
+      })}
       {relevant.length > 3 && (
         <div className="text-2xs text-ink-faint">
           and {relevant.length - 3} more in To review
@@ -223,6 +236,7 @@ function GateBranch({ agent, events }: { agent: string; events: TraceEvent[] }) 
 }
 
 export function TraceLog({ events }: { events: TraceEvent[] }) {
+  const { plain } = useSession();
   return (
     <div className="panel">
       <div className="panel-head">
@@ -258,7 +272,7 @@ export function TraceLog({ events }: { events: TraceEvent[] }) {
                     {actionLabel(e.action)}
                   </span>
                 </td>
-                <td className="text-xs text-ink-muted">{e.detail}</td>
+                <td className="text-xs text-ink-muted">{plain(e.detail)}</td>
               </tr>
             ))}
           </tbody>

@@ -1,29 +1,64 @@
 import { pct } from "../../lib/format";
 
-/** The share of students who got each question right. Placeholder. */
+/** Below this share the bar is drawn darker, and the legend says so in words. */
+const HARD_BELOW = 0.5;
+
+/**
+ * The share of students who got each question fully right. Bars share one scale
+ * from nobody to everybody, so a short bar is a hard question at a glance.
+ */
 export function QuestionBars({
   rows,
 }: {
   rows: { number: number; label: string; correct: number; total: number }[];
 }) {
+  if (rows.length === 0) return <p className="text-sm text-ink-muted">No questions to show yet.</p>;
   return (
-    <ul className="space-y-1.5">
-      {rows.map((r) => {
-        const share = r.total ? r.correct / r.total : 0;
-        return (
-          <li key={r.number} className="flex items-center gap-3 text-xs">
-            <span className="w-40 shrink-0 truncate text-ink-muted" title={r.label}>
-              {r.label}
-            </span>
-            <div className="flex-1 h-2 rounded-full bg-surface-sunken border border-line overflow-hidden">
-              <div className="h-full bg-ink-faint" style={{ width: `${share * 100}%` }} />
-            </div>
-            <span className="w-24 shrink-0 text-right num text-ink-muted">
-              {r.correct} of {r.total} ({pct(share)})
-            </span>
-          </li>
-        );
-      })}
-    </ul>
+    <div>
+      <ul className="space-y-2.5" aria-label="Share of students who got each question right">
+        {rows.map((r) => {
+          const share = r.total ? r.correct / r.total : 0;
+          const hard = share < HARD_BELOW;
+          return (
+            <li key={r.number} className="flex items-center gap-3">
+              <span className="w-6 shrink-0 text-right num font-medium text-ink">Q{r.number}</span>
+              <div className="min-w-0 flex-1">
+                <div className="truncate text-xs text-ink-muted" title={r.label}>
+                  {r.label}
+                </div>
+                <div
+                  role="img"
+                  aria-label={`Question ${r.number}, ${r.label}: ${r.correct} of ${r.total} students got it right, ${pct(share)}`}
+                  className="relative mt-0.5 h-3 rounded-r-[4px] bg-surface-sunken"
+                >
+                  <div
+                    className={
+                      hard
+                        ? "h-full rounded-r-[4px] bg-ink"
+                        : "h-full rounded-r-[4px] bg-ink-faint"
+                    }
+                    style={{ width: `${share * 100}%` }}
+                  />
+                  <span
+                    aria-hidden
+                    className="absolute -bottom-0.5 -top-0.5 w-px bg-line-strong"
+                    style={{ left: `${HARD_BELOW * 100}%` }}
+                  />
+                </div>
+              </div>
+              <span className="w-[4.5rem] shrink-0 text-right">
+                <span className="num text-ink">
+                  {r.correct} of {r.total}
+                </span>
+                <span className="block text-2xs text-ink-faint">{pct(share)}</span>
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+      <p className="mt-3 text-2xs text-ink-faint">
+        Darker bars: fewer than half the students got the question right. The thin line marks half.
+      </p>
+    </div>
   );
 }
