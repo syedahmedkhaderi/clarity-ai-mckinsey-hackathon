@@ -72,7 +72,14 @@ def run(state: LoopState) -> LoopState:
               f"Marked {min(done * config.MARK_BATCH_SIZE, learners * len(written))} of "
               f"{learners * len(written)} written responses against the scheme.")
 
-    outputs = llm.call_many(marking.SYSTEM, prompts, _MarkBatch, on_progress=progress)
+    def timed_out(missing: int, total: int) -> None:
+        trace(state, AGENT, "timeout",
+              f"{missing} of {total} marking calls did not return in time. Those responses "
+              f"were marked by the deterministic rules instead, so the run continues.",
+              level="warning")
+
+    outputs = llm.call_many(marking.SYSTEM, prompts, _MarkBatch,
+                            on_progress=progress, on_timeout=timed_out)
     llm_calls = sum(1 for o in outputs if o is not None)
     for (question, part), out in zip(chunks, outputs):
         marks.extend(_resolve_written(question, part, out))

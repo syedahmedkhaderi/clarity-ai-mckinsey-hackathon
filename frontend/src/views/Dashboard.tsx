@@ -16,6 +16,8 @@ export function Dashboard({
   health,
   stage,
   elapsedMs,
+  stalledMs,
+  onCancel,
 }: {
   assignments: Assignment[];
   selected: string;
@@ -30,6 +32,8 @@ export function Dashboard({
   health: Health | null;
   stage: string | null;
   elapsedMs: number;
+  stalledMs: number;
+  onCancel: () => void;
 }) {
   return (
     <div className="space-y-5">
@@ -51,6 +55,8 @@ export function Dashboard({
         running={running}
         stage={stage}
         elapsedMs={elapsedMs}
+        stalledMs={stalledMs}
+        onCancel={onCancel}
       />
 
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">

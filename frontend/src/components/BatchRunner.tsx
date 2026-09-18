@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useState } from "react";
 import type { Assignment } from "../types";
 
@@ -15,6 +16,8 @@ export function BatchRunner({
   running,
   stage,
   elapsedMs,
+  stalledMs,
+  onCancel,
 }: {
   assignments: Assignment[];
   selected: string;
@@ -25,6 +28,9 @@ export function BatchRunner({
   running: boolean;
   stage: string | null;
   elapsedMs: number;
+  /** Time since the last trace event arrived, while running. */
+  stalledMs: number;
+  onCancel: () => void;
 }) {
   const [touched, setTouched] = useState(false);
   return (
@@ -113,12 +119,17 @@ export function BatchRunner({
         </p>
         <div className="ml-auto flex items-center gap-3">
           {running && (
-            <span className="text-xs text-ink-muted text-right">
-              <span className="block">{stage ?? "Starting"}</span>
-              <span className="num text-ink-faint">
+            <span className="text-xs text-right">
+              <span className="block text-ink-muted">{stage ?? "Starting"}</span>
+              <span className={clsx("num", stalledMs > 45000 ? "text-flag" : "text-ink-faint")}>
                 {(elapsedMs / 1000).toFixed(0)}s elapsed, usually about 20s
               </span>
             </span>
+          )}
+          {running && stalledMs > 45000 && (
+            <button className="btn btn-xs" onClick={onCancel}>
+              Stop waiting
+            </button>
           )}
           <button className="btn btn-primary" onClick={onRun} disabled={running || !selected}>
             {running ? (

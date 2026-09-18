@@ -16,11 +16,11 @@
       "learner_id": "L01",
       "assessment_id": "A2",
       "question_id": "A2Q2",
-      "taxonomy_node": "M08",
-      "error_class": "procedural",
-      "confidence": 0.9,
-      "evidence_span": "Lining up the points, 0.70 + 0.65 = 1.45",
-      "reasoning": "The learner's sum is incorrect and suggests a misalignment of decimal points during addition, causing an incorrect total of 1.45 instead of 1.35. The error is procedural, related to decimal alignment rather than conceptual misunderstanding of decimal size.",
+      "taxonomy_node": "M07",
+      "error_class": "conceptual",
+      "confidence": 0.8,
+      "evidence_span": "0.70 + 0.65 = 1.45",
+      "reasoning": "The learner incorrectly summed 0.7 and 0.65 as 1.45 instead of 1.35, which suggests a misunderstanding of decimal addition, likely treating the fractional parts as whole numbers. This aligns with the misconception of treating digits after the decimal point as a whole number. The alternative possibility is a computational error shifting the decimal point incorrectly, but the evidence points more to conceptual misunderstanding.",
       "language_flag": 0,
       "batch_id": "B-A2-sync"
     },
@@ -42,11 +42,11 @@
       "learner_id": "L02",
       "assessment_id": "A1",
       "question_id": "A1Q6",
-      "taxonomy_node": "M12",
-      "error_class": "conceptual",
+      "taxonomy_node": "M13",
+      "error_class": "procedural",
       "confidence": 0.8,
-      "evidence_span": "Priya takes 2 and Sam takes 3. The rest is 35, split evenly. So Priya gets 19.",
-      "reasoning": "The learner incorrectly subtracts the sum of ratio parts from the total and then splits the remainder evenly, indicating a misunderstanding of ratio as a difference rather than a multiplicative relationship. This is consistent with adding or subtracting parts in ratios rather than scaling them.",
+      "evidence_span": "The rest is 35, split evenly. So Priya gets 19.",
+      "reasoning": "The learner incorrectly assumes that after assigning 2 and 3 seedlings to Priya and Sam, the remainder (35) should be split evenly, rather than dividing the total 40 seedlings by the sum of ratio parts (2+3=5) to find the share size. This indicates the misconception of dividing the total by the number of named parts instead of their sum.",
       "language_flag": 0,
       "batch_id": "B-A1-sync"
     },
@@ -80,9 +80,9 @@
       "question_id": "A2Q4",
       "taxonomy_node": "M01",
       "error_class": "conceptual",
-      "confidence": 0.95,
+      "confidence": 0.9,
       "evidence_span": "1/4 + 1/6 = 2/10. I add the tops and add the bottoms.",
-      "reasoning": "The learner adds the numerators and denominators directly, resulting in (1+1)/(4+6) = 2/10, showing a clear misconception that fractions can be added by summing numerators and denominators separately. This matches misconception M01 exactly.",
+      "reasoning": "The learner adds the numerators and denominators separately (1+1=2 for numerators and 4+6=10 for denominators), indicating a misconception that fraction addition can be done by adding numerators and denominators directly, without finding a common denominator.",
       "language_flag": 0,
       "batch_id": "B-A2-sync"
     },
@@ -92,9 +92,9 @@
       "question_id": "A2Q6",
       "taxonomy_node": "M13",
       "error_class": "procedural",
-      "confidence": 0.9,
-      "evidence_span": "Ayesha takes 3 and Ravi takes 5. The rest is 56, split evenly. So Ayesha gets 31.",
-      "reasoning": "The learner incorrectly assumes only two parts in the ratio and subtracts 8 from 64 to get 56, which they then split evenly, indicating a misunderstanding of dividing by the sum of the ratio parts (3+5=8).",
+      "confidence": 0.8,
+      "evidence_span": "The rest is 56, split evenly. So Ayesha gets 31.",
+      "reasoning": "The learner incorrectly treats the ratio by subtracting parts and splitting the remainder evenly instead of dividing by the sum of the ratio parts. This indicates a procedural error in dividing by the number of parts named rather than the total share count.",
       "language_flag": 0,
       "batch_id": "B-A2-sync"
     },
@@ -118,7 +118,7 @@
       "error_class": "conceptual",
       "confidence": 0.9,
       "evidence_span": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms.",
-      "reasoning": "The learner adds the numerators and denominators directly, showing a misconception that fractions can be added by adding numerators and denominators separately, which is incorrect.",
+      "reasoning": "The learner adds the numerators and denominators separately, treating the sum of fractions as (a+c)/(b+d), which shows a conceptual misunderstanding of fraction addition requiring a common denominator.",
       "language_flag": 0,
       "batch_id": "B-A3-sync"
     },
@@ -128,9 +128,9 @@
       "question_id": "A3Q6",
       "taxonomy_node": "M12",
       "error_class": "conceptual",
-      "confidence": 0.8,
-      "evidence_span": "The rest is 49, split evenly. So Lerato gets 27.",
-      "reasoning": "The learner subtracts the ratio parts from the total (56 - 7 = 49) and then splits the remainder evenly, which indicates they are treating the ratio parts as additive rather than multiplicative shares, consistent with the misconception M12.",
+      "confidence": 0.9,
+      "evidence_span": "Lerato takes 3 and Dineo takes 4. The rest is 49, split evenly. So Lerato gets 27.",
+      "reasoning": "The learner treats the ratio parts as amounts to subtract from the total and then divides the remainder evenly, indicating a misunderstanding of ratio as additive parts rather than multiplicative shares. This matches the misconception of adding rather than multiplying ratio parts.",
       "language_flag": 0,
       "batch_id": "B-A3-sync"
     },
@@ -240,7 +240,7 @@
       "error_class": "procedural",
       "confidence": 0.9,
       "evidence_span": "Lining up the points, 0.90 + 0.75 = 1.75",
-      "reasoning": "The learner's sum is incorrect because they misaligned the decimal points when adding, resulting in 1.75 instead of the correct 1.65. This points to a procedural error in aligning the decimal points for addition rather than a conceptual misunderstanding of decimal size or place value.",
+      "reasoning": "The learner's sum is incorrect, indicating a misalignment of decimal points during addition, as they wrote 1.75 instead of 1.65. This suggests procedural misunderstanding about aligning decimals properly when adding.",
       "language_flag": 0,
       "batch_id": "B-A3-sync"
     },
@@ -255,18 +255,6 @@
       "reasoning": "Option d, \"-8\", is mapped in the marking scheme to M15: Treats a negative number as its absolute value when ordering.",
       "language_flag": 0,
       "batch_id": "B-A3-sync"
-    },
-    {
-      "learner_id": "L03",
-      "assessment_id": "A3",
-      "question_id": "A3Q4",
-      "taxonomy_node": "M02",
-      "error_class": "procedural",
-      "confidence": 0.9,
-      "evidence_span": "I rewrite both over 12: 4/12 and 3/12.",
-      "reasoning": "The learner writes the fractions over the common denominator 12 but does not show scaling the numerators from the original fractions 1/3 and 1/4 to 4/12 and 3/12 explicitly, suggesting they may have forgotten to scale the numerators properly.",
-      "language_flag": 0,
-      "batch_id": "B-A3-sync"
     }
   ],
   "L04": [
@@ -278,7 +266,7 @@
       "error_class": "conceptual",
       "confidence": 0.9,
       "evidence_span": "1/2 + 1/3 = 2/5. and add the bottoms I add top.",
-      "reasoning": "The learner adds numerator and denominator separately (1+1=2 and 2+3=5) instead of finding a common denominator, indicating the misconception that fractions can be added by adding numerators and denominators directly.",
+      "reasoning": "The learner adds numerators and denominators separately (1+1=2 and 2+3=5) instead of finding a common denominator, which matches the misconception M01.",
       "language_flag": 0,
       "batch_id": "B-A1-sync"
     },
@@ -314,7 +302,7 @@
       "error_class": "computational",
       "confidence": 0.9,
       "evidence_span": "Total is 5/13 km.",
-      "reasoning": "The learner correctly found the common denominator and scaled the numerators properly but made a computational error by adding the numerators 3 + 2 and incorrectly writing the denominator as 13 instead of 12, indicating an arithmetic slip in the final addition step.",
+      "reasoning": "The learner correctly finds the common denominator and scales the numerators properly, but makes an arithmetic slip in adding 3/12 and 2/12, writing 5/13 instead of 5/12. This points to a computational error rather than conceptual misunderstanding or procedural error.",
       "language_flag": 0,
       "batch_id": "B-A2-sync"
     },
@@ -349,8 +337,8 @@
       "taxonomy_node": "M01",
       "error_class": "conceptual",
       "confidence": 0.9,
-      "evidence_span": "I add the tops and add the bottoms",
-      "reasoning": "The learner adds the numerators and denominators directly (1/3 + 1/4 = 2/7), which shows a conceptual misunderstanding that fractions must have a common denominator before addition.",
+      "evidence_span": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms.",
+      "reasoning": "The learner adds the numerators and denominators separately, indicating they treat a/b + c/d as (a+c)/(b+d) without finding a common denominator, which matches misconception M01.",
       "language_flag": 0,
       "batch_id": "B-A3-sync"
     },
@@ -398,9 +386,9 @@
       "question_id": "A2Q2",
       "taxonomy_node": "M07",
       "error_class": "conceptual",
-      "confidence": 0.9,
+      "confidence": 0.8,
       "evidence_span": "number after the point is bigger 0.65 is larger because its.",
-      "reasoning": "The learner's statement suggests they are comparing the digits after the decimal point as whole numbers rather than comparing the values of the decimals properly, which aligns with the misconception of treating digits after the decimal point as a whole number (M07).",
+      "reasoning": "The learner states that 0.65 is larger because its digits after the decimal point are bigger, indicating they are comparing the fractional parts as whole numbers rather than correctly comparing decimal values.",
       "language_flag": 0,
       "batch_id": "B-A2-sync"
     },
@@ -424,7 +412,7 @@
       "error_class": "conceptual",
       "confidence": 0.9,
       "evidence_span": "0.75 is larger because its number after point is bigger",
-      "reasoning": "The learner incorrectly judges 0.75 to be larger than 0.9 by comparing the digits after the decimal point as whole numbers rather than considering place value, matching the misconception M07.",
+      "reasoning": "The learner incorrectly judges 0.75 to be larger than 0.9 because they treat the digits after the decimal point as a whole number, comparing '75' with '9' instead of comparing place values.",
       "language_flag": 0,
       "batch_id": "B-A3-sync"
     },
@@ -462,7 +450,7 @@
       "error_class": "conceptual",
       "confidence": 0.9,
       "evidence_span": "1/2 + 1/3 = 2/5. I add the tops and add the bottoms.",
-      "reasoning": "The learner adds the numerators and denominators separately, which indicates a misconception about how to add fractions by finding a common denominator. This matches node M01. There is no evidence that the learner attempted to find a common denominator as in M02.",
+      "reasoning": "The learner adds the numerators and denominators directly, treating the sum of fractions as (a+c)/(b+d) instead of finding a common denominator. This matches misconception M01 exactly.",
       "language_flag": 0,
       "batch_id": "B-A1-sync"
     },
@@ -498,7 +486,7 @@
       "error_class": "conceptual",
       "confidence": 0.9,
       "evidence_span": "1/4 + 1/6 = 2/10. I add the tops and add the bottoms.",
-      "reasoning": "The learner adds the numerators and denominators separately, producing 2/10 instead of finding a common denominator and adding equivalent fractions. This matches the classic misconception M01.",
+      "reasoning": "The learner adds the numerators and denominators separately, treating 1/4 + 1/6 as (1+1)/(4+6) = 2/10, indicating the misconception of adding fractions by adding numerators and denominators directly. This is a conceptual error about fraction addition.",
       "language_flag": 0,
       "batch_id": "B-A2-sync"
     },
@@ -532,9 +520,9 @@
       "question_id": "A3Q4",
       "taxonomy_node": "M01",
       "error_class": "conceptual",
-      "confidence": 0.9,
+      "confidence": 0.95,
       "evidence_span": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms.",
-      "reasoning": "The learner incorrectly adds numerator and denominator separately, treating 1/3 + 1/4 as (1+1)/(3+4) = 2/7, showing a conceptual misunderstanding of fraction addition requiring common denominators.",
+      "reasoning": "The learner adds numerators and denominators separately (1+1=2 and 3+4=7) instead of finding a common denominator and converting the fractions accordingly, which is a classic misconception described by M01.",
       "language_flag": 0,
       "batch_id": "B-A3-sync"
     },
@@ -545,8 +533,8 @@
       "taxonomy_node": "M12",
       "error_class": "conceptual",
       "confidence": 0.9,
-      "evidence_span": "Lerato gets 3 x 8 = 25",
-      "reasoning": "The learner correctly calculates shares and per share value but then incorrectly computes Lerato's share as 25 instead of 24, indicating a likely arithmetic slip or misunderstanding of multiplication rather than a procedural error in dividing the total by the sum of ratio parts.",
+      "evidence_span": "Lerato gets 3 x 8 = 25.",
+      "reasoning": "The learner correctly calculates the shares but makes a simple arithmetic error multiplying 3 by 8, resulting in 25 instead of 24. This suggests a misunderstanding of the multiplicative relationship in the ratio context (M12), rather than misunderstanding the problem or the division step.",
       "language_flag": 0,
       "batch_id": "B-A3-sync"
     },
@@ -568,11 +556,11 @@
       "learner_id": "L07",
       "assessment_id": "A1",
       "question_id": "A1Q2",
-      "taxonomy_node": "M08",
-      "error_class": "procedural",
-      "confidence": 0.8,
-      "evidence_span": "Lining up the points, 0.40 + 0.35 = 0.85",
-      "reasoning": "The learner's sum of 0.4 + 0.35 is 0.85, indicating they misaligned the decimal points (likely right-aligning digits), which is a procedural error in adding decimals. The error is less likely to be conceptual about comparing decimals since the comparison statement is correct.",
+      "taxonomy_node": "M09",
+      "error_class": "computational",
+      "confidence": 0.9,
+      "evidence_span": "0.40 + 0.35 = 0.85",
+      "reasoning": "The learner's sum of 0.4 + 0.35 is 0.85, which is 0.1 too large, indicating a computational error likely from shifting the decimal point by the wrong number of places (such as treating 0.4 as 4).",
       "language_flag": 0,
       "batch_id": "B-A1-sync"
     },
@@ -582,9 +570,9 @@
       "question_id": "A1Q4",
       "taxonomy_node": "M01",
       "error_class": "conceptual",
-      "confidence": 0.9,
+      "confidence": 0.95,
       "evidence_span": "1/2 + 1/3 = 2/5. I add the tops and add the bottoms.",
-      "reasoning": "The learner adds numerators and denominators separately, treating a/b + c/d as (a+c)/(b+d), which indicates the misconception that fractions can be added by adding numerators and denominators directly.",
+      "reasoning": "The learner adds numerators and denominators directly, treating a/b + c/d as (a+c)/(b+d), which shows a conceptual misunderstanding of fraction addition requiring a common denominator.",
       "language_flag": 0,
       "batch_id": "B-A1-sync"
     },
@@ -619,8 +607,8 @@
       "taxonomy_node": "M01",
       "error_class": "conceptual",
       "confidence": 0.9,
-      "evidence_span": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms.",
-      "reasoning": "The learner adds the numerators and denominators directly, treating the sum as (1+1)/(3+4) = 2/7, which shows the misconception of adding fractions by adding numerators and denominators separately instead of finding a common denominator first.",
+      "evidence_span": "I add the tops and add the bottoms",
+      "reasoning": "The learner adds the numerators and denominators directly, treating the sum as (1+1)/(3+4) = 2/7, showing a clear misconception of fraction addition requiring a common denominator.",
       "language_flag": 0,
       "batch_id": "B-A3-sync"
     },
@@ -670,7 +658,7 @@
       "error_class": "procedural",
       "confidence": 0.9,
       "evidence_span": "40 / 2 = 20",
-      "reasoning": "The learner divides the total number of seedlings by the number of people (2) instead of by the sum of the ratio parts (2 + 3 = 5), showing a procedural misunderstanding of how to allocate quantities in a ratio.",
+      "reasoning": "The learner divides the total by 2, the number of people, rather than by the sum of the ratio parts (2+3=5). This aligns with the misconception of dividing by the number of named parts instead of the total parts in the ratio.",
       "language_flag": 0,
       "batch_id": "B-A1-sync"
     },
@@ -681,8 +669,8 @@
       "taxonomy_node": "M08",
       "error_class": "procedural",
       "confidence": 0.9,
-      "evidence_span": "0.70 + 0.65 = 1.45",
-      "reasoning": "The learner's sum is incorrect (1.45 instead of 1.35), indicating that they misaligned the decimal points when adding. This is typical of the procedural misconception M08. The comparison of which number is larger is correct, so M07 is less likely.",
+      "evidence_span": "Lining up the points, 0.70 + 0.65 = 1.45",
+      "reasoning": "The learner's incorrect sum indicates a misalignment of decimal points during addition, as the correct sum is 1.35, not 1.45. This aligns with the misconception of misaligning decimal points when adding decimals.",
       "language_flag": 0,
       "batch_id": "B-A2-sync"
     },
@@ -705,8 +693,8 @@
       "taxonomy_node": "M13",
       "error_class": "procedural",
       "confidence": 0.9,
-      "evidence_span": "64 / 2 = 32. Ayesha gets 32.",
-      "reasoning": "The learner incorrectly divides the total number of seedlings by 2 (the number of people) rather than by the sum of the ratio parts (3 + 5 = 8). This is a common procedural error when dealing with ratios, indicating misunderstanding of how to split quantities according to ratio parts rather than just the number of parties involved.",
+      "evidence_span": "64 / 2 = 32",
+      "reasoning": "The learner divided the total number of seedlings by the number of people (2) instead of by the total parts of the ratio (3+5=8). This shows a procedural error in interpreting the ratio division process.",
       "language_flag": 0,
       "batch_id": "B-A2-sync"
     },
@@ -737,24 +725,12 @@
     {
       "learner_id": "L08",
       "assessment_id": "A3",
-      "question_id": "A3Q4",
-      "taxonomy_node": "M02",
-      "error_class": "procedural",
-      "confidence": 0.9,
-      "evidence_span": "4/12 + 3/12 = 7/12 km",
-      "reasoning": "The learner correctly identifies the common denominator as 12, but the numerators are swapped compared to the original fractions (1/3 and 1/4 should scale to 4/12 and 3/12 respectively, but the learner has 4/12 and 3/12 reversed). This indicates they found the common denominator but forgot to scale numerators properly.",
-      "language_flag": 0,
-      "batch_id": "B-A3-sync"
-    },
-    {
-      "learner_id": "L08",
-      "assessment_id": "A3",
       "question_id": "A3Q6",
       "taxonomy_node": "M13",
       "error_class": "procedural",
       "confidence": 0.9,
       "evidence_span": "56 / 2 = 28. Lerato gets 28.",
-      "reasoning": "The learner divided the total number of seedlings by the number of people rather than by the sum of the ratio parts, indicating a procedural misunderstanding of how to split quantities in a ratio.",
+      "reasoning": "The learner divides the total quantity by the number of people (2) instead of by the sum of the ratio parts (3 + 4 = 7), indicating a misconception about how to split quantities according to a ratio.",
       "language_flag": 0,
       "batch_id": "B-A3-sync"
     }
@@ -768,7 +744,7 @@
       "error_class": "computational",
       "confidence": 0.9,
       "evidence_span": "0.9 + 0.75 = 16.5. Moving the point across gives that.",
-      "reasoning": "The learner's answer shows that they have shifted the decimal point incorrectly, resulting in an answer ten times larger than the correct sum (1.65). This points to a misconception about how to move the decimal point correctly in addition, consistent with M09. Misalignment of decimal points in addition (M08) is less likely here because the main error is the incorrect decimal shift leading to an answer ten times too large, rather than just misalignment in column addition.",
+      "reasoning": "The learner's sum is 16.5 instead of 1.65, indicating a decimal point shift error by a factor of ten, which aligns with the misconception of shifting the decimal point by the wrong number of places.",
       "language_flag": 0,
       "batch_id": "B-A3-sync"
     },
@@ -780,7 +756,7 @@
       "error_class": "conceptual",
       "confidence": 0.9,
       "evidence_span": "1/3 + 1/4 = 2/7. I add the tops and add the bottoms.",
-      "reasoning": "The learner adds the numerators and denominators directly, which indicates the misconception that fractions can be added by adding both numerators and denominators instead of finding a common denominator first.",
+      "reasoning": "The learner adds the numerators and denominators directly, treating 1/3 + 1/4 as (1+1)/(3+4) = 2/7, which shows a misunderstanding of how to add fractions by finding a common denominator.",
       "language_flag": 0,
       "batch_id": "B-A3-sync"
     },
@@ -792,7 +768,7 @@
       "error_class": "conceptual",
       "confidence": 0.9,
       "evidence_span": "Lerato gets 3 x 8 = 25.",
-      "reasoning": "The learner correctly calculates the share per unit (8) and multiplies by 3 but then incorrectly states the final product as 25 instead of 24, indicating a simple computational slip rather than conceptual misunderstanding of ratios or procedure.",
+      "reasoning": "The learner made a calculation error in the final multiplication step, resulting in 25 instead of 24. This suggests a misconception in treating the ratio as a difference or misapplying multiplication rather than a procedural error in dividing or understanding the ratio itself.",
       "language_flag": 0,
       "batch_id": "B-A3-sync"
     },
@@ -871,20 +847,7 @@
       "batch_id": "B-A3-sync"
     }
   ],
-  "L11": [
-    {
-      "learner_id": "L11",
-      "assessment_id": "A1",
-      "question_id": "A1Q4",
-      "taxonomy_node": "M02",
-      "error_class": "procedural",
-      "confidence": 0.8,
-      "evidence_span": "I make bottom number same 6 and then add top ones together",
-      "reasoning": "The learner states they make the denominator the same but gives no evidence of adjusting the numerators accordingly before adding, indicating they find a common denominator but forget to scale the numerators.",
-      "language_flag": 0,
-      "batch_id": "B-A1-sync"
-    }
-  ],
+  "L11": [],
   "L12": [
     {
       "learner_id": "L12",
@@ -894,7 +857,7 @@
       "error_class": "procedural",
       "confidence": 0.9,
       "evidence_span": "1/6 + 1/6",
-      "reasoning": "The learner correctly found the common denominator 6 but failed to scale the numerators accordingly, leaving them both as 1 instead of converting 1/2 to 3/6 and 1/3 to 2/6. This indicates the misconception of forgetting to scale the numerators after finding a common denominator.",
+      "reasoning": "The learner correctly identifies the common denominator as 6 but does not scale the numerators correctly, leaving them as 1 instead of converting 1/2 and 1/3 to 3/6 and 2/6 respectively. This is a procedural error related to fraction addition.",
       "language_flag": 0,
       "batch_id": "B-A1-sync"
     },
@@ -930,7 +893,7 @@
       "error_class": "procedural",
       "confidence": 0.9,
       "evidence_span": "1/12 + 1/12",
-      "reasoning": "The learner correctly finds a common denominator (12) but fails to scale the numerators correctly, leaving both numerators as 1 instead of converting 1/3 and 1/4 to equivalent fractions with denominator 12.",
+      "reasoning": "The learner finds the common denominator correctly but fails to scale the numerators to equivalent fractions before adding, adding the original numerators instead. This matches the misconception of finding a common denominator but forgetting to scale numerators.",
       "language_flag": 0,
       "batch_id": "B-A3-sync"
     },

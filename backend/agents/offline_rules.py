@@ -111,6 +111,26 @@ def _check_q6(question: dict[str, Any], answer: str) -> list[bool]:
             _has_number(answer, r1 * one)]
 
 
+def mathematics_is_correct(question: dict[str, Any], answer: str) -> bool:
+    """True when the answer carries the value the scheme asks for.
+
+    Derived from the marking scheme, not guessed. If the learner reached the
+    right result then the mathematics is not what went wrong, whatever the prose
+    around it looks like, so no conceptual, procedural or computational node can
+    be the right explanation.
+    """
+    if question.get("type") == "mcq":
+        correct = question.get("options", {}).get(question.get("correct", ""), "")
+        return bool(correct) and answer.strip() == correct
+    slot = question["question_id"][2:]
+    checker = {"Q2": _check_q2, "Q4": _check_q4, "Q6": _check_q6}.get(slot)
+    if checker is None:
+        return False
+    flags = checker(question, answer)
+    # The final criterion of every written scheme is the correct answer itself.
+    return bool(flags) and flags[-1]
+
+
 # --- diagnosis -------------------------------------------------------------
 
 def diagnose_offline(question: dict[str, Any], sub: Any, mark: Mark) -> Diagnosis:

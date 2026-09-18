@@ -131,29 +131,54 @@ def _propose(state: LoopState, nodes: list[NodePattern]) -> list[PlannedAction]:
             justification=a.justification, facilitator_script=a.facilitator_script))
     if not proposed:
         return rule_actions
-    return _merge_guarantees(proposed, rule_actions, state)
+    return _merge_guarantees(proposed, rule_actions, state, nodes)
 
 
 def _merge_guarantees(proposed: list[PlannedAction], rule_actions: list[PlannedAction],
-                      state: LoopState) -> list[PlannedAction]:
-    """Adds back the commitments the model is not allowed to drop.
+                      state: LoopState, nodes: list[NodePattern]) -> list[PlannedAction]:
+    """Reconciles the model's proposal with the commitments it cannot override.
 
-    The model proposes freely, but two things are promises the product makes
-    rather than suggestions it weighs: every learner with a diagnosis gets a
-    drafted feedback note reviewed, and every learner returning after a gap gets
-    a restart point. A plan that quietly omits a returner is exactly the failure
-    Meridian described, so the rule-generated versions are merged in and the
-    model's near-duplicates are dropped in their favour.
+    The model proposes freely, but three things follow from rules rather than
+    from its judgement:
+
+    - Every learner with a diagnosis gets a drafted feedback note reviewed.
+    - Every learner returning after a gap gets a restart point. A plan that
+      quietly omits a returner is exactly the failure Meridian described.
+    - A group re-teach exists for a node if and only if the cohort analyst
+      classified that node as a teaching problem. That classification is a
+      deterministic threshold, so the action following from it is too. Letting
+      the model add a group session for a node under the threshold, or omit one
+      above it, would mean the plan contradicted the cohort view next to it.
     """
+    teaching = {n.node_id for n in nodes if n.teaching_problem}
     guarantees = [a for a in rule_actions
-                  if a.type == "feedback_review" or a.action_id.startswith("RS-")]
+                  if a.type == "feedback_review" or a.action_id.startswith("RS-")
+                  or (a.type == "group_reteach" and a.node_id in teaching)]
     covered = {(a.type, tuple(sorted(a.learner_ids))) for a in guarantees}
-    kept = [a for a in proposed if (a.type, tuple(sorted(a.learner_ids))) not in covered]
+
+    kept: list[PlannedAction] = []
+    contradicted = 0
+    for a in proposed:
+        if a.type == "group_reteach":
+            # The cohort analyst owns this call, not the model.
+            contradicted += 1
+            continue
+        if (a.type, tuple(sorted(a.learner_ids))) in covered:
+            continue
+        kept.append(a)
+
     restarts = [a for a in guarantees if a.action_id.startswith("RS-")]
+    reteaches = [a for a in guarantees if a.type == "group_reteach"]
     if restarts:
         trace(state, AGENT, "guaranteed",
               f"{len(restarts)} restart points for learners returning after a gap were added to "
               f"the model's proposal. A returner is never dropped from a plan.", level="decision")
+    if contradicted or reteaches:
+        trace(state, AGENT, "guaranteed",
+              f"Group sessions come from the cohort threshold, not the model. "
+              f"{len(reteaches)} kept for nodes above the threshold, {contradicted} proposed by "
+              f"the model discarded so the plan cannot contradict the cohort view.",
+              level="decision")
     return kept + guarantees
 
 
@@ -293,6 +318,10 @@ def _draft_feedback(state: LoopState) -> list[DraftedFeedback]:
         feedback_prompt.SYSTEM,
         [feedback_prompt.build(n, p) for n, p in zip(names, payloads)],
         _FeedbackOut, smart=config.PLANNER_SMART, on_progress=progress,
+        on_timeout=lambda missing, total: trace(
+            state, AGENT, "timeout",
+            f"{missing} of {total} feedback drafts did not return in time. Those learners "
+            f"got the rule-written draft, which the facilitator can edit.", level="warning"),
     )
 
     drafts: list[DraftedFeedback] = []

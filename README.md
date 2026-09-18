@@ -82,18 +82,34 @@ This sequence is reproducible from a clean `./setup.sh` and is guarded by
 
 3. **Learners, Liu Y. (L11).** Her answer to the same question is
    `Answer is 7/12 km. and then add top ones together I make bottom number same
-   12.` The mathematics is correct. The grammar is not. The agent flagged
-   `LANGUAGE_BARRIER`, refused to name a conceptual misconception, and escalated.
-   This is the behaviour the whole second-language requirement turns on.
+   12.` The total is correct. The word order is not. LOOP marks it full marks and
+   records no misconception against her at all. If the marker does withhold a
+   presentation criterion, the diagnosis is escalated as `LANGUAGE_BARRIER`
+   instead. Either way the guarantee is the same and it holds on every run: a
+   learner whose mathematics is right is never recorded as conceptually weak.
+
+   This is enforced in code, not asked for in a prompt.
+   `offline_rules.mathematics_is_correct` reads the marking scheme, and if the
+   learner reached the value it asks for, a conceptual, procedural or
+   computational node cannot be the explanation whatever the model returned.
+   That guard exists because without it the model diagnosed exactly this answer
+   as a procedural misconception at 0.9 confidence.
+   `tests/test_language_rule.py` holds the line.
 
 4. **Cohort.** M01 is held by 5 of 12 learners, 42 percent, at or above the 40
    percent threshold. It is labelled a teaching problem, not five individual
    problems.
 
-5. **Intervention plan.** 120 of 120 minutes scheduled. A group re-teach on M01,
-   a restart point for Ibrahim N. who returned after missing A1 and A2, and three
-   individual follow-ups. Below it, everything that did not fit, each with its
+5. **Intervention plan.** The full budget scheduled: a group re-teach on M01,
+   restart points for the three learners who returned after a gap, peer pairings
+   and feedback reviews. Below it, everything that did not fit, each with its
    severity and the reason "budget exhausted".
+
+   The model proposes and scores the actions, but three things follow from rules
+   and it cannot override them: every learner gets a drafted feedback note, every
+   returner gets a restart point, and a group re-teach exists for a node **if and
+   only if** the cohort analyst put that node above the threshold. Otherwise the
+   plan could contradict the cohort view sitting next to it.
 
 6. **Review queue.** The language case, the ambiguous diagnoses where two
    readings were too close to separate, and the high-severity actions that did
@@ -103,9 +119,11 @@ This sequence is reproducible from a clean `./setup.sh` and is guarded by
    misconception at all", give a reason. LOOP re-enters the graph at the cohort
    analyst. M01 falls to 4 of 12, 33 percent, below the threshold. It is no
    longer a teaching problem, so the group re-teach is **withdrawn**, and the
-   freed 30 minutes go to the individual follow-ups that were suppressed while
-   the group session was covering those learners. The plan view highlights every
-   change.
+   freed 30 minutes are reallocated to work that could not fit before. The plan
+   view highlights every change.
+
+   Verified on three consecutive live runs: 5 of 12 and a group session before
+   the override, 4 of 12 and none after it, budget refilled each time.
 
 Step 7 is the point. The agent did not just accept a correction; it recomputed
 what the correction implied and rebuilt its decision.
@@ -136,7 +154,7 @@ Measured on the QuantumBlack gateway with `gpt-4.1-mini`, assessment A3:
 | Recovery on everyone else, before the gate | 100% (19 of 19) |
 | Evidence span validity | 100% (32 of 32) |
 | Returner handling | 100% (3 of 3) restart points proposed |
-| Run time, full cohort | about 20 seconds |
+| Run time, full cohort | 21 to 26 seconds |
 
 The one case not recovered is L11, whose mathematics was correct and whose
 diagnosis the reviewer deliberately held back as a language barrier. The
