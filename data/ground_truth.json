@@ -1,0 +1,3670 @@
+{
+  "version": "1.0",
+  "seed": 20260921,
+  "assignments": {
+    "L01": [
+      "M18",
+      "M08"
+    ],
+    "L02": [
+      "M01",
+      "M12"
+    ],
+    "L03": [
+      "M15",
+      "M18",
+      "M05"
+    ],
+    "L04": [
+      "M01",
+      "M10"
+    ],
+    "L05": [
+      "M07",
+      "M05"
+    ],
+    "L06": [
+      "M01",
+      "M19"
+    ],
+    "L07": [
+      "M01",
+      "M14"
+    ],
+    "L08": [
+      "M13",
+      "M16"
+    ],
+    "L09": [
+      "M01",
+      "M09"
+    ],
+    "L10": [
+      "M05",
+      "M18"
+    ],
+    "L11": [
+      "M21",
+      "M23"
+    ],
+    "L12": [
+      "M02",
+      "M20"
+    ]
+  },
+  "traits": {
+    "L01": {
+      "returner": false,
+      "missing_assessments": [],
+      "second_language": false,
+      "language_noise_level": 0.0,
+      "careless_rate": 0.08
+    },
+    "L02": {
+      "returner": false,
+      "missing_assessments": [],
+      "second_language": false,
+      "language_noise_level": 0.0,
+      "careless_rate": 0.1
+    },
+    "L03": {
+      "returner": false,
+      "missing_assessments": [],
+      "second_language": false,
+      "language_noise_level": 0.0,
+      "careless_rate": 0.12
+    },
+    "L04": {
+      "returner": false,
+      "missing_assessments": [],
+      "second_language": true,
+      "language_noise_level": 0.35,
+      "careless_rate": 0.08
+    },
+    "L05": {
+      "returner": false,
+      "missing_assessments": [],
+      "second_language": true,
+      "language_noise_level": 0.45,
+      "careless_rate": 0.07
+    },
+    "L06": {
+      "returner": false,
+      "missing_assessments": [],
+      "second_language": false,
+      "language_noise_level": 0.0,
+      "careless_rate": 0.1
+    },
+    "L07": {
+      "returner": true,
+      "missing_assessments": [
+        "A2"
+      ],
+      "second_language": false,
+      "language_noise_level": 0.0,
+      "careless_rate": 0.1
+    },
+    "L08": {
+      "returner": false,
+      "missing_assessments": [],
+      "second_language": false,
+      "language_noise_level": 0.0,
+      "careless_rate": 0.09
+    },
+    "L09": {
+      "returner": true,
+      "missing_assessments": [
+        "A1",
+        "A2"
+      ],
+      "second_language": false,
+      "language_noise_level": 0.0,
+      "careless_rate": 0.11
+    },
+    "L10": {
+      "returner": false,
+      "missing_assessments": [],
+      "second_language": false,
+      "language_noise_level": 0.0,
+      "careless_rate": 0.08
+    },
+    "L11": {
+      "returner": false,
+      "missing_assessments": [],
+      "second_language": true,
+      "language_noise_level": 0.55,
+      "careless_rate": 0.06
+    },
+    "L12": {
+      "returner": true,
+      "missing_assessments": [
+        "A2"
+      ],
+      "second_language": false,
+      "language_noise_level": 0.0,
+      "careless_rate": 0.1
+    }
+  },
+  "responses": [
+    {
+      "learner_id": "L01",
+      "assessment_id": "A1",
+      "question_id": "A1Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": "M18",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A1",
+      "question_id": "A1Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A1",
+      "question_id": "A1Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A1",
+      "question_id": "A1Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A1",
+      "question_id": "A1Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A1",
+      "question_id": "A1Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A1",
+      "question_id": "A1Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A1",
+      "question_id": "A1Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A2",
+      "question_id": "A2Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A2",
+      "question_id": "A2Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A2",
+      "question_id": "A2Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A2",
+      "question_id": "A2Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A2",
+      "question_id": "A2Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A2",
+      "question_id": "A2Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A2",
+      "question_id": "A2Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A2",
+      "question_id": "A2Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": "M18",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A4",
+      "question_id": "A4Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": "M18",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A4",
+      "question_id": "A4Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A4",
+      "question_id": "A4Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A4",
+      "question_id": "A4Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A4",
+      "question_id": "A4Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A4",
+      "question_id": "A4Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A4",
+      "question_id": "A4Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L01",
+      "assessment_id": "A4",
+      "question_id": "A4Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A1",
+      "question_id": "A1Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A1",
+      "question_id": "A1Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A1",
+      "question_id": "A1Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A1",
+      "question_id": "A1Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A1",
+      "question_id": "A1Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A1",
+      "question_id": "A1Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": "M12",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A1",
+      "question_id": "A1Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A1",
+      "question_id": "A1Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A2",
+      "question_id": "A2Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A2",
+      "question_id": "A2Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A2",
+      "question_id": "A2Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A2",
+      "question_id": "A2Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A2",
+      "question_id": "A2Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A2",
+      "question_id": "A2Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": "M12",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A2",
+      "question_id": "A2Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A2",
+      "question_id": "A2Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": "M12",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A4",
+      "question_id": "A4Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A4",
+      "question_id": "A4Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A4",
+      "question_id": "A4Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A4",
+      "question_id": "A4Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A4",
+      "question_id": "A4Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A4",
+      "question_id": "A4Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A4",
+      "question_id": "A4Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L02",
+      "assessment_id": "A4",
+      "question_id": "A4Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A1",
+      "question_id": "A1Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": "M18",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A1",
+      "question_id": "A1Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A1",
+      "question_id": "A1Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": "M15",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A1",
+      "question_id": "A1Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A1",
+      "question_id": "A1Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A1",
+      "question_id": "A1Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A1",
+      "question_id": "A1Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": "M05",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A1",
+      "question_id": "A1Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A2",
+      "question_id": "A2Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": "M18",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A2",
+      "question_id": "A2Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A2",
+      "question_id": "A2Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": "M15",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A2",
+      "question_id": "A2Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A2",
+      "question_id": "A2Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A2",
+      "question_id": "A2Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A2",
+      "question_id": "A2Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": "M05",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A2",
+      "question_id": "A2Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": "M15",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A4",
+      "question_id": "A4Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": "M18",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A4",
+      "question_id": "A4Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A4",
+      "question_id": "A4Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A4",
+      "question_id": "A4Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A4",
+      "question_id": "A4Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A4",
+      "question_id": "A4Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A4",
+      "question_id": "A4Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": "M05",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L03",
+      "assessment_id": "A4",
+      "question_id": "A4Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A1",
+      "question_id": "A1Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A1",
+      "question_id": "A1Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A1",
+      "question_id": "A1Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A1",
+      "question_id": "A1Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A1",
+      "question_id": "A1Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": "M10",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A1",
+      "question_id": "A1Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A1",
+      "question_id": "A1Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A1",
+      "question_id": "A1Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A2",
+      "question_id": "A2Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A2",
+      "question_id": "A2Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A2",
+      "question_id": "A2Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A2",
+      "question_id": "A2Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A2",
+      "question_id": "A2Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": "M10",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A2",
+      "question_id": "A2Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A2",
+      "question_id": "A2Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A2",
+      "question_id": "A2Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": "M10",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A4",
+      "question_id": "A4Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A4",
+      "question_id": "A4Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A4",
+      "question_id": "A4Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A4",
+      "question_id": "A4Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A4",
+      "question_id": "A4Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": "M10",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A4",
+      "question_id": "A4Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A4",
+      "question_id": "A4Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L04",
+      "assessment_id": "A4",
+      "question_id": "A4Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A1",
+      "question_id": "A1Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A1",
+      "question_id": "A1Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A1",
+      "question_id": "A1Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A1",
+      "question_id": "A1Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A1",
+      "question_id": "A1Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A1",
+      "question_id": "A1Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A1",
+      "question_id": "A1Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": "M05",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A1",
+      "question_id": "A1Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A2",
+      "question_id": "A2Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A2",
+      "question_id": "A2Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": "M07",
+      "injected_kind": "misconception",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A2",
+      "question_id": "A2Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A2",
+      "question_id": "A2Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A2",
+      "question_id": "A2Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A2",
+      "question_id": "A2Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A2",
+      "question_id": "A2Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": "M05",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A2",
+      "question_id": "A2Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": "M07",
+      "injected_kind": "misconception",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": "M05",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A4",
+      "question_id": "A4Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A4",
+      "question_id": "A4Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": "M07",
+      "injected_kind": "misconception",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A4",
+      "question_id": "A4Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A4",
+      "question_id": "A4Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A4",
+      "question_id": "A4Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A4",
+      "question_id": "A4Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A4",
+      "question_id": "A4Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L05",
+      "assessment_id": "A4",
+      "question_id": "A4Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A1",
+      "question_id": "A1Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": "M19",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A1",
+      "question_id": "A1Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A1",
+      "question_id": "A1Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A1",
+      "question_id": "A1Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A1",
+      "question_id": "A1Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A1",
+      "question_id": "A1Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A1",
+      "question_id": "A1Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A1",
+      "question_id": "A1Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A2",
+      "question_id": "A2Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": "M19",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A2",
+      "question_id": "A2Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A2",
+      "question_id": "A2Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A2",
+      "question_id": "A2Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A2",
+      "question_id": "A2Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A2",
+      "question_id": "A2Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A2",
+      "question_id": "A2Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A2",
+      "question_id": "A2Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": "M19",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A4",
+      "question_id": "A4Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": "M19",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A4",
+      "question_id": "A4Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A4",
+      "question_id": "A4Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A4",
+      "question_id": "A4Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A4",
+      "question_id": "A4Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A4",
+      "question_id": "A4Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A4",
+      "question_id": "A4Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L06",
+      "assessment_id": "A4",
+      "question_id": "A4Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A1",
+      "question_id": "A1Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A1",
+      "question_id": "A1Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A1",
+      "question_id": "A1Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A1",
+      "question_id": "A1Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A1",
+      "question_id": "A1Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": "M14",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A1",
+      "question_id": "A1Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A1",
+      "question_id": "A1Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A1",
+      "question_id": "A1Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": "M14",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A4",
+      "question_id": "A4Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A4",
+      "question_id": "A4Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A4",
+      "question_id": "A4Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A4",
+      "question_id": "A4Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A4",
+      "question_id": "A4Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": "M14",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A4",
+      "question_id": "A4Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A4",
+      "question_id": "A4Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L07",
+      "assessment_id": "A4",
+      "question_id": "A4Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A1",
+      "question_id": "A1Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A1",
+      "question_id": "A1Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A1",
+      "question_id": "A1Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": "M16",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A1",
+      "question_id": "A1Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A1",
+      "question_id": "A1Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A1",
+      "question_id": "A1Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": "M13",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A1",
+      "question_id": "A1Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A1",
+      "question_id": "A1Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A2",
+      "question_id": "A2Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A2",
+      "question_id": "A2Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A2",
+      "question_id": "A2Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": "M16",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A2",
+      "question_id": "A2Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A2",
+      "question_id": "A2Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A2",
+      "question_id": "A2Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": "M13",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A2",
+      "question_id": "A2Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A2",
+      "question_id": "A2Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": "M16",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": "M13",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A4",
+      "question_id": "A4Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A4",
+      "question_id": "A4Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A4",
+      "question_id": "A4Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A4",
+      "question_id": "A4Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A4",
+      "question_id": "A4Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A4",
+      "question_id": "A4Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": "M13",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A4",
+      "question_id": "A4Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L08",
+      "assessment_id": "A4",
+      "question_id": "A4Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": "M09",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A4",
+      "question_id": "A4Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A4",
+      "question_id": "A4Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": "M09",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A4",
+      "question_id": "A4Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A4",
+      "question_id": "A4Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M01",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A4",
+      "question_id": "A4Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A4",
+      "question_id": "A4Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A4",
+      "question_id": "A4Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L09",
+      "assessment_id": "A4",
+      "question_id": "A4Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A1",
+      "question_id": "A1Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": "M18",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A1",
+      "question_id": "A1Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A1",
+      "question_id": "A1Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A1",
+      "question_id": "A1Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A1",
+      "question_id": "A1Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A1",
+      "question_id": "A1Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A1",
+      "question_id": "A1Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": "M05",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A1",
+      "question_id": "A1Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A2",
+      "question_id": "A2Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A2",
+      "question_id": "A2Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A2",
+      "question_id": "A2Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A2",
+      "question_id": "A2Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A2",
+      "question_id": "A2Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A2",
+      "question_id": "A2Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A2",
+      "question_id": "A2Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A2",
+      "question_id": "A2Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": "M18",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": "M05",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A4",
+      "question_id": "A4Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": "M18",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A4",
+      "question_id": "A4Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A4",
+      "question_id": "A4Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A4",
+      "question_id": "A4Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A4",
+      "question_id": "A4Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A4",
+      "question_id": "A4Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A4",
+      "question_id": "A4Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": "M05",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L10",
+      "assessment_id": "A4",
+      "question_id": "A4Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A1",
+      "question_id": "A1Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A1",
+      "question_id": "A1Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A1",
+      "question_id": "A1Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A1",
+      "question_id": "A1Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M21",
+      "injected_kind": "misconception",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A1",
+      "question_id": "A1Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A1",
+      "question_id": "A1Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A1",
+      "question_id": "A1Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A1",
+      "question_id": "A1Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A2",
+      "question_id": "A2Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A2",
+      "question_id": "A2Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A2",
+      "question_id": "A2Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A2",
+      "question_id": "A2Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A2",
+      "question_id": "A2Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A2",
+      "question_id": "A2Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A2",
+      "question_id": "A2Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A2",
+      "question_id": "A2Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M21",
+      "injected_kind": "misconception",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A4",
+      "question_id": "A4Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A4",
+      "question_id": "A4Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A4",
+      "question_id": "A4Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A4",
+      "question_id": "A4Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M21",
+      "injected_kind": "misconception",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A4",
+      "question_id": "A4Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A4",
+      "question_id": "A4Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": true
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A4",
+      "question_id": "A4Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L11",
+      "assessment_id": "A4",
+      "question_id": "A4Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A1",
+      "question_id": "A1Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A1",
+      "question_id": "A1Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A1",
+      "question_id": "A1Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A1",
+      "question_id": "A1Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M02",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A1",
+      "question_id": "A1Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A1",
+      "question_id": "A1Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A1",
+      "question_id": "A1Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A1",
+      "question_id": "A1Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M02",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A3",
+      "question_id": "A3Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": "M20",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A3",
+      "question_id": "A3Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A3",
+      "question_id": "A3Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A3",
+      "question_id": "A3Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M02",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A3",
+      "question_id": "A3Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A3",
+      "question_id": "A3Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A3",
+      "question_id": "A3Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A3",
+      "question_id": "A3Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": "M02",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A4",
+      "question_id": "A4Q1",
+      "topic": "T7",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A4",
+      "question_id": "A4Q2",
+      "topic": "T3",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A4",
+      "question_id": "A4Q3",
+      "topic": "T6",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A4",
+      "question_id": "A4Q4",
+      "topic": "T2",
+      "type": "written",
+      "injected_node": "M02",
+      "injected_kind": "misconception",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A4",
+      "question_id": "A4Q5",
+      "topic": "T4",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A4",
+      "question_id": "A4Q6",
+      "topic": "T5",
+      "type": "written",
+      "injected_node": null,
+      "injected_kind": "careless",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A4",
+      "question_id": "A4Q7",
+      "topic": "T1",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    },
+    {
+      "learner_id": "L12",
+      "assessment_id": "A4",
+      "question_id": "A4Q8",
+      "topic": "T2",
+      "type": "mcq",
+      "injected_node": null,
+      "injected_kind": "correct",
+      "language_noise_applied": false
+    }
+  ]
+}

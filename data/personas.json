@@ -1,0 +1,80 @@
+{
+  "version": "1.0",
+  "cohort_id": "C1",
+  "cohort_label": "Meridian Centre 4 - Foundational Mathematics, Tuesday cohort",
+  "assessments_expected": ["A1", "A2", "A3", "A4"],
+  "learners": [
+    {
+      "learner_id": "L01",
+      "name": "Thabo M.",
+      "assigned_misconceptions": ["M18", "M08"],
+      "traits": {"returner": false, "missing_assessments": [], "second_language": false, "language_noise_level": 0.0, "careless_rate": 0.08}
+    },
+    {
+      "learner_id": "L02",
+      "name": "Nomsa D.",
+      "assigned_misconceptions": ["M01", "M12"],
+      "traits": {"returner": false, "missing_assessments": [], "second_language": false, "language_noise_level": 0.0, "careless_rate": 0.1}
+    },
+    {
+      "learner_id": "L03",
+      "name": "Ravi P.",
+      "assigned_misconceptions": ["M15", "M18", "M05"],
+      "traits": {"returner": false, "missing_assessments": [], "second_language": false, "language_noise_level": 0.0, "careless_rate": 0.12}
+    },
+    {
+      "learner_id": "L04",
+      "name": "Fatima S.",
+      "assigned_misconceptions": ["M01", "M10"],
+      "traits": {"returner": false, "missing_assessments": [], "second_language": true, "language_noise_level": 0.35, "careless_rate": 0.08}
+    },
+    {
+      "learner_id": "L05",
+      "name": "Chen W.",
+      "assigned_misconceptions": ["M07", "M05"],
+      "traits": {"returner": false, "missing_assessments": [], "second_language": true, "language_noise_level": 0.45, "careless_rate": 0.07}
+    },
+    {
+      "learner_id": "L06",
+      "name": "Kwame A.",
+      "assigned_misconceptions": ["M01", "M19"],
+      "traits": {"returner": false, "missing_assessments": [], "second_language": false, "language_noise_level": 0.0, "careless_rate": 0.1}
+    },
+    {
+      "learner_id": "L07",
+      "name": "Amira K.",
+      "assigned_misconceptions": ["M01", "M14"],
+      "traits": {"returner": true, "missing_assessments": ["A2"], "second_language": false, "language_noise_level": 0.0, "careless_rate": 0.1}
+    },
+    {
+      "learner_id": "L08",
+      "name": "Grace O.",
+      "assigned_misconceptions": ["M13", "M16"],
+      "traits": {"returner": false, "missing_assessments": [], "second_language": false, "language_noise_level": 0.0, "careless_rate": 0.09}
+    },
+    {
+      "learner_id": "L09",
+      "name": "Ibrahim N.",
+      "assigned_misconceptions": ["M01", "M09"],
+      "traits": {"returner": true, "missing_assessments": ["A1", "A2"], "second_language": false, "language_noise_level": 0.0, "careless_rate": 0.11}
+    },
+    {
+      "learner_id": "L10",
+      "name": "Sofia R.",
+      "assigned_misconceptions": ["M05", "M18"],
+      "traits": {"returner": false, "missing_assessments": [], "second_language": false, "language_noise_level": 0.0, "careless_rate": 0.08}
+    },
+    {
+      "learner_id": "L11",
+      "name": "Liu Y.",
+      "assigned_misconceptions": ["M21", "M23"],
+      "traits": {"returner": false, "missing_assessments": [], "second_language": true, "language_noise_level": 0.55, "careless_rate": 0.06}
+    },
+    {
+      "learner_id": "L12",
+      "name": "Daniel M.",
+      "assigned_misconceptions": ["M02", "M20"],
+      "traits": {"returner": true, "missing_assessments": ["A2"], "second_language": false, "language_noise_level": 0.0, "careless_rate": 0.1}
+    }
+  ]
+}
