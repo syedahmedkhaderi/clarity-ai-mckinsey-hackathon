@@ -23,10 +23,10 @@ def run(state: LoopState) -> LoopState:
 
     raw = mock_api.get_submissions(assessment_id)
     state["submissions"] = [Submission(**s) for s in raw]
-    meta = mock_api.get_cohort_meta()
+    meta = mock_api.get_cohort_meta(assessment_id)
     expected = meta["assessments_expected"]
 
-    present_by_learner = _assessments_present(meta["learners"])
+    present_by_learner = _assessments_present(meta["learners"], expected)
     contexts: list[LearnerContext] = []
     for learner in meta["learners"]:
         contexts.append(_build_context(learner, present_by_learner, expected, assessment_id))
@@ -51,11 +51,12 @@ def run(state: LoopState) -> LoopState:
     return state
 
 
-def _assessments_present(learners: list[dict]) -> dict[str, list[str]]:
-    """Which assessments each learner actually has submissions for, from the LMS."""
+def _assessments_present(learners: list[dict], expected: list[str]) -> dict[str, list[str]]:
+    """Which of the class's assessments each learner actually has submissions for, from
+    the LMS. The class's own list is used, not the demo schemes, so an uploaded
+    class is judged against its own tests."""
     present: dict[str, set[str]] = {l["learner_id"]: set() for l in learners}
-    for scheme in mock_api.schemes()["assessments"]:
-        aid = scheme["assessment_id"]
+    for aid in expected:
         for sub in mock_api.get_submissions(aid):
             present.setdefault(sub["learner_id"], set()).add(aid)
     return {lid: sorted(v) for lid, v in present.items()}

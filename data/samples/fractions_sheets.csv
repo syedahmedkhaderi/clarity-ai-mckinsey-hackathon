@@ -1,0 +1,9 @@
+student_id,name,email,Q1,Q2,Q3,Q4,Q5,Q6
+S001,Amira K.,amira.k@example.com,b,b,"1/3 + 1/4 = (1+1)/(3+4) = 2/7 km","2/5 + 1/2 = 3/7",a,"3/4. I divided the top and the bottom by 2."
+S002,Ben O.,ben.o@example.com,b,a,"I add the tops 1+1=2 and the bottoms 3+4=7 so the answer is 2/7 km","2/5 + 1/2 = 3/7",b,"3/4. Divide both numbers by 2."
+S003,Chidi N.,chidi.n@example.com,b,b,"2/7 km because 1+1=2 and 3+4=7","Common denominator is 10. 4/10 + 5/10 = 9/10",2/6,"2/4. I took 4 away from the top and the bottom."
+S004,Dara S.,dara.s@example.com,b,b,"1/3 + 1/4 = 2/7","2/5 + 1/2 = 3/7 so it is three sevenths",b,"3/4, divide the top and the bottom by 2"
+S005,Elif T.,elif.t@example.com,b,b,"The common denominator is 12. 1/3 = 4/12 and 1/4 = 3/12. 4/12 + 3/12 = 7/12 km","2/5 + 1/2 = 3/7",b,"3/4 by dividing both by 2"
+S006,Farah H.,farah.h@example.com,b,b,"Common denominator 12. 4/12 + 3/12 = 7/12 km","Common denominator 10. 4/10 + 5/10 = 9/10",b,"3/4. I divided the top and the bottom by 2 because both go into 2."
+S007,Grace L.,grace.l@example.com,b,a,"Common denominator 12. 1/3 is 4/12 and 1/4 is 3/12, so 7/12 km","Common denominator 10. 2/5 is 4/10 and 1/2 is 5/10. 9/10",b,"3/4. Divided by 2."
+S008,Hiro M.,hiro.m@example.com,b,b,"Need same bottom number. Twelve is the bottom for both. 1/3 is 4/12, 1/4 is 3/12. Together is 7/12 km.","Same bottom is ten. 2/5 is 4/10 and 1/2 is 5/10. Add them, is 9/10.",b,"Is 3/4. Top and bottom I divide with 2."

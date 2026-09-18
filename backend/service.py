@@ -278,7 +278,7 @@ def resolve_escalation(batch_id: str, escalation_id: str, resolution: str) -> di
 def run_sync(assessment_id: str, cohort_id: str | None = None,
              minutes: int | None = None) -> dict[str, Any]:
     """Blocking run. Used by the fixture builder, the evaluator and the tests."""
-    meta = mock_api.get_cohort_meta()
+    meta = mock_api.get_cohort_meta(assessment_id)
     state = new_state(f"B-{assessment_id}-sync", assessment_id,
                       cohort_id or meta["cohort_id"],
                       minutes or config.DEFAULT_FACILITATOR_MINUTES)
@@ -288,3 +288,18 @@ def run_sync(assessment_id: str, cohort_id: str | None = None,
         result["status"] = "complete"
     _persist(result)
     return serialise(result)
+
+
+def has_running_batch(assessment_id: str) -> bool:
+    """True while a graph run for this assessment is still in flight."""
+    with _LOCK:
+        return any(s.get("assessment_id") == assessment_id and s.get("status") == "running"
+                   for s in _LIVE.values())
+
+
+def forget_assessment(assessment_id: str) -> None:
+    """Drops the in-memory copy of every batch for a deleted test, so a batch that
+    is gone from the database is not still served from the cache."""
+    with _LOCK:
+        for batch_id in [b for b, s in _LIVE.items() if s.get("assessment_id") == assessment_id]:
+            del _LIVE[batch_id]

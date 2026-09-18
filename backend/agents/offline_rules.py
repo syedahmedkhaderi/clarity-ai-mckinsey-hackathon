@@ -46,9 +46,17 @@ def _params(question: dict[str, Any]) -> dict[str, Any]:
     return {"nums": nums}
 
 
+def is_demo(question: dict[str, Any]) -> bool:
+    """Demo questions have no origin key. The rules below encode the mathematics of
+    those questions only, so nothing else may reach them."""
+    return question.get("origin", "demo") == "demo"
+
+
 # --- marking ---------------------------------------------------------------
 
 def mark_written_offline(question: dict[str, Any], sub: Any) -> Mark:
+    if not is_demo(question):
+        return _unreadable_mark(question, sub)
     slot = question["question_id"][2:]
     checker = {"Q2": _check_q2, "Q4": _check_q4, "Q6": _check_q6}.get(slot)
     scheme = question["scheme"]
@@ -67,6 +75,16 @@ def mark_written_offline(question: dict[str, Any], sub: Any) -> Mark:
     return Mark(question_id=question["question_id"], learner_id=sub.learner_id,
                 awarded=awarded, max_marks=float(question["max_marks"]),
                 confidence=confidence, criteria_met=met, criteria_missed=missed,
+                source="fallback")
+
+
+def _unreadable_mark(question: dict[str, Any], sub: Any) -> Mark:
+    """The fallback for a question the rules were not written for. It awards nothing
+    and says so with zero confidence, so the reviewer gate hands the response to a
+    person instead of a demo rule marking a teacher's own question."""
+    return Mark(question_id=question["question_id"], learner_id=sub.learner_id, awarded=0.0,
+                max_marks=float(question["max_marks"]), confidence=0.0, criteria_met=[],
+                criteria_missed=[c["criterion"] for c in question.get("scheme", [])],
                 source="fallback")
 
 
@@ -113,7 +131,11 @@ def _check_q6(question: dict[str, Any], answer: str) -> list[bool]:
 
 # --- diagnosis -------------------------------------------------------------
 
-def diagnose_offline(question: dict[str, Any], sub: Any, mark: Mark) -> Diagnosis:
+def diagnose_offline(question: dict[str, Any], sub: Any, mark: Mark) -> Diagnosis | None:
+    """None for a question the rules were not written for. Naming a mistake pattern
+    from rules that never saw the question would be inventing an answer."""
+    if not is_demo(question):
+        return None
     slot = question["question_id"][2:]
     rule = {"Q2": _diag_q2, "Q4": _diag_q4, "Q6": _diag_q6}.get(slot)
     node, alt, confidence, span, reason = rule(question, sub.answer) if rule else (

@@ -20,7 +20,7 @@ from pydantic import BaseModel, Field
 
 from backend import llm
 from backend.agents import reviewer
-from backend.agents.offline_rules import diagnose_mcq, diagnose_offline
+from backend.agents.offline_rules import diagnose_mcq, diagnose_offline, is_demo
 from backend.lms import mock_api
 from backend.models import Diagnosis, Mark
 from backend.prompts import diagnosis as diagnosis_prompt
@@ -47,20 +47,11 @@ def run(state: LoopState) -> LoopState:
           f"({llm.describe()})")
 
     subs = {(s.learner_id, s.question_id): s for s in state["submissions"]}
-    diagnoses: list[Diagnosis] = []
-    written: list[tuple[dict[str, Any], Any, Mark]] = []
-
-    for mark in lost:
-        sub = subs.get((mark.learner_id, mark.question_id))
-        question = mock_api.get_question(mark.question_id)
-        if sub is None or question is None:
-            continue
-        if question["type"] == "mcq":
-            d = diagnose_mcq(question, sub)
-            if d:
-                diagnoses.append(d)
-            continue
-        written.append((question, sub, mark))
+    diagnoses, written, skipped = _triage(lost, subs)
+    if skipped:
+        trace(state, AGENT, "skipped",
+              f"{skipped} responses were not diagnosed because their question has no topic or "
+              f"the answer is blank. They keep their marks and raise no review item.")
 
     # Each written diagnosis is independent of the others, so they go out
     # together. Serially at a few seconds a call this is the slowest node in the
@@ -81,7 +72,8 @@ def run(state: LoopState) -> LoopState:
     for (question, sub, mark), out in zip(written, outputs):
         d, span_ok = _resolve(question, sub, mark, out)
         rejected_spans += int(not span_ok)
-        diagnoses.append(d)
+        if d is not None:
+            diagnoses.append(d)
 
     lang = [d for d in diagnoses if d.language_flag]
     trace(state, AGENT, "diagnosed",
@@ -105,13 +97,55 @@ def run(state: LoopState) -> LoopState:
     return state
 
 
+def _triage(lost: list[Mark], subs: dict[tuple[str, str], Any]
+            ) -> tuple[list[Diagnosis], list[tuple[dict[str, Any], Any, Mark]], int]:
+    """Splits lost marks into diagnoses already made from the distractor map, the
+    responses that need a model call, and a count of those skipped outright."""
+    diagnoses: list[Diagnosis] = []
+    written: list[tuple[dict[str, Any], Any, Mark]] = []
+    skipped = 0
+    for mark in lost:
+        sub = subs.get((mark.learner_id, mark.question_id))
+        question = mock_api.get_question(mark.question_id)
+        if sub is None or question is None:
+            continue
+        if not _can_diagnose(question, sub):
+            skipped += 1
+            continue
+        if question["type"] == "mcq":
+            d = diagnose_mcq(question, sub)
+            if d:
+                diagnoses.append(d)
+                continue
+            # A demo MCQ with no mapped distractor has no diagnosis to give. An
+            # uploaded one never had a map, so its misses go to the model.
+            if is_demo(question):
+                continue
+        written.append((question, sub, mark))
+    return diagnoses, written, skipped
+
+
 def _topic_nodes(question: dict[str, Any]) -> list[dict[str, Any]]:
     return [n for n in mock_api.taxonomy()["nodes"] if n["topic"] == question["topic"]]
+
+
+def _can_diagnose(question: dict[str, Any], sub: Any) -> bool:
+    """A question with no topic has no misconception nodes to choose from, and a blank
+    answer has no words to cite as evidence. Both keep their marks and stop here,
+    with no diagnosis and no escalation, so an untagged test cannot flood To review."""
+    return bool(_topic_nodes(question)) and bool(sub.answer.strip())
 
 
 def _build_prompt(question: dict[str, Any], sub: Any, mark: Mark) -> str:
     summary = (f"awarded {mark.awarded} of {mark.max_marks}, "
                f"criteria missed: {'; '.join(mark.criteria_missed) or 'none'}")
+    if question["type"] == "mcq":
+        # The diagnosis prompt shows only the question text, so the options and the
+        # right answer are added here. Without them the model cannot say which
+        # option was chosen or why it was tempting.
+        options = "; ".join(f"{k}) {v}" for k, v in question["options"].items())
+        question = {**question, "prompt": f"{question['prompt']} Options: {options}. "
+                                          f"Correct option: {question['correct']}."}
     return diagnosis_prompt.build(question, sub.answer, _topic_nodes(question), summary)
 
 
@@ -136,8 +170,9 @@ def normalise_span(span: str) -> str:
 
 
 def _resolve(question: dict[str, Any], sub: Any, mark: Mark,
-             out: "_DiagnosisOut | None") -> tuple[Diagnosis, bool]:
-    """Turns one model response into a Diagnosis, or falls back to the rules."""
+             out: "_DiagnosisOut | None") -> tuple[Diagnosis | None, bool]:
+    """Turns one model response into a Diagnosis, or falls back to the rules. The
+    rules have nothing to say about an uploaded question, so that case is None."""
     nodes = _topic_nodes(question)
     valid_ids = {n["id"] for n in nodes}
     if out is None:
@@ -148,6 +183,8 @@ def _resolve(question: dict[str, Any], sub: Any, mark: Mark,
     node_ok = out.taxonomy_node in valid_ids if out.taxonomy_node else True
     if not span_ok or not node_ok:
         fallback = diagnose_offline(question, sub, mark)
+        if fallback is None:
+            return None, span_ok
         fallback.confidence = min(fallback.confidence, 0.6)
         fallback.reasoning = (
             "The model's evidence could not be found verbatim in the learner's answer, "

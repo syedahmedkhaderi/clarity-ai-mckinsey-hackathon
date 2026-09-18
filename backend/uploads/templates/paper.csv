@@ -1,0 +1,4 @@
+number,type,topic,marks,question,correct,option_a,option_b,option_c,option_d,model_answer,criteria
+1,mcq,T1,1,Which fraction is equivalent to 2/4?,b,1/4,1/2,2/8,3/4,,
+2,written,T2,3,"A student walks 1/3 km then 1/4 km. How far did they walk in total? Show your working.",,,,,,"Common denominator 12. 4/12 + 3/12 = 7/12 km.","1|Finds a common denominator; 1|Converts both fractions correctly; 1|Gives 7/12 with the unit"
+3,written,,2,"Explain in one sentence why 1/8 is smaller than 1/2.",,,,,,"The whole is cut into more pieces, so each piece is smaller.","1|Says the pieces are smaller when there are more of them; 1|Compares the two fractions"
