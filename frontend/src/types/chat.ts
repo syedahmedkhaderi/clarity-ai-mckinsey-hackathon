@@ -23,3 +23,11 @@ export interface ChatReply {
   sources: ChatSource[];
   marks_are_draft: boolean;
 }
+
+/** One line of the conversation as the panel keeps it. The reply is kept whole so sources and notes can be shown. */
+export interface ChatMessage {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  reply?: ChatReply;
+}
