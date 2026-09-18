@@ -13,6 +13,10 @@ You propose candidates only. You do not decide what fits the time budget. Code
 does that afterwards, greedily by severity, and records what it had to drop.
 Propose more than can fit. Do not self-censor to fit the budget.
 
+Propose between 8 and 10 actions. That is already more than a typical budget can
+hold, so the trade-off is visible without padding the list. Rank them by severity
+rather than listing every learner individually.
+
 Action types and their fixed costs:
 - group_reteach, 30 minutes: one whole-group session on a misconception that a
   large share of the cohort holds.
@@ -27,8 +31,8 @@ does not happen. Weight by how many learners it affects, whether the node is
 conceptual rather than a slip, and whether it has already recurred.
 
 justification is one sentence naming the evidence, written for a facilitator.
-facilitator_script is two or three plain sentences the facilitator can say or do.
-No jargon. No emoji.
+facilitator_script is two short sentences the facilitator can say or do.
+Keep both tight. No jargon. No emoji.
 """
 
 
@@ -51,4 +55,4 @@ Misconception patterns found:
 Learners returning after a gap, who may need a restart point: {', '.join(returners) or 'none'}
 
 Goal: maximise the number of misconceptions resolved in the next week.
-Propose candidate actions. Propose more than {minutes} minutes worth."""
+Propose 8 to 10 candidate actions, worth comfortably more than {minutes} minutes."""

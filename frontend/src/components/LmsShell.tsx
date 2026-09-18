@@ -29,12 +29,14 @@ export function LmsShell({
   onNavigate,
   queueCount,
   mode,
+  offline,
   children,
 }: {
   view: ViewKey;
   onNavigate: (v: ViewKey) => void;
   queueCount: number;
   mode: string;
+  offline: boolean;
   children: ReactNode;
 }) {
   return (
@@ -49,8 +51,8 @@ export function LmsShell({
         <span className="text-white/30">/</span>
         <span className="text-sm text-white/70">Learning Portal</span>
         <div className="ml-auto flex items-center gap-4">
-          <span className="text-2xs text-white/50 hidden sm:inline">
-            LOOP {mode === "model" ? "model mode" : "offline mode"}
+          <span className="text-2xs text-white/50 hidden md:inline" title={mode}>
+            LOOP {offline ? "offline mode" : mode}
           </span>
           <div className="flex items-center gap-2">
             <span className="text-xs text-white/70 hidden sm:inline">N. Okonkwo, Facilitator</span>

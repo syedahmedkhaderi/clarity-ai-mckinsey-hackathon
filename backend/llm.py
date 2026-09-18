@@ -17,8 +17,9 @@ providers is a change here and nowhere else.
 from __future__ import annotations
 
 import logging
+import threading
 from concurrent.futures import ThreadPoolExecutor
-from typing import Any, Sequence, TypeVar
+from typing import Any, Callable, Sequence, TypeVar
 
 from pydantic import BaseModel
 
@@ -46,7 +47,9 @@ def describe() -> str:
 
 def _build(model: str) -> Any | None:
     """Creates the chat client for the detected provider."""
-    common = {"timeout": config.LLM_TIMEOUT_SECONDS, "max_retries": 2}
+    # One retry only. A second silent backoff inside the client turns a slow call
+    # into a very slow one, and the deterministic fallback is right there.
+    common = {"timeout": config.LLM_TIMEOUT_SECONDS, "max_retries": 1}
     if config.PROVIDER == "azure":
         from langchain_openai import AzureChatOpenAI
 
@@ -73,7 +76,15 @@ def _client(model: str, schema: type[BaseModel]) -> Any | None:
         llm = _build(model)
         if llm is None:
             return None
-        _CLIENTS[key] = llm.with_structured_output(schema)
+        # strict json_schema, not the default. Without it the smaller models
+        # quietly omit a required field, the response fails validation, and the
+        # agent silently falls back to rules while reporting itself as running
+        # on the model. Strict mode makes the contract enforceable at the API.
+        try:
+            _CLIENTS[key] = llm.with_structured_output(schema, method="json_schema",
+                                                       strict=True)
+        except Exception:
+            _CLIENTS[key] = llm.with_structured_output(schema)
         return _CLIENTS[key]
     except Exception as exc:  # pragma: no cover - provider or import failure
         log.warning("llm client unavailable for %s: %s", model, exc)
@@ -99,14 +110,35 @@ def call(system: str, user: str, schema: type[T], smart: bool = False) -> T | No
 
 
 def call_many(system: str, users: Sequence[str], schema: type[T],
-              smart: bool = False) -> list[T | None]:
+              smart: bool = False,
+              on_progress: Callable[[int, int], None] | None = None) -> list[T | None]:
     """Runs independent calls concurrently, preserving input order.
 
     A failure in one call is a None in that slot, never an exception, so one bad
     response cannot take down a whole batch.
+
+    on_progress(done, total) fires as each call lands. A model step that takes
+    ten seconds with no output looks identical to a hang, so the agents use this
+    to report progress while they wait.
     """
     if config.OFFLINE or not users:
         return [None] * len(users)
-    workers = max(1, min(config.LLM_CONCURRENCY, len(users)))
+    total = len(users)
+    workers = max(1, min(config.LLM_CONCURRENCY, total))
+    done = 0
+    lock = threading.Lock()
+
+    def one(user: str) -> T | None:
+        nonlocal done
+        result = call(system, user, schema, smart)
+        if on_progress:
+            with lock:
+                done += 1
+                try:
+                    on_progress(done, total)
+                except Exception:  # progress reporting must never break a run
+                    pass
+        return result
+
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        return list(pool.map(lambda u: call(system, u, schema, smart), users))
+        return list(pool.map(one, users))

@@ -11,7 +11,7 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
-from backend import llm
+from backend import config, llm
 from backend.agents import reviewer
 from backend.agents.offline_rules import mark_written_offline
 from backend.lms import mock_api
@@ -55,14 +55,27 @@ def run(state: LoopState) -> LoopState:
         else:
             written.append((question, subs))
 
-    # One call per written question, all learners batched into it, and the
-    # questions themselves sent concurrently. Live demo latency matters.
-    prompts = [marking.build(q, [{"learner_id": s.learner_id, "answer": s.answer} for s in subs])
-               for q, subs in written]
-    outputs = llm.call_many(marking.SYSTEM, prompts, _MarkBatch)
+    # Learners are chunked rather than sent one call per question. A response
+    # carrying the whole cohort is long, and output length is what latency is
+    # made of. Small chunks go out together and land far sooner.
+    chunks: list[tuple[dict[str, Any], list[Any]]] = []
+    for question, subs in written:
+        for i in range(0, len(subs), config.MARK_BATCH_SIZE):
+            chunks.append((question, subs[i:i + config.MARK_BATCH_SIZE]))
+
+    prompts = [marking.build(q, [{"learner_id": s.learner_id, "answer": s.answer} for s in part])
+               for q, part in chunks]
+    learners = len({s.learner_id for _, subs in written for s in subs})
+
+    def progress(done: int, total: int) -> None:
+        trace(state, AGENT, "progress",
+              f"Marked {min(done * config.MARK_BATCH_SIZE, learners * len(written))} of "
+              f"{learners * len(written)} written responses against the scheme.")
+
+    outputs = llm.call_many(marking.SYSTEM, prompts, _MarkBatch, on_progress=progress)
     llm_calls = sum(1 for o in outputs if o is not None)
-    for (question, subs), out in zip(written, outputs):
-        marks.extend(_resolve_written(question, subs, out))
+    for (question, part), out in zip(chunks, outputs):
+        marks.extend(_resolve_written(question, part, out))
 
     trace(state, AGENT, "marked",
           f"{len(marks)} provisional marks. "

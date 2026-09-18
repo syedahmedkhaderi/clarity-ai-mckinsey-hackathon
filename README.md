@@ -32,7 +32,7 @@ live:
 
 | Credentials present | Provider | Models |
 |---|---|---|
-| `QB_CLIENT_ID` + `QB_CLIENT_SECRET` | QuantumBlack Azure AI gateway | `gpt-4o-mini` for marking, `gpt-5.4` for diagnosis, planning and feedback |
+| `QB_CLIENT_ID` + `QB_CLIENT_SECRET` | QuantumBlack Azure AI gateway | `gpt-4.1-mini` |
 | `OPENAI_API_KEY` | OpenAI directly | `gpt-4o-mini` and `gpt-4o` |
 | neither | Offline deterministic rules | none |
 
@@ -126,20 +126,28 @@ whether it flatters the system or not.
 rules encode the same mathematics the generator used to inject the errors, so
 the recovery rate is a wiring check, not a measurement of model quality.
 
-Measured on the QuantumBlack gateway with `gpt-5.4`, assessment A3:
+Measured on the QuantumBlack gateway with `gpt-4.1-mini`, assessment A3:
 
 | Metric | Result |
 |---|---|
-| Misconception recovery | 92% (23 of 25) |
-| Recovery before the reviewer gate | 96% (24 of 25) |
-| **Language separation gap** | **+11.4%**, small |
-| Recovery on second-language learners, pre-gate | 100% (6 of 6) |
-| Evidence span validity | 100% (29 of 29) |
+| Misconception recovery | 96% (24 of 25) |
+| Recovery before the reviewer gate | 100% (25 of 25) |
+| Recovery on second-language learners, before the gate | 100% (6 of 6) |
+| Recovery on everyone else, before the gate | 100% (19 of 19) |
+| Evidence span validity | 100% (32 of 32) |
 | Returner handling | 100% (3 of 3) restart points proposed |
+| Run time, full cohort | about 20 seconds |
 
-The language gap is the number that matters: it is small, and every genuine
-misconception held by a second-language learner was still recovered. Grammatical
-noise is not being read as conceptual weakness.
+The one case not recovered is L11, whose mathematics was correct and whose
+diagnosis the reviewer deliberately held back as a language barrier. The
+diagnostician named it correctly first. Zero second-language learners were
+misdiagnosed as conceptually weak, which is the behaviour the whole fixture
+exists to protect.
+
+`gpt-5.4` is also available on the gateway and is one environment variable away
+(`LOOP_MODEL_SMART=gpt-5.4-2026-03-05`), but it measured slightly worse here
+(92% recovery) and took three times as long, so it is not the default. That
+comparison is the reason the eval harness exists.
 
 ## The independence rule
 

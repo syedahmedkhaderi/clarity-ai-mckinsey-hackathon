@@ -118,9 +118,9 @@ def batch(batch_id: str) -> dict[str, Any]:
 
 @app.get("/api/batch/{batch_id}/trace")
 def batch_trace(batch_id: str, since: int = 0) -> dict[str, Any]:
-    state = _require(batch_id)
-    events = state.get("trace") or []
-    return {"batch_id": batch_id, "status": state.get("status", "running"),
+    _require(batch_id)
+    events, status = service.get_trace(batch_id)
+    return {"batch_id": batch_id, "status": status,
             "total": len(events), "events": events[since:]}
 
 

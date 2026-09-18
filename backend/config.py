@@ -92,9 +92,15 @@ PROVIDER: Final[str] = (
 # Marking is mechanical: check a response against criteria that are already
 # written down. Diagnosis and planning are the judgement calls, so they get the
 # stronger model. Both are overridable per deployment.
-MODEL_FAST: Final[str] = _env("LOOP_MODEL_FAST", "gpt-4o-mini")
+# Measured on the gateway against this project's real prompts, not guessed:
+# gpt-4.1-mini returns a batched marking call in about 7s where gpt-4o-mini takes
+# 14s, and diagnoses in under 3s. A facilitator waiting on a progress bar is the
+# constraint that decides this, so the fast pair is the default and gpt-5.4 is
+# one environment variable away for a quality run.
+MODEL_FAST: Final[str] = _env(
+    "LOOP_MODEL_FAST", "gpt-4.1-mini" if PROVIDER == "azure" else "gpt-4o-mini")
 MODEL_SMART: Final[str] = _env(
-    "LOOP_MODEL_SMART", "gpt-5.4-2026-03-05" if PROVIDER == "azure" else "gpt-4o")
+    "LOOP_MODEL_SMART", "gpt-4.1-mini" if PROVIDER == "azure" else "gpt-4o")
 
 DB_PATH: Final[Path] = Path(_env("LOOP_DB_PATH", str(ROOT / "loop.db")))
 
@@ -105,7 +111,18 @@ OFFLINE: Final[bool] = PROVIDER == "offline"
 
 # Model calls are independent of one another, so they are fanned out. A live
 # demo that marks a whole cohort serially at three seconds a call is not a demo.
-LLM_CONCURRENCY: Final[int] = int(_env("LOOP_LLM_CONCURRENCY", "12"))
+LLM_CONCURRENCY: Final[int] = int(_env("LOOP_LLM_CONCURRENCY", "16"))
+
+# Learners per marking call. One call per question with the whole cohort in it
+# makes a very long response, and output length is what model latency is made of.
+# Small chunks in parallel land far sooner than one big one.
+MARK_BATCH_SIZE: Final[int] = int(_env("LOOP_MARK_BATCH_SIZE", "4"))
+
+# Planning proposes and scores candidate actions, which code then fits to the
+# budget. The judgement that matters most is the diagnosis, so that keeps the
+# stronger model and planning takes the faster one. Set LOOP_PLANNER_SMART=1 to
+# trade about ten seconds for a richer set of proposals.
+PLANNER_SMART: Final[bool] = _env("LOOP_PLANNER_SMART", "0").lower() in ("1", "true", "yes")
 LLM_TIMEOUT_SECONDS: Final[int] = int(_env("LOOP_LLM_TIMEOUT", "90"))
 
 # Reviewer gate thresholds. Each maps to one reason code in agents/reviewer.py.

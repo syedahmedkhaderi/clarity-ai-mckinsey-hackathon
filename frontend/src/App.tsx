@@ -12,6 +12,16 @@ import type { BatchResult, Escalation, LearnerProfile, ProfileEntry, TraceEvent 
 
 const POLL_MS = 400;
 
+/** Plain-English label for the stage currently running, shown on the button. */
+const STAGE_LABEL: Record<string, string> = {
+  intake: "Reading the batch",
+  marker: "Marking responses",
+  diagnostician: "Naming misconceptions",
+  cohort_analyst: "Finding cohort patterns",
+  planner: "Building your plan",
+};
+const PIPELINE = ["intake", "marker", "diagnostician", "cohort_analyst", "planner"];
+
 export default function App() {
   const qc = useQueryClient();
   const [view, setView] = useState<ViewKey>("dashboard");
@@ -25,6 +35,8 @@ export default function App() {
   const [override, setOverride] = useState<OverrideTarget | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [startedAt, setStartedAt] = useState<number | null>(null);
+  const [elapsedMs, setElapsedMs] = useState(0);
 
   const health = useQuery({ queryKey: ["health"], queryFn: api.health });
   const taxonomy = useQuery({ queryKey: ["taxonomy"], queryFn: api.taxonomy });
@@ -57,6 +69,18 @@ export default function App() {
     [qc],
   );
 
+  // A visible clock while the run is in flight. Without it a twenty second wait
+  // and a hang look exactly the same.
+  useEffect(() => {
+    if (startedAt === null) return;
+    if (status !== "running") {
+      setElapsedMs(Date.now() - startedAt);
+      return;
+    }
+    const id = setInterval(() => setElapsedMs(Date.now() - startedAt), 100);
+    return () => clearInterval(id);
+  }, [startedAt, status]);
+
   // Poll the trace while the graph runs so the pipeline animates rather than
   // showing a spinner.
   useEffect(() => {
@@ -87,6 +111,8 @@ export default function App() {
     setTrace([]);
     setBatch(null);
     setStatus("running");
+    setStartedAt(Date.now());
+    setElapsedMs(0);
     try {
       const { batch_id } = await api.runBatch(assessmentId, "C1", minutes);
       setBatchId(batch_id);
@@ -137,6 +163,14 @@ export default function App() {
     });
   };
 
+  // The furthest stage that has started but not finished.
+  const stage = useMemo(() => {
+    const ended = new Set(trace.filter((e) => e.action === "end").map((e) => e.agent));
+    const started = trace.map((e) => e.agent);
+    const active = PIPELINE.filter((a) => started.includes(a) && !ended.has(a));
+    return active.length ? (STAGE_LABEL[active[active.length - 1]] ?? null) : null;
+  }, [trace]);
+
   const openCount = useMemo(
     () => (batch?.escalations ?? []).filter((e) => !e.resolved).length,
     [batch],
@@ -150,6 +184,7 @@ export default function App() {
       onNavigate={setView}
       queueCount={openCount}
       mode={health.data?.mode ?? ""}
+      offline={(health.data?.provider ?? "offline") === "offline"}
     >
       {error && (
         <div className="panel border-flag-line bg-flag-soft px-4 py-3 mb-5">
@@ -172,6 +207,8 @@ export default function App() {
           status={status}
           batch={batch}
           health={health.data ?? null}
+          stage={stage}
+          elapsedMs={elapsedMs}
         />
       )}
 

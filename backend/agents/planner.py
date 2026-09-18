@@ -67,6 +67,9 @@ def run(state: LoopState) -> LoopState:
     # it runs while the candidate actions are being proposed and fitted.
     with ThreadPoolExecutor(max_workers=1) as pool:
         pending_drafts = pool.submit(_draft_feedback, state)
+        trace(state, AGENT, "proposing",
+              "Asking for candidate actions against the cohort patterns, and drafting "
+              "learner feedback at the same time.")
         candidates = _propose(state, patterns.nodes if patterns else [])
         drafts = pending_drafts.result()
 
@@ -110,7 +113,7 @@ def _propose(state: LoopState, nodes: list[NodePattern]) -> list[PlannedAction]:
     out = llm.call(planning.SYSTEM,
                    planning.build(patterns.model_dump(), details,
                                   state["facilitator_minutes"], returners),
-                   _ActionBatch, smart=True)
+                   _ActionBatch, smart=config.PLANNER_SMART)
     if out is None or not out.actions:
         trace(state, AGENT, "fallback",
               "The planning model call did not return usable actions. Falling back to the "
@@ -283,10 +286,13 @@ def _draft_feedback(state: LoopState) -> list[DraftedFeedback]:
 
     # One learner's feedback does not depend on another's, so they are drafted
     # together rather than one at a time.
+    def progress(done: int, total: int) -> None:
+        trace(state, AGENT, "progress", f"Drafted feedback for {done} of {total} learners.")
+
     outs = llm.call_many(
         feedback_prompt.SYSTEM,
         [feedback_prompt.build(n, p) for n, p in zip(names, payloads)],
-        _FeedbackOut, smart=True,
+        _FeedbackOut, smart=config.PLANNER_SMART, on_progress=progress,
     )
 
     drafts: list[DraftedFeedback] = []

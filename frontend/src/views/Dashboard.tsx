@@ -14,6 +14,8 @@ export function Dashboard({
   status,
   batch,
   health,
+  stage,
+  elapsedMs,
 }: {
   assignments: Assignment[];
   selected: string;
@@ -26,6 +28,8 @@ export function Dashboard({
   status: string;
   batch: BatchResult | null;
   health: Health | null;
+  stage: string | null;
+  elapsedMs: number;
 }) {
   return (
     <div className="space-y-5">
@@ -45,10 +49,12 @@ export function Dashboard({
         onMinutes={onMinutes}
         onRun={onRun}
         running={running}
+        stage={stage}
+        elapsedMs={elapsedMs}
       />
 
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <AgentTrace events={trace} status={status} />
+        <AgentTrace events={trace} status={status} elapsedMs={elapsedMs} />
         <div className="space-y-5">
           <Summary batch={batch} />
           <GraphShape health={health} />

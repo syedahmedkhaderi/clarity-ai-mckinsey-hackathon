@@ -251,6 +251,7 @@ export interface LearnerProfile {
 export interface Health {
   status: string;
   mode: string;
+  provider: "azure" | "openai" | "offline";
   graph: {
     nodes: string[];
     edges: [string, string][];

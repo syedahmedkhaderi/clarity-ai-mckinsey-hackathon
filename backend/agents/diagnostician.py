@@ -65,10 +65,15 @@ def run(state: LoopState) -> LoopState:
     # Each written diagnosis is independent of the others, so they go out
     # together. Serially at a few seconds a call this is the slowest node in the
     # graph by an order of magnitude.
+    def progress(done: int, total: int) -> None:
+        trace(state, AGENT, "progress",
+              f"Named the misconception behind {done} of {total} written errors, "
+              f"each with a span quoted from the learner's own answer.")
+
     outputs = llm.call_many(
         diagnosis_prompt.SYSTEM,
         [_build_prompt(q, sub, mark) for q, sub, mark in written],
-        _DiagnosisOut, smart=True,
+        _DiagnosisOut, smart=True, on_progress=progress,
     ) if llm.available() else [None] * len(written)
 
     model_calls = sum(1 for o in outputs if o is not None)

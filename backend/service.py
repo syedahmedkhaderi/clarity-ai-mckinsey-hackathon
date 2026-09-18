@@ -29,7 +29,8 @@ from backend.models import (
     Submission,
     TraceEvent,
 )
-from backend.state import LoopState, new_state, serialise, trace
+from backend.state import (LoopState, live_trace, new_state, reset_live_trace,
+                           serialise, trace)
 
 _LIVE: dict[str, dict[str, Any]] = {}
 _LOCK = threading.Lock()
@@ -40,6 +41,7 @@ def start_batch(assessment_id: str, cohort_id: str, minutes: int) -> str:
     while it is still running."""
     batch_id = f"B-{assessment_id}-{uuid.uuid4().hex[:6]}"
     state = new_state(batch_id, assessment_id, cohort_id, minutes)
+    reset_live_trace(batch_id)
     with _LOCK:
         _LIVE[batch_id] = serialise(state)
     threading.Thread(target=_run, args=(batch_id, state), daemon=True).start()
@@ -70,6 +72,19 @@ def _persist(result: LoopState) -> None:
     db.record_marks(payload["batch_id"], payload["assessment_id"], payload.get("marks") or [])
     db.record_diagnoses(payload["batch_id"], payload["assessment_id"],
                         payload.get("diagnoses") or [])
+
+
+def get_trace(batch_id: str) -> tuple[list[dict[str, Any]], str]:
+    """Returns (events, status) from the freshest source available.
+
+    While the graph is running the persisted state is still the one captured at
+    submit time, so the live buffer is the only thing that has anything in it.
+    """
+    payload = get_batch(batch_id)
+    persisted = (payload or {}).get("trace") or []
+    live = [e.model_dump() for e in live_trace(batch_id)]
+    events = live if len(live) > len(persisted) else persisted
+    return events, (payload or {}).get("status", "running")
 
 
 def get_batch(batch_id: str) -> dict[str, Any] | None:

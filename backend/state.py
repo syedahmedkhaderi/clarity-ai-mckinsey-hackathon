@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import threading
 from datetime import datetime, timezone
 from typing import Any, TypedDict
 
@@ -58,13 +59,34 @@ def now_iso() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="milliseconds")
 
 
+# The graph runs on a worker thread and its state only reaches the API when the
+# whole run finishes. That is far too late for a UI that is meant to show the
+# agents working, so every event is also published here the moment it happens and
+# the trace endpoint reads from this.
+_LIVE_TRACE: dict[str, list[TraceEvent]] = {}
+_TRACE_LOCK = threading.Lock()
+
+
 def trace(state: LoopState, agent: str, action: str, detail: str,
           duration_ms: int = 0, level: str = "info") -> None:
     """Appends a trace event. Every node emits one at entry and one at exit."""
-    state.setdefault("trace", []).append(
-        TraceEvent(agent=agent, action=action, detail=detail,
-                   timestamp=now_iso(), duration_ms=duration_ms, level=level)
-    )
+    event = TraceEvent(agent=agent, action=action, detail=detail,
+                       timestamp=now_iso(), duration_ms=duration_ms, level=level)
+    state.setdefault("trace", []).append(event)
+    batch_id = state.get("batch_id")
+    if batch_id:
+        with _TRACE_LOCK:
+            _LIVE_TRACE.setdefault(batch_id, []).append(event)
+
+
+def live_trace(batch_id: str) -> list[TraceEvent]:
+    with _TRACE_LOCK:
+        return list(_LIVE_TRACE.get(batch_id, []))
+
+
+def reset_live_trace(batch_id: str) -> None:
+    with _TRACE_LOCK:
+        _LIVE_TRACE.pop(batch_id, None)
 
 
 def serialise(state: LoopState) -> dict[str, Any]:

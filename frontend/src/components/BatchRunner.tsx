@@ -13,6 +13,8 @@ export function BatchRunner({
   onMinutes,
   onRun,
   running,
+  stage,
+  elapsedMs,
 }: {
   assignments: Assignment[];
   selected: string;
@@ -21,6 +23,8 @@ export function BatchRunner({
   onMinutes: (m: number) => void;
   onRun: () => void;
   running: boolean;
+  stage: string | null;
+  elapsedMs: number;
 }) {
   const [touched, setTouched] = useState(false);
   return (
@@ -107,9 +111,26 @@ export function BatchRunner({
             </span>
           )}
         </p>
-        <button className="btn btn-primary ml-auto" onClick={onRun} disabled={running || !selected}>
-          {running ? "Running" : "Run LOOP analysis"}
-        </button>
+        <div className="ml-auto flex items-center gap-3">
+          {running && (
+            <span className="text-xs text-ink-muted text-right">
+              <span className="block">{stage ?? "Starting"}</span>
+              <span className="num text-ink-faint">
+                {(elapsedMs / 1000).toFixed(0)}s elapsed, usually about 20s
+              </span>
+            </span>
+          )}
+          <button className="btn btn-primary" onClick={onRun} disabled={running || !selected}>
+            {running ? (
+              <>
+                <span className="h-3 w-3 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+                Working
+              </>
+            ) : (
+              "Run LOOP analysis"
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

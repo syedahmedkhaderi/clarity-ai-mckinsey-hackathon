@@ -157,20 +157,41 @@ if the span is not found, falling back to the rule engine at reduced confidence.
 
 | Credentials | Provider | Fast model | Smart model |
 |---|---|---|---|
-| `QB_CLIENT_ID` + `QB_CLIENT_SECRET` | `azure` | `gpt-4o-mini` | `gpt-5.4-2026-03-05` |
+| `QB_CLIENT_ID` + `QB_CLIENT_SECRET` | `azure` | `gpt-4.1-mini` | `gpt-4.1-mini` |
 | `OPENAI_API_KEY` | `openai` | `gpt-4o-mini` | `gpt-4o` |
 | neither, or `LOOP_OFFLINE=1` | `offline` | none | none |
 
-Marking uses the fast model: it checks a response against criteria that are
-already written down. Diagnosis, planning and feedback use the smart model,
-because those are the judgement calls.
+Model choice was measured against this project's real prompts rather than
+assumed. On the gateway, `gpt-4.1-mini` returns a batched marking call in about
+7 seconds where `gpt-4o-mini` takes 14, diagnoses in under 3, and scored 96
+percent recovery against `gpt-5.4`'s 92. It is both the fastest and the most
+accurate option here, so it is the default for both tiers. The two tiers remain
+separate so a deployment can raise either independently.
+
+Structured output uses strict `json_schema`. Without it the smaller models
+quietly omit a required field, validation fails, and the agent silently falls
+back to rules while still reporting itself as running on the model.
 
 `backend/llm.py` is the only module that knows which provider is in use, and it
 exposes `call` for a single request and `call_many` for independent requests,
 which are fanned out across a thread pool. Marking a cohort, diagnosing every
 error and drafting every learner's feedback are all independent, so they run
-concurrently. Serially at a few seconds a call, a full run took 190 seconds; it
-now takes about 50.
+concurrently, and the planner's proposal call overlaps its feedback drafting.
+Marking is chunked at `MARK_BATCH_SIZE` learners per call, because a response
+carrying the whole cohort is long and output length is what latency is made of.
+
+A full run went from 190 seconds serial to about 20.
+
+## Progress reporting
+
+The graph runs on a worker thread, so its state only reaches the API when the
+whole run finishes. That is far too late for a UI meant to show the agents
+working, so `state.trace` publishes every event to a live buffer the moment it
+happens, and `/api/batch/{id}/trace` reads from there. `llm.call_many` takes an
+`on_progress` callback, which the marker, diagnostician and planner use to emit
+an event per completed call. A ten second model step with no output is
+indistinguishable from a hang, and the pipeline panel is the main evidence that
+this is an agent system rather than a dashboard.
 
 With no credentials, `backend/config.py::OFFLINE` is true and every model
 call returns `None`. Each agent falls back to `backend/agents/offline_rules.py`,
