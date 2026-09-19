@@ -73,17 +73,25 @@ export function ScoreDistribution({ scores, outOf }: { scores: number[]; outOf: 
             ))}
 
             <div className="absolute inset-0 flex">
-              {bins.map((b) => (
+              {bins.map((b, i) => (
                 <div key={b.from} className="flex-1 px-1">
                   <Tip
                     className="relative flex h-full w-full items-end justify-center"
                     text={`${students(b.count)} scored ${range(b)} out of ${outOf}`}
                   >
+                    {/* The fill grows inside a fixed box, so the count above it never stretches. */}
                     <span
-                      className="relative block w-full max-w-10 rounded-t-[4px] bg-chart transition-colors group-hover:bg-chart-line group-focus:bg-chart-line"
+                      className="relative block w-full max-w-10"
                       style={{ height: `${(b.count / top) * 100}%` }}
                     >
-                      <span className="absolute bottom-full left-0 right-0 mb-0.5 text-center num text-ink">
+                      <span
+                        className="anim-grow-y absolute inset-0 rounded-t-[4px] bg-chart transition-colors group-hover:bg-chart-line group-focus:bg-chart-line"
+                        style={{ animationDelay: `${i * 90}ms` }}
+                      />
+                      <span
+                        className="anim-fade absolute bottom-full left-0 right-0 mb-0.5 text-center num text-ink"
+                        style={{ animationDelay: `${400 + i * 90}ms` }}
+                      >
                         {b.count}
                       </span>
                     </span>
@@ -94,13 +102,13 @@ export function ScoreDistribution({ scores, outOf }: { scores: number[]; outOf: 
 
             <span
               aria-hidden
-              className="absolute -top-1 bottom-0 w-0.5 bg-chart-hot"
-              style={{ left: `${meanAt * 100}%` }}
+              className="anim-grow-y absolute -top-1 bottom-0 w-0.5 bg-chart-hot"
+              style={{ left: `${meanAt * 100}%`, animationDelay: `${bins.length * 90 + 200}ms` }}
             />
             <span
               aria-hidden
-              className="absolute -top-10 -translate-x-1/2 whitespace-nowrap text-2xs font-medium text-chart-hot"
-              style={{ left: `${labelAt}%` }}
+              className="anim-fade absolute -top-10 -translate-x-1/2 whitespace-nowrap text-2xs font-medium text-chart-hot"
+              style={{ left: `${labelAt}%`, animationDelay: `${bins.length * 90 + 500}ms` }}
             >
               Class average {meanText}
             </span>

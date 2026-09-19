@@ -10,9 +10,9 @@ interface Spot {
 }
 
 /**
- * Students down the side, mistake patterns across the top. A magenta square is
- * a mistake that keeps happening, a blue one is new this test, and a pattern
- * whose number is magenta is shared by enough of the class to be a gap in the
+ * Students down the side, mistake patterns across the top. A pink square is
+ * a mistake that keeps happening, a light violet one is new this test, and a
+ * pattern whose number is pink is shared by enough of the class to be a gap in the
  * teaching. Columns carry a number and the names sit in a key underneath,
  * because eighty characters do not fit over a column and rotated text overlaps.
  */
@@ -73,7 +73,7 @@ export function ClassHeatmap({
             </tr>
           </thead>
           <tbody>
-            {learners.map((l) => (
+            {learners.map((l, row) => (
               <tr key={l.learner_id}>
                 <td className="sticky left-0 z-10 whitespace-nowrap border-0 bg-surface p-0 pr-3 align-middle text-sm text-ink">
                   {l.learner_name}
@@ -83,8 +83,9 @@ export function ClassHeatmap({
                     </span>
                   )}
                 </td>
-                {columns.map((n) => (
+                {columns.map((n, col) => (
                   <Cell
+                    delay={(row + col) * 28}
                     key={n.node_id}
                     node={n}
                     learner={l}
@@ -181,6 +182,7 @@ function Header({ node, index, lit }: { node: NodePattern; index: number; lit: b
 }
 
 function Cell({
+  delay,
   node,
   learner,
   active,
@@ -190,6 +192,7 @@ function Cell({
   onLeave,
   onCell,
 }: {
+  delay: number;
   node: NodePattern;
   learner: LearnerContext;
   active: boolean;
@@ -212,16 +215,21 @@ function Cell({
           aria-label={`${learner.learner_name}: ${node.label}. ${
             again ? PATTERN_KIND_LABELS.recurring : PATTERN_KIND_LABELS.emerging
           }. Show their answer.`}
+          style={{ animationDelay: `${delay}ms` }}
           className={clsx(
-            "block h-7 w-full rounded-[3px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ink",
+            "anim-pop block h-7 w-full rounded-[3px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ink",
             again
-              ? "bg-chart-hot hover:bg-[#b5195c]"
+              ? "bg-chart-hot hover:bg-chart-hot-strong"
               : "bg-chart-light hover:bg-chart",
             chosen && "ring-2 ring-ink ring-offset-1",
           )}
         />
       ) : (
-        <div aria-hidden className="h-7 w-full rounded-[3px] border border-line/70 bg-surface-raised" />
+        <div
+          aria-hidden
+          style={{ animationDelay: `${delay}ms` }}
+          className="anim-fade h-7 w-full rounded-[3px] border border-line/70 bg-surface-raised"
+        />
       )}
     </td>
   );

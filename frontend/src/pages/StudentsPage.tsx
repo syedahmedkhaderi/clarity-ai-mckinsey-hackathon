@@ -320,8 +320,9 @@ function HistoryStrip({
       )}
       {ordered.length > 0 && (
         <>
-          <div className="flex gap-2 overflow-x-auto pb-1">
-            {ordered.map((t) => {
+          {/* Keyed to the student, so the bars grow again when the teacher picks another. */}
+          <div key={learner.learner_id} className="flex gap-2 overflow-x-auto pb-1">
+            {ordered.map((t, i) => {
               const row = t.learners.find((l) => l.learner_id === learner.learner_id);
               const share = row && t.points_possible > 0 ? Math.min(1, row.awarded / t.points_possible) : 0;
               return (
@@ -343,10 +344,10 @@ function HistoryStrip({
                       >
                         <div
                           className={
-                            "w-full rounded-sm " +
+                            "anim-grow-y w-full rounded-sm " +
                             (row.provisional ? "bg-chart-light" : "bg-chart-line")
                           }
-                          style={{ height: `${Math.max(4, share * 100)}%` }}
+                          style={{ height: `${Math.max(4, share * 100)}%`, animationDelay: `${i * 80}ms` }}
                         />
                       </div>
                     ) : (
@@ -360,7 +361,7 @@ function HistoryStrip({
               );
             })}
           </div>
-          <p className="text-2xs text-ink-faint mt-2">The grey behind each bar is the full mark. Light blue bars are drafts, dark teal bars are confirmed.</p>
+          <p className="text-2xs text-ink-faint mt-2">The grey behind each bar is the full mark. Light violet bars are drafts, deep violet bars are confirmed.</p>
         </>
       )}
       {missing.length > 0 && (

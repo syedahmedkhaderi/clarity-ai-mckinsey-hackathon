@@ -56,7 +56,7 @@ export function PatternBars({
       </div>
 
       <ul aria-label="Students who made each mistake">
-        {shown.map((r) => {
+        {shown.map((r, i) => {
           const share = r.cohortSize ? r.count / r.cohortSize : 0;
           const whole = r.kind === "shared" || share >= line;
           return (
@@ -92,10 +92,13 @@ export function PatternBars({
                   >
                     <div
                       className={clsx(
-                        "h-full rounded-full",
+                        "anim-grow-x h-full rounded-full",
                         whole ? "bg-chart-hot" : "bg-chart",
                       )}
-                      style={{ width: `${Math.min(1, r.count / size) * 100}%` }}
+                      style={{
+                        width: `${Math.min(1, r.count / size) * 100}%`,
+                        animationDelay: `${(collapseAfter !== undefined && i >= collapseAfter ? i - collapseAfter : i) * 90}ms`,
+                      }}
                     />
                   </div>
                   <span
@@ -107,7 +110,10 @@ export function PatternBars({
               </div>
 
               <div className="py-2 text-right">
-                <span className="num text-ink">
+                <span
+                  className="anim-fade num text-ink"
+                  style={{ animationDelay: `${300 + i * 90}ms` }}
+                >
                   {r.count} of {r.cohortSize}
                 </span>
               </div>

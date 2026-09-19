@@ -70,13 +70,13 @@ function TopicBars({ summary }: { summary: UploadSummary }) {
     <div className="rounded-md border border-line bg-surface px-4 py-3">
       <p className="text-xs text-ink-muted mb-2">Questions by topic</p>
       <ul className="space-y-1.5">
-        {rows.map((r) => (
+        {rows.map((r, i) => (
           <li key={r.key} className="flex items-center gap-3 text-sm">
             <span className="w-40 truncate text-ink">{r.label}</span>
             <span className="h-2 flex-1 rounded-sm bg-surface-sunken">
               <span
-                className="block h-2 rounded-sm bg-ink-faint"
-                style={{ width: `${Math.round((r.count / total) * 100)}%` }}
+                className="anim-grow-x block h-2 rounded-sm bg-chart-light"
+                style={{ width: `${Math.round((r.count / total) * 100)}%`, animationDelay: `${i * 60}ms` }}
               />
             </span>
             <span className="num w-8 text-right text-ink-muted">{r.count}</span>

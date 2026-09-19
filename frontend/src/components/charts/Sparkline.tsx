@@ -57,10 +57,11 @@ function Small({
           <path
             d={points.map((p, i) => `${i === 0 ? "M" : "L"}${x(i)},${y(p.value)}`).join(" ")}
             fill="none"
+            pathLength={1}
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="stroke-chart-line"
+            className="anim-draw stroke-chart-line"
           />
         )}
         <circle
@@ -68,7 +69,8 @@ function Small({
           cy={y(last.value)}
           r="3.5"
           strokeWidth="2"
-          className="fill-chart-hot stroke-surface"
+          className="anim-pop fill-chart-hot stroke-surface"
+          style={{ transformBox: "fill-box", transformOrigin: "center", animationDelay: "900ms" }}
         />
       </svg>
       <span className="num text-ink">{format(last.value)}</span>
@@ -127,7 +129,8 @@ function Trend({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   vectorEffect="non-scaling-stroke"
-                  className="stroke-chart-line"
+                  pathLength={1}
+                  className="anim-draw stroke-chart-line"
                 />
               </svg>
             )}
@@ -140,14 +143,16 @@ function Trend({
               >
                 <span
                   className={
-                    "block h-3 w-3 rounded-full border-2 border-surface " +
+                    "anim-pop block h-3 w-3 rounded-full border-2 border-surface " +
                     (i === n - 1 ? "bg-chart-hot" : "bg-chart-line")
                   }
+                  style={{ animationDelay: `${(i / Math.max(1, n - 1)) * 900}ms` }}
                 />
                 <span
                   aria-hidden
+                  style={{ animationDelay: `${(i / Math.max(1, n - 1)) * 900 + 150}ms` }}
                   className={
-                    "absolute bottom-full left-1/2 mb-1 -translate-x-1/2 num group-hover:hidden group-focus:hidden " +
+                    "anim-fade absolute bottom-full left-1/2 mb-1 -translate-x-1/2 num group-hover:hidden group-focus:hidden " +
                     (i === n - 1 ? "font-medium text-chart-hot" : "text-ink")
                   }
                 >
