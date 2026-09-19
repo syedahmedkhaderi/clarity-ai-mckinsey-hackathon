@@ -74,7 +74,9 @@ function Planned({
 }) {
   const first = split(plan.scheduled);
   const later = split(plan.dropped);
-  const cards = [...first.cards, ...later.cards];
+  // One severity order across both groups, so a high-severity action the
+  // planner could not fit is not buried under lower ones it did.
+  const cards = [...first.cards, ...later.cards].sort((a, b) => b.severity - a.severity);
   const feedback = [...first.feedback, ...later.feedback];
   return (
     <section aria-labelledby="plan-first-title">

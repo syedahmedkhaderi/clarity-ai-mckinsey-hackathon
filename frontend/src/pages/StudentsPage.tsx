@@ -121,7 +121,7 @@ function StudentsView({ batch }: { batch: BatchResult }) {
   const course = s.tests.find((t) => t.id === batch.assessment_id);
   const courseId = course?.course_id || course?.class_id || "C1";
   const confirmed = batch.marks.filter((m) => !m.provisional).length;
-  // Confirming marks or correcting a finding changes the totals, so they refetch.
+  // Correcting a finding changes the totals, so they refetch.
   const history = useQuery({
     queryKey: ["insights-history", courseId, batch.batch_id, confirmed, batch.overrides.length],
     queryFn: () => insightsApi.history(courseId),

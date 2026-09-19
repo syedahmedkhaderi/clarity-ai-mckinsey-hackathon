@@ -143,6 +143,11 @@ showing.
 
 Marking a mark as final is not a decision the agent can make at all. Every
 `Mark` carries `provisional=True` until a human calls `/api/batch/{id}/approve`.
+The frontend no longer exposes that call or the facilitator time budget: the
+planner still fits a fixed 120 minutes in code and the API still returns
+`plan.dropped` and `BUDGET_OVERFLOW` escalations, but the action plan page shows
+one severity-ordered list and the session drops the budget escalations before
+any page reads them.
 
 ### Evidence spans
 

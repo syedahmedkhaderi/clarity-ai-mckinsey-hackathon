@@ -171,8 +171,8 @@ export function FeedbackChecks({
 /** What moved after a correction, in plain words. A first plan is not a change. */
 export function ChangeList({ changes }: { changes: PlanChange[] }) {
   const plain = usePlain();
-  // A change with no action behind it is a count or a budget line, not a thing to do.
-  const shown = changes.filter((c) => c.action_id && c.kind !== "budget");
+  // A first plan is not a change, and a budget line describes a time box the teacher does not see.
+  const shown = changes.filter((c) => !(c.kind === "added" && !c.action_id) && c.kind !== "budget");
   if (!shown.length) return null;
   return (
     <div className="panel border-agent-line">

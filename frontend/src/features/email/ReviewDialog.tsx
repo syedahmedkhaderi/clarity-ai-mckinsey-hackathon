@@ -152,7 +152,7 @@ function DraftForm({
           </div>
           <div className="panel-sub">
             Read it through and change anything you like. Nothing is sent until you press Send.
-            Sending a note does not confirm any marks.
+            Sending a note does not change any marks.
           </div>
         </div>
       </div>
