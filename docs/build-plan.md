@@ -1,5 +1,7 @@
 # LOOP - Implementation Plan for Codex
 
+> This is the original specification, kept unchanged as a record. The system as built is described in [`architecture.md`](architecture.md), which now lives beside this file in `docs/`; paths in the layout below are the planned ones.
+
 This document is the complete build specification for a hackathon project. Build it as specified. Where a decision is left open it is marked OPEN and a default is given; take the default unless instructed otherwise.
 
 Read this whole document before writing code.
