@@ -87,7 +87,7 @@ function ClassView({ batch }: { batch: BatchResult }) {
       header={header}
       bar={
         <TopBar>
-          <ClassFigures batch={batch} named={named} history={history.data} />
+          <ClassFigures batch={batch} named={named} history={history} />
         </TopBar>
       }
     >
@@ -131,12 +131,12 @@ function ClassFigures({
 }: {
   batch: BatchResult;
   named: NodePattern[];
-  history: InsightsHistory | undefined;
+  history: UseQueryResult<InsightsHistory>;
 }) {
   const scores = studentScores(batch);
   const outOf = Math.max(0, ...scores.map((x) => x.possible));
   const mean = scores.length ? scores.reduce((a, x) => a + x.awarded, 0) / scores.length : 0;
-  const prev = previousAverage(history, batch.assessment_id);
+  const prev = previousAverage(history.data, batch.assessment_id);
   const top = named[0];
   const repeating = new Set(named.flatMap((n) => n.recurring_learner_ids)).size;
   const { sharedThreshold, testName } = useSession();
@@ -144,7 +144,14 @@ function ClassFigures({
     {
       value: roundOne(mean),
       label: `Class average out of ${outOf}`,
-      sub: prev ? `It was ${roundOne(prev.value)} on ${testName(prev.id)}.` : "The first test on record.",
+      // Only say there is no earlier test once the history has loaded and shows none.
+      sub: prev
+        ? `It was ${roundOne(prev.value)} on ${testName(prev.id)}.`
+        : history.isError
+          ? "Earlier tests could not be loaded."
+          : history.isLoading
+            ? "Loading earlier tests."
+            : "No earlier test on the same marks.",
     },
     {
       value: top ? pct(top.share) : "0%",
@@ -157,7 +164,7 @@ function ClassFigures({
       sub: `Made by ${pct(sharedThreshold)} or more of the class.`,
     },
     {
-      value: `${repeating}`,
+      value: `${repeating} of ${batch.patterns?.cohort_size ?? scores.length}`,
       label: repeating === 1 ? "Student repeating a mistake" : "Students repeating a mistake",
       sub: "Also seen in an earlier test.",
     },
