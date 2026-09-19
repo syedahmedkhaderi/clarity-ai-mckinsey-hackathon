@@ -240,7 +240,7 @@ connector is the integration work. It is not a rewrite.
 
 ## Divergences from the plan
 
-`CODEX_BUILD_PLAN.md` is the original spec. Three deliberate divergences:
+`CODEX_BUILD_PLAN.md` is the original spec. Four deliberate divergences:
 
 1. **The demo numbers.** The plan's section 8 describes M01 held by 7 of 12
    learners, dropping to 6 of 12 after an override and thereby falling below the
@@ -261,6 +261,13 @@ connector is the integration work. It is not a rewrite.
    approve endpoint still exists (invariant 1), but the frontend shows neither a
    time box nor a confirm-marks table. Facilitators asked for one ordered list
    of things to do and the drafted notes to students, nothing about minutes.
+
+4. **The accent is also the primary action colour.** `AGENTS.md` section 5
+   reserves the `agent` colour for agent activity and agent decisions. After a
+   design review the LOOP pages moved to a work-surface layout with a summary
+   rail and tabs, in navy on cool grey, and the same navy is now the primary
+   button and the rail's shortcut to the plan. `flag` still marks only what the
+   agent handed to a human. The LMS shell around the pages is unchanged.
 
 ## Working on it
 

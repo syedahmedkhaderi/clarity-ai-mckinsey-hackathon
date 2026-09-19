@@ -13,7 +13,7 @@ import { pct } from "../lib/format";
 import type { BatchResult, CohortPatterns, NodePattern } from "../types";
 import type { InsightsHistory } from "../types/insights";
 import { namedPatterns, plural, roundOne } from "./classStats";
-import { PagePad } from "../shell/WorkSurface";
+import { PageHeader, PagePad, RailLink, RailSection, RailStat, WorkSurface } from "../shell/WorkSurface";
 
 /** A pattern the teacher is looking at, and optionally one student within it. */
 interface Focus {
@@ -27,9 +27,19 @@ export function ClassPage() {
   return batch ? <ClassView batch={batch} /> : null;
 }
 
+type ClassTab = "mistakes" | "who" | "trend";
+
+const CLASS_TABS: { key: ClassTab; label: string }[] = [
+  { key: "mistakes", label: "Which mistakes" },
+  { key: "who", label: "Who made which" },
+  { key: "trend", label: "Across tests" },
+];
+
 function ClassView({ batch }: { batch: BatchResult }) {
   const s = useSession();
+  const { setView } = useAppView();
   const [focus, setFocus] = useState<Focus | null>(null);
+  const [tab, setTab] = useState<ClassTab>("mistakes");
   const details = useRef<HTMLDivElement>(null);
   const patterns = batch.patterns;
 
@@ -55,64 +65,85 @@ function ClassView({ batch }: { batch: BatchResult }) {
     setFocus({ node, learner: only && only.length === 1 ? only[0] : null });
   };
 
+  const rail = (
+    <>
+      <RailSection title="This test">
+        <RailStat label="Students" value={patterns.cohort_size} />
+        <RailStat label="Mistake patterns" value={named.length} />
+        <RailStat label="Whole-class problems" value={whole.length} />
+      </RailSection>
+      <WholeClassBanner problems={whole} onSee={open} />
+      <RailSection title="Where to go">
+        <RailLink
+          title="Open the action plan"
+          hint="What to re-teach and who to follow up, most marks first."
+          onClick={() => setView("plan")}
+        />
+      </RailSection>
+    </>
+  );
+
+  const header = (
+    <PageHeader
+      title="Class"
+      subtitle={`${plural(patterns.cohort_size, "student")} took ${s.testName(patterns.assessment_id)}. This page shows whether a mistake belongs to one student or to the whole class.`}
+      tabs={CLASS_TABS}
+      active={tab}
+      onTab={setTab}
+    />
+  );
+
   return (
-    <PagePad>
+    <WorkSurface rail={rail} header={header}>
       <div className="space-y-6">
-        <header className="border-b border-line pb-5">
-          <h1 className="text-xl font-semibold tracking-tight text-ink">
-            Class
-          </h1>
-          <p className="mt-1 max-w-2xl text-sm text-ink-muted">
-            {plural(patterns.cohort_size, "student")} took{" "}
-            {s.testName(patterns.assessment_id)}. This page shows whether a
-            mistake belongs to one student or to the whole class.
-          </p>
-        </header>
-
-        <WholeClassBanner problems={whole} onSee={open} />
-
-        <Panel
-          title="How many students made each mistake"
-          subtitle="Select a mistake to see who made it."
-        >
-          <PatternBars
-            threshold={s.sharedThreshold}
-            onSelect={open}
-            rows={named.map((n) => ({
-              id: n.node_id,
-              label: n.label,
-              count: n.count,
-              cohortSize: n.cohort_size,
-              kind: n.kind,
-            }))}
-          />
-        </Panel>
-
-        <Panel
-          title="Who made which mistake"
-          subtitle="Select a square to see the student's answer and why marks were lost."
-        >
-          <ClassHeatmap
-            patterns={patterns}
-            learners={batch.learners}
-            threshold={s.sharedThreshold}
-            selected={
-              focus?.learner
-                ? { learnerId: focus.learner, nodeId: focus.node }
-                : null
-            }
-            onCell={(learner, node) => setFocus({ node, learner })}
-          />
-        </Panel>
+        {tab === "mistakes" && (
+          <>
+            <Panel
+              title="How many students made each mistake"
+              subtitle="Select a mistake to see who made it."
+            >
+              <PatternBars
+                threshold={s.sharedThreshold}
+                onSelect={open}
+                rows={named.map((n) => ({
+                  id: n.node_id,
+                  label: n.label,
+                  count: n.count,
+                  cohortSize: n.cohort_size,
+                  kind: n.kind,
+                }))}
+              />
+            </Panel>
+            <TooFew patterns={patterns} />
+          </>
+        )}
+        {tab === "who" && (
+          <Panel
+            title="Who made which mistake"
+            subtitle="Select a square to see the student's answer and why marks were lost."
+          >
+            <ClassHeatmap
+              patterns={patterns}
+              learners={batch.learners}
+              threshold={s.sharedThreshold}
+              selected={
+                focus?.learner
+                  ? { learnerId: focus.learner, nodeId: focus.node }
+                  : null
+              }
+              onCell={(learner, node) => setFocus({ node, learner })}
+            />
+          </Panel>
+        )}
+        {tab === "trend" && <ClassTrend courseId={batch.cohort_id} />}
 
         <div ref={details}>
-          {focus && <Details batch={batch} focus={focus} onFocus={setFocus} />}
+          {focus && tab !== "trend" && (
+            <Details batch={batch} focus={focus} onFocus={setFocus} />
+          )}
         </div>
-
-        <TooFew patterns={patterns} />
-        <ClassTrend courseId={batch.cohort_id} />
       </div>
-    </PagePad>
+    </WorkSurface>
   );
 }
 
@@ -123,71 +154,35 @@ function WholeClassBanner({
   problems: NodePattern[];
   onSee: (node: string) => void;
 }) {
-  const { setView } = useAppView();
   const s = useSession();
   if (problems.length === 0) {
     return (
-      <Panel>
-        <p className="text-sm text-ink">
-          No mistake is shared by enough of the class to be a whole-class
-          problem.
-        </p>
+      <RailSection title="Whole-class problems">
+        <p className="text-sm text-ink">None.</p>
         <p className="mt-0.5 text-xs text-ink-muted">
-          A mistake becomes one when {pct(s.sharedThreshold)} or more of the
-          class make it. The mistakes below belong to individual students.
+          A mistake becomes one when {pct(s.sharedThreshold)} or more of the class make it. The
+          mistakes on this page belong to individual students.
         </p>
-      </Panel>
+      </RailSection>
     );
   }
   return (
-    <Panel
-      tone="agent"
-      flush
-      title={
-        problems.length === 1
-          ? "One whole-class problem"
-          : `${problems.length} whole-class problems`
-      }
-      action={
-        <button className="btn btn-xs" onClick={() => setView("plan")}>
-          Open action plan
-        </button>
-      }
-    >
-      <ul className="divide-y divide-line">
-        {problems.map((n) => {
-          const hint = s.taxonomy?.nodes.find(
-            (x) => x.id === n.node_id,
-          )?.remediation_hint;
-          return (
-            <li key={n.node_id} className="px-4 py-3">
-              <p className="text-sm text-ink">
-                <span className="num font-medium">
-                  {n.count} of {n.cohort_size}
-                </span>{" "}
-                students made the same mistake:{" "}
-                <span className="font-medium">{n.label}</span>.
-              </p>
-              <p className="mt-1 text-xs text-ink-muted">
-                That is {pct(n.share)} of the class, so it points to a gap in
-                the teaching, not {n.count} separate student problems.
-              </p>
-              {hint && (
-                <p className="mt-1 text-xs text-ink-faint">
-                  Next step: {s.plain(hint)}
-                </p>
-              )}
-              <button
-                className="btn btn-xs mt-2"
-                onClick={() => onSee(n.node_id)}
-              >
-                See which students
-              </button>
-            </li>
-          );
-        })}
+    <RailSection title="Whole-class problems">
+      <ul className="space-y-2">
+        {problems.map((n) => (
+          <li key={n.node_id} className="rounded border border-agent-line bg-agent-soft px-3 py-2.5">
+            <p className="text-sm font-semibold text-agent">{n.label}</p>
+            <p className="mt-0.5 text-xs text-ink-muted">
+              {n.count} of {n.cohort_size} students, {pct(n.share)} of the class. That points to a
+              gap in the teaching, not {n.count} separate student problems.
+            </p>
+            <button className="btn btn-xs mt-2" onClick={() => onSee(n.node_id)}>
+              See which students
+            </button>
+          </li>
+        ))}
       </ul>
-    </Panel>
+    </RailSection>
   );
 }
 
