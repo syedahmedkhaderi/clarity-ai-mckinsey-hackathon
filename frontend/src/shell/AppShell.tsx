@@ -10,7 +10,6 @@ import coursesFixture from "../fixtures/lms_courses.json";
 const NAV: { label: string; key: ViewKey }[] = [
   { label: "Home", key: "home" },
   { label: "Students", key: "students" },
-  { label: "Class", key: "class" },
   { label: "Action plan", key: "plan" },
   { label: "To review", key: "review" },
 ];

@@ -3,7 +3,6 @@ import { OverrideDialog } from "./components/OverrideDialog";
 import { ChatDock } from "./features/chat/ChatDock";
 import { AppViewContext, useAppView, useAppViewState, type ViewKey } from "./hooks/useAppView";
 import { SessionProvider, useSession } from "./hooks/useSession";
-import { ClassPage } from "./pages/ClassPage";
 import { HomePage } from "./pages/HomePage";
 import { PlanPage } from "./pages/PlanPage";
 import { ReviewPage } from "./pages/ReviewPage";
@@ -14,14 +13,13 @@ import { AppShell } from "./shell/AppShell";
 const PAGES: Record<ViewKey, () => ReactNode> = {
   home: () => <HomePage />,
   students: () => <StudentsPage />,
-  class: () => <ClassPage />,
   plan: () => <PlanPage />,
   review: () => <ReviewPage />,
   upload: () => <UploadPage />,
 };
 
 /** These pages read the analysis, so they have nothing to show before a run. */
-const NEEDS_RUN: ViewKey[] = ["students", "class", "plan", "review"];
+const NEEDS_RUN: ViewKey[] = ["students", "plan", "review"];
 
 export default function App() {
   const appView = useAppViewState();

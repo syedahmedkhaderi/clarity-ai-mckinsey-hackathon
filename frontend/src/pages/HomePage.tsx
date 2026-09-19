@@ -4,20 +4,21 @@ import { TestPicker } from "../components/TestPicker";
 import { EmptyState } from "../components/ui/EmptyState";
 import { useAppView } from "../hooks/useAppView";
 import { useSession } from "../hooks/useSession";
-import { analysisLabel, marksLabel, pct } from "../lib/format";
+import { analysisLabel, marksLabel } from "../lib/format";
 import { BarLink, Figures, TopBar, TopSurface } from "../shell/WorkSurface";
 import { plural } from "./classStats";
 import { OverviewTab, homeStats, type HomeStats } from "./HomeSummary";
 import { BRAND_NAME } from "../lib/brand";
 
 /**
- * Home is the overview of one test. One bar across the top chooses the test;
- * the facts about it stay folded away until asked for, so the charts get the
- * screen. Where to go next comes after the charts, once the teacher has read them.
+ * Home is the overview of one test and the class picture in one place. One bar
+ * across the top chooses the test; the facts about it stay folded away until
+ * asked for, so the numbers and charts get the screen. Where to go next comes
+ * after the charts, once the teacher has read them.
  */
 export function HomePage() {
   const s = useSession();
-  const stats = s.batch ? homeStats(s.batch, s.topicName) : null;
+  const stats = s.batch ? homeStats(s.batch) : null;
 
   return (
     <TopSurface bar={<Bar stats={stats} />}>
@@ -32,12 +33,12 @@ export function HomePage() {
           />
         </div>
       )}
-      {stats ? (
+      {stats && s.batch ? (
         <>
-          <OverviewTab stats={stats} />
+          <OverviewTab stats={stats} batch={s.batch} />
           <div className="mt-6 flex flex-wrap items-center gap-2 border-t border-line pt-5">
             <span className="mr-2 text-sm font-medium text-ink">Next:</span>
-            <Links stats={stats} />
+            <Links />
           </div>
         </>
       ) : (
@@ -92,7 +93,7 @@ function Bar({ stats }: { stats: HomeStats | null }) {
 }
 
 /** Where work is waiting after this analysis. */
-function Links({ stats }: { stats: HomeStats }) {
+function Links() {
   const s = useSession();
   const { setView } = useAppView();
   const planned = s.batch?.plan?.scheduled.length ?? 0;
@@ -119,14 +120,6 @@ function Links({ stats }: { stats: HomeStats }) {
         }
         onClick={() => setView("review")}
       />
-      {stats.whole.length > 0 && (
-        <BarLink
-          tone="neutral"
-          title={`${stats.whole.length === 1 ? "One" : stats.whole.length} whole-class ${stats.whole.length === 1 ? "problem" : "problems"}`}
-          hint={`A mistake made by ${pct(s.sharedThreshold)} or more of the class. See who on the Class page.`}
-          onClick={() => setView("class")}
-        />
-      )}
     </>
   );
 }
@@ -161,12 +154,6 @@ function Details({ stats }: { stats: HomeStats | null }) {
             { label: "Students", value: stats.students },
             { label: "Marks lost", value: `${stats.lost} of ${stats.possible}` },
             { label: "Class average", value: `${stats.mean} of ${stats.outOf}` },
-            { label: "Whole-class problems", value: stats.whole.length },
-            {
-              label: "Waiting for you",
-              value: s.openCount,
-              tone: s.openCount > 0 ? "flag" : "default",
-            },
           ]}
         />
       )}

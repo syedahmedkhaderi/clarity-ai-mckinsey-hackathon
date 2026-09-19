@@ -9,7 +9,7 @@ import { EvidenceSpan } from "./EvidenceSpan";
  * Where one mark was lost, for reading rather than deciding: the question, the
  * student's answer with the evidence highlighted, and why it is wrong. Folded
  * to its title until opened, so a student with many findings stays one screen.
- * Corrections are made from the Class page and To review, where the teacher
+ * Corrections are made from Home and To review, where the teacher
  * sees the rest of the class beside it.
  */
 export function FindingCard({

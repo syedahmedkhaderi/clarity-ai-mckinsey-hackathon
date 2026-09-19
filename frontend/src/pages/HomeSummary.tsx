@@ -1,19 +1,12 @@
 import { Panel } from "../components/ui/Panel";
+import { useEffect, useRef, useState } from "react";
 import { PatternBars } from "../components/charts/PatternBars";
-import { QuestionBars } from "../components/charts/QuestionBars";
 import { ScoreDistribution } from "../components/charts/ScoreDistribution";
-import { useAppView } from "../hooks/useAppView";
 import { useSession } from "../hooks/useSession";
 import { pct } from "../lib/format";
 import type { BatchResult, NodePattern } from "../types";
-import {
-  marksLost,
-  namedPatterns,
-  plural,
-  questionRows,
-  roundOne,
-  studentScores,
-} from "./classStats";
+import { marksLost, namedPatterns, roundOne, studentScores } from "./classStats";
+import { ClassFigures, MistakeDetails, WhoPanel, WholeClass, focusOn, type Focus } from "./HomeClass";
 
 const TOP_PATTERNS = 4;
 
@@ -25,12 +18,11 @@ export interface HomeStats {
   mean: string;
   outOf: number;
   totals: number[];
-  questions: ReturnType<typeof questionRows>;
   patterns: NodePattern[];
   whole: NodePattern[];
 }
 
-export function homeStats(batch: BatchResult, topicName: (id: string) => string): HomeStats {
+export function homeStats(batch: BatchResult): HomeStats {
   const scores = studentScores(batch);
   const { lost, possible } = marksLost(scores);
   const totals = scores.map((x) => x.awarded);
@@ -43,74 +35,93 @@ export function homeStats(batch: BatchResult, topicName: (id: string) => string)
     mean: roundOne(mean),
     outOf: Math.max(0, ...scores.map((x) => x.possible)),
     totals,
-    questions: questionRows(batch, topicName),
     patterns,
     whole: patterns.filter((n) => n.teaching_problem),
   };
 }
 
-/** Home's one view: two pictures and the mistakes that matter most. */
-export function OverviewTab({ stats }: { stats: HomeStats }) {
-  const hardest = [...stats.questions].sort(
-    (a, b) => a.correct / (a.total || 1) - b.correct / (b.total || 1),
-  )[0];
+/**
+ * Home's one view, top to bottom: where the problem lies in four numbers, the
+ * whole-class problems, how the class scored, the most common mistakes, and who
+ * made which. Selecting a mistake anywhere opens the students behind it under
+ * the heatmap, where a finding can be corrected.
+ */
+export function OverviewTab({ stats, batch }: { stats: HomeStats; batch: BatchResult }) {
+  const [focus, setFocus] = useState<Focus | null>(null);
+  const who = useRef<HTMLDivElement>(null);
+  const details = useRef<HTMLDivElement>(null);
+  const [scrollTo, setScrollTo] = useState<"who" | "details" | null>(null);
+
+  useEffect(() => {
+    const target = scrollTo === "who" ? who.current : scrollTo === "details" ? details.current : null;
+    target?.scrollIntoView({ behavior: "smooth", block: scrollTo === "who" ? "start" : "nearest" });
+    setScrollTo(null);
+  }, [scrollTo, focus]);
+
+  const openPattern = (node: string) => {
+    setFocus(focusOn(batch, node));
+    setScrollTo("who");
+  };
+
   return (
-    <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:items-start">
-      <Panel
-        title="How the class scored"
-        subtitle={
-          stats.totals.length
-            ? `The class average was ${stats.mean} out of ${stats.outOf}.`
-            : "No scores to show yet."
-        }
-      >
-        <ScoreDistribution scores={stats.totals} outOf={stats.outOf} />
-      </Panel>
-      <Panel
-        title="Which questions were hard"
-        subtitle={
-          hardest
-            ? `Question ${hardest.number} was the hardest: ${hardest.correct} of ${hardest.total} got it right.`
-            : "No marked questions yet."
-        }
-      >
-        <QuestionBars rows={stats.questions} collapseAfter={4} />
-      </Panel>
-      <div className="lg:col-span-2">
-        <PatternPanel patterns={stats.patterns} limit={TOP_PATTERNS} />
+    <div className="space-y-5">
+      <ClassFigures batch={batch} named={stats.patterns} />
+      <WholeClass batch={batch} problems={stats.whole} onSee={openPattern} />
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:items-start">
+        <Panel
+          title="How the class scored"
+          subtitle={
+            stats.totals.length
+              ? `The class average was ${stats.mean} out of ${stats.outOf}.`
+              : "No scores to show yet."
+          }
+        >
+          <ScoreDistribution scores={stats.totals} outOf={stats.outOf} />
+        </Panel>
+      </div>
+      <PatternPanel patterns={stats.patterns} onSelect={openPattern} />
+      <div ref={who} className="scroll-mt-4">
+        <WhoPanel
+          batch={batch}
+          focus={focus}
+          onFocus={(f) => {
+            setFocus(f);
+            setScrollTo("details");
+          }}
+        />
+      </div>
+      <div ref={details}>
+        {focus && <MistakeDetails batch={batch} focus={focus} onFocus={setFocus} />}
       </div>
     </div>
   );
 }
 
-function PatternPanel({ patterns, limit }: { patterns: NodePattern[]; limit?: number }) {
-  const { setView } = useAppView();
+function PatternPanel({
+  patterns,
+  onSelect,
+}: {
+  patterns: NodePattern[];
+  onSelect: (node: string) => void;
+}) {
   const { sharedThreshold } = useSession();
   const top = patterns[0];
-  const shown = limit ? patterns.slice(0, limit) : patterns;
-  const more = limit !== undefined && patterns.length > limit;
   return (
     <Panel
-      title={limit ? "Most common mistakes" : "Every mistake pattern"}
+      title="Most common mistakes"
       subtitle={
         top
           ? top.teaching_problem
-            ? `${top.count} of ${top.cohort_size} students made the same mistake, so it is a whole-class problem.`
-            : `No mistake is made by ${pct(sharedThreshold)} of the class, so none is a whole-class problem.`
+            ? `${top.count} of ${top.cohort_size} students made the same mistake, so it is a whole-class problem. Select a mistake to see who made it.`
+            : `No mistake is made by ${pct(sharedThreshold)} of the class, so none is a whole-class problem. Select a mistake to see who made it.`
           : "No mistake patterns were found."
-      }
-      action={
-        more ? (
-          <button className="btn btn-xs" onClick={() => setView("class")}>
-            See all {plural(patterns.length, "pattern")} on the Class page
-          </button>
-        ) : undefined
       }
     >
       <PatternBars
         threshold={sharedThreshold}
-        onSelect={() => setView("class")}
-        rows={shown.map((n) => ({
+        onSelect={onSelect}
+        collapseAfter={TOP_PATTERNS}
+        rows={patterns.map((n) => ({
           id: n.node_id,
           label: n.label,
           count: n.count,

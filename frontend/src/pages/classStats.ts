@@ -1,7 +1,7 @@
 import type { BatchResult, Mark, NodePattern } from "../types";
 
 /**
- * Sums and shares for the Home and Class pages. Everything is worked out from
+ * Sums and shares for the Home page. Everything is worked out from
  * `all_marks`, because `marks` leaves out the items handed to the teacher and a
  * total that quietly drops them would understate a student's score.
  */
@@ -33,35 +33,6 @@ export function marksLost(scores: StudentScore[]): { lost: number; possible: num
   const possible = scores.reduce((a, s) => a + s.possible, 0);
   const awarded = scores.reduce((a, s) => a + s.awarded, 0);
   return { lost: possible - awarded, possible };
-}
-
-export interface QuestionRow {
-  number: number;
-  label: string;
-  correct: number;
-  total: number;
-}
-
-/** A question counts as right when the full marks were awarded. */
-export function questionRows(batch: BatchResult, topicName: (id: string) => string): QuestionRow[] {
-  const topicOf = new Map<string, string>();
-  for (const s of batch.submissions) if (!topicOf.has(s.question_id)) topicOf.set(s.question_id, s.topic);
-
-  const byQuestion = new Map<string, { correct: number; total: number }>();
-  for (const m of marksOf(batch)) {
-    const row = byQuestion.get(m.question_id) ?? { correct: 0, total: 0 };
-    row.total += 1;
-    if (m.awarded >= m.max_marks) row.correct += 1;
-    byQuestion.set(m.question_id, row);
-  }
-
-  return [...byQuestion.entries()]
-    .map(([id, row], index) => {
-      const topic = topicOf.get(id) ?? "";
-      const number = Number(/Q(\d+)$/.exec(id)?.[1] ?? index + 1);
-      return { number, label: topic ? topicName(topic) : "No topic set", ...row };
-    })
-    .sort((a, b) => a.number - b.number);
 }
 
 /** Patterns with enough students behind them to name, biggest first. */

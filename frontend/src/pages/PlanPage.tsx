@@ -74,8 +74,8 @@ function SeeWho() {
     <BarLink
       tone="neutral"
       title="See who made each mistake"
-      hint="The Class page shows which students share a problem."
-      onClick={() => setView("class")}
+      hint="Home shows which students share a problem."
+      onClick={() => setView("home")}
     />
   );
 }

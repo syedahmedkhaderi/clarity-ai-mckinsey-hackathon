@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
-export type ViewKey = "home" | "students" | "class" | "plan" | "review" | "upload";
+export type ViewKey = "home" | "students" | "plan" | "review" | "upload";
 
-export const VIEW_KEYS: ViewKey[] = ["home", "students", "class", "plan", "review", "upload"];
+export const VIEW_KEYS: ViewKey[] = ["home", "students", "plan", "review", "upload"];
 
 export interface AppView {
   view: ViewKey;
@@ -16,7 +16,7 @@ function fromHash(): ViewKey {
 
 /**
  * The current page, kept in the URL hash so a refresh or a shared link lands on
- * the same page. A hash rather than a router because there are six pages and no
+ * the same page. A hash rather than a router because there are five pages and no
  * nested routes.
  */
 export function useAppViewState(): AppView {
