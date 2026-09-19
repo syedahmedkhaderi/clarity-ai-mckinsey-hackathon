@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import { useState, type ReactNode } from "react";
-import { ChatDock } from "../features/chat/ChatDock";
 import { useAppView, type ViewKey } from "../hooks/useAppView";
 import { useSession } from "../hooks/useSession";
 import { BRAND_NAME, ORG_NAME } from "../lib/brand";
@@ -56,9 +55,8 @@ const COURSE_SECTIONS = ["Overview", "Materials", "Assignments", "Grades", "Anno
  */
 export function AppShell({ children }: { children: ReactNode }) {
   const { view, setView } = useAppView();
-  const { health, openCount, error, clearError } = useSession();
+  const { openCount, error, clearError } = useSession();
   const [selectedCourseId, setSelectedCourseId] = useState(ACTIVE_COURSE_ID);
-  const offline = (health?.provider ?? "offline") === "offline";
   const selectedCourse =
     COURSE_CONTEXTS.find((course) => course.id === selectedCourseId) ?? COURSE_CONTEXTS[0];
   // Adding a test starts from Home, so Home stays lit while the upload page is open.
@@ -72,10 +70,6 @@ export function AppShell({ children }: { children: ReactNode }) {
           <span className="truncate text-xs text-white/50">{ORG_NAME}</span>
         </div>
         <div className="ml-auto flex items-center gap-4">
-          <span className="hidden text-2xs text-white/50 lg:inline" title={health?.mode}>
-            {offline ? "Using the built-in rules only" : "AI is helping"}
-          </span>
-          <ChatDock />
           <div className="flex items-center gap-2">
             <span className="text-xs text-white/70">Teacher</span>
             <div
@@ -174,20 +168,20 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
         </aside>
 
-        <main className="min-w-0 flex-1 p-4 pb-24 md:px-8 md:py-7 md:pb-8">
-          <div className="mx-auto max-w-6xl">
-            {error && (
-              <div
-                role="alert"
-                className="panel mb-6 flex items-start gap-3 border-flag-line bg-flag-soft px-4 py-3"
-              >
-                <p className="flex-1 text-sm text-flag">{error}</p>
-                <button className="btn btn-xs shrink-0" onClick={clearError}>
-                  Dismiss
-                </button>
-              </div>
-            )}
-            {!selectedCourse.analysisAvailable ? (
+        <main className="min-w-0 flex-1 pb-24 md:pb-0">
+          {error && (
+            <div
+              role="alert"
+              className="flex items-start gap-3 border-b border-flag-line bg-flag-soft px-4 py-3 md:px-6"
+            >
+              <p className="flex-1 text-sm text-flag">{error}</p>
+              <button className="btn btn-xs shrink-0" onClick={clearError}>
+                Dismiss
+              </button>
+            </div>
+          )}
+          {!selectedCourse.analysisAvailable ? (
+            <div className="p-4 md:p-6">
               <div className="panel max-w-2xl p-6 md:p-8">
                 <p className="text-2xs font-medium uppercase tracking-wide text-ink-faint">Analysis unavailable</p>
                 <h1 className="mt-2 text-lg font-semibold tracking-tight text-ink">
@@ -200,10 +194,10 @@ export function AppShell({ children }: { children: ReactNode }) {
                   Return to mathematics
                 </button>
               </div>
-            ) : (
-              children
-            )}
-          </div>
+            </div>
+          ) : (
+            children
+          )}
         </main>
       </div>
     </div>

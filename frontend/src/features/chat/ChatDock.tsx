@@ -25,7 +25,7 @@ function rememberTagSeen(): void {
   }
 }
 
-/** Mounted once, outside the page shell, so it stays put as pages change. */
+/** Mounted once in App, outside the shell, so it sits bottom right on every page. */
 export function ChatDock() {
   const { batch } = useSession();
   const batchId = batch?.batch_id;
@@ -71,9 +71,9 @@ export function ChatDock() {
           onClose={() => setOpen(false)}
         />
       )}
-      <div className="flex items-center gap-2 md:fixed md:bottom-4 md:right-4 md:z-40">
+      <div className="fixed bottom-4 right-4 z-40 flex items-center gap-2">
         {showTag && !open && (
-          <span className="hidden rounded border border-line-strong bg-surface px-2 py-1 text-xs text-ink md:inline">
+          <span className="rounded border border-line-strong bg-surface px-2 py-1 text-xs text-ink">
             Ask me
           </span>
         )}

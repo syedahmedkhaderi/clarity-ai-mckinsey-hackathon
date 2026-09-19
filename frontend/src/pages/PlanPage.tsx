@@ -1,9 +1,19 @@
-import { ActionCard, ChangeList, FeedbackChecks } from "../components/InterventionPlan";
+import {
+  ActionCard,
+  ChangeList,
+  FeedbackChecks,
+} from "../components/InterventionPlan";
 import { EmptyState } from "../components/ui/EmptyState";
 import { StudentNotes } from "../features/email/StudentNotes";
 import { useAppView } from "../hooks/useAppView";
 import { useSession } from "../hooks/useSession";
-import type { BatchResult, InterventionPlan, PlanChange, PlannedAction } from "../types";
+import type {
+  BatchResult,
+  InterventionPlan,
+  PlanChange,
+  PlannedAction,
+} from "../types";
+import { PagePad } from "../shell/WorkSurface";
 
 export function PlanPage() {
   const { batch } = useSession();
@@ -25,38 +35,46 @@ function PlanView({ batch }: { batch: BatchResult }) {
   const plan = batch.plan;
   if (!plan) {
     return (
-      <EmptyState
-        title="No plan was built for this analysis."
-        action={
-          <button className="btn" onClick={() => setView("home")}>
-            Go to Home
-          </button>
-        }
-      >
-        The steps under How this was worked out on Home explain why.
-      </EmptyState>
+      <PagePad>
+        <EmptyState
+          title="No plan was built for this analysis."
+          action={
+            <button className="btn" onClick={() => setView("home")}>
+              Go to Home
+            </button>
+          }
+        >
+          The steps under How this was worked out on Home explain why.
+        </EmptyState>
+      </PagePad>
     );
   }
   const changed = new Map<string, PlanChange["kind"]>(
-    batch.changes.filter((c) => c.action_id).map((c) => [c.action_id as string, c.kind]),
+    batch.changes
+      .filter((c) => c.action_id)
+      .map((c) => [c.action_id as string, c.kind]),
   );
 
   return (
-    <div className="space-y-8">
-      <header className="border-b border-line pb-5">
-        <h1 className="text-xl font-semibold tracking-tight text-ink">Action plan</h1>
-        <p className="mt-1 max-w-2xl text-sm text-ink-muted">
-          Start with the mistakes that cost the most marks. Each note to a student is drafted for
-          you to read and send yourself.
-        </p>
-      </header>
+    <PagePad>
+      <div className="space-y-8">
+        <header className="border-b border-line pb-5">
+          <h1 className="text-xl font-semibold tracking-tight text-ink">
+            Action plan
+          </h1>
+          <p className="mt-1 max-w-2xl text-sm text-ink-muted">
+            Start with the mistakes that cost the most marks. Each note to a
+            student is drafted for you to read and send yourself.
+          </p>
+        </header>
 
-      <ChangeList changes={batch.changes} />
+        <ChangeList changes={batch.changes} />
 
-      <Planned plan={plan} changed={changed} />
+        <Planned plan={plan} changed={changed} />
 
-      <StudentNotes />
-    </div>
+        <StudentNotes />
+      </div>
+    </PagePad>
   );
 }
 
@@ -76,7 +94,9 @@ function Planned({
   const later = split(plan.dropped);
   // One severity order across both groups, so a high-severity action the
   // planner could not fit is not buried under lower ones it did.
-  const cards = [...first.cards, ...later.cards].sort((a, b) => b.severity - a.severity);
+  const cards = [...first.cards, ...later.cards].sort(
+    (a, b) => b.severity - a.severity,
+  );
   const feedback = [...first.feedback, ...later.feedback];
   return (
     <section aria-labelledby="plan-first-title">
@@ -86,16 +106,24 @@ function Planned({
         </h2>
         {cards.length > 0 && (
           <p className="text-xs text-ink-faint">
-            {cards.length} {cards.length === 1 ? "action" : "actions"}, most important first.
+            {cards.length} {cards.length === 1 ? "action" : "actions"}, most
+            important first.
           </p>
         )}
       </div>
       {cards.length === 0 && feedback.length === 0 && (
-        <p className="text-sm text-ink-muted">Nothing needs doing from this analysis.</p>
+        <p className="text-sm text-ink-muted">
+          Nothing needs doing from this analysis.
+        </p>
       )}
       <div className="grid items-start gap-4 md:grid-cols-2">
         {cards.map((a, i) => (
-          <ActionCard key={a.action_id} action={a} order={i + 1} changed={changed.get(a.action_id)} />
+          <ActionCard
+            key={a.action_id}
+            action={a}
+            order={i + 1}
+            changed={changed.get(a.action_id)}
+          />
         ))}
       </div>
       {feedback.length > 0 && (

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { OverrideDialog } from "./components/OverrideDialog";
+import { ChatDock } from "./features/chat/ChatDock";
 import { AppViewContext, useAppView, useAppViewState, type ViewKey } from "./hooks/useAppView";
 import { SessionProvider, useSession } from "./hooks/useSession";
 import { ClassPage } from "./pages/ClassPage";
@@ -42,18 +43,22 @@ function Body() {
     <>
       <AppShell>
         {needsRun ? (
-          <div className="panel p-8 text-center">
-            <p className="text-sm text-ink-muted">
-              Analyse a test first. Go to Home, pick a test and start the analysis.
-            </p>
-            <button className="btn mt-3" onClick={() => setView("home")}>
-              Go to Home
-            </button>
+          <div className="p-4 md:p-6">
+            <div className="panel p-8 text-center">
+              <p className="text-sm text-ink-muted">
+                Analyse a test first. Go to Home, pick a test and start the analysis.
+              </p>
+              <button className="btn mt-3" onClick={() => setView("home")}>
+                Go to Home
+              </button>
+            </div>
           </div>
         ) : (
           PAGES[view]()
         )}
       </AppShell>
+
+      <ChatDock />
 
       {session.overrideTarget && (
         <OverrideDialog
