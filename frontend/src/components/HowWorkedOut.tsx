@@ -37,11 +37,14 @@ export function HowWorkedOut({
   if (open) {
     return (
       <div className="space-y-4">
-        <p className="text-sm text-ink-muted">
-          {running
-            ? `Working: ${stage ?? "starting"}.`
-            : "The steps, in order, for anyone who wants to check the work."}
-        </p>
+        <div>
+          <h2 className="text-base font-semibold text-ink">How this was worked out</h2>
+          <p className="text-sm text-ink-muted">
+            {running
+              ? `Working: ${stage ?? "starting"}.`
+              : "The steps, in order, for anyone who wants to check the work."}
+          </p>
+        </div>
         {body}
       </div>
     );

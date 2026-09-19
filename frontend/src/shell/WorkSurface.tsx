@@ -178,8 +178,8 @@ export function RailLink({
       onClick={onClick}
       className={clsx(
         "block w-full rounded border px-3.5 py-3 text-left transition-colors",
-        tone === "agent" && "border-agent bg-agent-soft hover:bg-[#dbe4f1]",
-        tone === "flag" && "border-flag-line bg-flag-soft hover:bg-[#f6e4c9]",
+        tone === "agent" && "border-agent bg-agent-soft hover:bg-agent-line/50",
+        tone === "flag" && "border-flag-line bg-flag-soft hover:bg-flag-line/50",
         tone === "neutral" && "border-line bg-surface hover:bg-surface-sunken",
       )}
     >

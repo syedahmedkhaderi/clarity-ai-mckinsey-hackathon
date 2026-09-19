@@ -30,7 +30,10 @@ export function HomePage() {
   const stats = s.batch ? homeStats(s.batch, s.topicName) : null;
 
   return (
-    <WorkSurface rail={<Rail stats={stats} />}>
+    <WorkSurface
+      rail={<Rail stats={stats} />}
+      header={s.batch && stats ? <Header batch={s.batch} tab={tab} onTab={setTab} /> : undefined}
+    >
       {s.running && (
         <div className="mb-5">
           <RunProgress
@@ -43,7 +46,7 @@ export function HomePage() {
         </div>
       )}
       {s.batch && stats ? (
-        <Analysis batch={s.batch} stats={stats} tab={tab} onTab={setTab} />
+        <Analysis stats={stats} tab={tab} />
       ) : (
         !s.running && (
           <EmptyState title="No analysis yet">
@@ -56,33 +59,28 @@ export function HomePage() {
   );
 }
 
-function Analysis({
-  batch,
-  stats,
-  tab,
-  onTab,
-}: {
-  batch: BatchResult;
-  stats: HomeStats;
-  tab: Tab;
-  onTab: (t: Tab) => void;
-}) {
+function Header({ batch, tab, onTab }: { batch: BatchResult; tab: Tab; onTab: (t: Tab) => void }) {
+  const s = useSession();
+  const label = analysisLabel(s.testName(batch.assessment_id), batch.trace[0]?.timestamp);
+  return (
+    <PageHeader
+      title={s.testName(batch.assessment_id)}
+      subtitle={
+        s.preloaded
+          ? `${label}. A worked example from a practice class, so you can look around. Every mark is a draft.`
+          : `${label}. Every mark is a draft until you approve it.`
+      }
+      tabs={TABS}
+      active={tab}
+      onTab={onTab}
+    />
+  );
+}
+
+function Analysis({ stats, tab }: { stats: HomeStats; tab: Tab }) {
   const s = useSession();
   return (
     <>
-      <div className="-mx-4 -mt-4 mb-5 md:-mx-6 md:-mt-6">
-        <PageHeader
-          title={s.testName(batch.assessment_id)}
-          subtitle={
-            s.preloaded
-              ? `${analysisLabel(s.testName(batch.assessment_id), batch.trace[0]?.timestamp)}. A worked example from a practice class, so you can look around. Every mark is a draft.`
-              : `${analysisLabel(s.testName(batch.assessment_id), batch.trace[0]?.timestamp)}. Every mark is a draft until you approve it.`
-          }
-          tabs={TABS}
-          active={tab}
-          onTab={onTab}
-        />
-      </div>
       {tab === "overview" && <OverviewTab stats={stats} />}
       {tab === "questions" && <QuestionsTab stats={stats} />}
       {tab === "mistakes" && <MistakesTab stats={stats} />}

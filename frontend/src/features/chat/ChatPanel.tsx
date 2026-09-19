@@ -23,6 +23,8 @@ interface PanelProps {
   onRetry: () => void;
   onClear: () => void;
   onClose: () => void;
+  /** True when the deterministic rules are doing the work and no model is involved. */
+  offline: boolean;
 }
 
 export function ChatPanel(p: PanelProps) {
@@ -50,7 +52,12 @@ export function ChatPanel(p: PanelProps) {
     >
       <header className="flex items-center gap-2 border-b border-line px-3 py-2">
         <Mascot size={26} animated={false} />
-        <h2 className="flex-1 text-sm font-semibold text-ink">Pencil helper</h2>
+        <div className="min-w-0 flex-1">
+          <h2 className="text-sm font-semibold text-ink">Pencil helper</h2>
+          <p className="text-2xs text-ink-muted">
+            {p.offline ? "Using the built-in rules only, no AI." : "AI is helping with the answers."}
+          </p>
+        </div>
         {p.messages.length > 0 && (
           <button
             type="button"

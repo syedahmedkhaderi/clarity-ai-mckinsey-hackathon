@@ -24,8 +24,6 @@ export interface HomeStats {
   possible: number;
   mean: string;
   outOf: number;
-  lowest: number;
-  highest: number;
   totals: number[];
   questions: ReturnType<typeof questionRows>;
   patterns: NodePattern[];
@@ -44,8 +42,6 @@ export function homeStats(batch: BatchResult, topicName: (id: string) => string)
     possible,
     mean: roundOne(mean),
     outOf: Math.max(0, ...scores.map((x) => x.possible)),
-    lowest: totals.length ? Math.min(...totals) : 0,
-    highest: totals.length ? Math.max(...totals) : 0,
     totals,
     questions: questionRows(batch, topicName),
     patterns,

@@ -27,8 +27,9 @@ function rememberTagSeen(): void {
 
 /** Mounted once in App, outside the shell, so it sits bottom right on every page. */
 export function ChatDock() {
-  const { batch } = useSession();
+  const { batch, health } = useSession();
   const batchId = batch?.batch_id;
+  const offline = (health?.provider ?? "offline") === "offline";
   const [open, setOpen] = useState(false);
   const [showTag, setShowTag] = useState(() => !tagAlreadySeen());
   const chat = useChat(batchId);
@@ -69,6 +70,7 @@ export function ChatDock() {
           onRetry={chat.retry}
           onClear={chat.clear}
           onClose={() => setOpen(false)}
+          offline={offline}
         />
       )}
       <div className="fixed bottom-4 right-4 z-40 flex items-center gap-2">
