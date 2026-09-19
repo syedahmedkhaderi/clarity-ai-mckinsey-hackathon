@@ -12,3 +12,7 @@ node_modules/
 .pytest_cache/
 .DS_Store
 *.log
+
+# Local state and build caches, rebuilt on demand
+loop.db
+*.tsbuildinfo
