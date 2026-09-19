@@ -22,7 +22,7 @@ from backend.chat.text import make_context
 from backend.lms import mock_api
 
 # An internal id in any field the model or the teacher can see is a defect: the
-# teacher knows names and "Test 3", not M01 or L07.
+# teacher knows names and "Mid-term", not M01 or L07.
 INTERNAL_ID = re.compile(r"\b[ML]\d\d\b|\b[AU]\d{1,2}Q\d{1,2}\b|\bC\d\d-S\d\d\b")
 CLASS_ID, TEST_ID = "C97", "U97"
 UPLOADED_SPEC = {
@@ -175,7 +175,7 @@ def test_summary_passages_cover_topics_students_and_the_class(built: corpus.Corp
     roster = {l["learner_id"]: l["name"] for l in mock_api.get_roster("C1")}
     for name in roster.values():
         assert f"Summary for {name}" in titles
-    topic = next(p for p in summaries if p.title == "Weakest topics in Test 3")
+    topic = next(p for p in summaries if p.title == "Weakest topics in Mid-term")
     assert re.search(r"1\. .+: \d+ of \d+ marks lost", topic.text)
     assert "The class is weakest at" in topic.text
 
@@ -189,7 +189,7 @@ def test_weakest_topic_summary_matches_the_marks(built: corpus.Corpus,
         lost[topic] = lost.get(topic, 0.0) + m["max_marks"] - m["awarded"]
     worst = max(lost, key=lambda t: lost[t])
     label = make_context().topic_label(worst)
-    passage = next(p for p in built.passages if p.title == "Weakest topics in Test 3")
+    passage = next(p for p in built.passages if p.title == "Weakest topics in Mid-term")
     assert f"1. {label}: {int(lost[worst])} of" in passage.text
 
 
@@ -246,7 +246,7 @@ def test_wording_problems_are_never_worded_as_weak_maths(built: corpus.Corpus,
 
 def test_patterns_give_counts_as_x_of_y_students(built: corpus.Corpus) -> None:
     passage = next(p for p in built.passages
-                   if p.kind == "pattern" and p.title.startswith("Class pattern on Test 3")
+                   if p.kind == "pattern" and p.title.startswith("Class pattern on Mid-term")
                    and "5 of 12 students" in p.text)
     assert "whole-class problem" in passage.text
 
@@ -254,7 +254,7 @@ def test_patterns_give_counts_as_x_of_y_students(built: corpus.Corpus) -> None:
 def test_batch_scope_keeps_one_tests_analysis_and_ignores_unknown_ids(built: corpus.Corpus) -> None:
     scoped = corpus.build("B-A3-sync")
     tests = {p.title.split(":")[0].split(", ")[-1] for p in scoped.passages if p.kind == "mark"}
-    assert tests == {"Test 3"}
+    assert tests == {"Mid-term"}
     assert not any(p.kind == "question" and p.title.startswith("Test 1") for p in scoped.passages)
     assert len(corpus.build("no-such-batch").passages) == len(built.passages)
 
@@ -305,10 +305,10 @@ def test_uploaded_tests_and_answers_are_searchable_in_any_scope(uploaded: None) 
 # --- retrieval on the real corpus --------------------------------------------
 
 def test_a_named_question_finds_that_students_answer_and_the_question(built: corpus.Corpus) -> None:
-    hits = built.search("What did Amira write for question 4 on Test 3?")
-    assert "Amira K., Test 3, Question 4: their answer" in [p.title for p in hits]
-    hits = built.search("What is the marking scheme for question 4 in test 3?")
-    assert hits[0].title.startswith("Test 3, Question 4")
+    hits = built.search("What did Amira write for question 4 on the Mid-term?")
+    assert "Amira K., Mid-term, Question 4: their answer" in [p.title for p in hits]
+    hits = built.search("What is the marking scheme for question 4 in the mid-term?")
+    assert hits[0].title.startswith("Mid-term, Question 4")
 
 
 def test_each_starter_question_finds_its_summary(built: corpus.Corpus) -> None:

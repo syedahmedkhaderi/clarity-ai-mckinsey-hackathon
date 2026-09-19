@@ -86,9 +86,9 @@ def test_points_possible_is_the_sum_of_question_marks() -> None:
 
 def test_demo_assignments_gain_only_additive_fields() -> None:
     row = mock_api.get_assignments("C1")[2]
-    assert row["name"] == "Assessment 3 - Foundational Mathematics"
+    assert row["name"] == "Mid-term - Foundational Mathematics"
     assert (row["display_name"], row["source"], row["needs_ai"], row["class_id"]) == (
-        "Test 3", "demo", False, "C1")
+        "Mid-term", "demo", False, "C1")
 
 
 def test_contacts_cover_every_demo_learner_on_a_reserved_domain() -> None:

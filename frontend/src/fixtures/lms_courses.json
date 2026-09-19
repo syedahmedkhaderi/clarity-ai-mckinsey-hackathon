@@ -11,7 +11,7 @@
     {
       "id": "A1",
       "course_id": "C1",
-      "name": "Assessment 1 - Foundational Mathematics",
+      "name": "Test 1 - Foundational Mathematics",
       "display_name": "Test 1",
       "source": "demo",
       "needs_ai": false,
@@ -34,7 +34,7 @@
     {
       "id": "A2",
       "course_id": "C1",
-      "name": "Assessment 2 - Foundational Mathematics",
+      "name": "Test 2 - Foundational Mathematics",
       "display_name": "Test 2",
       "source": "demo",
       "needs_ai": false,
@@ -57,8 +57,8 @@
     {
       "id": "A3",
       "course_id": "C1",
-      "name": "Assessment 3 - Foundational Mathematics",
-      "display_name": "Test 3",
+      "name": "Mid-term - Foundational Mathematics",
+      "display_name": "Mid-term",
       "source": "demo",
       "needs_ai": false,
       "class_id": "C1",
@@ -80,8 +80,8 @@
     {
       "id": "A4",
       "course_id": "C1",
-      "name": "Assessment 4 - Foundational Mathematics",
-      "display_name": "Test 4",
+      "name": "Final - Foundational Mathematics",
+      "display_name": "Final",
       "source": "demo",
       "needs_ai": false,
       "class_id": "C1",

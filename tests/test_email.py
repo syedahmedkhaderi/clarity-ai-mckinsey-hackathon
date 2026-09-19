@@ -80,7 +80,7 @@ def gmail(monkeypatch: pytest.MonkeyPatch) -> list[dict[str, Any]]:
 
 def _send(client: TestClient, batch_id: str, learner_id: str, **over: Any) -> Any:
     body = {"batch_id": batch_id, "learner_id": learner_id, "to": "kid@school.org.uk",
-            "subject": "Next steps after Test 3", "body": "Hi,\n\nPlease look at question 4."}
+            "subject": "Next steps after Mid-term", "body": "Hi,\n\nPlease look at question 4."}
     return client.post("/api/email/send", json={**body, **over})
 
 
@@ -96,13 +96,13 @@ def test_every_demo_draft_is_clean(client: TestClient, batch_id: str,
         assert not NODE_ID.search(text), (learner_id, text)
         guard.check(data["subject"], data["body"], pipeline["all_marks"], learner_id,
                     compose.evidence_spans(pipeline, learner_id))
-        assert data["subject"] == "Next steps after Test 3"
+        assert data["subject"] == "Next steps after Mid-term"
         assert data["body"].startswith("Hi ") and data["body"].endswith("Your teacher")
         assert "Where we saw it" in data["body"]
         assert "facilitator" not in text.lower()
         assert DEMO_EMAIL.match(data["to"]), data["to"]
         for obs in data["observations"]:
-            assert obs["test"] == "Test 3" and obs["question_number"] >= 1
+            assert obs["test"] == "Mid-term" and obs["question_number"] >= 1
             assert f"{obs['test']}, Question {obs['question_number']}: {obs['area']}" in data["body"]
 
 
@@ -144,7 +144,7 @@ def test_wording_diagnosis_never_blames_the_maths() -> None:
 def test_uploaded_question_numbers_and_test_name() -> None:
     assert compose.question_number("A3Q4") == 4
     assert compose.question_number("U01Q04") == 4
-    assert compose.test_name("A3") == "Test 3"
+    assert compose.test_name("A3") == "Mid-term"
 
 
 def test_guard_node_ids() -> None:
@@ -213,7 +213,7 @@ def test_delivered_through_a_fake_smtp(client: TestClient, batch_id: str, studen
         config.SMTP_HOST, config.SMTP_PORT, config.SMTP_TIMEOUT_SECONDS)
     assert call["login"] == ("teacher@gmail.com", "app-password-1234")
     assert call["to"] == "kid@school.org.uk"
-    assert call["subject"] == "Next steps after Test 3"
+    assert call["subject"] == "Next steps after Mid-term"
     assert "Café note" in call["body"]
 
 
@@ -341,7 +341,7 @@ def test_students_list_and_edit(client: TestClient, student: str) -> None:
 def test_demo_class_contacts_are_untouched_by_these_tests(client: TestClient) -> None:
     demo = client.get("/api/students?class_id=C1").json()
     assert all(DEMO_EMAIL.match(s["email"]) for s in demo)
-    assert mock_api.get_assignments("C1")[2]["display_name"] == "Test 3"
+    assert mock_api.get_assignments("C1")[2]["display_name"] == "Mid-term"
 
 
 def _batch_with_body(body: str) -> dict[str, Any]:

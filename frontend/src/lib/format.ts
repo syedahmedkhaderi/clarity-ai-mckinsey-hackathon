@@ -35,7 +35,11 @@ export function marksLabel(n: number): string {
 }
 
 /** Demo tests are A1 to A4, uploaded ones U01 and up. */
+/** The demo course's paper names; mirrors DEMO_TEST_NAMES in backend/lms/mock_api.py. */
+const DEMO_TEST_NAMES: Record<string, string> = { A1: "Test 1", A2: "Test 2", A3: "Mid-term", A4: "Final" };
+
 export function testLabel(assessmentId: string): string {
+  if (DEMO_TEST_NAMES[assessmentId]) return DEMO_TEST_NAMES[assessmentId];
   const demo = /^A(\d+)$/.exec(assessmentId);
   if (demo) return `Test ${Number(demo[1])}`;
   const uploaded = /^U(\d+)$/.exec(assessmentId);
@@ -49,7 +53,7 @@ export function assessmentOfQuestion(questionId: string): string {
 }
 
 /**
- * "Test 3, Question 4". An uploaded question has no test number to derive a name
+ * "Mid-term, Question 4". An uploaded question has no test number to derive a name
  * from, so it reads "Question 4" unless the caller passes the test's own name.
  */
 export function questionLabel(questionId: string, testName?: string): string {
@@ -61,7 +65,7 @@ export function questionLabel(questionId: string, testName?: string): string {
   return demo ? `${testLabel(`A${demo[1]}`)}, ${question}` : question;
 }
 
-/** "Test 3 analysis, 18 Sep". The date is left off when it is not known. */
+/** "Mid-term analysis, 18 Sep". The date is left off when it is not known. */
 export function analysisLabel(testName: string, iso?: string): string {
   const date = iso ? shortDate(iso) : "";
   return date ? `${testName} analysis, ${date}` : `${testName} analysis`;

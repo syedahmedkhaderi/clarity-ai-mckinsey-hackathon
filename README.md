@@ -125,7 +125,7 @@ A dead model provider costs quality, never a run. After three failures a circuit
 
 Errors in the mock data are injected by **Python rules, never by a model**. If the same model had written the errors and then diagnosed them, the accuracy score would be self-graded. The backend is blocked from reading the answer key, and a check fails the evaluation if it ever does.
 
-| Metric (Test 3, 12 learners, 96 answers) | Result |
+| Metric (Mid-term, 12 learners, 96 answers) | Result |
 |---|---|
 | Correct mistake pattern named | **92%** (23 of 25), 96% before the reviewer gate |
 | Correct pattern in the top two | 96% |
@@ -150,12 +150,12 @@ git clone https://github.com/syedahmedkhaderi/clarity-ai-mckinsey-hackathon.git 
 <details>
 <summary><b>Two-minute demo script</b></summary>
 
-1. **Home.** Test 3 is already analysed: class average, hardest questions, most common mistakes.
-2. **Students, Thabo M.** He evaluates `2 + 3 x 4` left to right in Test 1 and Test 3, so it shows as "Keeps happening". Press *Write a note* to draft his email, edit it and send.
+1. **Home.** The Mid-term is already analysed: class average, hardest questions, most common mistakes.
+2. **Students, Thabo M.** He evaluates `2 + 3 x 4` left to right in Test 1 and the Mid-term, so it shows as "Keeps happening". Press *Write a note* to draft his email, edit it and send.
 3. **Students, Liu Y.** She wrote the correct answer in awkward English. It gets full marks and no maths mistake is recorded.
 4. **Class.** "Adds numerators and denominators separately" affects 5 of 12 students, so it is a whole-class problem.
 5. **Action plan.** The group re-teach comes first, then restart points for the three returning learners.
-6. **Class, See which students, Kwame A.** On his Test 3 Question 4 answer, choose *Correct this*, then *Not a mistake pattern at all*. The count drops to 4 of 12, the group re-teach is withdrawn and the plan reorders.
+6. **Class, See which students, Kwame A.** On his Mid-term Question 4 answer, choose *Correct this*, then *Not a mistake pattern at all*. The count drops to 4 of 12, the group re-teach is withdrawn and the plan reorders.
 
 </details>
 

@@ -5,10 +5,13 @@ import { Select, type SelectOption } from "./ui/Select";
 /** One menu row per test: the short name, the full name, when it is due and how many sheets are in. */
 function option(a: Assignment): SelectOption {
   const short = a.submission_count < a.expected_count;
+  const label = a.display_name ?? a.name;
+  // "Mid-term - Foundational Mathematics" under the label "Mid-term" repeats itself.
+  const rest = a.name.startsWith(label) ? a.name.slice(label.length).replace(/^\s*-\s*/, "") : a.name;
   return {
     value: a.id,
-    label: a.display_name ?? a.name,
-    detail: a.display_name && a.display_name !== a.name ? a.name : undefined,
+    label,
+    detail: rest && rest !== label ? rest : undefined,
     sub: a.due_at ? `Due ${shortDate(a.due_at)}` : undefined,
     meta: `${a.submission_count} of ${a.expected_count} in`,
     metaTone: short ? "flag" : "default",

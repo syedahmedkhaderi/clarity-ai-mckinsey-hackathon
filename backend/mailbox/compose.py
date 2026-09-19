@@ -24,7 +24,7 @@ _QUESTION_NUMBER = re.compile(r"Q(\d+)$")
 
 
 def test_name(assessment_id: str) -> str:
-    """The name the teacher sees for a test, such as 'Test 3' or an uploaded title."""
+    """The name the teacher sees for a test, such as 'Mid-term' or an uploaded title."""
     try:
         rows = mock_api.get_assignments(mock_api.cohort_id_for(assessment_id))
     except Exception:
@@ -32,7 +32,7 @@ def test_name(assessment_id: str) -> str:
     for row in rows:
         if row.get("id") == assessment_id and row.get("display_name"):
             return str(row["display_name"])
-    return f"Test {assessment_id[1:].lstrip('0') or assessment_id}"
+    return mock_api.demo_test_name(assessment_id)
 
 
 def question_number(question_id: str) -> int:

@@ -93,14 +93,23 @@ def get_courses() -> list[dict[str, Any]]:
     return [demo, *uploaded]
 
 
+# What the demo course calls each paper. A real term mixes short tests with the
+# bigger sittings, and the names should read that way.
+DEMO_TEST_NAMES: dict[str, str] = {"A1": "Test 1", "A2": "Test 2", "A3": "Mid-term", "A4": "Final"}
+
+
+def demo_test_name(assessment_id: str) -> str:
+    return DEMO_TEST_NAMES.get(assessment_id, f"Test {assessment_id[1:].lstrip('0') or assessment_id}")
+
+
 def _demo_assignment(scheme: dict[str, Any], data: dict[str, Any]) -> dict[str, Any]:
     aid = scheme["assessment_id"]
     subs = [s for s in data["submissions"] if s["assessment_id"] == aid]
     return {
         "id": aid,
         "course_id": data["cohort_id"],
-        "name": f"Assessment {aid[1:]} - Foundational Mathematics",
-        "display_name": f"Test {aid[1:]}",
+        "name": f"{demo_test_name(aid)} - Foundational Mathematics",
+        "display_name": demo_test_name(aid),
         "source": "demo",
         "needs_ai": False,
         "class_id": data["cohort_id"],
