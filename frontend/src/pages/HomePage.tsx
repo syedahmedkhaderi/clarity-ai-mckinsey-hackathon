@@ -142,9 +142,10 @@ function Rail({ stats }: { stats: HomeStats | null }) {
             />
             <RailLink
               tone={s.openCount > 0 ? "flag" : "neutral"}
+              count={s.openCount > 0 ? s.openCount : undefined}
               title={
                 s.openCount > 0
-                  ? `${plural(s.openCount, "answer")} need${s.openCount === 1 ? "s" : ""} your call`
+                  ? `${s.openCount === 1 ? "Answer needs" : "Answers need"} your call`
                   : "Nothing needs your call"
               }
               hint={

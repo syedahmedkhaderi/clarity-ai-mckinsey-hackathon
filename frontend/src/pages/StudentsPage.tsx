@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useRef, useState } from "react";
 import { insightsApi } from "../api/insights";
@@ -491,19 +492,28 @@ function Findings({
 function EscalationNote({ escalation: e }: { escalation: Escalation }) {
   const { plain } = useSession();
   return (
-    <div className="rounded-md border border-flag-line bg-flag-soft p-3">
-      <div className="flex flex-wrap items-center gap-2 mb-1">
-        <Tag tone="flag" className="bg-surface">
+    <div className={clsx("overflow-hidden rounded-sm border", e.resolved ? "border-line" : "border-flag")}>
+      <div
+        className={clsx(
+          "flex flex-wrap items-center gap-x-3 gap-y-1 px-3 py-2",
+          e.resolved ? "bg-surface-raised text-ink-muted" : "bg-flag text-white",
+        )}
+      >
+        <span className="text-2xs font-semibold uppercase tracking-wider opacity-80">
+          {e.resolved ? "Decided" : "Needs your call"}
+        </span>
+        <span className="text-sm font-medium">{plain(e.subject)}</span>
+        <span className={clsx("text-xs", e.resolved ? "text-ink-muted" : "text-white/80")}>
           {REASON_LABELS[e.reason_code] ?? e.reason_code}
-        </Tag>
-        <span className="text-sm font-medium text-ink">{plain(e.subject)}</span>
-        {e.resolved && <span className="text-2xs text-ink-faint">Resolved</span>}
+        </span>
       </div>
-      <p className="text-sm text-ink-muted">{plain(e.reasoning)}</p>
-      <p className="text-xs text-ink-muted mt-1.5">
-        <span className="text-ink-faint">If it had to choose: </span>
-        {plain(e.would_have_decided)}
-      </p>
+      <div className="bg-surface px-3 py-2.5">
+        <p className="text-sm text-ink-muted">{plain(e.reasoning)}</p>
+        <p className="mt-1.5 text-xs text-ink-muted">
+          <span className="text-ink-faint">If it had to choose: </span>
+          {plain(e.would_have_decided)}
+        </p>
+      </div>
     </div>
   );
 }

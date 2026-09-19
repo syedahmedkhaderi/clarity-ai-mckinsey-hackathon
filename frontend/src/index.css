@@ -50,8 +50,13 @@
     @apply px-2 py-1 text-xs;
   }
   .tag {
-    @apply inline-flex items-center rounded border px-1.5 py-0.5 text-2xs font-medium
+    @apply inline-flex items-center rounded-sm border px-1.5 py-0.5 text-2xs font-medium
            tracking-wide whitespace-nowrap;
+  }
+  /* The count of things waiting on the teacher. Solid, so it reads at a glance. */
+  .count-flag {
+    @apply inline-grid min-w-[22px] place-items-center rounded-sm bg-flag px-1.5 font-mono
+           text-2xs font-medium leading-5 text-white tabular-nums;
   }
   .num {
     @apply font-mono text-xs tabular-nums;

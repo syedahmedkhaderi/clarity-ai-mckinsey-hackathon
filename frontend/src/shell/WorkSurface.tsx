@@ -126,7 +126,7 @@ export function Tabs<K extends string>({
           >
             {t.label}
             {t.badge !== undefined && t.badge > 0 && (
-              <span className="tag border-flag-line bg-flag-soft text-flag num">{t.badge}</span>
+              <span className="count-flag">{t.badge}</span>
             )}
           </button>
         );
@@ -160,16 +160,42 @@ export function RailStat({
   );
 }
 
-/** A rail shortcut to the page where the work happens. Agent blue for the plan, flag for things handed to the teacher. */
+function Chevron({ className }: { className?: string }) {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={clsx("shrink-0", className)}
+    >
+      <path d="M4.5 2.5 8 6l-3.5 3.5" />
+    </svg>
+  );
+}
+
+/**
+ * A rail shortcut to the page where the work happens. Agent blue for the plan;
+ * the flag tone is a rust outline with the count in a solid square, for things
+ * waiting on the teacher.
+ */
 export function RailLink({
   title,
   hint,
   tone = "agent",
+  count,
   onClick,
 }: {
   title: string;
   hint: string;
   tone?: "agent" | "flag" | "neutral";
+  /** Shown as a solid square before the title. Meant for the flag tone. */
+  count?: number;
   onClick: () => void;
 }) {
   return (
@@ -177,23 +203,42 @@ export function RailLink({
       type="button"
       onClick={onClick}
       className={clsx(
-        "block w-full rounded border px-3.5 py-3 text-left transition-colors",
+        "flex w-full items-center gap-3 rounded-sm border px-3 py-2.5 text-left transition-colors",
         tone === "agent" && "border-agent bg-agent-soft hover:bg-agent-line/50",
-        tone === "flag" && "border-flag-line bg-flag-soft hover:bg-flag-line/50",
+        tone === "flag" && "border-flag bg-surface hover:bg-flag-soft",
         tone === "neutral" && "border-line bg-surface hover:bg-surface-sunken",
       )}
     >
-      <span
+      {count !== undefined && (
+        <span
+          className={clsx(
+            "grid h-8 w-8 shrink-0 place-items-center rounded-sm font-mono text-[15px] font-medium tabular-nums",
+            tone === "flag" ? "bg-flag text-white" : "bg-agent text-white",
+          )}
+        >
+          {count}
+        </span>
+      )}
+      <span className="min-w-0 flex-1">
+        <span
+          className={clsx(
+            "block text-sm font-semibold",
+            tone === "agent" && "text-agent",
+            tone === "flag" && "text-flag",
+            tone === "neutral" && "text-ink",
+          )}
+        >
+          {title}
+        </span>
+        <span className="mt-0.5 block text-xs text-ink-muted">{hint}</span>
+      </span>
+      <Chevron
         className={clsx(
-          "block text-sm font-semibold",
           tone === "agent" && "text-agent",
           tone === "flag" && "text-flag",
-          tone === "neutral" && "text-ink",
+          tone === "neutral" && "text-ink-muted",
         )}
-      >
-        {title}
-      </span>
-      <span className="mt-0.5 block text-xs text-ink-muted">{hint}</span>
+      />
     </button>
   );
 }

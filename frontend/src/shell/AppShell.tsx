@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { useState, type ReactNode } from "react";
+import { Select } from "../components/ui/Select";
 import { useAppView, type ViewKey } from "../hooks/useAppView";
 import { useSession } from "../hooks/useSession";
 import { BRAND_NAME, ORG_NAME } from "../lib/brand";
@@ -98,21 +99,24 @@ export function AppShell({ children }: { children: ReactNode }) {
               Meridian LMS
             </p>
 
-            <label htmlFor="course-context" className="mt-3 block text-2xs font-medium uppercase tracking-wide text-ink-faint">
-              Course
-            </label>
-            <select
+            <Select
               id="course-context"
+              label="Course"
               value={selectedCourse.id}
-              onChange={(event) => setSelectedCourseId(event.target.value)}
-              className="mt-1.5 w-full min-w-0 rounded border border-line-strong bg-surface px-2.5 py-1.5 text-sm leading-5 text-ink outline-none transition-colors focus:border-ink focus:ring-1 focus:ring-ink"
-            >
-              {COURSE_CONTEXTS.map((course) => (
-                <option key={course.id} value={course.id}>
-                  {course.subject}
-                </option>
-              ))}
-            </select>
+              onChange={setSelectedCourseId}
+              className="mt-3"
+              groups={[
+                {
+                  options: COURSE_CONTEXTS.map((course) => ({
+                    value: course.id,
+                    label: course.subject,
+                    sub: course.name,
+                    meta: course.analysisAvailable ? `${course.enrolled} enrolled` : "Not connected",
+                    metaTone: course.analysisAvailable ? "default" : "flag",
+                  })),
+                },
+              ]}
+            />
 
             <p className="mt-2 text-xs leading-4 text-ink-muted">{selectedCourse.name}</p>
             <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-2xs text-ink-faint">
@@ -161,7 +165,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 >
                   {item.label}
                   {item.key === "review" && openCount > 0 && (
-                    <span className="tag border-flag-line bg-flag-soft text-flag num">{openCount}</span>
+                    <span className="count-flag">{openCount}</span>
                   )}
                 </button>
               ))}

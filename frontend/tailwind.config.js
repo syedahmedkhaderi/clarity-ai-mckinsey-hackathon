@@ -13,12 +13,13 @@ export default {
         // The accent. Navy, so the LOOP panels read as one tool against the plain shell.
         // Used for agent activity, agent decisions and the primary action on a page.
         agent: { DEFAULT: "#1d3d6b", soft: "#e7edf6", line: "#c3d0e4" },
-        // Things the agent handed to a human.
-        flag: { DEFAULT: "#8d4d0b", soft: "#fbf0e2", line: "#e9cfa6" },
+        // Things the agent handed to a human. A deep rust: solid where the teacher acts,
+        // an outline where it only points the way.
+        flag: { DEFAULT: "#8a3b12", soft: "#faf1ec", line: "#d9b8a5" },
       },
       fontFamily: {
         sans: ["IBM Plex Sans", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
-        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        mono: ["IBM Plex Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       fontSize: {
         "2xs": ["11px", "16px"],

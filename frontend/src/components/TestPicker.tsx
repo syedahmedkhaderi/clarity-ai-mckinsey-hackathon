@@ -1,5 +1,19 @@
 import type { Assignment } from "../types";
-import { marksLabel } from "../lib/format";
+import { marksLabel, shortDate } from "../lib/format";
+import { Select, type SelectOption } from "./ui/Select";
+
+/** One menu row per test: the short name, the full name, when it is due and how many sheets are in. */
+function option(a: Assignment): SelectOption {
+  const short = a.submission_count < a.expected_count;
+  return {
+    value: a.id,
+    label: a.display_name ?? a.name,
+    detail: a.display_name && a.display_name !== a.name ? a.name : undefined,
+    sub: a.due_at ? `Due ${shortDate(a.due_at)}` : undefined,
+    meta: `${a.submission_count} of ${a.expected_count} in`,
+    metaTone: short ? "flag" : "default",
+  };
+}
 
 /**
  * Chooses the test and starts the analysis. Lives in the Home rail, so it is a
@@ -23,53 +37,30 @@ export function TestPicker({
   blockedReason: string | null;
 }) {
   const current = assignments.find((a) => a.id === selected);
-  const yours = assignments.filter((a) => a.source === "uploaded");
-  const provided = assignments.filter((a) => a.source !== "uploaded");
+  const yours = assignments.filter((a) => a.source === "uploaded").map(option);
+  const provided = assignments.filter((a) => a.source !== "uploaded").map(option);
+  const groups =
+    yours.length > 0
+      ? [
+          { label: "Tests you added", options: yours },
+          { label: "Course tests", options: provided },
+        ]
+      : [{ options: provided }];
 
   return (
     <div className="flex flex-col gap-3">
         <div className="min-w-0">
-          <label
-            htmlFor="test-picker"
-            className="block text-2xs font-medium uppercase tracking-wide text-ink-muted"
-          >
-            Analysing
-          </label>
           {assignments.length === 0 ? (
             <p className="mt-2 text-sm text-ink-faint">Loading your tests.</p>
           ) : (
-            <select
+            <Select
               id="test-picker"
+              label="Test"
               value={selected}
               disabled={running}
-              onChange={(e) => onSelect(e.target.value)}
-              className="mt-1.5 w-full rounded border border-line-strong bg-surface px-3 py-2 text-sm text-ink outline-none transition-colors focus:border-ink focus:ring-1 focus:ring-ink disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {yours.length > 0 ? (
-                <>
-                  <optgroup label="Tests you added">
-                    {yours.map((a) => (
-                      <option key={a.id} value={a.id}>
-                        {a.display_name ?? a.name}
-                      </option>
-                    ))}
-                  </optgroup>
-                  <optgroup label="Course tests">
-                    {provided.map((a) => (
-                      <option key={a.id} value={a.id}>
-                        {a.display_name ?? a.name}
-                      </option>
-                    ))}
-                  </optgroup>
-                </>
-              ) : (
-                provided.map((a) => (
-                  <option key={a.id} value={a.id}>
-                    {a.display_name ?? a.name}
-                  </option>
-                ))
-              )}
-            </select>
+              onChange={onSelect}
+              groups={groups}
+            />
           )}
           {current && (
             <p className="mt-2 text-xs text-ink-muted">

@@ -1,5 +1,6 @@
 import type { Diagnosis, Question, TaxonomyNode } from "../types";
 import { ConfidenceBadge } from "./ConfidenceBadge";
+import { Tag } from "./ui/Tag";
 import { EvidenceSpan } from "./EvidenceSpan";
 import {
   DIAGNOSIS_SOURCE_LABELS,
@@ -45,10 +46,10 @@ export function DiagnosisDetail({
           {ERROR_CLASS_LABELS[diagnosis.error_class] ?? diagnosis.error_class}
         </span>
         {diagnosis.language_flag && (
-          <span className="tag border-flag-line bg-flag-soft text-flag">{REASON_LABELS.LANGUAGE_BARRIER}</span>
+          <Tag tone="agent">{REASON_LABELS.LANGUAGE_BARRIER}</Tag>
         )}
         {needsCall && (
-          <span className="tag border-flag-line bg-flag-soft text-flag">{STUDENT_TAG_LABELS.needsCall}</span>
+          <Tag tone="flag">{STUDENT_TAG_LABELS.needsCall}</Tag>
         )}
         <div className="ml-auto flex items-center gap-2">
           {awarded && <span className="num text-ink-muted">{awarded}</span>}
