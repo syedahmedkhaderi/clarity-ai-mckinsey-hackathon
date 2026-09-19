@@ -3,6 +3,7 @@ import { useMemo, useRef, useState } from "react";
 import { insightsApi } from "../api/insights";
 import { DiagnosisDetail } from "../components/DiagnosisDetail";
 import { LearnerCard, type LearnerTotal, type LearnerTrend } from "../components/LearnerCard";
+import { PageHeader, WorkSurface } from "../shell/WorkSurface";
 import { Collapsible } from "../components/ui/Collapsible";
 import { EmptyState } from "../components/ui/EmptyState";
 import { Panel } from "../components/ui/Panel";
@@ -116,6 +117,7 @@ function trendsFor(history: InsightsHistory | undefined): Record<string, Learner
 function StudentsView({ batch }: { batch: BatchResult }) {
   const s = useSession();
   const [selectedId, setSelectedId] = useState(batch.learners[0]?.learner_id ?? "");
+  const [query, setQuery] = useState("");
   const detailRef = useRef<HTMLDivElement>(null);
 
   const course = s.tests.find((t) => t.id === batch.assessment_id);
@@ -150,36 +152,52 @@ function StudentsView({ batch }: { batch: BatchResult }) {
       detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
+  const needle = query.trim().toLowerCase();
+  const shown = needle
+    ? batch.learners.filter((l) => l.learner_name.toLowerCase().includes(needle))
+    : batch.learners;
+
+  const rail = (
+    <>
+      <div className="border-b border-line px-4 pb-3 pt-4">
+        <h1 className="text-base font-semibold text-ink">Students</h1>
+        <p className="mt-0.5 text-xs text-ink-muted">Every total is a draft. Choose a student to see their work.</p>
+        <input
+          type="search"
+          aria-label="Find a student"
+          placeholder="Find a student"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="mt-3 w-full rounded border border-line-strong bg-surface-sunken px-2.5 py-1.5 text-sm text-ink outline-none focus:border-ink focus:ring-1 focus:ring-ink"
+        />
+      </div>
+      <div className="max-h-[50vh] overflow-y-auto lg:max-h-none">
+        {shown.map((l) => {
+          const sum = summaries[l.learner_id];
+          return (
+            <LearnerCard
+              key={l.learner_id}
+              learner={l}
+              total={sum.total}
+              trend={trends[l.learner_id] ?? null}
+              mainPattern={s.patternName(sum.mainNode) || null}
+              keepsHappening={sum.keeps}
+              needsCall={sum.needsCall}
+              selected={l.learner_id === learner.learner_id}
+              onClick={() => choose(l.learner_id)}
+            />
+          );
+        })}
+        {shown.length === 0 && (
+          <p className="px-4 py-5 text-sm text-ink-muted">No student matches that name.</p>
+        )}
+      </div>
+    </>
+  );
 
   return (
-    <div className="grid gap-5 lg:grid-cols-[minmax(0,25rem)_minmax(0,1fr)] lg:items-start">
-      <Panel
-        title="Students"
-        subtitle="Every total is a draft. Choose a student to see their work."
-        flush
-        className="lg:sticky lg:top-7"
-      >
-        <div className="max-h-[60vh] lg:max-h-[calc(100vh-8rem)] overflow-y-auto border-t border-line">
-          {batch.learners.map((l) => {
-            const sum = summaries[l.learner_id];
-            return (
-              <LearnerCard
-                key={l.learner_id}
-                learner={l}
-                total={sum.total}
-                trend={trends[l.learner_id] ?? null}
-                mainPattern={s.patternName(sum.mainNode) || null}
-                keepsHappening={sum.keeps}
-                needsCall={sum.needsCall}
-                selected={l.learner_id === learner.learner_id}
-                onClick={() => choose(l.learner_id)}
-              />
-            );
-          })}
-        </div>
-      </Panel>
-
-      <div ref={detailRef} className="space-y-5 min-w-0 scroll-mt-4">
+    <WorkSurface rail={rail} railWidth="320px" railFlush>
+      <div ref={detailRef} className="-mx-4 -mt-4 md:-mx-6 md:-mt-6">
         <StudentDetail
           key={learner.learner_id}
           batch={batch}
@@ -189,7 +207,7 @@ function StudentsView({ batch }: { batch: BatchResult }) {
           historyState={history.isError ? "error" : history.data ? "ready" : "loading"}
         />
       </div>
-    </div>
+    </WorkSurface>
   );
 }
 
@@ -213,28 +231,36 @@ function StudentDetail({
     (e) => e.assessment_id !== batch.assessment_id,
   );
 
+  const found = (batch.all_diagnoses ?? batch.diagnoses).filter(
+    (d) => d.learner_id === learner.learner_id && d.taxonomy_node,
+  ).length;
+  const open = batch.escalations.filter(
+    (e) => e.learner_id === learner.learner_id && !e.resolved,
+  ).length;
+
   return (
     <>
-      <header>
-        <h1 className="text-lg font-semibold text-ink leading-snug">
-          {mistakeHeadline(learner.learner_name, mainNode ? s.patternName(mainNode) : null, keeps, wording)}
-        </h1>
-        <p className="text-sm text-ink-muted mt-1">
-          {learner.learner_name}
-          {total
-            ? `, ${thisTest}: ${scoreText(total.awarded)} of ${scoreText(total.outOf)} (${total.draft ? "Draft" : "Confirmed"}).`
-            : `, ${thisTest}: no marks.`}
-        </p>
-      </header>
-
+      <PageHeader
+        title={learner.learner_name}
+        subtitle={mistakeHeadline(learner.learner_name, mainNode ? s.patternName(mainNode) : null, keeps, wording)}
+        figures={[
+          {
+            label: total?.draft === false ? "Confirmed total" : "Draft total",
+            value: total ? `${scoreText(total.awarded)} of ${scoreText(total.outOf)}` : "No marks",
+          },
+          { label: "Mistakes found", value: found },
+          { label: "Waiting for you", value: open, tone: open > 0 ? "flag" : "default" },
+        ]}
+      />
+      <div className="space-y-5 p-4 md:p-6">
+      <Findings batch={batch} learner={learner} thisTest={thisTest} />
+      <PatternsTable summary={summary} />
       <HistoryStrip
         learner={learner}
         currentId={batch.assessment_id}
         tests={tests}
         state={historyState}
       />
-      <PatternsTable summary={summary} />
-      <Findings batch={batch} learner={learner} thisTest={thisTest} />
 
       {earlier.length > 0 && (
         <Collapsible
@@ -265,6 +291,7 @@ function StudentDetail({
       )}
 
       <StudentEmail learnerId={learner.learner_id} />
+      </div>
     </>
   );
 }
@@ -403,10 +430,16 @@ function Findings({
   const marks = new Map(
     (batch.all_marks ?? batch.marks).filter((m) => m.learner_id === id).map((m) => [m.question_id, m]),
   );
+  const escalations = batch.escalations.filter((e) => e.learner_id === id);
+  const waiting = (q: string) => escalations.some((e) => e.question_id === q && !e.resolved);
+  // Answers waiting on the teacher come first; the rest stay in question order.
   const diagnoses = (batch.all_diagnoses ?? batch.diagnoses)
     .filter((d) => d.learner_id === id && d.taxonomy_node)
-    .sort((a, b) => byId(a.question_id, b.question_id));
-  const escalations = batch.escalations.filter((e) => e.learner_id === id);
+    .sort(
+      (a, b) =>
+        Number(waiting(b.question_id)) - Number(waiting(a.question_id)) ||
+        byId(a.question_id, b.question_id),
+    );
   const paired = new Set(diagnoses.map((d) => d.question_id));
   const unpaired = escalations.filter((e) => !e.question_id || !paired.has(e.question_id));
   const open = escalations.filter((e) => !e.resolved).length;

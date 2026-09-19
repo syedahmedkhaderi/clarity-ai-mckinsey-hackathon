@@ -12,11 +12,14 @@ export function WorkSurface({
   header,
   children,
   railWidth = "300px",
+  railFlush = false,
 }: {
   rail: ReactNode;
   header?: ReactNode;
   children: ReactNode;
   railWidth?: string;
+  /** For a rail that is a list: no padding, the rows run edge to edge. */
+  railFlush?: boolean;
 }) {
   return (
     <div
@@ -24,7 +27,7 @@ export function WorkSurface({
       style={{ gridTemplateColumns: `${railWidth} minmax(0, 1fr)` }}
     >
       <aside className="border-b border-line bg-surface lg:sticky lg:top-0 lg:max-h-screen lg:overflow-y-auto lg:border-b-0 lg:border-r">
-        <div className="flex flex-col gap-5 p-4 md:p-5">{rail}</div>
+        <div className={railFlush ? "" : "flex flex-col gap-5 p-4 md:p-5"}>{rail}</div>
       </aside>
       <div className="min-w-0">
         {header}
