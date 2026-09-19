@@ -31,7 +31,7 @@ export function Collapsible({
         type="button"
         onClick={toggle}
         aria-expanded={isOpen}
-        className="w-full px-4 py-3 flex items-baseline gap-3 text-left hover:bg-surface-sunken rounded-md"
+        className="w-full px-4 py-3 flex items-baseline gap-3 text-left rounded-md bg-surface-raised hover:bg-surface-sunken"
       >
         <span className="panel-title">{title}</span>
         {hint !== undefined && <span className="panel-sub">{hint}</span>}

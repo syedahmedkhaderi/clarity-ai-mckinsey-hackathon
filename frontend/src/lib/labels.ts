@@ -74,8 +74,8 @@ export const STATUS_LABELS = {
 export const PLAN_CHANGE_LABELS: Record<PlanChange["kind"], string> = {
   added: "Added",
   removed: "Removed",
-  rescheduled: "Moved",
-  budget: "Time changed",
+  rescheduled: "Moved up",
+  budget: "Order changed",
 };
 
 /** Old: distractor_map, model, fallback. */
@@ -164,8 +164,8 @@ export function mistakeHeadline(
 export const PLAN_CHANGE_PLAIN_LABELS: Record<PlanChange["kind"], string> = {
   removed: "No longer needed",
   added: "New",
-  rescheduled: "Now fits",
-  budget: "Time",
+  rescheduled: "Moved up",
+  budget: "Order changed",
 };
 
 /**
@@ -174,13 +174,6 @@ export const PLAN_CHANGE_PLAIN_LABELS: Record<PlanChange["kind"], string> = {
  */
 export function stripNodeIds(text: string): string {
   return text.replace(/\s*\(M\d{2}(?:\s*,\s*M\d{2})*\)/g, "").replace(/\bReteach\b/g, "Re-teach");
-}
-
-/** Old: "budget exhausted". */
-export function dropReasonText(reason: string | null): string {
-  if (!reason || /budget/i.test(reason)) return "There was not enough time left in your budget.";
-  const sentence = reason.charAt(0).toUpperCase() + reason.slice(1);
-  return sentence.endsWith(".") ? sentence : `${sentence}.`;
 }
 
 /** Old: "Withdrawn: ...", "Newly scheduled: ...", "Now scheduled with the freed time: ...". */

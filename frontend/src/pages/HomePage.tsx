@@ -13,13 +13,13 @@ export function HomePage() {
   const selected = s.tests.find((t) => t.id === s.selectedTest);
 
   return (
-    <div className="space-y-5">
-      <header className="flex flex-wrap items-start gap-x-4 gap-y-3">
+    <div className="space-y-6">
+      <header className="flex flex-wrap items-start gap-x-4 gap-y-3 border-b border-line pb-5">
         <div className="min-w-0 flex-1">
-          <h1 className="text-lg font-semibold text-ink">Your tests</h1>
-          <p className="mt-0.5 text-sm text-ink-muted">
+          <h1 className="text-xl font-semibold tracking-tight text-ink">Home</h1>
+          <p className="mt-1 max-w-2xl text-sm text-ink-muted">
             {BRAND_NAME} marks a class's answers as drafts, finds the mistake behind each lost mark,
-            and plans your follow-up time.
+            and tells you what to do about it first.
           </p>
         </div>
         <button className="btn shrink-0" onClick={() => setView("upload")}>
@@ -31,8 +31,6 @@ export function HomePage() {
         assignments={s.tests}
         selected={s.selectedTest}
         onSelect={s.setSelectedTest}
-        minutes={s.minutes}
-        onMinutes={s.setMinutes}
         onRun={s.run}
         running={s.running}
         blockedReason={selected ? s.runBlockedReason(selected) : null}

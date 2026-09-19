@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { Mascot } from "./Mascot";
 import type { ChatMessage, ChatSource } from "../../types/chat";
 
-export const DRAFT_LINE = "These marks are drafts until you confirm them.";
+export const DRAFT_LINE = "These marks are drafts.";
 const EMPTY_SENTENCE =
   "Ask about a student, a test or your class. I read your uploaded files and the analysis.";
 const MAX_QUESTION = 1000;

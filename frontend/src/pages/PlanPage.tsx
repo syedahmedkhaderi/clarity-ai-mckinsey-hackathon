@@ -1,14 +1,8 @@
-import { useState } from "react";
 import { ActionCard, ChangeList, FeedbackChecks } from "../components/InterventionPlan";
-import { TimeBudgetBar } from "../components/charts/TimeBudgetBar";
-import { Collapsible } from "../components/ui/Collapsible";
 import { EmptyState } from "../components/ui/EmptyState";
-import { Panel } from "../components/ui/Panel";
-import { Tag } from "../components/ui/Tag";
 import { StudentNotes } from "../features/email/StudentNotes";
 import { useAppView } from "../hooks/useAppView";
 import { useSession } from "../hooks/useSession";
-import { STATUS_LABELS, scoreText } from "../lib/format";
 import type { BatchResult, InterventionPlan, PlanChange, PlannedAction } from "../types";
 
 export function PlanPage() {
@@ -48,35 +42,29 @@ function PlanView({ batch }: { batch: BatchResult }) {
   );
 
   return (
-    <div className="space-y-6">
-      <header>
-        <h1 className="text-lg font-semibold text-ink">Action plan</h1>
-        <p className="text-sm text-ink-muted mt-0.5">
-          Use your {plan.budget_minutes} minutes on the mistakes that cost the most marks.
+    <div className="space-y-8">
+      <header className="border-b border-line pb-5">
+        <h1 className="text-xl font-semibold tracking-tight text-ink">Action plan</h1>
+        <p className="mt-1 max-w-2xl text-sm text-ink-muted">
+          Start with the mistakes that cost the most marks. Each note to a student is drafted for
+          you to read and send yourself.
         </p>
       </header>
 
       <ChangeList changes={batch.changes} />
 
-      <Panel>
-        <TimeBudgetBar
-          used={plan.minutes_used}
-          budget={plan.budget_minutes}
-          dropped={plan.dropped.reduce((sum, a) => sum + a.cost_minutes, 0)}
-        />
-      </Panel>
-
       <Planned plan={plan} changed={changed} />
-      <LeftOut plan={plan} />
-      <ConfirmMarks batch={batch} />
 
-      <div className="pt-2">
-        <StudentNotes />
-      </div>
+      <StudentNotes />
     </div>
   );
 }
 
+/**
+ * Everything the planner proposed, in priority order. Actions it placed first
+ * come first; the ones it ranked lower follow in the same list, so nothing the
+ * planner considered is hidden from the teacher.
+ */
 function Planned({
   plan,
   changed,
@@ -84,153 +72,35 @@ function Planned({
   plan: InterventionPlan;
   changed: Map<string, PlanChange["kind"]>;
 }) {
-  const { cards, feedback } = split(plan.scheduled);
+  const first = split(plan.scheduled);
+  const later = split(plan.dropped);
+  const cards = [...first.cards, ...later.cards];
+  const feedback = [...first.feedback, ...later.feedback];
   return (
-    <section>
-      <h2 className="text-sm font-semibold text-ink mb-2">Do these first</h2>
+    <section aria-labelledby="plan-first-title">
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <h2 id="plan-first-title" className="text-base font-semibold text-ink">
+          Do these first
+        </h2>
+        {cards.length > 0 && (
+          <p className="text-xs text-ink-faint">
+            {cards.length} {cards.length === 1 ? "action" : "actions"}, most important first.
+          </p>
+        )}
+      </div>
       {cards.length === 0 && feedback.length === 0 && (
-        <p className="text-sm text-ink-muted">Nothing fitted into your time.</p>
+        <p className="text-sm text-ink-muted">Nothing needs doing from this analysis.</p>
       )}
-      <div className="grid gap-3 md:grid-cols-2 items-start">
+      <div className="grid items-start gap-4 md:grid-cols-2">
         {cards.map((a, i) => (
           <ActionCard key={a.action_id} action={a} order={i + 1} changed={changed.get(a.action_id)} />
         ))}
       </div>
       {feedback.length > 0 && (
-        <div className="mt-3">
+        <div className="mt-4">
           <FeedbackChecks actions={feedback} feedback={plan.feedback} />
         </div>
       )}
     </section>
-  );
-}
-
-function LeftOut({ plan }: { plan: InterventionPlan }) {
-  if (!plan.dropped.length) return null;
-  const { cards, feedback } = split(plan.dropped);
-  const minutes = plan.dropped.reduce((sum, a) => sum + a.cost_minutes, 0);
-  return (
-    <Collapsible
-      title="Did not fit your time"
-      hint={`${plan.dropped.length} ${plan.dropped.length === 1 ? "action" : "actions"}, ${minutes} minutes`}
-    >
-      <p className="text-sm text-ink-muted">
-        There was not time for these. To fit more, raise your minutes on Home and analyse the test
-        again.
-      </p>
-      <div className="grid gap-3 md:grid-cols-2 items-start">
-        {cards.map((a) => (
-          <ActionCard key={a.action_id} action={a} dropped />
-        ))}
-      </div>
-      <FeedbackChecks actions={feedback} feedback={plan.feedback} dropped />
-    </Collapsible>
-  );
-}
-
-interface StudentMarks {
-  id: string;
-  name: string;
-  awarded: number;
-  outOf: number;
-  /** Marks held back in To review. Confirming cannot reach them. */
-  held: number;
-  confirmed: boolean;
-  /** False when every mark is held in To review, so there is nothing to confirm here. */
-  reachable: boolean;
-}
-
-/**
- * The status comes from the marks the confirm call can reach; the total comes
- * from every mark, so a student whose answer is waiting in To review still shows
- * a full score out of the right number.
- */
-function studentMarks(batch: BatchResult): StudentMarks[] {
-  const every = batch.all_marks ?? batch.marks;
-  return batch.learners.map((l) => {
-    const all = every.filter((m) => m.learner_id === l.learner_id);
-    const reachable = batch.marks.filter((m) => m.learner_id === l.learner_id);
-    return {
-      id: l.learner_id,
-      name: l.learner_name,
-      awarded: all.reduce((sum, m) => sum + m.awarded, 0),
-      outOf: all.reduce((sum, m) => sum + m.max_marks, 0),
-      held: all.length - reachable.length,
-      confirmed: reachable.length > 0 && reachable.every((m) => !m.provisional),
-      reachable: reachable.length > 0,
-    };
-  });
-}
-
-function ConfirmMarks({ batch }: { batch: BatchResult }) {
-  const { approve } = useSession();
-  const [busy, setBusy] = useState(false);
-  const rows = studentMarks(batch);
-  const waiting = rows.filter((r) => r.reachable && !r.confirmed);
-
-  const confirm = async (ids: string[]) => {
-    setBusy(true);
-    try {
-      await approve(ids);
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  return (
-    <Panel
-      title="Confirm marks"
-      subtitle="Marks stay drafts until you confirm them."
-      action={
-        <button
-          className="btn btn-primary shrink-0"
-          disabled={busy || waiting.length === 0}
-          onClick={() => confirm(waiting.map((r) => r.id))}
-        >
-          Confirm all marks
-        </button>
-      }
-      flush
-    >
-      <div className="overflow-x-auto">
-        <table>
-          <thead>
-            <tr>
-              <th>Student</th>
-              <th>Marks</th>
-              <th>Status</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr key={r.id}>
-                <td className="text-sm text-ink">{r.name}</td>
-                <td className="num text-ink-muted whitespace-nowrap">
-                  {scoreText(r.awarded)} of {scoreText(r.outOf)}
-                </td>
-                <td>
-                  <Tag tone={r.confirmed ? "neutral" : "flag"}>
-                    {r.confirmed ? STATUS_LABELS.confirmed : STATUS_LABELS.draft}
-                  </Tag>
-                  {r.held > 0 && (
-                    <span className="ml-2 text-xs text-ink-faint">
-                      {r.held === 1 ? "1 mark is" : `${r.held} marks are`} in To review
-                    </span>
-                  )}
-                </td>
-                <td className="text-right">
-                  {r.reachable && !r.confirmed && (
-                    <button className="btn btn-xs" disabled={busy} onClick={() => confirm([r.id])}>
-                      {STATUS_LABELS.confirm}
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </Panel>
   );
 }

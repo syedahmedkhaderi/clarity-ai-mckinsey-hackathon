@@ -5,10 +5,10 @@ export function ReviewPage() {
   const { batch, resolve, overrideEscalation, openCount } = useSession();
   if (!batch) return null;
   return (
-    <div className="space-y-5">
-      <header>
-        <h1 className="text-lg font-semibold text-ink">Needs your call</h1>
-        <p className="text-sm text-ink-muted mt-0.5">
+    <div className="space-y-6">
+      <header className="border-b border-line pb-5">
+        <h1 className="text-xl font-semibold tracking-tight text-ink">Needs your call</h1>
+        <p className="mt-1 max-w-2xl text-sm text-ink-muted">
           {openCount === 0
             ? "Nothing is waiting for you."
             : openCount === 1

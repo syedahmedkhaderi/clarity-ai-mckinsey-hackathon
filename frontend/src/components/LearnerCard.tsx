@@ -64,7 +64,7 @@ export function LearnerCard({
             <span className="text-sm text-ink tabular-nums">
               {scoreText(total.awarded)} of {scoreText(total.outOf)}
             </span>
-            <span className="text-2xs text-ink-faint">{total.draft ? "Draft" : "Confirmed"}</span>
+            <span className="text-2xs text-ink-faint">{total.draft ? "Draft" : "Final"}</span>
           </div>
         ) : (
           <span className="text-xs text-ink-faint">No marks</span>

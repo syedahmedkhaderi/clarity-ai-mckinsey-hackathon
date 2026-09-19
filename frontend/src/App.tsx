@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { OverrideDialog } from "./components/OverrideDialog";
-import { ChatDock } from "./features/chat/ChatDock";
 import { AppViewContext, useAppView, useAppViewState, type ViewKey } from "./hooks/useAppView";
 import { SessionProvider, useSession } from "./hooks/useSession";
 import { ClassPage } from "./pages/ClassPage";
@@ -55,8 +54,6 @@ function Body() {
           PAGES[view]()
         )}
       </AppShell>
-
-      <ChatDock />
 
       {session.overrideTarget && (
         <OverrideDialog

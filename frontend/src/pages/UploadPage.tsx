@@ -18,11 +18,11 @@ export function UploadPage() {
   });
 
   return (
-    <div className="space-y-5">
-      <header className="flex flex-wrap items-start gap-4">
+    <div className="space-y-6">
+      <header className="flex flex-wrap items-start gap-4 border-b border-line pb-5">
         <div className="min-w-0 flex-1 basis-64">
-          <h1 className="text-lg font-semibold text-ink">Add a test</h1>
-          <p className="text-sm text-ink-muted mt-0.5">
+          <h1 className="text-xl font-semibold tracking-tight text-ink">Add a test</h1>
+          <p className="mt-1 max-w-2xl text-sm text-ink-muted">
             Add your own test and your students' answers in four short steps. Nothing is marked or
             sent to anyone until you say so.
           </p>

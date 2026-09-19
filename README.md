@@ -79,8 +79,9 @@ human approves it. That is a product requirement, not a disclaimer.
 This sequence is reproducible from a clean `./setup.sh` and is guarded by
 `tests/test_override_replan.py`.
 
-1. **Run and trace.** Pick "Assessment 3", leave the budget at 120 minutes, press
-   Run. The pipeline animates through intake, marker, diagnostician, cohort
+1. **Run and trace.** Choose "Test 3" from the test list and press Analyse this
+   test. The planner runs against a fixed 120 minute budget in code; the
+   facilitator does not set it and the UI never mentions it. The pipeline animates through intake, marker, diagnostician, cohort
    analyst and planner. The reviewer gate appears as a dashed branch off the
    line, because that is what it is in the code.
 
@@ -109,10 +110,12 @@ This sequence is reproducible from a clean `./setup.sh` and is guarded by
    percent threshold. It is labelled a teaching problem, not five individual
    problems.
 
-5. **Intervention plan.** The full budget scheduled: a group re-teach on M01,
-   restart points for the three learners who returned after a gap, peer pairings
-   and feedback reviews. Below it, everything that did not fit, each with its
-   severity and the reason "budget exhausted".
+5. **Action plan.** One ordered list, most important first: a group re-teach on
+   M01, restart points for the three learners who returned after a gap, peer
+   pairings and feedback reviews. Actions the planner ranked below its budget
+   follow in the same list rather than in a separate "did not fit" section; the
+   API response still carries them under `plan.dropped` with severity and the
+   reason "budget exhausted".
 
    The model proposes and scores the actions, but three things follow from rules
    and it cannot override them: every learner gets a drafted feedback note, every
@@ -120,16 +123,17 @@ This sequence is reproducible from a clean `./setup.sh` and is guarded by
    only if** the cohort analyst put that node above the threshold. Otherwise the
    plan could contradict the cohort view sitting next to it.
 
-6. **Review queue.** The language case, the ambiguous diagnoses where two
-   readings were too close to separate, and the high-severity actions that did
-   not fit the budget.
+6. **Review queue.** The language case and the ambiguous diagnoses where two
+   readings were too close to separate. `BUDGET_OVERFLOW` escalations are still
+   raised by the reviewer and returned by the API, but the frontend drops them
+   because the time box is not shown.
 
 7. **The override.** Open Kwame A. (L06) on A3Q4, press Override, choose "Not a
    misconception at all", give a reason. LOOP re-enters the graph at the cohort
    analyst. M01 falls to 4 of 12, 33 percent, below the threshold. It is no
    longer a teaching problem, so the group re-teach is **withdrawn**, and the
-   freed 30 minutes are reallocated to work that could not fit before. The plan
-   view highlights every change.
+   work it had ranked above moves up the list. The plan view highlights every
+   change.
 
    Verified on three consecutive live runs: 5 of 12 and a group session before
    the override, 4 of 12 and none after it, budget refilled each time.
@@ -236,7 +240,7 @@ connector is the integration work. It is not a rewrite.
 
 ## Divergences from the plan
 
-`CODEX_BUILD_PLAN.md` is the original spec. Two deliberate divergences:
+`CODEX_BUILD_PLAN.md` is the original spec. Three deliberate divergences:
 
 1. **The demo numbers.** The plan's section 8 describes M01 held by 7 of 12
    learners, dropping to 6 of 12 after an override and thereby falling below the
@@ -251,6 +255,12 @@ connector is the integration work. It is not a rewrite.
    try/except-with-fallback requirement enforceable in one place rather than
    five. The second is that fallback, and is what lets the system run with no API
    key.
+
+3. **The facilitator time budget is not a UI control.** The planner still fits a
+   fixed budget in code and records what it dropped (invariant 8), and the
+   approve endpoint still exists (invariant 1), but the frontend shows neither a
+   time box nor a confirm-marks table. Facilitators asked for one ordered list
+   of things to do and the drafted notes to students, nothing about minutes.
 
 ## Working on it
 

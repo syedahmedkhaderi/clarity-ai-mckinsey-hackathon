@@ -71,9 +71,9 @@ export function ChatDock() {
           onClose={() => setOpen(false)}
         />
       )}
-      <div className="fixed bottom-4 right-4 z-40 flex items-center gap-2">
+      <div className="flex items-center gap-2 md:fixed md:bottom-4 md:right-4 md:z-40">
         {showTag && !open && (
-          <span className="rounded border border-line-strong bg-surface px-2 py-1 text-xs text-ink">
+          <span className="hidden rounded border border-line-strong bg-surface px-2 py-1 text-xs text-ink md:inline">
             Ask me
           </span>
         )}
@@ -83,7 +83,7 @@ export function ChatDock() {
           aria-expanded={open}
           aria-controls="chat-panel"
           onClick={toggle}
-          className="grid h-14 w-14 place-items-center rounded-full border border-line-strong bg-surface hover:bg-surface-sunken focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-agent"
+          className="grid h-12 w-12 place-items-center rounded-full border border-line-strong bg-surface hover:bg-surface-sunken focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-agent md:h-14 md:w-14"
         >
           <Mascot size={44} />
         </button>

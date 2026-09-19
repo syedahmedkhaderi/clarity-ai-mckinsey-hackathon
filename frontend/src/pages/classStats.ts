@@ -1,4 +1,4 @@
-import type { BatchResult, InterventionPlan, Mark, NodePattern } from "../types";
+import type { BatchResult, Mark, NodePattern } from "../types";
 
 /**
  * Sums and shares for the Home and Class pages. Everything is worked out from
@@ -69,10 +69,6 @@ export function namedPatterns(nodes: NodePattern[]): NodePattern[] {
   return nodes
     .filter((n) => n.kind !== "insufficient_data" && n.count > 0)
     .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
-}
-
-export function droppedMinutes(plan: InterventionPlan | null): number {
-  return plan ? plan.dropped.reduce((a, d) => a + d.cost_minutes, 0) : 0;
 }
 
 export function plural(n: number, one: string, many = `${one}s`): string {

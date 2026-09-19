@@ -4,13 +4,11 @@ import { Tag } from "../components/ui/Tag";
 import { PatternBars } from "../components/charts/PatternBars";
 import { QuestionBars } from "../components/charts/QuestionBars";
 import { ScoreDistribution } from "../components/charts/ScoreDistribution";
-import { TimeBudgetDonut } from "../components/charts/TimeBudgetDonut";
 import { useAppView } from "../hooks/useAppView";
 import { useSession } from "../hooks/useSession";
 import { analysisLabel, pct } from "../lib/format";
 import type { BatchResult } from "../types";
 import {
-  droppedMinutes,
   marksLost,
   namedPatterns,
   plural,
@@ -36,12 +34,12 @@ export function HomeSummary({ batch }: { batch: BatchResult }) {
   const plan = batch.plan;
 
   return (
-    <section className="space-y-5" aria-label="Analysis summary">
-      <div>
+    <section className="space-y-6" aria-label="Analysis summary">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <h2 className="text-base font-semibold text-ink">
           {analysisLabel(s.testName(batch.assessment_id), batch.trace[0]?.timestamp)}
         </h2>
-        <p className="text-xs text-ink-muted">Every mark is a draft until you confirm it.</p>
+        <p className="text-xs text-ink-faint">Every mark shown is a draft.</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -68,14 +66,9 @@ export function HomeSummary({ batch }: { batch: BatchResult }) {
         />
       </div>
 
-      <NextSteps
-        planned={plan ? plan.scheduled.length : 0}
-        used={plan?.minutes_used ?? 0}
-        budget={plan?.budget_minutes ?? 0}
-        open={s.openCount}
-      />
+      <NextSteps planned={plan ? plan.scheduled.length : 0} open={s.openCount} />
 
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
         <Panel
           title="How the class scored"
           subtitle={
@@ -98,24 +91,9 @@ export function HomeSummary({ batch }: { batch: BatchResult }) {
           <QuestionBars rows={questions} />
         </Panel>
 
-        <PatternPanel patterns={patterns} threshold={s.sharedThreshold} />
-
-        {plan && (
-          <Panel
-            title="Your follow-up time"
-            subtitle={
-              droppedMinutes(plan) > 0
-                ? `${plan.minutes_used} of ${plan.budget_minutes} minutes planned. The rest did not fit.`
-                : `${plan.minutes_used} of ${plan.budget_minutes} minutes planned.`
-            }
-          >
-            <TimeBudgetDonut
-              used={plan.minutes_used}
-              budget={plan.budget_minutes}
-              dropped={droppedMinutes(plan)}
-            />
-          </Panel>
-        )}
+        <div className="lg:col-span-2">
+          <PatternPanel patterns={patterns} threshold={s.sharedThreshold} />
+        </div>
       </div>
     </section>
   );
@@ -164,17 +142,7 @@ function PatternPanel({
   );
 }
 
-function NextSteps({
-  planned,
-  used,
-  budget,
-  open,
-}: {
-  planned: number;
-  used: number;
-  budget: number;
-  open: number;
-}) {
+function NextSteps({ planned, open }: { planned: number; open: number }) {
   const { setView } = useAppView();
   return (
     <Panel title="What to do next" flush>
@@ -183,8 +151,9 @@ function NextSteps({
           <div className="min-w-0 flex-1">
             <div className="text-sm text-ink">Look at your action plan</div>
             <div className="text-xs text-ink-muted">
-              {plural(planned, "thing")} planned for <span className="num">{used}</span> of{" "}
-              <span className="num">{budget}</span> minutes.
+              {planned > 0
+                ? `${plural(planned, "thing")} to do, in the order that will win back the most marks.`
+                : "Nothing to plan from this analysis."}
             </div>
           </div>
           <button className="btn btn-xs" onClick={() => setView("plan")}>

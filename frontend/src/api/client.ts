@@ -36,8 +36,6 @@ export const api = {
     batchId: string,
     body: { type: string; target_id: string; new_value?: string | null; reason: string },
   ) => post<BatchResult>(`/batch/${batchId}/override`, body),
-  approve: (batchId: string, item_ids: string[]) =>
-    post<{ approved: number }>(`/batch/${batchId}/approve`, { item_ids }),
   resolve: (batchId: string, escalation_id: string, resolution: string) =>
     post<{ resolved: boolean }>(`/batch/${batchId}/resolve`, { escalation_id, resolution }),
 };

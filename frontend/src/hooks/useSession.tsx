@@ -37,18 +37,30 @@ const STAGE_LABEL: Record<string, string> = {
   marker: "Marking the answers",
   diagnostician: "Finding mistakes",
   cohort_analyst: "Building the class picture",
-  planner: "Planning your time",
+  planner: "Planning what to do next",
 };
 const PIPELINE = ["intake", "marker", "diagnostician", "cohort_analyst", "planner"];
+
+// The planner still fits a fixed budget in code, but the teacher no longer sets
+// it. The plan page lists everything in priority order instead of a time box.
+const PLANNER_MINUTES = 120;
+
+/**
+ * Escalations raised only because an action fell outside the planner's budget
+ * are dropped here, so no page mentions a time box the teacher cannot see.
+ */
+function withoutBudgetEscalations(result: BatchResult): BatchResult {
+  return {
+    ...result,
+    escalations: result.escalations.filter((e) => e.reason_code !== "BUDGET_OVERFLOW"),
+  };
+}
 
 export interface Session {
   health: Health | null;
   tests: Assignment[];
   selectedTest: string;
   setSelectedTest: (id: string) => void;
-  minutes: number;
-  setMinutes: (m: number) => void;
-
   batch: BatchResult | null;
   batchId: string | null;
   /** The screen is showing the seeded example, not a run the teacher started. */
@@ -65,8 +77,6 @@ export interface Session {
   /** Gives up on a run that will not finish and clears the "Working" state. */
   cancelRun: () => void;
 
-  /** Confirms every mark the given students have on the current test. */
-  approve: (learnerIds: string[]) => Promise<void>;
   resolve: (escalationId: string) => Promise<void>;
 
   profiles: Record<string, ProfileEntry[]>;
@@ -122,7 +132,6 @@ async function loadTests(): Promise<Assignment[]> {
 export function SessionProvider({ children }: { children: ReactNode }) {
   const qc = useQueryClient();
   const [selectedTest, setSelectedTest] = useState("A3");
-  const [minutes, setMinutes] = useState(120);
   const [batchId, setBatchId] = useState<string | null>(null);
   const [trace, setTrace] = useState<TraceEvent[]>([]);
   const [status, setStatus] = useState("idle");
@@ -151,7 +160,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
   const loadBatch = useCallback(
     async (id: string) => {
-      const result = await api.batch(id);
+      const result = withoutBudgetEscalations(await api.batch(id));
       setBatch(result);
       const entries = await Promise.all(
         result.learners.map(async (l) => {
@@ -297,7 +306,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     setElapsedMs(0);
     setLastEventAt(Date.now());
     try {
-      const { batch_id } = await api.runBatch(selectedTest, test?.class_id ?? "C1", minutes);
+      const { batch_id } = await api.runBatch(selectedTest, test?.class_id ?? "C1", PLANNER_MINUTES);
       setBatchId(batch_id);
     } catch (e) {
       setError(describe(e));
@@ -313,20 +322,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     setStatus("idle");
     setBatchId(null);
     setError(null);
-  };
-
-  const approve = async (learnerIds: string[]) => {
-    if (!batchId || !batch) return;
-    const wanted = new Set(learnerIds);
-    const ids = batch.marks
-      .filter((m) => wanted.has(m.learner_id))
-      .map((m) => `${m.learner_id}:${m.question_id}`);
-    try {
-      await api.approve(batchId, ids);
-      await loadBatch(batchId);
-    } catch (e) {
-      setError(describe(e));
-    }
   };
 
   const resolve = async (escalationId: string) => {
@@ -353,7 +348,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         new_value: newValue,
         reason,
       });
-      setBatch(result);
+      setBatch(withoutBudgetEscalations(result));
       setTrace(result.trace);
       setOverrideTarget(null);
       return true;
@@ -416,8 +411,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     tests: testList,
     selectedTest,
     setSelectedTest,
-    minutes,
-    setMinutes,
     batch,
     batchId,
     preloaded,
@@ -429,7 +422,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     stalledMs,
     run,
     cancelRun,
-    approve,
     resolve,
     profiles,
     taxonomy: taxonomyData,

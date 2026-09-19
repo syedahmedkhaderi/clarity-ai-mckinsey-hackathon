@@ -155,9 +155,9 @@ function StudentsView({ batch }: { batch: BatchResult }) {
     <div className="grid gap-5 lg:grid-cols-[minmax(0,25rem)_minmax(0,1fr)] lg:items-start">
       <Panel
         title="Students"
-        subtitle="Totals stay drafts until you confirm them."
+        subtitle="Every total is a draft. Choose a student to see their work."
         flush
-        className="lg:sticky lg:top-6"
+        className="lg:sticky lg:top-7"
       >
         <div className="max-h-[60vh] lg:max-h-[calc(100vh-8rem)] overflow-y-auto border-t border-line">
           {batch.learners.map((l) => {

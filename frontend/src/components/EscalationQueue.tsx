@@ -264,7 +264,7 @@ function whyFor(
   if (e.reason_code === "BUDGET_OVERFLOW") {
     const action = batch?.plan?.dropped.find((a) => a.title === e.subject);
     if (!action) return null;
-    return `${severityLabel(action.severity, highFloor)}, but it needs ${action.cost_minutes} minutes and there was no time left.`;
+    return `${severityLabel(action.severity, highFloor)}, but the planner ranked other work above it.`;
   }
   return null;
 }
@@ -291,7 +291,7 @@ function choiceFor(
     case "SPARSE_HISTORY":
       return "Treat it as a mistake that keeps happening, and plan for that.";
     case "BUDGET_OVERFLOW":
-      return "Leave it out of this plan. Raise your minutes on Home to fit it in.";
+      return "Keep it lower down the action plan.";
   }
   return plain(e.would_have_decided);
 }

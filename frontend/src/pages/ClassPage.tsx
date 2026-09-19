@@ -48,10 +48,10 @@ function ClassView({ batch }: { batch: BatchResult }) {
   };
 
   return (
-    <div className="space-y-5">
-      <header>
-        <h1 className="text-lg font-semibold text-ink">Class</h1>
-        <p className="mt-0.5 text-sm text-ink-muted">
+    <div className="space-y-6">
+      <header className="border-b border-line pb-5">
+        <h1 className="text-xl font-semibold tracking-tight text-ink">Class</h1>
+        <p className="mt-1 max-w-2xl text-sm text-ink-muted">
           {plural(patterns.cohort_size, "student")} took {s.testName(patterns.assessment_id)}. This
           page shows whether a mistake belongs to one student or to the whole class.
         </p>
@@ -334,7 +334,7 @@ function TrendBody({
       />
       {draft && (
         <p className="mt-3 text-2xs text-ink-faint">
-          Averages include draft marks until you confirm them.
+          Averages include every draft mark.
         </p>
       )}
     </div>
