@@ -227,7 +227,7 @@ it must not look generated.
   the offline recovery rate circular in a way that is invisible from the outside.
 - `data/personas.json` and the seed in `data/generator.py` are tuned so the demo
   scenario is reproducible. Changing either will move the numbers in the README's
-  demo script. Re-verify the scenario after any change:
+  "One correction changes the plan" feature. Re-verify the scenario after any change:
   M01 must land on exactly 5 of 12 learners on A3, which is above the 40 percent
   shared-misconception threshold, so that one override drops it to 4 of 12 and
   withdraws the group re-teach.
@@ -256,6 +256,6 @@ Before you say a change is finished:
    `.venv/bin/python eval/evaluate.py` was re-run and the language separation gap
    did not widen.
 5. If you touched the state shape, the fixture was rebuilt.
-6. `./start.sh` comes up and the demo scenario in the README still runs.
+6. `./start.sh` comes up and the 5 of 12 to 4 of 12 override scenario still runs.
 
 State plainly what you did not do. Do not report a partial change as complete.
