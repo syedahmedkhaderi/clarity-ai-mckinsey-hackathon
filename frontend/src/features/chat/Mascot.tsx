@@ -20,7 +20,7 @@ export function Mascot({ size = 48, animated = true }: { size?: number; animated
       height={size}
       viewBox="0 0 64 64"
       fill="none"
-      stroke="#16181d"
+      stroke="#151a22"
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -35,15 +35,15 @@ export function Mascot({ size = 48, animated = true }: { size?: number; animated
         <circle cx="11" cy="44" r="2" fill="#ffffff" />
         <circle cx="53" cy="21" r="2" fill="#ffffff" />
         {/* eraser and band */}
-        <rect x="22" y="4" width="20" height="8" rx="3" fill="#3b4ce0" />
+        <rect x="22" y="4" width="20" height="8" rx="3" fill="#1d3d6b" />
         <rect x="20" y="11" width="24" height="5" fill="#ffffff" />
         {/* body and sharpened end */}
         <path d="M20 16 H44 V44 L32 59 L20 44 Z" fill="#ffffff" />
-        <path d="M27.5 53 L32 59 L36.5 53" fill="#16181d" />
+        <path d="M27.5 53 L32 59 L36.5 53" fill="#151a22" />
         <path d="M20 44 H44" />
         {/* face */}
-        <circle className="pencil-eye" cx="27" cy="27" r="1.9" fill="#16181d" stroke="none" />
-        <circle className="pencil-eye" cx="37" cy="27" r="1.9" fill="#16181d" stroke="none" />
+        <circle className="pencil-eye" cx="27" cy="27" r="1.9" fill="#151a22" stroke="none" />
+        <circle className="pencil-eye" cx="37" cy="27" r="1.9" fill="#151a22" stroke="none" />
         <path d="M28 34 Q32 38 36 34" />
       </g>
     </svg>

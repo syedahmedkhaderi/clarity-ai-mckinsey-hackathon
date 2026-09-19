@@ -4,15 +4,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: { DEFAULT: "#16181d", muted: "#5b6270", faint: "#8a919e" },
-        line: { DEFAULT: "#e3e5ea", strong: "#cbd0d8" },
-        surface: { DEFAULT: "#ffffff", sunken: "#f6f7f9", raised: "#fbfbfc" },
-        // The single accent. Used only for agent activity and agent decisions.
-        agent: { DEFAULT: "#3b4ce0", soft: "#eef0fd", line: "#c3c9f6" },
-        flag: { DEFAULT: "#a8621b", soft: "#fdf3e7", line: "#f0d7b5" },
+        ink: { DEFAULT: "#151a22", muted: "#525b68", faint: "#5f6875" },
+        line: { DEFAULT: "#d9dee6", strong: "#b8c0cc" },
+        surface: { DEFAULT: "#ffffff", sunken: "#f3f5f8", raised: "#f8f9fb" },
+        // The accent. Navy, so the LOOP panels read as one tool against the plain shell.
+        // Used for agent activity, agent decisions and the primary action on a page.
+        agent: { DEFAULT: "#1d3d6b", soft: "#e7edf6", line: "#c3d0e4" },
+        // Things the agent handed to a human.
+        flag: { DEFAULT: "#8d4d0b", soft: "#fbf0e2", line: "#e9cfa6" },
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+        sans: ["IBM Plex Sans", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       fontSize: {

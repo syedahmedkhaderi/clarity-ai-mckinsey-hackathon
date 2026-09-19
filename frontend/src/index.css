@@ -26,10 +26,10 @@
 
 @layer components {
   .panel {
-    @apply bg-surface border border-line rounded-md;
+    @apply bg-surface border border-line rounded;
   }
   .panel-head {
-    @apply px-4 py-3 border-b border-line bg-surface-raised rounded-t-md
+    @apply px-4 py-3 border-b border-line bg-surface rounded-t
            flex items-baseline justify-between gap-3;
   }
   .panel-title {
@@ -44,7 +44,7 @@
            hover:bg-surface-sunken disabled:opacity-40 disabled:cursor-not-allowed;
   }
   .btn-primary {
-    @apply border-agent bg-agent text-white hover:bg-[#3242c9];
+    @apply border-agent bg-agent text-white hover:bg-[#152d50];
   }
   .btn-xs {
     @apply px-2 py-1 text-xs;

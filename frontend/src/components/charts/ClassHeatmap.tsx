@@ -190,7 +190,7 @@ function Cell({
           className={clsx(
             "block h-7 w-full rounded-[3px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ink",
             again
-              ? "bg-agent hover:bg-[#3242c9]"
+              ? "bg-agent hover:bg-[#152d50]"
               : "border border-agent-line bg-agent-soft hover:bg-agent-line",
             chosen && "ring-2 ring-ink ring-offset-1",
           )}
