@@ -23,7 +23,8 @@ export function Mascot({
   onDark?: boolean;
 }) {
   const limb = onDark ? "#ffffff" : "#16151f";
-  const eraser = onDark ? "#c3bdfc" : "#5a4bd6";
+  // On the violet helper button a violet eraser would vanish, so it takes the palette's pink.
+  const eraser = onDark ? "#fd79a8" : "#5a4bd6";
   return (
     <svg
       width={size}

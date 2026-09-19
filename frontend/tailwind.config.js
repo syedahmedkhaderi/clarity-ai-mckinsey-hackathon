@@ -13,7 +13,7 @@ export default {
         // The LMS sidebar. A cool institutional grey, one step darker than the page
         // ground, so the portal's own navigation reads apart from LOOP's white rails.
         shell: { DEFAULT: "#e8ecf1", line: "#d0d7e0" },
-        // The top bar of the portal, and the helper button that sits on the same ground.
+        // The top bar of the portal.
         bar: { DEFAULT: "#22262e", hover: "#343a45" },
         // The accent, a violet built on #6c5ce7. DEFAULT is a step deeper so white text
         // on it and violet text on `soft` both stay readable at small sizes. Used for
