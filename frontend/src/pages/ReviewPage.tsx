@@ -4,6 +4,7 @@ import { useSession } from "../hooks/useSession";
 import { REASON_LABELS } from "../lib/format";
 import { PageHeader, RailLink, RailSection, RailStat, WorkSurface } from "../shell/WorkSurface";
 import type { ReasonCode } from "../types";
+import { BRAND_NAME } from "../lib/brand";
 
 export function ReviewPage() {
   const { batch, resolve, overrideEscalation, openCount } = useSession();
@@ -20,7 +21,7 @@ export function ReviewPage() {
         <RailStat label="Decided" value={batch.escalations.length - open.length} />
       </RailSection>
       {byReason.size > 0 && (
-        <RailSection title="Why Markwise stopped">
+        <RailSection title={`Why ${BRAND_NAME} stopped`}>
           {[...byReason.entries()].map(([code, n]) => (
             <RailStat key={code} label={REASON_LABELS[code]} value={n} />
           ))}
@@ -34,7 +35,7 @@ export function ReviewPage() {
         />
       </RailSection>
       <p className="mt-auto border-t border-line pt-4 text-2xs leading-4 text-ink-muted">
-        Markwise never sets a mark that counts. It hands you what it is not sure about.
+        {BRAND_NAME} never sets a mark that counts. It hands you what it is not sure about.
       </p>
     </>
   );

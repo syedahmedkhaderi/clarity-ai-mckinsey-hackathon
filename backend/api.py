@@ -32,7 +32,7 @@ async def lifespan(_: FastAPI):
     yield
 
 
-app = FastAPI(title="LOOP", version="1.0", lifespan=lifespan,
+app = FastAPI(title="Clarity AI", version="1.0", lifespan=lifespan,
               description="Agentic marking, diagnosis and intervention planning for "
                           "Meridian Foundation learning centres.")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"],

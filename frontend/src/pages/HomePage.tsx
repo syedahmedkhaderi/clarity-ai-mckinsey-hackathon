@@ -10,6 +10,7 @@ import { PageHeader, RailLink, RailSection, RailStat, WorkSurface } from "../she
 import type { BatchResult } from "../types";
 import { plural } from "./classStats";
 import { MistakesTab, OverviewTab, QuestionsTab, homeStats, type HomeStats } from "./HomeSummary";
+import { BRAND_NAME } from "../lib/brand";
 
 type Tab = "overview" | "questions" | "mistakes" | "how";
 
@@ -68,7 +69,7 @@ function Header({ batch, tab, onTab }: { batch: BatchResult; tab: Tab; onTab: (t
       subtitle={
         s.preloaded
           ? `${label}. A worked example from a practice class, so you can look around. Every mark is a draft.`
-          : `${label}. Every mark is a draft until you approve it.`
+          : `${label}. Every mark is a draft.`
       }
       tabs={TABS}
       active={tab}
@@ -150,7 +151,7 @@ function Rail({ stats }: { stats: HomeStats | null }) {
               }
               hint={
                 s.openCount > 0
-                  ? "Markwise was not sure enough to decide alone."
+                  ? `${BRAND_NAME} was not sure enough to decide alone.`
                   : "It decided everything it was sure about."
               }
               onClick={() => setView("review")}
@@ -171,7 +172,7 @@ function Rail({ stats }: { stats: HomeStats | null }) {
           Add a test
         </button>
         <p className="text-2xs leading-4 text-ink-muted">
-          Every mark shown is a draft. Nothing counts until you approve it.
+          Every mark shown is a draft. {BRAND_NAME} never sets a final mark on its own.
         </p>
       </div>
     </>

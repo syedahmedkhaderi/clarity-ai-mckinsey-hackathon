@@ -135,7 +135,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   key={section}
                   type="button"
                   disabled
-                  title="This part of the course is outside the LOOP demo"
+                  title={`This part of the course is outside the ${BRAND_NAME} demo`}
                   className="flex w-full cursor-not-allowed items-center rounded-sm border-l-2 border-transparent px-2.5 py-1.5 text-left text-sm text-ink-faint"
                 >
                   {section}
@@ -146,9 +146,9 @@ export function AppShell({ children }: { children: ReactNode }) {
 
           <div className="px-2 py-3 md:px-3 md:py-4">
             <p className="px-2 pb-1.5 text-2xs font-medium uppercase tracking-wide text-agent">
-              LOOP analysis
+              {BRAND_NAME}
             </p>
-            <nav aria-label="LOOP analysis" className="grid grid-cols-2 gap-1 md:block md:space-y-0.5">
+            <nav aria-label={BRAND_NAME} className="grid grid-cols-2 gap-1 md:block md:space-y-0.5">
               {NAV.map((item) => (
                 <button
                   key={item.key}
@@ -190,7 +190,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <div className="panel max-w-2xl p-6 md:p-8">
                 <p className="text-2xs font-medium uppercase tracking-wide text-ink-faint">Analysis unavailable</p>
                 <h1 className="mt-2 text-lg font-semibold tracking-tight text-ink">
-                  This course is not connected to LOOP yet.
+                  This course is not connected to {BRAND_NAME} yet.
                 </h1>
                 <p className="mt-2 max-w-xl text-sm leading-6 text-ink-muted">
                   Choose Mathematics to return to the assessment analysis.
