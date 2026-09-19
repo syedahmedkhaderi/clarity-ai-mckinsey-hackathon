@@ -1,0 +1,1105 @@
+<!--
+Variant 3, One thing at a time. How this variant achieves separation:
+1. Every page is a numbered walk of steps; only the current step is on screen, so there is one place to look.
+2. A white step list on the left names the steps, marks the current one in navy and the visited ones as Seen.
+3. The header carries the page title, one sentence of purpose, one sentence of figures and a Step n of N progress rule.
+4. Navy is spent only on Markwise's decisions and the one primary action; rust only on what was handed to the teacher.
+5. Every last step hands off to the page that logically follows, so the walk never ends on a dead control.
+-->
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Markwise, LOOP analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #151a22;
+  --ink-muted: #525b68;
+  --ink-faint: #5f6875;
+  --line: #d9dee6;
+  --line-strong: #b8c0cc;
+  --surface: #ffffff;
+  --raised: #f8f9fb;
+  --sunken: #f3f5f8;
+  --shell: #e8ecf1;
+  --shell-line: #d0d7e0;
+  --agent: #1d3d6b;
+  --agent-soft: #e7edf6;
+  --agent-line: #c3d0e4;
+  --flag: #8a3b12;
+  --flag-soft: #faf1ec;
+  --flag-line: #d9b8a5;
+  --bar: #525b68;
+  --bar-light: #b8c0cc;
+  --sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--ink);
+  background: var(--sunken);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, p { margin: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+a { color: inherit; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.muted { color: var(--ink-muted); }
+.sm { font-size: 13px; line-height: 20px; }
+.xs { font-size: 12px; line-height: 18px; }
+:focus-visible { outline: 2px solid var(--agent); outline-offset: 2px; }
+[hidden] { display: none !important; }
+
+/* The LMS shell. Plain and institutional, as the facilitator already knows it. */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  height: 56px; background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+}
+.topbar .brand { display: flex; gap: 12px; align-items: baseline; }
+.topbar .brand strong { font-weight: 600; }
+.topbar .who { display: flex; align-items: center; gap: 12px; }
+.topbar .avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--shell); border: 1px solid var(--shell-line);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 13px;
+}
+.frame { display: flex; min-height: calc(100vh - 56px); }
+.sidebar {
+  width: 276px; flex: 0 0 276px;
+  background: var(--shell); border-right: 1px solid var(--shell-line);
+  position: sticky; top: 56px; height: calc(100vh - 56px); overflow-y: auto;
+  padding: 20px 0 24px;
+}
+.sidebar .block { padding: 0 20px; }
+.sidebar .lms-name { font-weight: 600; margin-bottom: 16px; }
+.label {
+  font-size: 11px; line-height: 16px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-faint); font-weight: 500; margin: 12px 0 6px;
+}
+.sidebar select {
+  width: 100%; font: inherit; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line-strong); border-radius: 4px;
+  padding: 5px 8px; margin-bottom: 8px;
+}
+.sidebar .course-line { font-size: 13px; line-height: 20px; }
+.sidebar .course-meta { font-size: 13px; line-height: 20px; color: var(--ink-muted); display: flex; gap: 16px; }
+.sidebar nav { display: flex; flex-direction: column; }
+.sidebar nav a {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 20px 6px 17px; text-decoration: none;
+  border-left: 3px solid transparent; font-size: 14px;
+}
+.sidebar nav a:hover { background: rgba(255,255,255,0.5); }
+.sidebar nav a[aria-current="page"] { background: var(--surface); border-left-color: var(--agent); font-weight: 500; }
+.sidebar hr { border: 0; border-top: 1px solid var(--shell-line); margin: 16px 20px; }
+.badge-flag {
+  display: inline-block; min-width: 20px; padding: 0 6px;
+  font-size: 11px; line-height: 18px; text-align: center; font-weight: 600;
+  color: #fff; background: var(--flag); border-radius: 4px;
+}
+
+/* The work surface. One header, one step list, one panel. */
+main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.page-head { background: var(--surface); border-bottom: 1px solid var(--line); }
+.page-head .inner { padding: 24px 40px 16px; }
+.page-head h1 { font-size: 24px; line-height: 32px; font-weight: 600; }
+.page-head .purpose { margin-top: 6px; color: var(--ink-muted); }
+.page-head .context { margin-top: 2px; }
+.page-head .context b { font-weight: 600; }
+.page-head .example {
+  display: inline-block; margin-top: 10px; padding: 1px 8px;
+  font-size: 12px; line-height: 18px; color: var(--ink-muted);
+  border: 1px solid var(--line); border-radius: 4px; background: var(--raised);
+}
+.page-head .stepline { padding: 0 40px 8px; font-size: 12px; line-height: 18px; color: var(--ink-muted); }
+.progress { height: 2px; background: var(--line); }
+.progress > span { display: block; height: 2px; background: var(--agent); transition: width 200ms ease; }
+
+.work { display: flex; flex: 1; align-items: stretch; }
+.steps {
+  width: 240px; flex: 0 0 240px; background: var(--surface);
+  border-right: 1px solid var(--line); padding: 16px 0;
+  position: sticky; top: 56px; align-self: flex-start;
+}
+.steps .label { padding: 0 20px; margin-top: 0; }
+.steps ol { list-style: none; margin: 0; padding: 0; }
+.steps li button {
+  width: 100%; text-align: left; background: none; border: 0;
+  border-left: 3px solid transparent;
+  padding: 8px 16px 8px 17px; display: grid; grid-template-columns: 20px 1fr auto; gap: 8px;
+  align-items: start; color: var(--ink-muted);
+}
+.steps li button:hover { background: var(--raised); }
+.steps li button .n { font-family: var(--mono); font-size: 13px; line-height: 22px; }
+.steps li button .name { font-size: 14px; line-height: 22px; }
+.steps li button .sub { display: block; font-size: 12px; line-height: 18px; color: var(--ink-faint); }
+.steps li button .seen { font-size: 11px; line-height: 22px; color: var(--ink-faint); }
+.steps li button[aria-current="step"] { border-left-color: var(--agent); color: var(--agent); background: var(--raised); }
+.steps li button[aria-current="step"] .name { font-weight: 600; }
+.steps li button[aria-current="step"] .seen { visibility: hidden; }
+
+.content { flex: 1; min-width: 0; padding: 32px 40px 48px; }
+.panel {
+  max-width: 860px; background: var(--surface);
+  border: 1px solid var(--line); border-radius: 4px;
+}
+.step-body { padding: 40px; }
+.step-body > h2 { font-size: 18px; line-height: 26px; font-weight: 600; margin-bottom: 8px; }
+.step-body > .lead { color: var(--ink-muted); margin-bottom: 24px; }
+.step-body p + p { margin-top: 12px; }
+.step-foot {
+  border-top: 1px solid var(--line); padding: 16px 40px;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+}
+
+/* Buttons. Navy is the one primary action; rust is an outline pointing at what is waiting. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 7px 14px; border-radius: 4px; text-decoration: none;
+  border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+  font-weight: 500; line-height: 20px;
+}
+.btn:hover { background: var(--raised); }
+.btn:active { background: var(--sunken); }
+.btn:disabled { color: var(--ink-faint); border-color: var(--line); background: var(--surface); cursor: not-allowed; }
+.btn-primary { background: var(--agent); border-color: var(--agent); color: #fff; }
+.btn-primary:hover { background: #17325a; }
+.btn-primary:active { background: #122a4c; }
+.btn-flag { border-color: var(--flag); color: var(--flag); }
+.btn-flag:hover { background: var(--flag-soft); }
+.btn-lg { padding: 12px 18px; font-size: 15px; }
+.btn-block { width: 100%; }
+
+/* Data. Dense tables, neutral bars, numbers in mono. */
+table { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 20px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 500; color: var(--ink-muted); font-size: 12px; line-height: 18px; border-bottom: 1px solid var(--line-strong); }
+td.num, th.num { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+th.num { font-family: var(--sans); }
+tr.selectable { cursor: pointer; }
+tr.selectable:hover td { background: var(--raised); }
+tr.selectable[aria-selected="true"] td { background: var(--agent-soft); }
+tr.selectable td:first-child { border-left: 3px solid transparent; }
+tr.selectable[aria-selected="true"] td:first-child { border-left-color: var(--agent); }
+.bar { display: inline-block; height: 8px; background: var(--bar); vertical-align: middle; border-radius: 2px; }
+.bar.light { background: var(--bar-light); }
+.bar-track { display: flex; align-items: center; gap: 8px; min-width: 140px; }
+.bar-track .bar { flex: none; }
+.tag {
+  display: inline-block; padding: 0 6px; font-size: 12px; line-height: 18px;
+  border-radius: 4px; border: 1px solid var(--line); background: var(--raised); color: var(--ink-muted);
+  white-space: nowrap;
+}
+.tag-agent { background: var(--agent-soft); border-color: var(--agent-line); color: var(--agent); }
+.tag-flag { background: var(--flag-soft); border-color: var(--flag-line); color: var(--flag); }
+.evidence { background: var(--agent-soft); border-bottom: 1px solid var(--agent-line); padding: 0 1px; }
+
+.reading { margin-top: 20px; font-size: 14px; line-height: 22px; }
+.chart { width: 100%; height: auto; display: block; }
+.chart text { font-family: var(--sans); font-size: 12px; fill: var(--ink-muted); }
+.chart text.mono { font-family: var(--mono); }
+.chart .axis { stroke: var(--line-strong); stroke-width: 1; }
+.chart .grid { stroke: var(--line); stroke-width: 1; }
+.chart .avg { stroke: var(--agent); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.chart .threshold { stroke: var(--ink-faint); stroke-width: 1; stroke-dasharray: 3 3; }
+
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+.choice {
+  display: block; text-decoration: none; padding: 20px 20px 18px; border-radius: 4px;
+  border: 1px solid var(--line-strong); background: var(--surface);
+}
+.choice:hover { background: var(--raised); }
+.choice .big { font-size: 18px; line-height: 26px; font-weight: 600; }
+.choice .small { color: var(--ink-muted); margin-top: 4px; }
+.choice-flag { border-color: var(--flag); }
+.choice-flag .big { color: var(--flag); }
+.choice-agent { border-color: var(--agent); background: var(--agent); color: #fff; }
+.choice-agent:hover { background: #17325a; }
+.choice-agent .small { color: #d7e0ee; }
+
+/* Answers: the learner's own words, with evidence marked inside them. */
+.answer-block { border: 1px solid var(--line); border-radius: 4px; margin-bottom: 16px; }
+.answer-block header { padding: 10px 16px; border-bottom: 1px solid var(--line); background: var(--raised); display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+.answer-block header .q { font-weight: 600; }
+.answer-block .prompt { padding: 12px 16px 0; color: var(--ink-muted); font-size: 13px; line-height: 20px; }
+.answer-block .learner { padding: 8px 16px 12px; font-size: 15px; line-height: 24px; }
+.answer-block .learner.big { font-size: 16px; line-height: 26px; }
+.answer-block .finding { padding: 12px 16px; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; font-size: 13px; line-height: 20px; }
+.answer-block .finding .why { grid-column: 1 / -1; color: var(--ink-muted); }
+.answer-block .finding .conf { font-family: var(--mono); white-space: nowrap; }
+.mark { font-family: var(--mono); font-size: 13px; white-space: nowrap; }
+
+.kv { display: grid; grid-template-columns: 160px 1fr; gap: 6px 16px; font-size: 13px; line-height: 20px; }
+.kv dt { color: var(--ink-muted); margin: 0; }
+.kv dd { margin: 0; }
+
+/* Plan actions are the one place cards are allowed. */
+.card { border: 1px solid var(--line-strong); border-radius: 4px; padding: 20px 24px; background: var(--surface); }
+.card + .card { margin-top: 12px; }
+.card .card-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+.card .card-title { font-size: 16px; line-height: 24px; font-weight: 600; }
+.card .card-meta { font-family: var(--mono); font-size: 13px; color: var(--ink-muted); white-space: nowrap; }
+.card h3 { font-size: 12px; line-height: 18px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); font-weight: 500; margin: 16px 0 4px; }
+.card.lead-card { border-color: var(--agent-line); border-left: 3px solid var(--agent); }
+.card.compact { padding: 12px 16px; }
+.card.compact .card-title { font-size: 14px; line-height: 22px; }
+.card.compact p { font-size: 13px; line-height: 20px; color: var(--ink-muted); margin-top: 2px; }
+.budget { margin: 16px 0 8px; }
+.budget .track { display: flex; height: 16px; border-radius: 3px; overflow: hidden; border: 1px solid var(--line-strong); }
+.budget .seg { height: 100%; }
+.budget .legend { display: flex; gap: 20px; margin-top: 8px; font-size: 13px; color: var(--ink-muted); flex-wrap: wrap; }
+.budget .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+/* Review decisions. Three stacked choices, the recommended one filled navy. */
+.decisions { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+.decisions .btn { justify-content: flex-start; text-align: left; padding: 11px 16px; }
+.decisions .btn[aria-pressed="true"] { outline: 2px solid var(--agent); outline-offset: 2px; }
+.decisions .btn small { font-weight: 400; color: var(--ink-muted); margin-left: auto; padding-left: 12px; }
+.decisions .btn-primary small { color: #d7e0ee; }
+.chosen { margin-top: 12px; padding: 10px 14px; background: var(--raised); border: 1px solid var(--line); border-radius: 4px; font-size: 13px; line-height: 20px; }
+.note-box { padding: 16px 20px; border: 1px solid var(--line); border-radius: 4px; background: var(--raised); }
+.note-box p + p { margin-top: 10px; }
+.empty { padding: 20px; border: 1px dashed var(--line-strong); border-radius: 4px; color: var(--ink-muted); }
+.grid-table td.hit { font-family: var(--mono); font-size: 12px; background: var(--agent-soft); color: var(--agent); text-align: center; }
+.grid-table td.miss { text-align: center; color: var(--line-strong); }
+.grid-table th.rot { font-size: 11px; line-height: 14px; vertical-align: bottom; }
+.grid-scroll { overflow-x: auto; }
+.history-bars { display: grid; grid-template-columns: 90px 1fr 60px; gap: 8px 12px; align-items: center; font-size: 13px; margin-bottom: 20px; }
+.history-bars .bar { height: 10px; }
+
+@media (max-width: 1023px) {
+  .frame { flex-direction: column; }
+  .sidebar { position: static; width: auto; flex: none; height: auto; border-right: 0; border-bottom: 1px solid var(--shell-line); padding: 12px 0; }
+  .sidebar .block { padding: 0 16px; }
+  .sidebar select { max-width: 320px; }
+  .sidebar nav { flex-direction: row; flex-wrap: wrap; gap: 0 4px; padding: 0 12px; }
+  .sidebar nav a { border-left: 0; border-bottom: 3px solid transparent; padding: 4px 8px; gap: 8px; }
+  .sidebar nav a[aria-current="page"] { border-bottom-color: var(--agent); }
+  .sidebar hr { margin: 8px 16px; }
+  .page-head .inner { padding: 20px 16px 12px; }
+  .page-head .stepline { padding: 0 16px 8px; }
+  .work { flex-direction: column; }
+  .work > * { min-width: 0; }
+  .steps { position: static; width: auto; flex: none; min-width: 0; max-width: 100%; border-right: 0; border-bottom: 1px solid var(--line); padding: 8px 0; }
+  .steps ol { display: flex; overflow-x: auto; }
+  .steps li { flex: none; }
+  .steps li button { border-left: 0; border-bottom: 3px solid transparent; grid-template-columns: auto auto; }
+  .steps li button .seen { display: none; }
+  .steps li button .sub { display: none; }
+  .steps li button[aria-current="step"] { border-bottom-color: var(--agent); background: none; }
+  .content { padding: 16px; }
+  .step-body { padding: 24px 20px; }
+  .step-foot { padding: 12px 20px; flex-wrap: wrap; }
+  .choices { grid-template-columns: 1fr; }
+  .kv { grid-template-columns: 1fr; }
+  .answer-block .finding { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><strong>Markwise</strong><span class="muted">Meridian Foundation</span></div>
+  <div class="who"><span>Teacher</span><span class="avatar" aria-hidden="true">T</span></div>
+</header>
+
+<div class="frame">
+  <aside class="sidebar">
+    <div class="block">
+      <div class="lms-name">Meridian LMS</div>
+      <div class="label">Course</div>
+      <select aria-label="Course"><option>Mathematics</option><option>English</option><option>Science</option></select>
+      <div class="course-line">Meridian Centre 4 - Foundational Mathematics</div>
+      <div class="course-meta"><span>2026 Term 3</span><span>12 enrolled</span></div>
+      <div class="label">Course pages</div>
+    </div>
+    <nav aria-label="Course pages">
+      <a href="#">Overview</a>
+      <a href="#">Materials</a>
+      <a href="#">Assignments</a>
+      <a href="#">Grades</a>
+      <a href="#">Announcements</a>
+    </nav>
+    <hr>
+    <div class="block"><div class="label">LOOP analysis</div></div>
+    <nav aria-label="LOOP analysis" id="loopnav">
+      <a href="#home" data-page="home">Home</a>
+      <a href="#students" data-page="students">Students</a>
+      <a href="#class" data-page="class">Class</a>
+      <a href="#plan" data-page="plan">Action plan</a>
+      <a href="#review" data-page="review"><span>To review</span><span class="badge-flag" aria-label="3 waiting">3</span></a>
+    </nav>
+  </aside>
+
+  <main>
+    <div class="page-head">
+      <div class="inner">
+        <h1 id="page-title">Home</h1>
+        <p class="purpose" id="page-purpose"></p>
+        <p class="context" id="page-context"></p>
+        <span class="example">A worked example from a practice class, so you can look around.</span>
+      </div>
+      <div class="stepline" id="stepline">Step 1 of 4</div>
+      <div class="progress" aria-hidden="true"><span id="progress-fill" style="width:25%"></span></div>
+    </div>
+
+    <div class="work">
+      <aside class="steps" aria-label="Steps on this page">
+        <div class="label">Steps</div>
+        <ol id="steplist"></ol>
+      </aside>
+
+      <div class="content">
+        <div class="panel" id="panel">
+
+<!-- HOME -->
+<section class="step" data-page="home" data-step="1" hidden>
+  <div class="step-body">
+    <h2>How the class scored</h2>
+    <p class="lead">Twelve answer sheets, marked out of 14. Every mark is a draft until you approve it.</p>
+    <svg class="chart" viewBox="0 0 780 300" role="img" aria-label="Score distribution: 0 students scored 0 to 2, 0 scored 3 to 5, 4 scored 6 to 8, 5 scored 9 to 11, 3 scored 12 to 14. Class average 9.7.">
+      <line class="grid" x1="60" y1="60" x2="760" y2="60"/><text class="mono" x="50" y="64" text-anchor="end">6</text>
+      <line class="grid" x1="60" y1="120" x2="760" y2="120"/><text class="mono" x="50" y="124" text-anchor="end">4</text>
+      <line class="grid" x1="60" y1="180" x2="760" y2="180"/><text class="mono" x="50" y="184" text-anchor="end">2</text>
+      <line class="axis" x1="60" y1="240" x2="760" y2="240"/><text class="mono" x="50" y="244" text-anchor="end">0</text>
+      <text x="14" y="150" transform="rotate(-90 14 150)" text-anchor="middle">Students</text>
+      <rect x="90" y="240" width="100" height="0" fill="#525b68"/>
+      <rect x="230" y="240" width="100" height="0" fill="#525b68"/>
+      <rect x="370" y="120" width="100" height="120" fill="#525b68"/>
+      <rect x="510" y="90" width="100" height="150" fill="#525b68"/>
+      <rect x="650" y="150" width="100" height="90" fill="#525b68"/>
+      <text class="mono" x="140" y="232" text-anchor="middle">0</text>
+      <text class="mono" x="280" y="232" text-anchor="middle">0</text>
+      <text class="mono" x="420" y="112" text-anchor="middle" fill="#151a22">4</text>
+      <text class="mono" x="560" y="82" text-anchor="middle" fill="#151a22">5</text>
+      <text class="mono" x="700" y="142" text-anchor="middle" fill="#151a22">3</text>
+      <text x="140" y="264" text-anchor="middle">0 to 2</text>
+      <text x="280" y="264" text-anchor="middle">3 to 5</text>
+      <text x="420" y="264" text-anchor="middle">6 to 8</text>
+      <text x="560" y="264" text-anchor="middle">9 to 11</text>
+      <text x="700" y="264" text-anchor="middle">12 to 14</text>
+      <text x="410" y="290" text-anchor="middle">Marks out of 14</text>
+      <line class="avg" x1="543" y1="40" x2="543" y2="240"/>
+      <text x="549" y="52" fill="#1d3d6b">Class average 9.7</text>
+    </svg>
+    <p class="reading">Most students scored between 9 and 11. Nobody scored under 6.</p>
+    <p class="reading muted">Four students sit in the 6 to 8 band. Three of them also made the whole-class mistake described in step 3. The three at the top scored 12 or 13 and lost their marks on different questions.</p>
+  </div>
+</section>
+
+<section class="step" data-page="home" data-step="2" hidden>
+  <div class="step-body">
+    <h2>Which questions were hard</h2>
+    <p class="lead">How many of the 12 students got each question fully right.</p>
+    <table>
+      <thead><tr><th>Question</th><th>Topic</th><th class="num">Right</th><th class="num">Share</th><th></th></tr></thead>
+      <tbody id="home-questions"></tbody>
+    </table>
+    <p class="reading">Two questions stand apart. Q4 was answered fully right by 3 students and Q8 by 6. Both ask for fractions to be added with unlike denominators, and the same mistake sits behind most of the marks lost on them.</p>
+  </div>
+</section>
+
+<section class="step" data-page="home" data-step="3" hidden>
+  <div class="step-body">
+    <h2>The mistakes behind them</h2>
+    <p class="lead">Markwise names the mistake behind each lost mark and counts how many students made it. Where more than 40% of the class share one, it is treated as a teaching problem rather than a learner problem.</p>
+    <table>
+      <thead><tr><th>Mistake</th><th class="num">Students</th><th>What Markwise concluded</th></tr></thead>
+      <tbody id="home-mistakes"></tbody>
+    </table>
+    <p class="reading">One mistake is shared by 5 of the 12 students, which is 42% of the class and above the 40% threshold. That is one teaching gap, not five separate problems, and it is the first item on the action plan.</p>
+  </div>
+</section>
+
+<section class="step" data-page="home" data-step="4" hidden>
+  <div class="step-body">
+    <h2>Where to go next</h2>
+    <p class="lead">Two things are ready for you. The answers waiting for your call come first, because the plan is only final once they are decided.</p>
+    <div class="choices">
+      <a class="choice choice-flag" href="#review" data-goto="review">
+        <span class="big">3 answers need your call</span>
+        <span class="small">Markwise would not decide these alone. All three are on Q4 and all three are about language, not mathematics.</span>
+      </a>
+      <a class="choice choice-agent" href="#plan" data-goto="plan">
+        <span class="big">Open the action plan</span>
+        <span class="small">120 minutes of work in priority order, starting with the whole-class re-teach.</span>
+      </a>
+    </div>
+    <p class="reading muted">You can also look at any one student, or at the whole class, from the sidebar.</p>
+  </div>
+</section>
+
+<!-- STUDENTS -->
+<section class="step" data-page="students" data-step="1" hidden>
+  <div class="step-body">
+    <h2>Choose a student</h2>
+    <p class="lead">Click a row to open that student's answers. Draft totals are out of 14 and count only once you approve them.</p>
+    <table>
+      <thead><tr><th>Student</th><th class="num">Draft total</th><th>Returning after a gap</th><th>Waiting for you</th><th></th></tr></thead>
+      <tbody id="roster"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="step" data-page="students" data-step="2" hidden>
+  <div class="step-body" id="student-answers"></div>
+</section>
+
+<section class="step" data-page="students" data-step="3" hidden>
+  <div class="step-body" id="student-history"></div>
+</section>
+
+<section class="step" data-page="students" data-step="4" hidden>
+  <div class="step-body" id="student-note"></div>
+</section>
+
+<!-- CLASS -->
+<section class="step" data-page="class" data-step="1" hidden>
+  <div class="step-body">
+    <h2>Which mistakes were made</h2>
+    <p class="lead">Every mistake Markwise found on Test 3, with the share of the class that made it. The bar reaches the 40% mark only for the first one.</p>
+    <table>
+      <thead><tr><th>Mistake</th><th class="num">Students</th><th>Share of the class</th></tr></thead>
+      <tbody id="class-mistakes"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="step" data-page="class" data-step="2" hidden>
+  <div class="step-body">
+    <h2>Is it one student or the whole class</h2>
+    <p class="lead">Markwise separates a learner's problem from a teaching problem using one rule, and only one mistake on this test crosses it.</p>
+    <div class="card lead-card">
+      <div class="card-head">
+        <span class="card-title">Adds numerators and denominators separately</span>
+        <span class="tag tag-agent">Whole-class problem</span>
+      </div>
+      <h3>The rule</h3>
+      <p>When 40% or more of the class make the same mistake, it is treated as a teaching gap and goes on the plan as one group re-teach. Below that, each learner is followed up on their own.</p>
+      <h3>What happened here</h3>
+      <p>5 of 12 students made this mistake, which is 42% of the class. On Q4 they each turned 1/3 + 1/4 into 2/7, adding the tops together and the bottoms together. Four of the five did the same thing again on Q8.</p>
+      <h3>The five students</h3>
+      <p>Nomsa D., Fatima S., Kwame A., Amira K. and Ibrahim N.</p>
+      <h3>Why it matters</h3>
+      <p>If one more student is found not to have this mistake, the share falls to 4 of 12, which is 33%, and the group re-teach is withdrawn from the plan. Three answers on Q4 are waiting for your call, so this can still move.</p>
+    </div>
+    <p class="reading muted">Every other mistake on this test was made by three students or fewer. Those are handled individually, and the ones that fit the budget are on the plan.</p>
+  </div>
+</section>
+
+<section class="step" data-page="class" data-step="3" hidden>
+  <div class="step-body">
+    <h2>Who made which</h2>
+    <p class="lead">Each cell names the question where the mistake was found. Read down a column to see who shares a mistake, and along a row to see one student's pattern.</p>
+    <div class="grid-scroll" id="class-grid"></div>
+  </div>
+</section>
+
+<section class="step" data-page="class" data-step="4" hidden>
+  <div class="step-body">
+    <h2>Across tests</h2>
+    <p class="lead">The share of the class making the whole-class mistake, on each of the three tests this term. The dotted line is the 40% threshold.</p>
+    <svg class="chart" viewBox="0 0 780 280" role="img" aria-label="Share of the class adding numerators and denominators separately: Test 1 58%, Test 2 50%, Test 3 42%. Threshold 40%.">
+      <line class="grid" x1="60" y1="40" x2="760" y2="40"/><text class="mono" x="50" y="44" text-anchor="end">80%</text>
+      <line class="grid" x1="60" y1="90" x2="760" y2="90"/><text class="mono" x="50" y="94" text-anchor="end">60%</text>
+      <line class="threshold" x1="60" y1="140" x2="760" y2="140"/><text class="mono" x="50" y="144" text-anchor="end">40%</text>
+      <line class="grid" x1="60" y1="190" x2="760" y2="190"/><text class="mono" x="50" y="194" text-anchor="end">20%</text>
+      <line class="axis" x1="60" y1="240" x2="760" y2="240"/><text class="mono" x="50" y="244" text-anchor="end">0%</text>
+      <text x="700" y="134" fill="#5f6875">Threshold 40%</text>
+      <polyline points="180,95 410,115 640,135" fill="none" stroke="#525b68" stroke-width="2"/>
+      <circle cx="180" cy="95" r="4" fill="#525b68"/><circle cx="410" cy="115" r="4" fill="#525b68"/><circle cx="640" cy="135" r="4" fill="#1d3d6b"/>
+      <text class="mono" x="180" y="82" text-anchor="middle" fill="#151a22">58%</text>
+      <text class="mono" x="410" y="102" text-anchor="middle" fill="#151a22">50%</text>
+      <text class="mono" x="640" y="122" text-anchor="middle" fill="#1d3d6b">42%</text>
+      <text x="180" y="264" text-anchor="middle">Test 1</text>
+      <text x="410" y="264" text-anchor="middle">Test 2</text>
+      <text x="640" y="264" text-anchor="middle">Test 3</text>
+    </svg>
+    <table style="margin-top:16px">
+      <thead><tr><th>Test</th><th class="num">Sheets in</th><th class="num">Class average</th><th class="num">Adds tops and bottoms</th></tr></thead>
+      <tbody>
+        <tr><td>Test 1</td><td class="num">12 of 12</td><td class="num">8.9 of 14</td><td class="num">7 of 12</td></tr>
+        <tr><td>Test 2</td><td class="num">9 of 12</td><td class="num">9.3 of 14</td><td class="num">4 of 9 (three students away)</td></tr>
+        <tr><td>Test 3</td><td class="num">12 of 12</td><td class="num">9.7 of 14</td><td class="num">5 of 12</td></tr>
+      </tbody>
+    </table>
+    <p class="reading">The share is falling but has not yet dropped below the threshold. The three students who were away for Test 2 all returned for Test 3, and two of them are among the five, which is why the plan gives them restart points as well as the group re-teach.</p>
+  </div>
+</section>
+
+<section class="step" data-page="class" data-step="5" hidden>
+  <div class="step-body">
+    <h2>Where to go next</h2>
+    <p class="lead">The class view feeds the plan. The whole-class problem becomes the first item and the individual ones are ranked beneath it.</p>
+    <div class="choices">
+      <a class="choice choice-agent" href="#plan" data-goto="plan">
+        <span class="big">Open the action plan</span>
+        <span class="small">One re-teach, three restart points and six notes to send, fitted into 120 minutes.</span>
+      </a>
+      <a class="choice" href="#students" data-goto="students">
+        <span class="big">Look at one student</span>
+        <span class="small">See any student's answers with the evidence marked inside them.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ACTION PLAN -->
+<section class="step" data-page="plan" data-step="1" hidden>
+  <div class="step-body">
+    <h2>Your 120 minutes</h2>
+    <p class="lead">Markwise proposed and scored every action. The budget was then filled in strict priority order, and everything that did not fit is listed in step 5 with its reason.</p>
+    <div class="budget">
+      <div class="track" role="img" aria-label="120 of 120 minutes used: 30 on the group re-teach, 60 on three restart points, 30 on six feedback notes.">
+        <div class="seg" style="width:25%;background:#1d3d6b"></div>
+        <div class="seg" style="width:50%;background:#525b68"></div>
+        <div class="seg" style="width:25%;background:#b8c0cc"></div>
+      </div>
+      <div class="legend">
+        <span><i style="background:#1d3d6b"></i>Group re-teach, 30 min</span>
+        <span><i style="background:#525b68"></i>Three restart points, 60 min</span>
+        <span><i style="background:#b8c0cc"></i>Six feedback notes, 30 min</span>
+      </div>
+    </div>
+    <p class="reading"><b>120 of 120 minutes</b> are used across 10 actions. 11 further actions were proposed and left out because the budget ran out.</p>
+  </div>
+</section>
+
+<section class="step" data-page="plan" data-step="2" hidden>
+  <div class="step-body">
+    <h2>Do first: the whole-class re-teach</h2>
+    <p class="lead">One session for the five students who share the mistake, and anyone else who wants to sit in.</p>
+    <div class="card lead-card">
+      <div class="card-head">
+        <span class="card-title">Group re-teach: adds numerators and denominators separately</span>
+        <span class="card-meta">30 min, priority 95 of 100</span>
+      </div>
+      <h3>Who</h3>
+      <p>Nomsa D., Fatima S., Kwame A., Amira K. and Ibrahim N.</p>
+      <h3>Why</h3>
+      <p>5 of 12 learners (42%) show this. Above the 40% threshold this is one teaching gap, not 5 separate learner problems.</p>
+      <h3>What to say</h3>
+      <p>Cut two paper strips into different numbers of equal pieces and try to add the pieces. The pieces must be the same size before you can count them together.</p>
+      <h3>Then check</h3>
+      <p>Ask each of the five to add 1/3 and 1/4 again on paper before the session ends. If they reach 7/12 with the strips in front of them, the next test will show whether it holds without them.</p>
+    </div>
+  </div>
+</section>
+
+<section class="step" data-page="plan" data-step="3" hidden>
+  <div class="step-body">
+    <h2>Then: three restart points</h2>
+    <p class="lead">Three students missed Test 2. Each gets a starting point that Markwise chose from what they could already do on Test 1.</p>
+    <div class="card">
+      <div class="card-head"><span class="card-title">Restart point for Ibrahim N.</span><span class="card-meta">20 min, priority 81 of 100</span></div>
+      <h3>Start from</h3><p>Adding fractions that already share a denominator, which he did correctly on Test 1, before returning to unlike denominators.</p>
+      <h3>Why</h3><p>He has the lowest draft total on Test 3 at 6 of 14 and shares the whole-class mistake, so the re-teach alone would leave him behind.</p>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title">Restart point for Amira K.</span><span class="card-meta">20 min, priority 73 of 100</span></div>
+      <h3>Start from</h3><p>Equivalent fractions, which she had secure on Test 1. Her Q7 answer on this test shows the idea is still there.</p>
+      <h3>Why</h3><p>She shares the whole-class mistake and was away for the lesson that first covered it.</p>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title">Restart point for Daniel M.</span><span class="card-meta">20 min, priority 73 of 100</span></div>
+      <h3>Start from</h3><p>Scaling the numerator when the denominator changes. He finds the common denominator correctly and then leaves the tops untouched.</p>
+      <h3>Why</h3><p>This is the same mistake he made on Test 1, so it is recurring rather than new, and it is his alone rather than the class's.</p>
+    </div>
+  </div>
+</section>
+
+<section class="step" data-page="plan" data-step="4" hidden>
+  <div class="step-body">
+    <h2>Then: six notes to check and send</h2>
+    <p class="lead">Markwise drafted a note for every student with a diagnosis. These six fit the remaining 30 minutes at 5 minutes each. Open a note to read it in full.</p>
+    <div id="plan-notes"></div>
+  </div>
+</section>
+
+<section class="step" data-page="plan" data-step="5" hidden>
+  <div class="step-body">
+    <h2>Left out and why</h2>
+    <p class="lead">Everything Markwise proposed that did not fit. Nothing was quietly trimmed; each item is here with its score and the reason it was dropped.</p>
+    <table>
+      <thead><tr><th>Action</th><th class="num">Minutes</th><th class="num">Priority</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td>Individual follow-up on simplifying fractions by division not subtraction (Ravi P., Ibrahim N.)</td><td class="num">20</td><td class="num">41</td><td>Budget exhausted</td></tr>
+        <tr><td>Individual follow-up on decimal place value (Kwame A., Ibrahim N.)</td><td class="num">20</td><td class="num">38</td><td>Budget exhausted</td></tr>
+        <tr><td>Individual follow-up on order of operations (Fatima S., Grace O., Daniel M.)</td><td class="num">20</td><td class="num">36</td><td>Budget exhausted</td></tr>
+        <tr><td>Review drafted feedback for Amira K.</td><td class="num">5</td><td class="num">32</td><td>Budget exhausted</td></tr>
+        <tr><td>Review drafted feedback for Grace O.</td><td class="num">5</td><td class="num">32</td><td>Budget exhausted</td></tr>
+        <tr><td>Review drafted feedback for Ibrahim N.</td><td class="num">5</td><td class="num">32</td><td>Budget exhausted</td></tr>
+        <tr><td>Review drafted feedback for Sofia R.</td><td class="num">5</td><td class="num">32</td><td>Budget exhausted</td></tr>
+        <tr><td>Review drafted feedback for Liu Y.</td><td class="num">5</td><td class="num">32</td><td>Budget exhausted</td></tr>
+        <tr><td>Review drafted feedback for Daniel M.</td><td class="num">5</td><td class="num">32</td><td>Budget exhausted</td></tr>
+        <tr><td>Peer pairing for improper fraction to mixed number conversion</td><td class="num">15</td><td class="num">28</td><td>Budget exhausted</td></tr>
+        <tr><td>Peer pairing on sharing in a ratio (Chen W., Sofia R.)</td><td class="num">15</td><td class="num">27</td><td>Budget exhausted</td></tr>
+      </tbody>
+    </table>
+    <p class="reading">If you have more than 120 minutes, the top of this list is where the next minutes would go. The six notes that were left out are still drafted and can be read from each student's page.</p>
+  </div>
+</section>
+
+<!-- TO REVIEW -->
+<section class="step" data-page="review" data-step="1" hidden><div class="step-body" data-review="0"></div></section>
+<section class="step" data-page="review" data-step="2" hidden><div class="step-body" data-review="1"></div></section>
+<section class="step" data-page="review" data-step="3" hidden><div class="step-body" data-review="2"></div></section>
+<section class="step" data-page="review" data-step="4" hidden>
+  <div class="step-body" id="review-done"></div>
+</section>
+
+          <footer class="step-foot">
+            <button class="btn" id="btn-back" type="button">Back</button>
+            <button class="btn btn-primary" id="btn-next" type="button">Next</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const PAGES = {
+    home: {
+      title: 'Home',
+      purpose: 'This page shows how the class did on Test 3 and where to go next.',
+      context: '<b>12</b> students, <b>9.7 of 14</b> on average, <b>52 of 168</b> marks lost, <b>3</b> answers waiting for you.',
+      steps: ['How the class scored', 'Which questions were hard', 'The mistakes behind them', 'Where to go next'],
+      handoff: { page: 'review', label: 'Next: To review' }
+    },
+    students: {
+      title: 'Students',
+      purpose: 'Choose one student to see their answers, the mistakes found and their scores across earlier tests.',
+      context: '<b>12</b> students, draft totals from <b>6</b> to <b>13</b> of 14, <b>3</b> returning after a gap, <b>3</b> answers waiting for you.',
+      steps: ['Choose a student', 'Their answers on this test', 'Across earlier tests', 'The note drafted for them'],
+      handoff: { page: 'plan', label: 'Next: Action plan' }
+    },
+    class: {
+      title: 'Class',
+      purpose: 'This page shows which mistakes were made, by how many students, and whether each is a teaching problem.',
+      context: '<b>12</b> students, <b>15</b> mistake patterns found, <b>1</b> whole-class problem, <b>40%</b> is the threshold.',
+      steps: ['Which mistakes were made', 'Is it one student or the whole class', 'Who made which', 'Across tests', 'Where to go next'],
+      handoff: { page: 'plan', label: 'Next: Action plan' }
+    },
+    plan: {
+      title: 'Action plan',
+      purpose: 'This page turns the findings into 120 minutes of work, in priority order, and says what was left out.',
+      context: '<b>120</b> minutes available, <b>120</b> used, <b>10</b> actions scheduled, <b>11</b> left out.',
+      steps: ['Your 120 minutes', 'Do first: the whole-class re-teach', 'Then: three restart points', 'Then: six notes to check and send', 'Left out and why'],
+      handoff: { page: 'students', label: 'Next: Students' }
+    },
+    review: {
+      title: 'To review',
+      purpose: 'These are the three answers Markwise would not decide alone. Each one needs your call.',
+      context: '<b>3</b> answers waiting for you, all on <b>Q4</b>, all about language rather than mathematics.',
+      steps: ['1 of 3: Ravi P., Q4', '2 of 3: Grace O., Q4', '3 of 3: Liu Y., Q4', 'All decided'],
+      handoff: { page: 'plan', label: 'Next: Action plan' }
+    }
+  };
+
+  const QUESTIONS = [
+    { n: 1, topic: 'Order of operations', marks: 1, right: 7, prompt: 'Work out 2 + 3 x 4.', correct: '2 + 3 x 4 = 2 + 12 = 14.' },
+    { n: 2, topic: 'Decimals - place value', marks: 2, right: 9, prompt: 'Which is larger, 0.35 or 0.4? Explain how you know.', correct: '0.4 is larger. 0.4 is the same as 0.40, and 40 hundredths is more than 35 hundredths.' },
+    { n: 3, topic: 'Negative numbers - arithmetic', marks: 1, right: 10, prompt: 'Work out -7 - (-3).', correct: '-7 - (-3) = -7 + 3 = -4.' },
+    { n: 4, topic: 'Fractions - addition and subtraction with unlike denominators', marks: 2, right: 3, prompt: 'Two friends walk 1/3 km and then 1/4 km. How far did they walk in total?', correct: '1/3 = 4/12 and 1/4 = 3/12, so 4/12 + 3/12 = 7/12 km.' },
+    { n: 5, topic: 'Percentages - conversion to and from fractions', marks: 2, right: 10, prompt: 'Write 45% as a fraction in its simplest form.', correct: '45% = 45/100. Divide top and bottom by 5 to get 9/20.' },
+    { n: 6, topic: 'Ratio and proportion', marks: 2, right: 8, prompt: 'Share 30 sweets between Ade and Bo in the ratio 2 : 3.', correct: '2 + 3 = 5 parts, 30 / 5 = 6 per part. Ade gets 12 and Bo gets 18.' },
+    { n: 7, topic: 'Fractions - equivalence and simplification', marks: 2, right: 9, prompt: 'Simplify 12/18.', correct: 'Divide top and bottom by 6: 12/18 = 2/3.' },
+    { n: 8, topic: 'Fractions - addition and subtraction with unlike denominators', marks: 2, right: 6, prompt: 'Work out 2/5 + 1/2.', correct: '2/5 = 4/10 and 1/2 = 5/10, so 4/10 + 5/10 = 9/10.' }
+  ];
+
+  const M01 = 'Adds numerators and denominators separately';
+  const M02 = 'Finds a common denominator but forgets to scale the numerators';
+  const M03 = 'Correct method, arithmetic slip in the final addition';
+  const M04 = 'Simplifies by subtracting instead of dividing';
+  const M05 = 'Treats digits after the decimal point as a whole number';
+  const M06 = 'Shifts the decimal point the wrong way';
+  const M07 = 'Evaluates strictly left to right ignoring precedence';
+  const M08 = 'Stops before the fraction is fully simplified';
+  const M09 = 'Divides the total by each part of the ratio';
+  const M10 = 'Treats the ratio numbers as the actual amounts';
+  const M11 = 'Ignores the double negative';
+  const M12 = 'Forgets that subtracting a negative adds';
+  const M13 = 'Reads the multiplication sign as addition';
+  const M14 = 'Subtracts instead of adding after multiplying';
+  const M15 = 'Converts to a decimal instead of simplifying';
+
+  const MISTAKES = [
+    { name: M01, kind: 'Whole-class problem', why: '5 of 12 students, 42%, above the 40% threshold. One group re-teach.' },
+    { name: M07, kind: 'Individual', why: '3 students. Followed up individually; did not fit the budget.' },
+    { name: M08, kind: 'Individual', why: '3 students, each losing one mark. Covered in the drafted notes.' },
+    { name: M04, kind: 'Individual', why: '2 students. Followed up individually; did not fit the budget.' },
+    { name: M05, kind: 'Individual', why: '2 students. Followed up individually; did not fit the budget.' },
+    { name: M09, kind: 'Individual', why: '2 students. Proposed as peer pairing; did not fit the budget.' },
+    { name: M02, kind: 'Recurring', why: '1 student, Daniel M., seen on Test 1 as well. Restart point on the plan.' },
+    { name: M03, kind: 'Individual', why: '1 student, Kwame A. Covered in the drafted note.' },
+    { name: M06, kind: 'Individual', why: '1 student, Nomsa D. Covered in the drafted note.' },
+    { name: M10, kind: 'Individual', why: '1 student, Nomsa D. Covered in the drafted note.' },
+    { name: M11, kind: 'Individual', why: '1 student, Amira K. Covered in the drafted note.' },
+    { name: M12, kind: 'Individual', why: '1 student, Grace O. Covered in the drafted note.' },
+    { name: M13, kind: 'Individual', why: '1 student, Thabo M. Covered in the drafted note.' },
+    { name: M14, kind: 'Individual', why: '1 student, Chen W. Covered in the drafted note.' },
+    { name: M15, kind: 'Individual', why: '1 student, Grace O. Covered in the drafted note.' }
+  ];
+
+  // Per-question marks for each learner sum to their draft total, and the number of
+  // full-mark answers per question matches the Home table. A wrong or partial answer
+  // carries its own text; evidence is always a contiguous substring of that text.
+  const STUDENTS = [
+    { name: 'Thabo M.', total: 13, marks: [0, 2, 1, 2, 2, 2, 2, 2], history: [12, 13],
+      answers: { 1: { text: '2 + 3 x 4 = 2 + 7 = 9.', mistake: M13, conf: '0.84', evidence: '2 + 7 = 9', why: 'The learner treats 3 x 4 as 3 + 4, giving 7, and then adds 2. The order of operations is not the issue here; the sign was misread.' } },
+      patterns: [{ name: M13, tests: 'Test 3 only' }],
+      note: 'You scored 13 of 14, the joint highest in the class. The one mark you lost was on Q1, where 3 x 4 became 3 + 4. Read each sign once more before you start; everything else on this paper was right.' },
+    { name: 'Nomsa D.', total: 7, marks: [1, 1, 1, 0, 2, 0, 2, 0], history: [8, 7],
+      answers: {
+        2: { text: '0.4 is bigger. 0.4 is 4 tenths which is 400 hundredths and 0.35 is 35 hundredths.', mistake: M06, conf: '0.78', evidence: '4 tenths which is 400 hundredths', why: 'The final choice is right, but 4 tenths is written as 400 hundredths rather than 40. The decimal point has moved the wrong way, so one mark is held back.' },
+        4: { text: '1/3 + 1/4 = 2/7. I add the tops and add the bottoms. So they walked 2/7 km.', mistake: M01, conf: '0.90', evidence: '1/3 + 1/4 = 2/7. I add the tops and add the bottoms.', why: 'The learner adds the numerators and denominators separately, treating 1/3 + 1/4 as (1+1)/(3+4) = 2/7 instead of finding a common denominator.' },
+        6: { text: 'Ade gets 2 sweets and Bo gets 3 sweets. That is the ratio 2 : 3.', mistake: M10, conf: '0.86', evidence: 'Ade gets 2 sweets and Bo gets 3 sweets', why: 'The ratio numbers are handed out as the actual amounts, leaving 25 sweets unshared.' },
+        8: { text: '2/5 + 1/2 = 3/7.', mistake: M01, conf: '0.88', evidence: '2/5 + 1/2 = 3/7', why: 'The same pattern as Q4: 2 + 1 over 5 + 2.' }
+      },
+      patterns: [{ name: M01, tests: 'Test 1, Test 2 and Test 3' }, { name: M10, tests: 'Test 3 only' }, { name: M06, tests: 'Test 2 and Test 3' }],
+      note: 'You scored 7 of 14. On Q4 and Q8 you added the tops together and the bottoms together. Fractions can only be added once the pieces are the same size, which is what the group session on Thursday will practise with paper strips. Your Q2 answer chose the right number; check how many hundredths are in 4 tenths.' },
+    { name: 'Ravi P.', total: 10, marks: [1, 2, 1, 1, 1, 2, 0, 2], history: [9, 10], waiting: true,
+      answers: {
+        4: { text: 'Answer is 7/12 km. and then add top ones together I make bottom number same 12.', waiting: true, candidate: M02 },
+        5: { text: '45% = 45/100.', mistake: M08, conf: '0.92', evidence: '45/100', why: 'The fraction is correct but the question asked for its simplest form, 9/20.' },
+        7: { text: 'Take 6 from both: 12/18 = 6/12. Take 6 again: 0/6. So it is 0.', mistake: M04, conf: '0.91', evidence: 'Take 6 from both: 12/18 = 6/12', why: 'Simplifying is done by subtracting the same number from top and bottom rather than dividing.' }
+      },
+      patterns: [{ name: M04, tests: 'Test 2 and Test 3' }, { name: M08, tests: 'Test 3 only' }],
+      note: 'You scored 10 of 14. On Q7 you took 6 away from the top and the bottom; to simplify a fraction you divide both by the same number, so 12/18 becomes 2/3. Q5 was right but not finished: 45/100 simplifies to 9/20. Your Q4 answer reached 7/12, which is correct, and I will come back to you about how it was written.' },
+    { name: 'Fatima S.', total: 9, marks: [0, 2, 1, 0, 2, 2, 2, 0], history: [10, 8],
+      answers: {
+        1: { text: '2 + 3 = 5, then 5 x 4 = 20.', mistake: M07, conf: '0.93', evidence: '2 + 3 = 5, then 5 x 4 = 20', why: 'The sum is worked from left to right, adding before multiplying.' },
+        4: { text: '1/3 + 1/4 = 2/7 km because 1 + 1 = 2 and 3 + 4 = 7.', mistake: M01, conf: '0.94', evidence: '1 + 1 = 2 and 3 + 4 = 7', why: 'Numerators and denominators are added separately.' },
+        8: { text: '2/5 + 1/2 = 3/7 (2 + 1 over 5 + 2).', mistake: M01, conf: '0.93', evidence: '2 + 1 over 5 + 2', why: 'The same pattern as Q4.' }
+      },
+      patterns: [{ name: M01, tests: 'Test 2 and Test 3' }, { name: M07, tests: 'Test 1 and Test 3' }],
+      note: 'You scored 9 of 14. On Q4 and Q8 you added the tops together and the bottoms together; the group session on Thursday will show why the pieces need to be the same size first. On Q1, multiply before you add: 3 x 4 = 12, then 2 + 12 = 14.' },
+    { name: 'Chen W.', total: 11, marks: [0, 2, 1, 2, 2, 0, 2, 2], history: [10, 11],
+      answers: {
+        1: { text: '3 x 4 = 12, then 12 - 2 = 10.', mistake: M14, conf: '0.81', evidence: '12 - 2 = 10', why: 'The multiplication is done first, correctly, but the 2 is then subtracted rather than added.' },
+        6: { text: '30 / 2 = 15 and 30 / 3 = 10. Ade 15, Bo 10.', mistake: M09, conf: '0.89', evidence: '30 / 2 = 15 and 30 / 3 = 10', why: 'The total is divided by each part of the ratio in turn rather than by the number of parts.' }
+      },
+      patterns: [{ name: M09, tests: 'Test 3 only' }, { name: M14, tests: 'Test 3 only' }],
+      note: 'You scored 11 of 14. Q4 and Q8 were both right, which most of the class found hard. On Q6, a ratio of 2 : 3 means 5 equal parts, so 30 / 5 = 6 per part, then 12 and 18. On Q1 the sign after the 2 is a plus.' },
+    { name: 'Kwame A.', total: 8, marks: [1, 0, 1, 0, 2, 1, 2, 1], history: [8, 9],
+      answers: {
+        2: { text: '0.35 is bigger because 35 is more than 4.', mistake: M05, conf: '0.92', evidence: '35 is more than 4', why: 'The digits after the point are compared as whole numbers, 35 against 4.' },
+        4: { text: 'Top: 1 + 1 = 2. Bottom: 3 + 4 = 7. Total 2/7 km.', mistake: M01, conf: '0.95', evidence: 'Top: 1 + 1 = 2. Bottom: 3 + 4 = 7.', why: 'Numerators and denominators are added separately.' },
+        6: { text: '30 / 5 = 6, so Ade gets 2 x 6 = 12 sweets.', partial: 'The method is right and Ade\'s share is correct. One mark is held back because Bo\'s share is not written.' },
+        8: { text: '2/5 = 4/10 and 1/2 = 5/10. 4/10 + 5/10 = 8/10.', mistake: M03, conf: '0.87', evidence: '4/10 + 5/10 = 8/10', why: 'Both fractions are converted correctly to tenths, then 4 + 5 is written as 8. The method is sound; the slip is in the final addition.' }
+      },
+      patterns: [{ name: M01, tests: 'Test 1 and Test 3' }, { name: M05, tests: 'Test 1, Test 2 and Test 3' }, { name: M03, tests: 'Test 3 only' }],
+      note: 'You scored 8 of 14. Your Q8 working was right up to the last line: 4/10 + 5/10 is 9/10, not 8/10. On Q4 you added tops and bottoms separately, so please come to the group session on Thursday. On Q2, 0.4 is 0.40, and 40 hundredths is more than 35.' },
+    { name: 'Amira K.', total: 9, marks: [1, 2, 0, 0, 2, 2, 2, 0], history: [9, null], returning: true,
+      answers: {
+        3: { text: '-7 - (-3) = -7 - 3 = -10.', mistake: M11, conf: '0.88', evidence: '-7 - 3 = -10', why: 'Subtracting a negative is treated as subtracting a positive.' },
+        4: { text: 'They walked 2/7 km. I added the numerators and added the denominators.', mistake: M01, conf: '0.96', evidence: 'I added the numerators and added the denominators', why: 'The learner states the mistaken method in her own words.' },
+        8: { text: '2/5 + 1/2 = 3/7 km.', mistake: M01, conf: '0.90', evidence: '2/5 + 1/2 = 3/7', why: 'The same pattern as Q4.' }
+      },
+      patterns: [{ name: M01, tests: 'Test 1 and Test 3 (away for Test 2)' }, { name: M11, tests: 'Test 3 only' }],
+      note: 'Welcome back. You scored 9 of 14, and your equivalent fractions on Q7 were secure, which is where we will start on Tuesday. On Q4 and Q8 the tops and bottoms were added separately; the group session on Thursday covers exactly this. On Q3, taking away a negative is the same as adding.' },
+    { name: 'Grace O.', total: 8, marks: [0, 2, 0, 1, 1, 2, 0, 2], history: [7, 8], waiting: true,
+      answers: {
+        1: { text: '2 + 3 = 5 and 5 x 4 = 20.', mistake: M07, conf: '0.93', evidence: '2 + 3 = 5 and 5 x 4 = 20', why: 'The sum is worked from left to right, adding before multiplying.' },
+        3: { text: '-7 - (-3) = -10 because two minuses makes it more negative.', mistake: M12, conf: '0.85', evidence: 'two minuses makes it more negative', why: 'The learner explains the rule the wrong way round.' },
+        4: { text: '7/12 km. bottom is 12 I make then 4 and 3 on top add is 7.', waiting: true, candidate: M02 },
+        5: { text: '45% is 45 over 100 so 45/100.', mistake: M08, conf: '0.91', evidence: '45/100', why: 'The fraction is correct but not in its simplest form, 9/20.' },
+        7: { text: '12/18 = 12 / 18 = 0.66.', mistake: M15, conf: '0.83', evidence: '12 / 18 = 0.66', why: 'The fraction is turned into a decimal rather than simplified to 2/3.' }
+      },
+      patterns: [{ name: M07, tests: 'Test 1, Test 2 and Test 3' }, { name: M08, tests: 'Test 2 and Test 3' }],
+      note: 'You scored 8 of 14. Q4 and Q8 were both right, which most of the class found hard. On Q1, multiply before you add: 3 x 4 = 12, then 2 + 12 = 14. Two minuses together make a plus on Q3. On Q7, simplifying means dividing the top and bottom by the same number, not turning it into a decimal.' },
+    { name: 'Ibrahim N.', total: 6, marks: [1, 0, 1, 0, 2, 2, 0, 0], history: [7, null], returning: true,
+      answers: {
+        2: { text: '0.35 because 35 is a bigger number than 4.', mistake: M05, conf: '0.93', evidence: '35 is a bigger number than 4', why: 'The digits after the point are compared as whole numbers.' },
+        4: { text: '1/3 + 1/4 is 2/7 km, add top and add bottom.', mistake: M01, conf: '0.94', evidence: 'add top and add bottom', why: 'Numerators and denominators are added separately.' },
+        7: { text: '12/18, minus 2 each = 10/16 = 8/14 = 6/12.', mistake: M04, conf: '0.90', evidence: 'minus 2 each = 10/16', why: 'Simplifying is done by subtracting from top and bottom rather than dividing.' },
+        8: { text: '2/5 + 1/2 = 3/7, add tops add bottoms.', mistake: M01, conf: '0.92', evidence: 'add tops add bottoms', why: 'The same pattern as Q4.' }
+      },
+      patterns: [{ name: M01, tests: 'Test 1 and Test 3 (away for Test 2)' }, { name: M05, tests: 'Test 1 and Test 3' }, { name: M04, tests: 'Test 3 only' }],
+      note: 'Welcome back. You scored 6 of 14, and Q5 and Q6 were fully right. We will start on Tuesday from adding fractions that already have the same bottom number, which you did well on Test 1, and then come to the group session on Thursday about fractions with different bottom numbers.' },
+    { name: 'Sofia R.', total: 12, marks: [1, 2, 1, 2, 2, 0, 2, 2], history: [11, 12],
+      answers: {
+        6: { text: 'Ade gets 30 / 2 = 15 and Bo gets 30 / 3 = 10.', mistake: M09, conf: '0.90', evidence: '30 / 2 = 15 and Bo gets 30 / 3 = 10', why: 'The total is divided by each part of the ratio in turn rather than by the number of parts.' }
+      },
+      patterns: [{ name: M09, tests: 'Test 3 only' }],
+      note: 'You scored 12 of 14, and every fractions question was right. The two marks lost were on Q6: a ratio of 2 : 3 means five equal parts, so 30 / 5 = 6 per part, then 12 for Ade and 18 for Bo. Check that the shares add back to the total.' },
+    { name: 'Liu Y.', total: 13, marks: [1, 2, 1, 1, 2, 2, 2, 2], history: [12, 13], waiting: true,
+      answers: {
+        4: { text: '7/12 km, I change to twelfths first then tops added 4 add 3 is 7 on 12.', waiting: true, candidate: M01 }
+      },
+      patterns: [],
+      note: 'You scored 13 of 14, the joint highest in the class. Every answer reached the right value. On Q4 the working is hard to follow as written; I will come back to you about that, and it may not cost the mark.' },
+    { name: 'Daniel M.', total: 10, marks: [0, 2, 1, 1, 2, 2, 2, 0], history: [10, null], returning: true,
+      answers: {
+        1: { text: '2 + 3 = 5, 5 x 4 = 20.', mistake: M07, conf: '0.93', evidence: '2 + 3 = 5, 5 x 4 = 20', why: 'The sum is worked from left to right, adding before multiplying.' },
+        4: { text: 'Same bottom is 12. So 1/12 + 1/12 = 2/12 km.', mistake: M02, conf: '0.89', evidence: '1/12 + 1/12 = 2/12', why: 'The common denominator 12 is found correctly, but the numerators are left as 1 and 1 instead of being scaled to 4 and 3. One mark for the denominator.' },
+        8: { text: 'Bottom 10. 2/10 + 1/10 = 3/10.', mistake: M02, conf: '0.91', evidence: '2/10 + 1/10 = 3/10', why: 'The same pattern as Q4: the denominator changes but the numerators do not.' }
+      },
+      patterns: [{ name: M02, tests: 'Test 1 and Test 3 (away for Test 2)' }, { name: M07, tests: 'Test 3 only' }],
+      note: 'Welcome back. You scored 10 of 14. On Q4 and Q8 you found the right bottom number, which is the hard part. When the bottom changes from 3 to 12 the top must change too, from 1 to 4. We will start there on Tuesday. On Q1, multiply before you add.' }
+  ];
+
+  const REVIEWS = [
+    { student: 'Ravi P.', total: 10,
+      note: 'The final value is correct, so the mathematics held. What the marks were lost on is how the working is written, which is a language issue rather than a misconception.',
+      would: 'Record no conceptual misconception. Route to language support rather than re-teaching the mathematics.',
+      candidate: M02 },
+    { student: 'Grace O.', total: 8,
+      note: 'The learner reaches 7/12, which is the value the marking scheme asks for. The steps are out of order and the grammar is unclear, but every step needed is present: a common denominator of 12 and the scaled numerators 4 and 3.',
+      would: 'Record no conceptual misconception. Route to language support rather than re-teaching the mathematics.',
+      candidate: M02 },
+    { student: 'Liu Y.', total: 13,
+      note: 'The final value is correct and the learner names the method, changing to twelfths first. The phrase "tops added" could be read as adding numerators without scaling, but the numbers 4 and 3 show the scaling was done.',
+      would: 'Record no conceptual misconception. Route to language support rather than re-teaching the mathematics.',
+      candidate: M01 }
+  ];
+  const CHOICES = ['Agree, it is language', 'It is the mistake Markwise considered', 'Something else'];
+
+  const state = {
+    page: 'home',
+    step: { home: 1, students: 1, class: 1, plan: 1, review: 1 },
+    seen: { home: new Set(), students: new Set(), class: new Set(), plan: new Set(), review: new Set() },
+    student: null,
+    decisions: [null, null, null]
+  };
+
+  const $ = (sel, root) => (root || document).querySelector(sel);
+  const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  // Evidence is only ever marked when it is a contiguous substring of the answer.
+  function highlight(text, evidence) {
+    if (!evidence) return esc(text);
+    const i = text.indexOf(evidence);
+    if (i < 0) return esc(text);
+    return esc(text.slice(0, i)) + '<mark class="evidence">' + esc(evidence) + '</mark>' + esc(text.slice(i + evidence.length));
+  }
+
+  function renderStatic() {
+    $('#home-questions').innerHTML = QUESTIONS.map((q) => {
+      const pct = Math.round(q.right / 12 * 100);
+      return '<tr><td class="mono">Q' + q.n + '</td><td>' + esc(q.topic) + '</td><td class="num">' + q.right + ' of 12</td><td class="num">' + pct + '%</td>' +
+        '<td><span class="bar-track"><span class="bar" style="width:' + pct + 'px"></span></span></td></tr>';
+    }).join('');
+
+    const counts = {};
+    STUDENTS.forEach((s) => {
+      const seen = new Set();
+      Object.values(s.answers).forEach((a) => { if (a.mistake) seen.add(a.mistake); });
+      seen.forEach((m) => { counts[m] = (counts[m] || 0) + 1; });
+    });
+    $('#home-mistakes').innerHTML = MISTAKES.map((m) => {
+      const n = counts[m.name] || 0;
+      const tag = m.kind === 'Whole-class problem' ? '<span class="tag tag-agent">Whole-class problem</span> ' : (m.kind === 'Recurring' ? '<span class="tag">Recurring</span> ' : '');
+      return '<tr><td>' + esc(m.name) + '</td><td class="num">' + n + ' of 12</td><td>' + tag + esc(m.why) + '</td></tr>';
+    }).join('');
+    $('#class-mistakes').innerHTML = MISTAKES.map((m) => {
+      const n = counts[m.name] || 0;
+      const pct = Math.round(n / 12 * 100);
+      const whole = m.kind === 'Whole-class problem';
+      return '<tr><td>' + esc(m.name) + (whole ? ' <span class="tag tag-agent">Whole-class problem</span>' : '') + (m.kind === 'Recurring' ? ' <span class="tag">Recurring</span>' : '') +
+        '</td><td class="num">' + n + '</td><td><span class="bar-track"><span class="bar' + (whole ? '' : ' light') + '" style="width:' + (pct * 2) + 'px"></span><span class="mono xs">' + pct + '%</span></span></td></tr>';
+    }).join('');
+
+    $('#roster').innerHTML = STUDENTS.map((s, i) =>
+      '<tr class="selectable" data-index="' + i + '" tabindex="0" aria-selected="false"><td>' + esc(s.name) + '</td><td class="num">' + s.total + ' of 14</td>' +
+      '<td>' + (s.returning ? 'Yes, missed Test 2' : '') + '</td><td>' + (s.waiting ? '<span class="tag tag-flag">Q4 waiting for you</span>' : '') + '</td>' +
+      '<td class="sm muted">Open</td></tr>').join('');
+
+    const grid = MISTAKES.slice(0, 8);
+    $('#class-grid').innerHTML = '<table class="grid-table"><thead><tr><th>Student</th>' +
+      grid.map((m) => '<th class="rot">' + esc(m.name) + '</th>').join('') + '</tr></thead><tbody>' +
+      STUDENTS.map((s) => '<tr><td>' + esc(s.name) + '</td>' + grid.map((m) => {
+        const qs = Object.keys(s.answers).filter((k) => s.answers[k].mistake === m.name).map((k) => 'Q' + k);
+        return qs.length ? '<td class="hit">' + qs.join(', ') + '</td>' : '<td class="miss">-</td>';
+      }).join('') + '</tr>').join('') + '</tbody></table>' +
+      '<p class="reading muted">Seven further mistakes were each made by one student and are listed in step 1.</p>';
+
+    const noteNames = ['Thabo M.', 'Nomsa D.', 'Ravi P.', 'Fatima S.', 'Chen W.', 'Kwame A.'];
+    $('#plan-notes').innerHTML = noteNames.map((n) => {
+      const i = STUDENTS.findIndex((s) => s.name === n);
+      const s = STUDENTS[i];
+      return '<div class="card compact"><div class="card-head"><span class="card-title">Review drafted feedback for ' + esc(s.name) + '</span><span class="card-meta">5 min, priority 32 of 100</span></div>' +
+        '<p>' + esc(s.note.split('. ').slice(0, 2).join('. ')) + '.</p>' +
+        '<p><a href="#students" data-open-note="' + i + '">Open the full note</a></p></div>';
+    }).join('');
+
+    REVIEWS.forEach((r, i) => renderReview(i));
+  }
+
+  function renderReview(i) {
+    const r = REVIEWS[i];
+    const s = STUDENTS.find((x) => x.name === r.student);
+    const a = s.answers[4];
+    const q = QUESTIONS[3];
+    const chosen = state.decisions[i];
+    const box = $('[data-review="' + i + '"]');
+    box.innerHTML = '<h2>' + esc(r.student) + ', Q4</h2>' +
+      '<p class="lead">Markwise would not decide this one alone. Read the answer, then choose.</p>' +
+      '<div class="answer-block"><header><span class="q">Q4, ' + esc(q.topic) + '</span><span class="mark">2 marks available, draft 1 of 2</span></header>' +
+      '<p class="prompt">' + esc(q.prompt) + '</p><p class="learner big">' + highlight(a.text, '7/12') + '</p></div>' +
+      '<dl class="kv" style="margin-top:20px"><dt>What Markwise found</dt><dd>' + esc(r.note) + '</dd>' +
+      '<dt>What it would have decided</dt><dd>' + esc(r.would) + '</dd>' +
+      '<dt>The mistake it also considered</dt><dd>' + esc(r.candidate) + '</dd></dl>' +
+      '<div class="decisions" role="group" aria-label="Your decision">' +
+      CHOICES.map((c, k) => '<button type="button" class="btn ' + (k === 0 ? 'btn-primary' : '') + '" data-decide="' + i + '" data-choice="' + k + '" aria-pressed="' + (chosen === k) + '">' + esc(c) +
+        (k === 0 ? '<small>Markwise recommends this</small>' : '') + '</button>').join('') + '</div>' +
+      (chosen === null ? '' : '<div class="chosen">You chose: <b>' + esc(CHOICES[chosen]) + '</b>. ' +
+        (chosen === 1 ? 'The mistake will be recorded for ' + esc(r.student) + ' and the class view re-run. ' : '') +
+        'You can change this until the marks are approved.</div>');
+  }
+
+  function renderReviewDone() {
+    const n = state.decisions.filter((d) => d !== null).length;
+    const lines = REVIEWS.map((r, i) => '<tr><td>' + esc(r.student) + ', Q4</td><td>' + (state.decisions[i] === null ? '<span class="tag tag-flag">Still waiting</span>' : esc(CHOICES[state.decisions[i]])) + '</td></tr>').join('');
+    $('#review-done').innerHTML = '<h2>' + (n === 3 ? 'All decided' : n + ' of 3 decided') + '</h2>' +
+      '<p class="lead">' + (n === 3 ? 'Every answer Markwise handed to you now has your call. The plan below reflects them.' : 'Go back to the ones still waiting, or carry on and return later.') + '</p>' +
+      '<table><thead><tr><th>Answer</th><th>Your decision</th></tr></thead><tbody>' + lines + '</tbody></table>' +
+      '<div class="choices" style="margin-top:24px"><a class="choice choice-agent" href="#plan" data-goto="plan"><span class="big">Open the action plan</span><span class="small">120 minutes of work in priority order, starting with the whole-class re-teach.</span></a>' +
+      '<a class="choice" href="#class" data-goto="class"><span class="big">See the class view</span><span class="small">Whether the whole-class problem still crosses the 40% line after your decisions.</span></a></div>';
+  }
+
+  function renderStudent() {
+    const s = state.student === null ? null : STUDENTS[state.student];
+    const empty = '<h2>Choose a student first</h2><p class="lead">Nothing is selected yet.</p><div class="empty">Go back to step 1 and click a student in the list.</div>';
+    if (!s) { $('#student-answers').innerHTML = empty; $('#student-history').innerHTML = empty; $('#student-note').innerHTML = empty; return; }
+
+    $('#student-answers').innerHTML = '<h2>' + esc(s.name) + ': answers on Test 3</h2>' +
+      '<p class="lead">Draft total <b class="mono">' + s.total + ' of 14</b>. Where a mark was lost, the evidence is marked inside the answer.</p>' +
+      QUESTIONS.map((q, i) => {
+        const a = s.answers[q.n];
+        const got = s.marks[i];
+        const text = a ? a.text : q.correct;
+        let finding = '';
+        if (a && a.waiting) {
+          finding = '<div class="finding"><span><span class="tag tag-flag">Waiting for you</span> Markwise would not decide this alone.</span><span class="conf"></span>' +
+            '<span class="why">The final value is correct. The question is whether the working shows a language issue or the mistake "' + esc(a.candidate) + '". <a href="#review" data-goto="review">Decide it on the To review page.</a></span></div>';
+        } else if (a && a.mistake) {
+          finding = '<div class="finding"><span><span class="tag tag-agent">Mistake found</span> ' + esc(a.mistake) + '</span><span class="conf">Confidence ' + a.conf + '</span><span class="why">' + esc(a.why) + '</span></div>';
+        } else if (a && a.partial) {
+          finding = '<div class="finding"><span><span class="tag">Held back</span> No mistake recorded</span><span class="conf"></span><span class="why">' + esc(a.partial) + '</span></div>';
+        }
+        return '<div class="answer-block"><header><span class="q">Q' + q.n + ', ' + esc(q.topic) + '</span><span class="mark">Draft ' + got + ' of ' + q.marks + '</span></header>' +
+          '<p class="prompt">' + esc(q.prompt) + '</p><p class="learner">' + highlight(text, a && a.evidence) + '</p>' + finding + '</div>';
+      }).join('');
+
+    const hist = [s.history[0], s.history[1], s.total];
+    $('#student-history').innerHTML = '<h2>' + esc(s.name) + ': across earlier tests</h2>' +
+      '<p class="lead">Draft totals on each test this term, and the mistakes Markwise has seen more than once.</p>' +
+      '<div class="history-bars">' + hist.map((h, i) => '<span>Test ' + (i + 1) + '</span>' +
+        (h === null ? '<span class="muted sm">Away, no sheet</span><span></span>' : '<span><span class="bar' + (i === 2 ? '' : ' light') + '" style="width:' + (h / 14 * 100) + '%"></span></span><span class="mono sm">' + h + ' of 14</span>')).join('') + '</div>' +
+      (s.patterns.length ? '<table><thead><tr><th>Mistake</th><th>Seen on</th></tr></thead><tbody>' + s.patterns.map((p) => '<tr><td>' + esc(p.name) + '</td><td>' + esc(p.tests) + '</td></tr>').join('') + '</tbody></table>' :
+        '<p class="reading">No mistake has been recorded for this student on any test this term.</p>') +
+      (s.returning ? '<p class="reading">' + esc(s.name.split(' ')[0]) + ' missed Test 2, so the plan includes a restart point chosen from what was secure on Test 1.</p>' : '');
+
+    $('#student-note').innerHTML = '<h2>The note drafted for ' + esc(s.name) + '</h2>' +
+      '<p class="lead">Markwise drafted this from the evidence above. It is not sent until you approve the marks.</p>' +
+      '<div class="note-box"><p>' + esc(s.note) + '</p></div>' +
+      '<p class="reading muted">Edit or replace any of it; the draft only proposes wording.</p>';
+  }
+
+  function renderStepList() {
+    const p = PAGES[state.page];
+    const cur = state.step[state.page];
+    $('#steplist').innerHTML = p.steps.map((name, i) => {
+      const n = i + 1;
+      const sub = (state.page === 'students' && n > 1 && state.student !== null) ? '<span class="sub">' + esc(STUDENTS[state.student].name) + '</span>' : '';
+      const seen = state.seen[state.page].has(n) ? 'Seen' : '';
+      return '<li><button type="button" data-step="' + n + '"' + (n === cur ? ' aria-current="step"' : '') + '><span class="n">' + n + '</span><span class="name">' + esc(name) + sub + '</span><span class="seen">' + seen + '</span></button></li>';
+    }).join('');
+  }
+
+  function render() {
+    const p = PAGES[state.page];
+    const cur = state.step[state.page];
+    const total = p.steps.length;
+    $('#page-title').textContent = p.title;
+    $('#page-purpose').textContent = p.purpose;
+    $('#page-context').innerHTML = p.context;
+    $('#stepline').textContent = 'Step ' + cur + ' of ' + total + ': ' + p.steps[cur - 1];
+    $('#progress-fill').style.width = (cur / total * 100) + '%';
+    $$('#loopnav a').forEach((a) => { if (a.dataset.page === state.page) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+
+    if (state.page === 'students') renderStudent();
+    if (state.page === 'review' && cur === 4) renderReviewDone();
+    renderStepList();
+
+    $$('.step').forEach((sec) => { sec.hidden = !(sec.dataset.page === state.page && Number(sec.dataset.step) === cur); });
+    $$('#roster tr').forEach((tr) => tr.setAttribute('aria-selected', String(Number(tr.dataset.index) === state.student)));
+
+    const back = $('#btn-back'), next = $('#btn-next');
+    back.disabled = cur === 1;
+    if (cur < total) { next.textContent = 'Next: ' + p.steps[cur]; next.dataset.goto = ''; }
+    else { next.textContent = p.handoff.label; next.dataset.goto = p.handoff.page; }
+    document.title = 'Markwise, ' + p.title + ', step ' + cur + ' of ' + total;
+  }
+
+  function goStep(n) {
+    const p = PAGES[state.page];
+    state.seen[state.page].add(state.step[state.page]);
+    state.step[state.page] = Math.max(1, Math.min(p.steps.length, n));
+    render();
+    $('#panel').scrollIntoView({ block: 'start' });
+  }
+
+  function goPage(page, step) {
+    if (!PAGES[page]) page = 'home';
+    if (state.page !== page) state.seen[state.page].add(state.step[state.page]);
+    state.page = page;
+    if (step) state.step[page] = step;
+    if (location.hash.replace('#', '') !== page) history.replaceState(null, '', '#' + page);
+    render();
+    window.scrollTo({ top: 0 });
+  }
+
+  document.addEventListener('click', (e) => {
+    const nav = e.target.closest('#loopnav a');
+    if (nav) { e.preventDefault(); goPage(nav.dataset.page); return; }
+    const goto = e.target.closest('[data-goto]');
+    if (goto && goto.dataset.goto) { e.preventDefault(); goPage(goto.dataset.goto); return; }
+    const openNote = e.target.closest('[data-open-note]');
+    if (openNote) { e.preventDefault(); state.student = Number(openNote.dataset.openNote); goPage('students', 4); return; }
+    const stepBtn = e.target.closest('#steplist button');
+    if (stepBtn) { goStep(Number(stepBtn.dataset.step)); return; }
+    if (e.target.closest('#btn-back')) { goStep(state.step[state.page] - 1); return; }
+    const nextBtn = e.target.closest('#btn-next');
+    if (nextBtn) { if (nextBtn.dataset.goto) goPage(nextBtn.dataset.goto); else goStep(state.step[state.page] + 1); return; }
+    const row = e.target.closest('#roster tr.selectable');
+    if (row) { state.student = Number(row.dataset.index); goStep(2); return; }
+    const decide = e.target.closest('[data-decide]');
+    if (decide) {
+      const i = Number(decide.dataset.decide);
+      state.decisions[i] = Number(decide.dataset.choice);
+      renderReview(i);
+      $$('[data-decide="' + i + '"]')[state.decisions[i]].focus();
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    const row = e.target.closest && e.target.closest('#roster tr.selectable');
+    if (row && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); state.student = Number(row.dataset.index); goStep(2); }
+  });
+  window.addEventListener('hashchange', () => { goPage(location.hash.replace('#', '') || 'home'); });
+
+  renderStatic();
+  const params = new URLSearchParams(location.search);
+  goPage(location.hash.replace('#', '') || params.get('page') || 'home');
+})();
+</script>
+</body>
+</html>

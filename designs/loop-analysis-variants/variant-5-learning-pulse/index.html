@@ -1,0 +1,1197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LOOP — Learning pulse</title>
+    <style>
+      :root {
+        --canvas: #eef2f8;
+        --card: #ffffff;
+        --card-soft: #f7f9fc;
+        --ink: #172238;
+        --muted: #6b7890;
+        --faint: #8f9aae;
+        --line: #d9e1ef;
+        --line-strong: #c5cede;
+        --indigo: #4756e8;
+        --indigo-dark: #3241c3;
+        --indigo-soft: #edf0ff;
+        --lime: #b7d84b;
+        --lime-dark: #59720c;
+        --lime-soft: #f1f8dc;
+        --paprika: #d76045;
+        --paprika-soft: #fff0eb;
+        --rail: #fbfcfe;
+        --topbar: #22262e;
+        --shadow-float: 0 18px 42px rgba(40, 55, 95, 0.12);
+      }
+
+      * { box-sizing: border-box; }
+
+      html { min-width: 320px; }
+
+      body {
+        margin: 0;
+        background: var(--canvas);
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      button, select { font: inherit; }
+
+      button { cursor: pointer; }
+
+      button:focus-visible, select:focus-visible {
+        outline: 3px solid rgba(71, 86, 232, 0.28);
+        outline-offset: 2px;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .topbar {
+        min-height: 56px;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        background: var(--topbar);
+        color: #fff;
+      }
+
+      .brand-lockup {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        min-width: 0;
+      }
+
+      .brand-name {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.11em;
+      }
+
+      .brand-org {
+        overflow: hidden;
+        color: rgba(255,255,255,0.48);
+        font-size: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        margin-left: auto;
+        font-size: 12px;
+      }
+
+      .ai-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255,255,255,0.64);
+      }
+
+      .ai-status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--lime);
+        box-shadow: 0 0 0 3px rgba(183, 216, 75, 0.14);
+      }
+
+      .teacher {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: rgba(255,255,255,0.72);
+      }
+
+      .avatar {
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border: 1px solid rgba(255,255,255,0.16);
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .app-frame {
+        display: flex;
+        min-height: calc(100vh - 56px);
+      }
+
+      .rail {
+        width: 246px;
+        flex: 0 0 246px;
+        background: var(--rail);
+        border-right: 1px solid var(--line);
+      }
+
+      .rail-context {
+        padding: 20px 16px 16px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .rail-title {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      .rail-subtitle {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .rail-label {
+        display: block;
+        margin: 18px 0 6px;
+        color: var(--faint);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+
+      .course-select {
+        width: 100%;
+        padding: 8px 28px 8px 9px;
+        border: 1px solid var(--line-strong);
+        border-radius: 4px;
+        background: var(--card);
+        color: var(--ink);
+        font-size: 12px;
+      }
+
+      .course-name {
+        margin: 9px 0 0;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.45;
+      }
+
+      .course-meta {
+        display: flex;
+        gap: 12px;
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 10px;
+      }
+
+      .rail-body { padding: 18px 12px 20px; }
+
+      .rail-section-label {
+        margin: 0 8px 8px;
+        color: var(--faint);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+
+      .nav-list, .destination-list {
+        display: grid;
+        gap: 2px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .nav-button, .destination-button {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 9px 10px;
+        border: 0;
+        border-left: 2px solid transparent;
+        border-radius: 3px;
+        background: transparent;
+        color: var(--muted);
+        text-align: left;
+        font-size: 13px;
+      }
+
+      .nav-button:hover, .destination-button:hover { background: #f1f4f9; color: var(--ink); }
+
+      .nav-button.active {
+        border-left-color: var(--ink);
+        background: #f0f3f8;
+        color: var(--ink);
+        font-weight: 700;
+      }
+
+      .rail-count {
+        min-width: 20px;
+        padding: 2px 6px;
+        border: 1px solid #efc7bb;
+        border-radius: 3px;
+        background: var(--paprika-soft);
+        color: var(--paprika);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 10px;
+        text-align: center;
+      }
+
+      .rail-destinations {
+        margin-top: 24px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+      }
+
+      .destination-button {
+        cursor: default;
+        color: var(--faint);
+        font-size: 12px;
+      }
+
+      .destination-button span:last-child {
+        font-size: 10px;
+        text-align: right;
+      }
+
+      .workspace {
+        flex: 1;
+        min-width: 0;
+        padding: 28px 34px 38px;
+        overflow: hidden;
+      }
+
+      .workspace-inner {
+        width: min(1128px, 100%);
+        margin: 0 auto;
+      }
+
+      .workspace-topline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .breadcrumb strong { color: var(--ink); font-weight: 700; }
+
+      .assessment-picker {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .picker-label {
+        color: var(--faint);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .assessment-button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 11px;
+        border: 1px solid var(--line-strong);
+        border-radius: 5px;
+        background: var(--card);
+        color: var(--ink);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .assessment-button:hover { border-color: var(--indigo); color: var(--indigo-dark); }
+
+      .assessment-button .caret {
+        width: 7px;
+        height: 7px;
+        border-right: 1.5px solid var(--muted);
+        border-bottom: 1.5px solid var(--muted);
+        transform: rotate(45deg) translateY(-2px);
+      }
+
+      .hero {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 300px;
+        align-items: start;
+        gap: 36px;
+        min-height: 248px;
+        padding: 28px 30px 30px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--card);
+        overflow: visible;
+      }
+
+      .hero-copy { max-width: 680px; }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--indigo-dark);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 20px;
+        height: 2px;
+        background: var(--indigo);
+      }
+
+      h1 {
+        max-width: 650px;
+        margin: 12px 0 10px;
+        color: var(--ink);
+        font-size: clamp(32px, 3.8vw, 49px);
+        font-weight: 700;
+        letter-spacing: -0.055em;
+        line-height: 0.99;
+      }
+
+      h1 em { color: var(--indigo); font-style: normal; }
+
+      .hero-description {
+        max-width: 590px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .metric-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 22px;
+      }
+
+      .metric-chip {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 7px;
+        min-height: 34px;
+        padding: 7px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--card-soft);
+      }
+
+      .metric-number {
+        color: var(--ink);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+      }
+
+      .metric-label { color: var(--muted); font-size: 11px; }
+
+      .hero-progress {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        max-width: 580px;
+        margin-top: 19px;
+      }
+
+      .hero-progress-track {
+        height: 4px;
+        flex: 1;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #e1e6ef;
+      }
+
+      .hero-progress-track span {
+        display: block;
+        width: 74%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--indigo);
+      }
+
+      .progress-label {
+        color: var(--muted);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 10px;
+        white-space: nowrap;
+      }
+
+      .summary-card {
+        position: relative;
+        z-index: 1;
+        min-height: 202px;
+        margin-top: -12px;
+        padding: 18px 18px 16px;
+        border: 1px solid #d2d9f7;
+        border-radius: 14px;
+        background: var(--indigo-soft);
+        box-shadow: var(--shadow-float);
+        transform: rotate(1.4deg);
+      }
+
+      .summary-card > * { transform: rotate(-1.4deg); }
+
+      .summary-card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--indigo-dark);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+
+      .summary-live {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--indigo);
+      }
+
+      .summary-number {
+        margin: 18px 0 0;
+        color: var(--ink);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 31px;
+        font-weight: 700;
+        letter-spacing: -0.08em;
+        line-height: 1;
+      }
+
+      .summary-title {
+        margin: 5px 0 0;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .summary-copy {
+        margin: 8px 0 0;
+        color: #56638f;
+        font-size: 11px;
+        line-height: 1.45;
+      }
+
+      .summary-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 15px;
+        padding-top: 12px;
+        border-top: 1px solid #d5dcfa;
+        color: #5e6a95;
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 10px;
+      }
+
+      .summary-footer strong { color: var(--indigo-dark); }
+
+      .bento {
+        display: grid;
+        grid-template-columns: minmax(0, 1.55fr) minmax(260px, 0.9fr) minmax(240px, 0.86fr);
+        grid-template-areas:
+          "pulse pattern lesson"
+          "pulse checks checks";
+        gap: 14px;
+        margin-top: 14px;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: var(--card);
+        overflow: hidden;
+      }
+
+      .panel-pulse { grid-area: pulse; min-height: 366px; }
+      .panel-pattern { grid-area: pattern; min-height: 240px; }
+      .panel-lesson { grid-area: lesson; min-height: 240px; }
+      .panel-checks { grid-area: checks; min-height: 112px; }
+
+      .panel-heading {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 18px 18px 14px;
+      }
+
+      .panel-kicker {
+        margin: 0 0 6px;
+        color: var(--faint);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .panel-title {
+        margin: 0;
+        color: var(--ink);
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+
+      .panel-note {
+        margin: 0;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.45;
+      }
+
+      .panel-body { padding: 0 18px 18px; }
+
+      .snapshot-pill {
+        padding: 5px 7px;
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        color: var(--muted);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 10px;
+        white-space: nowrap;
+      }
+
+      .pulse-bar {
+        display: flex;
+        height: 42px;
+        margin: 6px 0 22px;
+        overflow: hidden;
+        border-radius: 8px;
+        background: #ebeff5;
+      }
+
+      .pulse-segment { display: flex; align-items: center; padding: 0 12px; color: var(--ink); font-family: "SFMono-Regular", Consolas, monospace; font-size: 12px; font-weight: 700; }
+      .pulse-ready { width: 58.33%; background: var(--lime); }
+      .pulse-practice { width: 33.33%; background: #dce5f4; }
+      .pulse-review { width: 8.34%; min-width: 44px; background: var(--paprika); color: #fff; }
+
+      .pulse-legend {
+        display: grid;
+        gap: 11px;
+      }
+
+      .pulse-item {
+        display: grid;
+        grid-template-columns: 10px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .pulse-dot { width: 8px; height: 8px; border-radius: 50%; }
+      .pulse-dot.ready { background: var(--lime); }
+      .pulse-dot.practice { background: #aabbd7; }
+      .pulse-dot.review { background: var(--paprika); }
+
+      .pulse-item-copy strong { display: block; font-size: 12px; }
+      .pulse-item-copy span { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; }
+      .pulse-value { color: var(--ink); font-family: "SFMono-Regular", Consolas, monospace; font-size: 12px; font-weight: 700; }
+
+      .movement {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 22px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+      }
+
+      .movement-block { min-width: 0; }
+      .movement-label { color: var(--muted); font-size: 10px; }
+      .movement-value { margin-top: 5px; color: var(--ink); font-family: "SFMono-Regular", Consolas, monospace; font-size: 18px; font-weight: 700; }
+      .movement-value span { color: var(--lime-dark); font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: 700; }
+
+      .mini-spark {
+        display: flex;
+        align-items: end;
+        gap: 4px;
+        height: 25px;
+        margin-top: 7px;
+      }
+
+      .mini-spark i { display: block; width: 9px; border-radius: 2px 2px 0 0; background: #bdc8e9; }
+      .mini-spark i:nth-child(1) { height: 9px; }
+      .mini-spark i:nth-child(2) { height: 13px; }
+      .mini-spark i:nth-child(3) { height: 11px; }
+      .mini-spark i:nth-child(4) { height: 17px; background: #8796ed; }
+      .mini-spark i:nth-child(5) { height: 20px; background: var(--indigo); }
+
+      .pattern-label {
+        display: inline-flex;
+        padding: 5px 7px;
+        border-radius: 5px;
+        background: var(--paprika-soft);
+        color: var(--paprika);
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      .pattern-number {
+        margin: 17px 0 0;
+        color: var(--paprika);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: -0.08em;
+      }
+
+      .pattern-subtitle {
+        margin: 2px 0 0;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .pattern-copy {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.5;
+      }
+
+      .evidence {
+        margin: 13px 0 0;
+        padding: 9px 10px;
+        border-left: 3px solid var(--paprika);
+        background: #fff8f5;
+        color: #76544c;
+        font-size: 11px;
+        line-height: 1.42;
+      }
+
+      .evidence mark {
+        background: #ffd3c7;
+        color: #63382f;
+      }
+
+      .panel-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-top: 13px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: var(--indigo-dark);
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .panel-link::after { content: "→"; font-size: 15px; line-height: 0.5; }
+      .panel-link:hover { color: var(--indigo); text-decoration: underline; }
+
+      .lesson-wrap { padding-top: 4px; }
+
+      .lesson-number {
+        margin: 2px 0 0;
+        color: var(--indigo);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 40px;
+        font-weight: 700;
+        letter-spacing: -0.09em;
+        line-height: 1;
+      }
+
+      .lesson-number span { margin-left: 4px; color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0; }
+
+      .lesson-title { margin: 9px 0 0; font-size: 13px; font-weight: 700; line-height: 1.4; }
+
+      .lesson-note { margin: 6px 0 0; color: var(--muted); font-size: 11px; line-height: 1.45; }
+
+      .lesson-steps {
+        display: grid;
+        gap: 7px;
+        margin-top: 14px;
+      }
+
+      .lesson-step {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .lesson-step::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--line-strong);
+      }
+
+      .lesson-step:first-child { color: var(--ink); font-weight: 700; }
+      .lesson-step:first-child::before { background: var(--indigo); }
+
+      .checks-content {
+        display: grid;
+        grid-template-columns: 178px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 18px;
+        padding: 0 18px 18px;
+      }
+
+      .checks-count {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+      }
+
+      .checks-count strong { color: var(--paprika); font-family: "SFMono-Regular", Consolas, monospace; font-size: 30px; letter-spacing: -0.08em; }
+      .checks-count span { color: var(--muted); font-size: 11px; line-height: 1.3; }
+
+      .checks-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+      }
+
+      .check-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 8px;
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        background: var(--card-soft);
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .check-item::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--paprika); }
+      .check-item strong { color: var(--ink); font-family: "SFMono-Regular", Consolas, monospace; font-weight: 700; }
+
+      .outline-button, .primary-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 34px;
+        padding: 8px 11px;
+        border: 1px solid var(--line-strong);
+        border-radius: 5px;
+        background: var(--card);
+        color: var(--ink);
+        font-size: 11px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .outline-button:hover { border-color: var(--indigo); color: var(--indigo-dark); }
+      .primary-button { border-color: var(--indigo); background: var(--indigo); color: #fff; }
+      .primary-button:hover { border-color: var(--indigo-dark); background: var(--indigo-dark); }
+
+      .how-it-works {
+        display: grid;
+        grid-template-columns: 170px repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        align-items: stretch;
+        margin-top: 16px;
+      }
+
+      .how-intro {
+        padding: 16px 2px 12px 0;
+      }
+
+      .how-intro h2 { margin: 0; font-size: 13px; letter-spacing: -0.02em; }
+      .how-intro p { margin: 6px 0 0; color: var(--muted); font-size: 11px; line-height: 1.45; }
+
+      .how-step {
+        position: relative;
+        min-height: 78px;
+        padding: 14px 14px 12px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background: rgba(255,255,255,0.72);
+      }
+
+      .how-step::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: -9px;
+        width: 8px;
+        height: 1px;
+        background: var(--line-strong);
+      }
+
+      .how-step:last-child::after { display: none; }
+
+      .how-step-label { color: var(--indigo-dark); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+      .how-step-copy { margin: 6px 0 0; color: var(--muted); font-size: 11px; line-height: 1.4; }
+
+      .toast {
+        position: fixed;
+        right: 24px;
+        bottom: 22px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        max-width: 330px;
+        padding: 11px 13px;
+        border: 1px solid #cfd6ef;
+        border-radius: 7px;
+        background: var(--card);
+        box-shadow: 0 8px 24px rgba(40, 55, 95, 0.12);
+        color: var(--ink);
+        font-size: 12px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(10px);
+        transition: opacity 160ms ease, transform 160ms ease;
+      }
+
+      .toast.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+      .toast strong { color: var(--indigo-dark); }
+
+      @media (max-width: 1120px) {
+        .workspace { padding-right: 24px; padding-left: 24px; }
+        .hero { grid-template-columns: minmax(0, 1fr) 260px; gap: 22px; }
+        .bento { grid-template-columns: minmax(0, 1.35fr) minmax(230px, 0.9fr); grid-template-areas: "pulse pattern" "pulse lesson" "checks checks"; }
+      }
+
+      @media (max-width: 820px) {
+        .topbar { padding: 0 16px; }
+        .brand-org, .ai-status { display: none; }
+        .app-frame { display: block; }
+        .rail { width: 100%; border-right: 0; border-bottom: 1px solid var(--line); }
+        .rail-context { padding: 15px 16px 14px; }
+        .rail-label { margin-top: 13px; }
+        .rail-body { padding: 12px 14px 14px; }
+        .rail-section-label { margin-left: 2px; }
+        .nav-list { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+        .nav-button { min-height: 34px; padding: 8px 7px; font-size: 11px; }
+        .nav-button .rail-count { padding: 2px 4px; }
+        .rail-destinations { display: none; }
+        .workspace { padding: 22px 16px 30px; }
+        .hero { grid-template-columns: 1fr; gap: 6px; min-height: 0; padding: 24px 22px 22px; }
+        .summary-card { width: min(300px, 100%); margin: 14px 0 0 auto; transform: none; }
+        .summary-card > * { transform: none; }
+        .bento { grid-template-columns: 1fr; grid-template-areas: "pulse" "pattern" "lesson" "checks"; }
+        .panel-pulse, .panel-pattern, .panel-lesson, .panel-checks { min-height: 0; }
+        .checks-content { grid-template-columns: 1fr; gap: 12px; }
+        .checks-content .outline-button { justify-self: start; }
+        .how-it-works { grid-template-columns: 1fr; gap: 8px; }
+        .how-intro { padding: 4px 0 5px; }
+        .how-step::after { display: none; }
+      }
+
+      @media (max-width: 520px) {
+        .topbar { min-height: 52px; }
+        .app-frame { min-height: calc(100vh - 52px); }
+        .topbar-actions { gap: 12px; }
+        .teacher { font-size: 11px; }
+        .workspace-topline { display: block; margin-bottom: 14px; }
+        .assessment-picker { justify-content: space-between; margin-top: 13px; }
+        .picker-label { display: none; }
+        .assessment-button { width: 100%; justify-content: space-between; }
+        h1 { font-size: 34px; line-height: 1.02; }
+        .hero-description { font-size: 13px; }
+        .metric-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+        .metric-chip { display: block; min-height: 57px; padding: 8px 7px; }
+        .metric-number { display: block; font-size: 13px; }
+        .metric-label { display: block; margin-top: 4px; font-size: 10px; line-height: 1.2; }
+        .hero-progress { margin-top: 16px; }
+        .pulse-bar { height: 35px; }
+        .pulse-segment { padding: 0 8px; font-size: 11px; }
+        .pulse-review { min-width: 34px; }
+        .movement { margin-top: 18px; }
+        .checks-list { display: grid; }
+        .toast { right: 14px; bottom: 14px; left: 14px; max-width: none; }
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .hero, .panel, .how-step { animation: rise-in 420ms ease both; }
+        .panel-pattern { animation-delay: 70ms; }
+        .panel-lesson { animation-delay: 110ms; }
+        .panel-checks { animation-delay: 150ms; }
+        .how-step:nth-child(2) { animation-delay: 180ms; }
+        .how-step:nth-child(3) { animation-delay: 230ms; }
+        .how-step:nth-child(4) { animation-delay: 280ms; }
+        @keyframes rise-in {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-lockup">
+        <span class="brand-name">LOOP</span>
+        <span class="brand-org">Meridian Foundation</span>
+      </div>
+      <div class="topbar-actions">
+        <span class="ai-status"><span class="ai-status-dot" aria-hidden="true"></span>AI support is on</span>
+        <span class="teacher">Teacher <span class="avatar" aria-hidden="true">T</span></span>
+      </div>
+    </header>
+
+    <div class="app-frame">
+      <aside class="rail" aria-label="LMS navigation">
+        <section class="rail-context" aria-labelledby="lms-heading">
+          <h2 id="lms-heading" class="rail-title">Meridian LMS</h2>
+          <p class="rail-subtitle">Courses</p>
+          <label class="rail-label" for="course-context">Course context</label>
+          <select class="course-select" id="course-context" aria-label="Course context">
+            <option>Mathematics · Tuesday cohort</option>
+          </select>
+          <p class="course-name">Meridian Centre 4 — Foundational Mathematics, Tuesday cohort</p>
+          <p class="course-meta"><span>2026 Term 3</span><span>12 enrolled</span></p>
+        </section>
+
+        <div class="rail-body">
+          <p class="rail-section-label">LOOP analysis</p>
+          <nav aria-label="LOOP analysis">
+            <ul class="nav-list">
+              <li><button class="nav-button active" type="button" aria-current="page">Home</button></li>
+              <li><button class="nav-button" type="button">Students</button></li>
+              <li><button class="nav-button" type="button">Class</button></li>
+              <li><button class="nav-button" type="button">Action plan</button></li>
+              <li><button class="nav-button" type="button">To review <span class="rail-count">7</span></button></li>
+            </ul>
+          </nav>
+
+          <section class="rail-destinations" aria-labelledby="destinations-heading">
+            <p id="destinations-heading" class="rail-section-label">Other LMS destinations</p>
+            <ul class="destination-list">
+              <li><button class="destination-button" type="button" disabled><span>Calendar</span><span>Not in demo</span></button></li>
+              <li><button class="destination-button" type="button" disabled><span>Messages</span><span>Not in demo</span></button></li>
+              <li><button class="destination-button" type="button" disabled><span>Files and resources</span><span>Not in demo</span></button></li>
+              <li><button class="destination-button" type="button" disabled><span>Grades</span><span>Not in demo</span></button></li>
+            </ul>
+          </section>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <div class="workspace-inner">
+          <div class="workspace-topline">
+            <p class="breadcrumb"><span>LOOP analysis</span><span aria-hidden="true">/</span><strong>Learning pulse</strong></p>
+            <div class="assessment-picker">
+              <span class="picker-label">Assessment</span>
+              <button class="assessment-button" type="button" id="assessment-toggle" aria-expanded="false">
+                <span>A3 · Algebra &amp; fractions</span><span class="caret" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+
+          <section class="hero" aria-labelledby="page-title">
+            <div class="hero-copy">
+              <span class="eyebrow">Class read · 12 learners</span>
+              <h1 id="page-title">The class is one <em>reteach</em> away from moving on.</h1>
+              <p class="hero-description">Most learners can compare fractions now. A short reset on adding unlike fractions should unlock the next lesson without slowing the whole group.</p>
+
+              <div class="metric-row" aria-label="Class metrics">
+                <div class="metric-chip"><span class="metric-number">74%</span><span class="metric-label">average</span></div>
+                <div class="metric-chip"><span class="metric-number">5 / 12</span><span class="metric-label">shared pattern</span></div>
+                <div class="metric-chip"><span class="metric-number">7</span><span class="metric-label">human checks</span></div>
+              </div>
+
+              <div class="hero-progress" aria-label="Class readiness 74 percent">
+                <div class="hero-progress-track"><span></span></div>
+                <span class="progress-label">74% class readiness</span>
+              </div>
+            </div>
+
+            <aside class="summary-card" aria-label="LOOP recommendation summary">
+              <div class="summary-card-top"><span>LOOP reading</span><span class="summary-live" aria-hidden="true"></span></div>
+              <p class="summary-number">7 / 12</p>
+              <p class="summary-title">ready for the next idea</p>
+              <p class="summary-copy">The class has a clear path forward: one 12-minute denominator reset, then check again.</p>
+              <div class="summary-footer"><span>Confidence <strong>0.88</strong></span><span>Updated <strong>now</strong></span></div>
+            </aside>
+          </section>
+
+          <section class="bento" aria-label="Class analysis details">
+            <article class="panel panel-pulse">
+              <div class="panel-heading">
+                <div>
+                  <p class="panel-kicker">Class distribution</p>
+                  <h2 class="panel-title">Learning pulse</h2>
+                </div>
+                <span class="snapshot-pill">A3 / current</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-note">A simple view of who can move on, who needs practice, and where LOOP wants a human look.</p>
+                <div class="pulse-bar" aria-label="7 ready, 4 need practice, 1 needs review">
+                  <div class="pulse-segment pulse-ready">7</div>
+                  <div class="pulse-segment pulse-practice">4</div>
+                  <div class="pulse-segment pulse-review">1</div>
+                </div>
+                <div class="pulse-legend">
+                  <div class="pulse-item">
+                    <span class="pulse-dot ready" aria-hidden="true"></span>
+                    <div class="pulse-item-copy"><strong>Ready to move on</strong><span>Secure across the current skill</span></div>
+                    <span class="pulse-value">7 · 58%</span>
+                  </div>
+                  <div class="pulse-item">
+                    <span class="pulse-dot practice" aria-hidden="true"></span>
+                    <div class="pulse-item-copy"><strong>Needs practice</strong><span>One focused prompt should help</span></div>
+                    <span class="pulse-value">4 · 33%</span>
+                  </div>
+                  <div class="pulse-item">
+                    <span class="pulse-dot review" aria-hidden="true"></span>
+                    <div class="pulse-item-copy"><strong>Needs human review</strong><span>Evidence is unclear or incomplete</span></div>
+                    <span class="pulse-value">1 · 8%</span>
+                  </div>
+                </div>
+                <div class="movement">
+                  <div class="movement-block">
+                    <span class="movement-label">Since A2</span>
+                    <p class="movement-value">+2 <span>learners ready</span></p>
+                    <div class="mini-spark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+                  </div>
+                  <div class="movement-block">
+                    <span class="movement-label">Average score</span>
+                    <p class="movement-value">74% <span>+9 pts</span></p>
+                    <div class="mini-spark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel panel-pattern">
+              <div class="panel-heading">
+                <div>
+                  <p class="panel-kicker">Shared pattern</p>
+                  <h2 class="panel-title">Top pattern</h2>
+                </div>
+                <span class="pattern-label">Teaching signal</span>
+              </div>
+              <div class="panel-body">
+                <p class="pattern-number">5</p>
+                <p class="pattern-subtitle">adding unlike fractions</p>
+                <p class="pattern-copy">Learners are adding the top numbers but copying one denominator instead of finding a common one.</p>
+                <p class="evidence">“top ones together ... then <mark>make bottom number same 12</mark>.”</p>
+                <button class="panel-link" type="button" data-toast="Showing the five learners behind this shared pattern.">Review the five learners</button>
+              </div>
+            </article>
+
+            <article class="panel panel-lesson">
+              <div class="panel-heading">
+                <div>
+                  <p class="panel-kicker">Recommended next move</p>
+                  <h2 class="panel-title">Next lesson</h2>
+                </div>
+              </div>
+              <div class="panel-body lesson-wrap">
+                <p class="lesson-number">12<span>min</span></p>
+                <p class="lesson-title">Run a denominator reset before new content.</p>
+                <p class="lesson-note">Use one visual example, one guided example, then a two-question check.</p>
+                <div class="lesson-steps" aria-label="Recommended lesson sequence">
+                  <div class="lesson-step">Name the shared denominator</div>
+                  <div class="lesson-step">Build one equivalent fraction</div>
+                  <div class="lesson-step">Check the class again</div>
+                </div>
+                <button class="panel-link" type="button" data-toast="The 12-minute reset is ready in the action plan.">Open action plan</button>
+              </div>
+            </article>
+
+            <article class="panel panel-checks">
+              <div class="panel-heading">
+                <div>
+                  <p class="panel-kicker">Human in the loop</p>
+                  <h2 class="panel-title">Human checks</h2>
+                </div>
+                <span class="snapshot-pill">Nothing is final until you approve</span>
+              </div>
+              <div class="checks-content">
+                <div class="checks-count"><strong>7</strong><span>items need a<br />facilitator look</span></div>
+                <div class="checks-list" aria-label="Human check categories">
+                  <span class="check-item"><strong>3</strong> unclear evidence</span>
+                  <span class="check-item"><strong>2</strong> partial working</span>
+                  <span class="check-item"><strong>2</strong> mark boundary</span>
+                </div>
+                <button class="outline-button" type="button" data-toast="Opening the review queue with seven items.">Open review queue</button>
+              </div>
+            </article>
+          </section>
+
+          <section class="how-it-works" aria-labelledby="how-title">
+            <div class="how-intro">
+              <h2 id="how-title">How LOOP knows</h2>
+              <p>Every recommendation is traceable before you use it.</p>
+            </div>
+            <div class="how-step">
+              <div class="how-step-label">01 · Read</div>
+              <p class="how-step-copy">Checks each answer against the marking scheme.</p>
+            </div>
+            <div class="how-step">
+              <div class="how-step-label">02 · Compare</div>
+              <p class="how-step-copy">Groups repeated evidence across the class.</p>
+            </div>
+            <div class="how-step">
+              <div class="how-step-label">03 · Recommend</div>
+              <p class="how-step-copy">Suggests the smallest useful next move.</p>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      const toast = document.getElementById("toast");
+      let toastTimer;
+
+      function showToast(message) {
+        toast.innerHTML = "<strong>LOOP</strong> " + message;
+        toast.classList.add("show");
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => toast.classList.remove("show"), 3000);
+      }
+
+      document.querySelectorAll("[data-toast]").forEach((button) => {
+        button.addEventListener("click", () => showToast(button.dataset.toast));
+      });
+
+      const assessmentButton = document.getElementById("assessment-toggle");
+      assessmentButton.addEventListener("click", () => {
+        const expanded = assessmentButton.getAttribute("aria-expanded") === "true";
+        assessmentButton.setAttribute("aria-expanded", String(!expanded));
+        showToast(expanded ? "A3 remains the active assessment." : "A3 is the active assessment in this overview.");
+      });
+    </script>
+  </body>
+</html>

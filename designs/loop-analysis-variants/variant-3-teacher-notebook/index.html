@@ -1,0 +1,1176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#22262e" />
+    <title>LOOP analysis | Assessment 03</title>
+    <style>
+      :root {
+        --canvas: #f5efe5;
+        --card: #fffaf2;
+        --card-deep: #f3eadc;
+        --ink: #20313a;
+        --muted: #687378;
+        --faint: #8d9696;
+        --border: #e5daca;
+        --border-strong: #d8c8b5;
+        --agent: #3e7c68;
+        --agent-soft: #e5f0eb;
+        --flag: #c66d52;
+        --flag-soft: #f5e4dc;
+        --yellow: #f7e6a6;
+        --rail: #ffffff;
+        --topbar: #22262e;
+        --shadow: 0 14px 34px rgba(59, 45, 30, 0.08);
+        --display: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+        --body: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+        --serif: Georgia, "Times New Roman", serif;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { -webkit-font-smoothing: antialiased; }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background: var(--canvas);
+        color: var(--ink);
+        font-family: var(--body);
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      button, select { font: inherit; }
+
+      button { cursor: pointer; }
+
+      button:focus-visible, select:focus-visible {
+        outline: 3px solid rgba(62, 124, 104, 0.35);
+        outline-offset: 2px;
+      }
+
+      .topbar {
+        height: 56px;
+        padding: 0 22px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: var(--topbar);
+        color: #ffffff;
+      }
+
+      .brand-lockup {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        min-width: 0;
+      }
+
+      .brand {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+
+      .brand-org {
+        overflow: hidden;
+        color: rgba(255, 255, 255, 0.48);
+        font-size: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        margin-left: auto;
+      }
+
+      .system-status {
+        color: rgba(255, 255, 255, 0.52);
+        font-size: 11px;
+      }
+
+      .teacher {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 12px;
+      }
+
+      .teacher-avatar {
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.14);
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .app-layout {
+        display: flex;
+        min-height: calc(100vh - 56px);
+      }
+
+      .rail {
+        width: 240px;
+        flex: 0 0 240px;
+        background: var(--rail);
+        border-right: 1px solid var(--border);
+      }
+
+      .rail-context {
+        padding: 16px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .rail-title {
+        margin: 0;
+        color: var(--ink);
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      .rail-subtitle {
+        margin: 1px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .rail-label {
+        display: block;
+        margin: 16px 0 5px;
+        color: var(--faint);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .course-select {
+        width: 100%;
+        padding: 7px 9px;
+        border: 1px solid var(--border-strong);
+        border-radius: 3px;
+        background: #ffffff;
+        color: var(--ink);
+        font-size: 12px;
+      }
+
+      .course-name {
+        margin: 7px 0 0;
+        color: var(--ink);
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.35;
+      }
+
+      .course-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 12px;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .rail-nav-wrap { padding: 16px 12px; }
+
+      .rail-section-label {
+        margin: 0 8px 7px;
+        color: var(--faint);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .rail-nav {
+        display: grid;
+        gap: 2px;
+      }
+
+      .rail-button {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 35px;
+        padding: 7px 10px;
+        border: 0;
+        border-left: 2px solid transparent;
+        border-radius: 2px;
+        background: transparent;
+        color: var(--muted);
+        text-align: left;
+        font-size: 13px;
+      }
+
+      .rail-button:hover { background: #f5f3ef; color: var(--ink); }
+
+      .rail-button.active {
+        border-left-color: var(--ink);
+        background: #f3f1ed;
+        color: var(--ink);
+        font-weight: 700;
+      }
+
+      .rail-count {
+        min-width: 22px;
+        padding: 1px 6px;
+        border: 1px solid #e4bdae;
+        border-radius: 2px;
+        background: var(--flag-soft);
+        color: var(--flag);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        text-align: center;
+      }
+
+      .rail-other {
+        margin-top: 22px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+      }
+
+      .rail-disabled {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 7px 10px;
+        border: 0;
+        background: transparent;
+        color: var(--faint);
+        font-size: 12px;
+        text-align: left;
+      }
+
+      .rail-disabled span:last-child { font-size: 9px; }
+
+      .workspace {
+        min-width: 0;
+        flex: 1;
+        padding: 28px 42px 54px;
+        background: var(--canvas);
+      }
+
+      .workspace-inner {
+        width: min(1120px, 100%);
+        margin: 0 auto;
+      }
+
+      .workspace-topline {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 22px;
+      }
+
+      .eyebrow {
+        margin: 0 0 4px;
+        color: var(--agent);
+        font-family: var(--serif);
+        font-size: 13px;
+        font-style: italic;
+      }
+
+      h1, h2, h3, p { margin-top: 0; }
+
+      h1 {
+        margin-bottom: 5px;
+        color: var(--ink);
+        font-family: var(--display);
+        font-size: clamp(25px, 3vw, 34px);
+        font-weight: 750;
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+      }
+
+      .workspace-subtitle {
+        max-width: 630px;
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .draft-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 11px;
+        border: 1px solid var(--border-strong);
+        border-radius: 3px;
+        background: rgba(255, 250, 242, 0.72);
+        color: var(--muted);
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      .draft-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--agent);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 315px;
+        gap: 26px;
+        min-height: 235px;
+        margin-bottom: 24px;
+        padding: 31px 34px 30px;
+        border: 1px solid var(--border);
+        border-radius: 16px 16px 4px 16px;
+        background: var(--card);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-copy { min-width: 0; }
+
+      .agent-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 15px;
+        color: var(--agent);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+
+      .agent-kicker::before {
+        width: 8px;
+        height: 8px;
+        border: 2px solid var(--agent);
+        border-radius: 50%;
+        content: "";
+      }
+
+      .hero h2 {
+        max-width: 650px;
+        margin-bottom: 12px;
+        color: var(--ink);
+        font-family: var(--display);
+        font-size: clamp(30px, 4vw, 50px);
+        font-weight: 750;
+        letter-spacing: -0.055em;
+        line-height: 0.98;
+      }
+
+      .hero-copy > p {
+        max-width: 620px;
+        margin-bottom: 21px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      .hero-metrics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 26px;
+      }
+
+      .metric {
+        display: flex;
+        align-items: baseline;
+        gap: 7px;
+      }
+
+      .metric-value {
+        color: var(--ink);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: -0.05em;
+      }
+
+      .metric-label {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .hero-note {
+        align-self: stretch;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 19px;
+        border: 1px solid #e8d9ac;
+        border-radius: 4px 14px 4px 4px;
+        background: var(--yellow);
+      }
+
+      .note-label {
+        color: #7a6d3e;
+        font-family: var(--serif);
+        font-size: 13px;
+        font-style: italic;
+      }
+
+      .hero-note p {
+        margin: 11px 0 18px;
+        color: #574e2c;
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .primary-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 10px 12px;
+        border: 1px solid var(--agent);
+        border-radius: 3px;
+        background: var(--agent);
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 700;
+        text-align: left;
+        transition: background 160ms ease, transform 160ms ease;
+      }
+
+      .primary-button:hover { background: #2f6654; transform: translateY(-1px); }
+
+      .primary-button .button-arrow {
+        display: inline-block;
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 1;
+      }
+
+      .plan-confirmation {
+        display: none;
+        margin-top: 9px;
+        color: #536d5f;
+        font-size: 11px;
+      }
+
+      .plan-confirmation.visible { display: block; }
+
+      .section-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      .panel {
+        min-width: 0;
+        border: 1px solid var(--border);
+        border-radius: 11px 11px 4px 11px;
+        background: var(--card);
+      }
+
+      .panel-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 19px 21px 15px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .section-kicker {
+        margin: 0 0 4px;
+        color: var(--agent);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .panel h3 {
+        margin-bottom: 0;
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 750;
+        letter-spacing: -0.025em;
+        line-height: 1.2;
+      }
+
+      .confidence {
+        flex: 0 0 auto;
+        padding: 4px 7px;
+        border: 1px solid #b9d3c6;
+        border-radius: 3px;
+        background: var(--agent-soft);
+        color: var(--agent);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      .noticed-body { padding: 20px 21px 22px; }
+
+      .notice-intro {
+        margin-bottom: 18px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .learner-visual {
+        padding: 15px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: #fdf7ee;
+      }
+
+      .visual-topline {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .visual-topline strong {
+        color: var(--ink);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 13px;
+      }
+
+      .learner-dots {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 7px;
+        margin-bottom: 13px;
+      }
+
+      .learner-dot {
+        display: grid;
+        aspect-ratio: 1;
+        place-items: center;
+        border: 1px solid #c6d9cf;
+        border-radius: 50%;
+        background: var(--agent-soft);
+        color: var(--agent);
+        font-size: 10px;
+        font-weight: 800;
+      }
+
+      .learner-dot.flagged {
+        border-color: #e4bdae;
+        background: var(--flag-soft);
+        color: var(--flag);
+      }
+
+      .dot-key {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 17px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .key-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .key-item::before {
+        width: 7px;
+        height: 7px;
+        border: 1px solid #c6d9cf;
+        border-radius: 50%;
+        background: var(--agent-soft);
+        content: "";
+      }
+
+      .key-item.flagged::before {
+        border-color: #e4bdae;
+        background: var(--flag-soft);
+      }
+
+      .pattern-callout {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 12px;
+        align-items: end;
+        margin-top: 19px;
+        padding-top: 15px;
+        border-top: 1px solid var(--border);
+      }
+
+      .pattern-name {
+        margin-bottom: 7px;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .pattern-bar {
+        width: 100%;
+        height: 9px;
+        overflow: hidden;
+        border-radius: 2px;
+        background: #ecdfd1;
+      }
+
+      .pattern-bar span {
+        display: block;
+        width: 42%;
+        height: 100%;
+        background: var(--flag);
+      }
+
+      .pattern-score {
+        color: var(--flag);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 19px;
+        font-weight: 800;
+        letter-spacing: -0.08em;
+      }
+
+      .pattern-footnote {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .why-body { padding: 20px 21px 22px; }
+
+      .why-lede {
+        margin-bottom: 17px;
+        color: var(--ink);
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
+      .evidence-box {
+        margin-bottom: 19px;
+        padding: 15px 16px;
+        border-left: 3px solid var(--agent);
+        background: var(--agent-soft);
+      }
+
+      .evidence-label {
+        margin-bottom: 7px;
+        color: var(--agent);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+
+      .evidence-box blockquote {
+        margin: 0;
+        color: var(--ink);
+        font-size: 14px;
+        line-height: 1.62;
+      }
+
+      mark {
+        padding: 1px 3px;
+        background: var(--yellow);
+        color: inherit;
+      }
+
+      .explanation {
+        margin-bottom: 18px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.62;
+      }
+
+      .decision-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .decision-row {
+        display: grid;
+        grid-template-columns: 26px 1fr;
+        gap: 10px;
+        align-items: start;
+      }
+
+      .decision-mark {
+        display: grid;
+        width: 25px;
+        height: 25px;
+        place-items: center;
+        border: 1px solid var(--border-strong);
+        border-radius: 50%;
+        background: #fffdf8;
+        color: var(--agent);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .decision-row strong {
+        display: block;
+        margin-bottom: 1px;
+        color: var(--ink);
+        font-size: 12px;
+      }
+
+      .decision-row span {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.45;
+      }
+
+      .lower-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(250px, 0.72fr);
+        gap: 24px;
+        align-items: stretch;
+      }
+
+      .reset-card {
+        border: 1px solid #d8c8b5;
+        border-radius: 14px 4px 4px 14px;
+        background: #f1e6d7;
+        overflow: hidden;
+      }
+
+      .reset-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 21px 23px 17px;
+        border-bottom: 1px solid #ddcdbb;
+      }
+
+      .reset-label {
+        margin: 0 0 4px;
+        color: var(--flag);
+        font-family: var(--serif);
+        font-size: 13px;
+        font-style: italic;
+      }
+
+      .reset-card h3 {
+        margin-bottom: 6px;
+        color: var(--ink);
+        font-size: 21px;
+        font-weight: 750;
+        letter-spacing: -0.035em;
+      }
+
+      .reset-intro {
+        max-width: 530px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .time-badge {
+        flex: 0 0 auto;
+        min-width: 66px;
+        padding: 8px 9px;
+        border: 1px solid #d9a08c;
+        border-radius: 3px;
+        background: #fff5ee;
+        color: var(--flag);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+        font-weight: 800;
+        text-align: center;
+      }
+
+      .time-badge small {
+        display: block;
+        margin-top: 1px;
+        color: #9b6858;
+        font-family: var(--body);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .lesson-steps {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+        padding: 18px 23px 21px;
+      }
+
+      .lesson-step {
+        min-width: 0;
+        padding-right: 18px;
+      }
+
+      .lesson-step + .lesson-step {
+        padding-left: 18px;
+        border-left: 1px solid #ddcdbb;
+      }
+
+      .step-number {
+        display: grid;
+        width: 27px;
+        height: 27px;
+        margin-bottom: 10px;
+        place-items: center;
+        border: 1px solid #d59c87;
+        border-radius: 50%;
+        background: #fff7ef;
+        color: var(--flag);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        font-weight: 800;
+      }
+
+      .step-time {
+        margin-left: 4px;
+        color: var(--flag);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10px;
+      }
+
+      .lesson-step h4 {
+        margin: 0 0 5px;
+        color: var(--ink);
+        font-size: 12px;
+        line-height: 1.35;
+      }
+
+      .lesson-step p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.5;
+      }
+
+      .review-card {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #e3b7a8;
+        border-radius: 4px 13px 13px 4px;
+        background: var(--flag-soft);
+      }
+
+      .review-card-inner { padding: 21px 20px 19px; }
+
+      .review-card .section-kicker { color: var(--flag); }
+
+      .review-card h3 {
+        margin-bottom: 7px;
+        color: var(--ink);
+        font-size: 20px;
+      }
+
+      .review-copy {
+        margin-bottom: 15px;
+        color: #795f57;
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      .review-items {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .review-items li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--ink);
+        font-size: 11px;
+      }
+
+      .review-items li::before {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--flag);
+        content: "";
+      }
+
+      .review-button {
+        width: calc(100% - 40px);
+        margin: auto 20px 19px;
+        padding: 9px 11px;
+        border: 1px solid #d99d8a;
+        border-radius: 3px;
+        background: #fff9f4;
+        color: var(--flag);
+        font-size: 11px;
+        font-weight: 800;
+        text-align: left;
+        transition: background 160ms ease;
+      }
+
+      .review-button:hover { background: #ffffff; }
+
+      .review-button span { float: right; font-size: 16px; font-weight: 400; line-height: 0.9; }
+
+      .workspace-footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        margin-top: 20px;
+        color: var(--faint);
+        font-size: 11px;
+      }
+
+      .workspace-footer strong { color: var(--muted); font-weight: 700; }
+
+      @media (max-width: 1050px) {
+        .workspace { padding: 24px 28px 44px; }
+        .hero { grid-template-columns: minmax(0, 1fr) 280px; gap: 18px; padding: 27px; }
+        .lower-grid { grid-template-columns: minmax(0, 1fr) 280px; }
+      }
+
+      @media (max-width: 820px) {
+        .topbar { padding: 0 16px; }
+        .system-status { display: none; }
+        .app-layout { display: block; }
+        .rail { width: 100%; border-right: 0; border-bottom: 1px solid var(--border); }
+        .rail-context { display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; align-items: end; padding: 13px 16px; }
+        .rail-context > .rail-title, .rail-context > .rail-subtitle { grid-column: 1 / -1; }
+        .rail-label { margin-top: 10px; }
+        .rail-nav-wrap { padding: 12px 16px 14px; }
+        .rail-nav { display: flex; gap: 4px; overflow-x: auto; }
+        .rail-button { flex: 0 0 auto; width: auto; min-height: 31px; padding: 6px 10px; }
+        .rail-other { display: none; }
+        .workspace { padding: 24px 20px 42px; }
+        .section-grid, .lower-grid { grid-template-columns: 1fr; }
+        .review-card { min-height: 0; }
+      }
+
+      @media (max-width: 560px) {
+        body { font-size: 14px; }
+        .brand-org, .teacher { display: none; }
+        .topbar-right { gap: 0; }
+        .workspace { padding: 20px 14px 36px; }
+        .workspace-topline { display: block; margin-bottom: 17px; }
+        .draft-status { display: inline-flex; margin-top: 13px; }
+        .hero { display: block; min-height: 0; margin-bottom: 18px; padding: 22px 19px 19px; border-radius: 12px 12px 4px 12px; }
+        .hero h2 { font-size: 35px; }
+        .hero-note { margin-top: 21px; padding: 16px; }
+        .hero-note p { margin: 8px 0 14px; }
+        .section-grid { gap: 18px; margin-bottom: 18px; }
+        .panel-head { padding: 16px 16px 13px; }
+        .noticed-body, .why-body { padding: 16px; }
+        .learner-dots { gap: 5px; }
+        .learner-dot { font-size: 8px; }
+        .pattern-callout { grid-template-columns: 1fr auto; }
+        .lower-grid { gap: 18px; }
+        .reset-top { padding: 17px 16px 15px; }
+        .lesson-steps { grid-template-columns: 1fr; gap: 16px; padding: 17px 16px 18px; }
+        .lesson-step, .lesson-step + .lesson-step { padding: 0 0 0 39px; border-left: 0; position: relative; }
+        .lesson-step + .lesson-step { border-top: 1px solid #ddcdbb; padding-top: 16px; }
+        .step-number { position: absolute; left: 0; top: 0; }
+        .lesson-step + .lesson-step .step-number { top: 16px; }
+        .workspace-footer { display: block; line-height: 1.7; }
+        .workspace-footer span { display: block; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-lockup">
+        <span class="brand">LOOP</span>
+        <span class="brand-org">Meridian Foundation</span>
+      </div>
+      <div class="topbar-right">
+        <span class="system-status">Using the built-in rules only</span>
+        <div class="teacher"><span>Teacher</span><span class="teacher-avatar" aria-hidden="true">T</span></div>
+      </div>
+    </header>
+
+    <div class="app-layout">
+      <aside class="rail" aria-label="LMS navigation">
+        <section class="rail-context" aria-labelledby="rail-title">
+          <p id="rail-title" class="rail-title">Meridian LMS</p>
+          <p class="rail-subtitle">Courses</p>
+          <label class="rail-label" for="course-context">Course context</label>
+          <select id="course-context" class="course-select">
+            <option>Mathematics · Tuesday cohort</option>
+            <option>Literacy · Wednesday cohort (not connected)</option>
+          </select>
+          <p class="course-name">Meridian Centre 4 - Foundational Mathematics</p>
+          <div class="course-meta"><span>2026 Term 3</span><span>12 enrolled</span></div>
+        </section>
+        <div class="rail-nav-wrap">
+          <p class="rail-section-label">LOOP analysis</p>
+          <nav class="rail-nav" aria-label="LOOP analysis">
+            <button class="rail-button active" type="button" aria-current="page">Home</button>
+            <button class="rail-button" type="button">Students</button>
+            <button class="rail-button" type="button">Class</button>
+            <button class="rail-button" type="button">Action plan</button>
+            <button class="rail-button" type="button">To review <span class="rail-count">7</span></button>
+          </nav>
+          <div class="rail-other">
+            <p class="rail-section-label">Other LMS destinations</p>
+            <button class="rail-disabled" type="button" disabled><span>Calendar</span><span>Not in demo</span></button>
+            <button class="rail-disabled" type="button" disabled><span>Messages</span><span>Not in demo</span></button>
+            <button class="rail-disabled" type="button" disabled><span>Files and resources</span><span>Not in demo</span></button>
+            <button class="rail-disabled" type="button" disabled><span>Grades</span><span>Not in demo</span></button>
+          </div>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <div class="workspace-inner">
+          <div class="workspace-topline">
+            <div>
+              <p class="eyebrow">LOOP / analysis overview</p>
+              <h1>Assessment 03 · Fractions &amp; decimals</h1>
+              <p class="workspace-subtitle">A calm read of what happened in the room, with the next useful step ready for tomorrow.</p>
+            </div>
+            <div class="draft-status"><span class="draft-dot" aria-hidden="true"></span>Every mark is a draft until you confirm it.</div>
+          </div>
+
+          <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-copy">
+              <div class="agent-kicker">LOOP's read</div>
+              <h2 id="hero-title">One pattern is big enough to reteach.</h2>
+              <p>Five learners combined the top numbers but did not make the denominators match. That points to one shared idea to revisit, rather than five separate problems to chase.</p>
+              <div class="hero-metrics" aria-label="Assessment summary">
+                <div class="metric"><span class="metric-value">7.4 / 10</span><span class="metric-label">class average</span></div>
+                <div class="metric"><span class="metric-value">5 / 12</span><span class="metric-label">shared misconception</span></div>
+                <div class="metric"><span class="metric-value">120 min</span><span class="metric-label">follow-up budget</span></div>
+              </div>
+            </div>
+            <aside class="hero-note" aria-label="Suggested next action">
+              <div>
+                <div class="note-label">A note for your next lesson</div>
+                <p>Start with a 12-minute reset on equivalent fractions, then let the class try one carefully chosen comparison.</p>
+              </div>
+              <div>
+                <button id="open-plan" class="primary-button" type="button">Open the action plan <span class="button-arrow" aria-hidden="true">→</span></button>
+                <div id="plan-confirmation" class="plan-confirmation" role="status">Action plan is ready below.</div>
+              </div>
+            </aside>
+          </section>
+
+          <div class="section-grid">
+            <section class="panel" aria-labelledby="noticed-title">
+              <header class="panel-head">
+                <div>
+                  <p class="section-kicker">Class picture</p>
+                  <h3 id="noticed-title">What LOOP noticed</h3>
+                </div>
+                <span class="confidence">0.91 confidence</span>
+              </header>
+              <div class="noticed-body">
+                <p class="notice-intro">The same move appears in five answers. The other seven learners either used a common denominator or showed a different, smaller issue.</p>
+                <div class="learner-visual">
+                  <div class="visual-topline"><span>12 learner answers read</span><strong>5 share one pattern</strong></div>
+                  <div class="learner-dots" aria-label="Five of twelve learners share the pattern">
+                    <span class="learner-dot flagged">AM</span><span class="learner-dot flagged">BK</span><span class="learner-dot flagged">CY</span><span class="learner-dot flagged">DS</span><span class="learner-dot flagged">EH</span><span class="learner-dot">FN</span><span class="learner-dot">GP</span><span class="learner-dot">HT</span><span class="learner-dot">JR</span><span class="learner-dot">KL</span><span class="learner-dot">LM</span><span class="learner-dot">NS</span>
+                  </div>
+                  <div class="dot-key"><span class="key-item flagged">Shared misconception</span><span class="key-item">Other response</span></div>
+                </div>
+                <div class="pattern-callout">
+                  <div>
+                    <div class="pattern-name">Adding unlike fractions as if the bottoms already match</div>
+                    <div class="pattern-bar" aria-label="Five of twelve learners, 42 percent"><span></span></div>
+                  </div>
+                  <div class="pattern-score">42%</div>
+                </div>
+                <p class="pattern-footnote">This crosses the 40% class threshold for a group re-teach.</p>
+              </div>
+            </section>
+
+            <section class="panel" aria-labelledby="why-title">
+              <header class="panel-head">
+                <div>
+                  <p class="section-kicker">Evidence first</p>
+                  <h3 id="why-title">Why it matters</h3>
+                </div>
+                <span class="confidence">0.88 confidence</span>
+              </header>
+              <div class="why-body">
+                <p class="why-lede">This is a teaching problem, not five isolated mistakes.</p>
+                <div class="evidence-box">
+                  <div class="evidence-label">Verbatim evidence · Amina M.</div>
+                  <blockquote>“Answer is 7/12 km. and then <mark>add top ones together</mark> I make bottom number same 12.”</blockquote>
+                </div>
+                <p class="explanation">LOOP found the same operation in five answers and checked it against the marking scheme. Because the correct denominator idea is missing, a short shared reset should help more learners than five separate explanations.</p>
+                <ul class="decision-list">
+                  <li class="decision-row"><span class="decision-mark">01</span><div><strong>Group response</strong><span>Reteach equivalent fractions to the whole class.</span></div></li>
+                  <li class="decision-row"><span class="decision-mark">02</span><div><strong>Individual follow-up</strong><span>Keep the other seven answers on their own support path.</span></div></li>
+                </ul>
+              </div>
+            </section>
+          </div>
+
+          <div class="lower-grid">
+            <section id="action-plan" class="reset-card" aria-labelledby="reset-title">
+              <div class="reset-top">
+                <div>
+                  <p class="reset-label">Ready for tomorrow</p>
+                  <h3 id="reset-title">Tomorrow's 12-minute reset</h3>
+                  <p class="reset-intro">A small, practical sequence that makes the hidden denominator step visible before the next fraction comparison.</p>
+                </div>
+                <div class="time-badge">12 min<small>total</small></div>
+              </div>
+              <div class="lesson-steps">
+                <article class="lesson-step"><span class="step-number">1</span><h4>Show the mismatch <span class="step-time">3 min</span></h4><p>Put 1/2 + 1/3 on the board. Ask what the bottoms are saying before anyone calculates.</p></article>
+                <article class="lesson-step"><span class="step-number">2</span><h4>Build one whole <span class="step-time">5 min</span></h4><p>Use sixths to make both fractions comparable, then narrate why the denominator changes.</p></article>
+                <article class="lesson-step"><span class="step-number">3</span><h4>Try one quietly <span class="step-time">4 min</span></h4><p>Ask learners to solve 2/3 + 1/4 and circle the step that makes the bottoms match.</p></article>
+              </div>
+            </section>
+
+            <aside class="review-card" aria-labelledby="review-title">
+              <div class="review-card-inner">
+                <p class="section-kicker">Your call</p>
+                <h3 id="review-title">7 checks still need you</h3>
+                <p class="review-copy">LOOP left these answers open because the evidence was not strong enough to decide alone.</p>
+                <ul class="review-items">
+                  <li>Four provisional marks</li>
+                  <li>Two unclear written answers</li>
+                  <li>One learner marked unavailable</li>
+                </ul>
+              </div>
+              <button class="review-button" type="button">Open To review <span aria-hidden="true">→</span></button>
+            </aside>
+          </div>
+
+          <footer class="workspace-footer">
+            <span><strong>Analysis complete</strong> · 12 answers checked against the marking scheme.</span>
+            <span>Last run today at 09:42 · Assessment 03</span>
+          </footer>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const openPlanButton = document.querySelector("#open-plan");
+      const plan = document.querySelector("#action-plan");
+      const confirmation = document.querySelector("#plan-confirmation");
+
+      openPlanButton.addEventListener("click", () => {
+        plan.scrollIntoView({ behavior: "smooth", block: "start" });
+        confirmation.classList.add("visible");
+        openPlanButton.innerHTML = 'Action plan opened <span class="button-arrow" aria-hidden="true">✓</span>';
+      });
+    </script>
+  </body>
+</html>

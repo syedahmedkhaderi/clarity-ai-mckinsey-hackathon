@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LOOP analysis — Test 3</title>
+  <style>
+    :root {
+      --canvas: #f7f9fb;
+      --paper: #ffffff;
+      --paper-tint: #f1f5f7;
+      --ink: #182431;
+      --muted: #647181;
+      --faint: #8a96a3;
+      --border: #dbe2e8;
+      --border-strong: #b9c4ce;
+      --navy: #22262e;
+      --teal: #147d78;
+      --teal-deep: #075e5c;
+      --teal-soft: #e7f4f2;
+      --rust: #b95f3a;
+      --rust-soft: #fbede8;
+      --yellow-soft: #fff8df;
+      --yellow-line: #ebd78f;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { min-width: 320px; background: var(--canvas); }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--canvas);
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, select { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, select:focus-visible {
+      outline: 2px solid var(--teal);
+      outline-offset: 2px;
+    }
+    .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+    .eyebrow {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .topbar {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 20px;
+      color: #fff;
+      background: var(--navy);
+    }
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      min-width: 0;
+      white-space: nowrap;
+    }
+    .brand strong { font-size: 14px; letter-spacing: .07em; }
+    .brand span { color: rgba(255,255,255,.5); font-size: 12px; overflow: hidden; text-overflow: ellipsis; }
+    .topbar-spacer { flex: 1; }
+    .system-note { color: rgba(255,255,255,.48); font-size: 11px; }
+    .teacher {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+    }
+    .teacher-mark {
+      display: grid;
+      width: 28px;
+      height: 28px;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .app-shell { display: flex; min-height: calc(100vh - 56px); }
+    .lms-rail {
+      width: 240px;
+      flex: 0 0 240px;
+      border-right: 1px solid var(--border);
+      background: var(--paper);
+    }
+    .rail-context {
+      padding: 18px 16px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .rail-context h2 { margin: 0; font-size: 14px; letter-spacing: -.01em; }
+    .rail-context p { margin: 2px 0 0; color: var(--muted); font-size: 12px; }
+    .rail-label { display: block; margin-top: 16px; }
+    .rail-select {
+      width: 100%;
+      margin-top: 6px;
+      padding: 7px 8px;
+      color: var(--ink);
+      background: var(--paper);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      font-size: 12px;
+    }
+    .course-name { margin: 8px 0 0; font-size: 12px; font-weight: 600; line-height: 1.35; }
+    .course-meta { display: flex; gap: 12px; margin-top: 5px; color: var(--muted); font-size: 10px; }
+    .rail-menu { padding: 15px 12px; }
+    .rail-heading { padding: 0 8px 8px; }
+    .rail-nav { display: grid; gap: 2px; }
+    .rail-nav button, .destination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 8px 10px;
+      color: var(--muted);
+      background: transparent;
+      border: 0;
+      border-left: 2px solid transparent;
+      border-radius: 2px;
+      text-align: left;
+      font-size: 13px;
+    }
+    .rail-nav button:hover, .rail-nav button.active { color: var(--ink); background: var(--paper-tint); }
+    .rail-nav button.active { border-left-color: var(--ink); font-weight: 600; }
+    .review-count {
+      min-width: 22px;
+      padding: 1px 5px;
+      color: var(--rust);
+      background: var(--rust-soft);
+      border: 1px solid #e6bcae;
+      border-radius: 2px;
+      font-family: var(--mono);
+      font-size: 10px;
+      text-align: center;
+    }
+    .other-destinations { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .destination { padding: 8px; color: var(--faint); cursor: default; font-size: 12px; }
+    .destination small { font-size: 9px; }
+
+    main {
+      min-width: 0;
+      flex: 1;
+      padding: 28px 34px 34px;
+      background: var(--canvas);
+    }
+    .workspace { max-width: 1190px; margin: 0 auto; }
+    .page-top {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-strong);
+    }
+    .breadcrumb { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 12px; }
+    .breadcrumb strong { color: var(--ink); font-weight: 600; }
+    .slash { color: var(--border-strong); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin: 8px 0 0; font-size: 27px; font-weight: 600; letter-spacing: -.035em; line-height: 1.12; }
+    .page-note { margin: 7px 0 0; color: var(--muted); font-size: 13px; }
+    .page-controls { display: flex; align-items: center; gap: 10px; }
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 9px;
+      color: var(--teal-deep);
+      background: var(--teal-soft);
+      border: 1px solid #b8ded9;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .status-dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; }
+    .quiet-button {
+      padding: 7px 10px;
+      color: var(--ink);
+      background: var(--paper);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .quiet-button:hover { background: var(--paper-tint); }
+
+    .briefing {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(320px, .85fr);
+      margin-top: 20px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+    }
+    .briefing-summary { padding: 21px 23px 22px; border-right: 1px solid var(--border); }
+    .briefing-summary h2 { max-width: 680px; margin: 9px 0 8px; font-size: 20px; font-weight: 600; line-height: 1.25; letter-spacing: -.02em; }
+    .briefing-summary p { max-width: 710px; margin-bottom: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .briefing-summary em { color: var(--ink); font-style: normal; font-weight: 600; }
+    .briefing-ledger { padding: 17px 19px; }
+    .ledger-heading { display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .ledger-heading strong { font-size: 12px; font-weight: 600; }
+    .ledger-heading span { color: var(--teal); font-family: var(--mono); font-size: 11px; }
+    .ledger-list { margin: 0; padding: 0; list-style: none; }
+    .ledger-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 0 0; font-size: 12px; }
+    .ledger-list li span:first-child { color: var(--muted); }
+    .ledger-list li span:last-child { color: var(--ink); font-family: var(--mono); font-size: 11px; }
+    .ledger-list .review { color: var(--rust) !important; }
+
+    .section-kicker { display: flex; align-items: center; gap: 10px; margin: 26px 0 11px; }
+    .section-number { display: grid; width: 22px; height: 22px; place-items: center; color: var(--paper); background: var(--ink); border-radius: 50%; font-family: var(--mono); font-size: 10px; }
+    .section-kicker h2 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+    .section-kicker p { margin: 2px 0 0; color: var(--muted); font-size: 11px; }
+    .analysis-grid { display: grid; grid-template-columns: minmax(0, 1.52fr) minmax(340px, .83fr); gap: 16px; align-items: start; }
+    .register-panel, .evidence-panel { min-width: 0; background: var(--paper); border: 1px solid var(--border); }
+    .panel-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 16px 17px 13px; border-bottom: 1px solid var(--border); }
+    .panel-head h3 { margin: 0; font-size: 14px; font-weight: 600; }
+    .panel-head p { margin: 3px 0 0; color: var(--muted); font-size: 11px; }
+    .table-note { color: var(--muted); font-family: var(--mono); font-size: 10px; white-space: nowrap; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; min-width: 730px; border-collapse: collapse; }
+    th {
+      padding: 10px 12px;
+      color: var(--muted);
+      background: #fbfcfd;
+      border-bottom: 1px solid var(--border);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      line-height: 1.25;
+      text-align: left;
+      text-transform: uppercase;
+    }
+    td { padding: 13px 12px; vertical-align: top; border-bottom: 1px solid var(--border); font-size: 12px; }
+    tbody tr { cursor: pointer; transition: background .15s ease; }
+    tbody tr:hover, tbody tr.selected { background: #f2f8f7; }
+    tbody tr.selected td:first-child { box-shadow: inset 3px 0 0 var(--teal); }
+    tbody tr:last-child td { border-bottom: 0; }
+    .pattern { display: flex; gap: 9px; }
+    .pattern-id { flex: 0 0 auto; color: var(--teal); font-family: var(--mono); font-size: 10px; font-weight: 700; }
+    .pattern-name { color: var(--ink); font-weight: 600; line-height: 1.35; }
+    .pattern-meta { margin-top: 4px; color: var(--muted); font-size: 10px; line-height: 1.35; }
+    .cell-num { color: var(--ink); font-family: var(--mono); font-size: 11px; }
+    .confidence { display: grid; gap: 5px; min-width: 82px; }
+    .confidence-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .confidence-meter { height: 4px; background: #e8edf0; }
+    .confidence-meter span { display: block; height: 100%; background: var(--teal); }
+    .scope { display: inline-flex; width: max-content; padding: 3px 5px; color: var(--muted); background: var(--paper-tint); border: 1px solid var(--border); border-radius: 2px; font-size: 10px; line-height: 1.2; }
+    .scope.group { color: var(--teal-deep); background: var(--teal-soft); border-color: #b8ded9; }
+    .action { color: var(--ink); font-size: 11px; line-height: 1.35; }
+    .action strong { display: block; color: var(--teal-deep); font-size: 11px; font-weight: 600; }
+    .action.review strong { color: var(--rust); }
+    .register-footer { display: flex; justify-content: space-between; gap: 15px; padding: 10px 12px; border-top: 1px solid var(--border); color: var(--muted); font-size: 10px; }
+    .register-footer span:last-child { color: var(--teal-deep); }
+
+    .evidence-panel { position: sticky; top: 20px; }
+    .evidence-head { padding: 16px 17px 13px; border-bottom: 1px solid var(--border); }
+    .evidence-head-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .evidence-head h3 { margin: 0; font-size: 14px; font-weight: 600; }
+    .evidence-id { color: var(--teal); font-family: var(--mono); font-size: 10px; }
+    .evidence-head p { margin: 5px 0 0; color: var(--muted); font-size: 11px; }
+    .evidence-body { padding: 16px 17px 17px; }
+    .answer-label { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 7px; }
+    .answer-label span:last-child { color: var(--muted); font-family: var(--mono); font-size: 10px; }
+    .answer {
+      margin: 0;
+      padding: 13px 14px;
+      color: #35424d;
+      background: #fbfcfd;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--teal);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    mark { padding: 1px 3px; color: var(--teal-deep); background: #cdebe7; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+    .evidence-caption { margin: 7px 0 0; color: var(--muted); font-size: 10px; }
+    .reasoning { margin-top: 17px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .reasoning h4 { margin: 0 0 8px; color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .reasoning-list { margin: 0; padding: 0; list-style: none; }
+    .reasoning-list li { position: relative; padding: 0 0 9px 17px; color: var(--muted); font-size: 11px; line-height: 1.45; }
+    .reasoning-list li:last-child { padding-bottom: 0; }
+    .reasoning-list li::before { content: ""; position: absolute; left: 2px; top: 6px; width: 6px; height: 6px; background: var(--teal); border-radius: 50%; }
+    .reasoning-list li:not(:last-child)::after { content: ""; position: absolute; left: 4px; top: 13px; width: 2px; height: calc(100% - 5px); background: #bfe1dd; }
+    .reasoning-list strong { color: var(--ink); font-weight: 600; }
+    .confidence-block { margin-top: 17px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .confidence-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+    .confidence-row span:first-child { color: var(--muted); font-size: 11px; }
+    .confidence-score { color: var(--teal-deep); font-family: var(--mono); font-size: 18px; font-weight: 700; }
+    .large-meter { height: 6px; margin-top: 8px; background: #e8edf0; }
+    .large-meter span { display: block; height: 100%; background: var(--teal); }
+    .review-note { display: flex; gap: 8px; margin-top: 13px; padding: 9px 10px; color: #7a4633; background: var(--rust-soft); border: 1px solid #e6bcae; font-size: 10px; line-height: 1.4; }
+    .review-note b { font-weight: 700; }
+
+    .next-section { margin-top: 26px; }
+    .decision-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .decision {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 74px;
+      padding: 15px 17px;
+      color: var(--ink);
+      background: var(--paper);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      text-align: left;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .decision:hover { background: #fbfcfd; border-color: var(--teal); }
+    .decision.primary { color: #fff; background: var(--teal-deep); border-color: var(--teal-deep); }
+    .decision.primary:hover { background: #084f4d; }
+    .decision-copy { display: grid; gap: 3px; }
+    .decision-copy strong { font-size: 13px; font-weight: 600; }
+    .decision-copy span { color: var(--muted); font-size: 11px; }
+    .decision.primary .decision-copy span { color: rgba(255,255,255,.7); }
+    .arrow { flex: 0 0 auto; font-family: var(--mono); font-size: 19px; line-height: 1; }
+    .toast {
+      position: fixed;
+      right: 26px;
+      bottom: 22px;
+      max-width: 300px;
+      padding: 11px 13px;
+      color: var(--teal-deep);
+      background: var(--teal-soft);
+      border: 1px solid #b8ded9;
+      border-radius: 3px;
+      font-size: 12px;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 1050px) {
+      main { padding-right: 24px; padding-left: 24px; }
+      .briefing { grid-template-columns: 1fr; }
+      .briefing-summary { border-right: 0; border-bottom: 1px solid var(--border); }
+      .analysis-grid { grid-template-columns: 1fr; }
+      .evidence-panel { position: static; }
+    }
+    @media (max-width: 720px) {
+      .topbar { padding: 0 14px; }
+      .system-note { display: none; }
+      .brand span { max-width: 155px; }
+      .app-shell { display: block; }
+      .lms-rail { width: 100%; border-right: 0; border-bottom: 1px solid var(--border); }
+      .rail-context { padding: 14px 14px 13px; }
+      .rail-menu { padding: 12px 12px 14px; }
+      .rail-nav { grid-template-columns: repeat(2, 1fr); gap: 3px; }
+      .rail-nav button { padding: 8px 9px; font-size: 12px; }
+      .other-destinations { margin-top: 12px; padding-top: 10px; }
+      .other-destinations .destination { display: none; }
+      main { padding: 20px 14px 26px; }
+      .page-top { display: block; padding-bottom: 16px; }
+      .page-controls { margin-top: 14px; justify-content: space-between; }
+      h1 { font-size: 23px; }
+      .briefing { margin-top: 16px; }
+      .briefing-summary { padding: 17px 16px 18px; }
+      .briefing-summary h2 { font-size: 18px; }
+      .briefing-ledger { padding: 15px 16px; }
+      .section-kicker { margin-top: 21px; }
+      .panel-head { align-items: flex-start; display: block; padding: 14px 13px 12px; }
+      .table-note { display: block; margin-top: 5px; }
+      td { padding: 12px 10px; }
+      .register-footer { display: block; line-height: 1.6; }
+      .register-footer span { display: block; }
+      .decision-bar { grid-template-columns: 1fr; }
+      .decision { min-height: 68px; }
+      .toast { right: 14px; bottom: 14px; left: 14px; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <strong>LOOP</strong>
+      <span>Meridian Foundation</span>
+    </div>
+    <div class="topbar-spacer"></div>
+    <span class="system-note">AI is helping · drafts remain yours to confirm</span>
+    <div class="teacher"><span>Teacher</span><span class="teacher-mark">T</span></div>
+  </header>
+
+  <div class="app-shell">
+    <aside class="lms-rail" aria-label="LMS navigation">
+      <section class="rail-context" aria-labelledby="lms-title">
+        <h2 id="lms-title">Meridian LMS</h2>
+        <p>Courses</p>
+        <label class="eyebrow rail-label" for="course-context">Course context</label>
+        <select class="rail-select" id="course-context">
+          <option>Mathematics · Tuesday cohort</option>
+          <option>Literacy · Wednesday cohort (not connected)</option>
+          <option>Science · Thursday cohort (not connected)</option>
+        </select>
+        <p class="course-name">Meridian Centre 4 — Foundational Mathematics, Tuesday cohort</p>
+        <div class="course-meta"><span>2026 Term 3</span><span>12 enrolled</span></div>
+      </section>
+      <div class="rail-menu">
+        <div class="eyebrow rail-heading">LOOP analysis</div>
+        <nav class="rail-nav" aria-label="LOOP analysis">
+          <button type="button" class="active" aria-current="page">Home</button>
+          <button type="button">Students</button>
+          <button type="button">Class</button>
+          <button type="button">Action plan</button>
+          <button type="button">To review <span class="review-count">7</span></button>
+        </nav>
+        <div class="other-destinations" aria-label="Other LMS destinations">
+          <div class="eyebrow rail-heading">Other LMS destinations</div>
+          <div class="destination"><span>Calendar</span><small>Not in demo</small></div>
+          <div class="destination"><span>Messages</span><small>Not in demo</small></div>
+          <div class="destination"><span>Files and resources</span><small>Not in demo</small></div>
+          <div class="destination"><span>Grades</span><small>Not in demo</small></div>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="workspace">
+        <header class="page-top">
+          <div>
+            <div class="breadcrumb"><span>LOOP analysis</span><span class="slash">/</span><strong>Test 3</strong></div>
+            <h1>Analysis / Test 3</h1>
+            <p class="page-note">Draft marks — not yet confirmed · run completed 18 Sep 2026, 10:42</p>
+          </div>
+          <div class="page-controls">
+            <span class="status-chip"><span class="status-dot"></span>Agent pass complete</span>
+            <button class="quiet-button" type="button" id="export-button">Export brief</button>
+          </div>
+        </header>
+
+        <section class="briefing" aria-labelledby="briefing-title">
+          <div class="briefing-summary">
+            <div class="eyebrow">Briefing · plain-language conclusion</div>
+            <h2 id="briefing-title">The class is mostly secure on equivalent fractions, but one shared pattern is holding back the next step.</h2>
+            <p><em>5 of 12 learners</em> are combining unlike denominators instead of finding an equivalent fraction. LOOP has marked this as a teaching problem, with three individual follow-ups worth a closer look.</p>
+          </div>
+          <div class="briefing-ledger" aria-label="Analysis status ledger">
+            <div class="ledger-heading"><strong>Run ledger</strong><span>18 SEP · 10:42</span></div>
+            <ul class="ledger-list">
+              <li><span>Learners processed</span><span>12 / 12</span></li>
+              <li><span>Responses read</span><span>96 / 96</span></li>
+              <li><span>Findings raised</span><span>28</span></li>
+              <li><span>Needs your decision</span><span class="review">7 items</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="section-kicker">
+          <span class="section-number">01</span>
+          <div><h2>Signal register</h2><p>Patterns worth acting on, ordered by shared impact.</p></div>
+        </div>
+
+        <section class="analysis-grid" aria-label="Signals and evidence">
+          <article class="register-panel">
+            <div class="panel-head">
+              <div><h3>What LOOP found</h3><p>Each claim is paired with scope, confidence and a next action.</p></div>
+              <span class="table-note">04 signals shown · 28 total</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">Signal register of provisional findings</caption>
+                <thead>
+                  <tr><th scope="col">Pattern</th><th scope="col">Learners</th><th scope="col">Confidence</th><th scope="col">Scope</th><th scope="col">Next action</th></tr>
+                </thead>
+                <tbody>
+                  <tr class="selected" data-id="m01" tabindex="0">
+                    <td><div class="pattern"><span class="pattern-id">M01</span><div><div class="pattern-name">Combines unlike denominators</div><div class="pattern-meta">Equivalent fractions · Q4, Q7</div></div></div></td>
+                    <td class="cell-num">5 / 12</td>
+                    <td><div class="confidence"><div class="confidence-top"><span class="cell-num">0.91</span><span class="mono" style="font-size:9px;color:var(--teal-deep)">high</span></div><div class="confidence-meter"><span style="width:91%"></span></div></div></td>
+                    <td><span class="scope group">Teaching problem</span></td>
+                    <td class="action"><strong>Re-teach to group</strong>Use a common-unit model.</td>
+                  </tr>
+                  <tr data-id="m07" tabindex="0">
+                    <td><div class="pattern"><span class="pattern-id">M07</span><div><div class="pattern-name">Reads the remainder as a whole</div><div class="pattern-meta">Mixed numbers · Q3</div></div></div></td>
+                    <td class="cell-num">3 / 12</td>
+                    <td><div class="confidence"><div class="confidence-top"><span class="cell-num">0.84</span><span class="mono" style="font-size:9px;color:var(--teal-deep)">high</span></div><div class="confidence-meter"><span style="width:84%"></span></div></div></td>
+                    <td><span class="scope">Individual</span></td>
+                    <td class="action"><strong>Draft feedback</strong>Show the trade back.</td>
+                  </tr>
+                  <tr data-id="m12" tabindex="0">
+                    <td><div class="pattern"><span class="pattern-id">M12</span><div><div class="pattern-name">Drops the negative sign</div><div class="pattern-meta">Number line · Q6</div></div></div></td>
+                    <td class="cell-num">2 / 12</td>
+                    <td><div class="confidence"><div class="confidence-top"><span class="cell-num">0.88</span><span class="mono" style="font-size:9px;color:var(--teal-deep)">high</span></div><div class="confidence-meter"><span style="width:88%"></span></div></div></td>
+                    <td><span class="scope">Individual</span></td>
+                    <td class="action review"><strong>Review mark</strong>Check intent before approval.</td>
+                  </tr>
+                  <tr data-id="m18" tabindex="0">
+                    <td><div class="pattern"><span class="pattern-id">M18</span><div><div class="pattern-name">Ignores operation precedence</div><div class="pattern-meta">Order of operations · Q8</div></div></div></td>
+                    <td class="cell-num">2 / 12</td>
+                    <td><div class="confidence"><div class="confidence-top"><span class="cell-num">0.79</span><span class="mono" style="font-size:9px;color:var(--muted)">med</span></div><div class="confidence-meter"><span style="width:79%"></span></div></div></td>
+                    <td><span class="scope">Individual</span></td>
+                    <td class="action"><strong>Watch next test</strong>Not enough evidence to reteach.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="register-footer"><span>Showing top signals by number of learners affected.</span><span>Click a row to inspect evidence →</span></div>
+          </article>
+
+          <aside class="evidence-panel" aria-labelledby="evidence-title">
+            <div class="evidence-head">
+              <div class="evidence-head-row"><h3 id="evidence-title">Evidence behind finding</h3><span class="evidence-id" id="evidence-id">M01</span></div>
+              <p id="evidence-subtitle">Learner L04 · Question 4 · equivalent fractions</p>
+            </div>
+            <div class="evidence-body">
+              <div class="answer-label"><span class="eyebrow">Learner answer</span><span id="evidence-source">L04 / Q4</span></div>
+              <p class="answer" id="evidence-answer">“I made the bottoms the same by adding <mark>3 + 4 = 7</mark>, then <mark>2 + 1 = 3</mark>, so the answer is 3/7.”</p>
+              <p class="evidence-caption" id="evidence-caption">Highlighted text is copied verbatim from the learner’s answer.</p>
+
+              <div class="reasoning">
+                <h4>Why LOOP thinks this</h4>
+                <ol class="reasoning-list" id="reasoning-list">
+                  <li><strong>Observed:</strong> the denominator operation is addition, not a common-unit conversion.</li>
+                  <li><strong>Compared:</strong> the same pattern appears in 4 other learners’ responses.</li>
+                  <li><strong>Classified:</strong> shared enough to suggest a short group re-teach.</li>
+                </ol>
+              </div>
+
+              <div class="confidence-block">
+                <div class="confidence-row"><span>Confidence in this finding</span><span class="confidence-score" id="confidence-score">0.91</span></div>
+                <div class="large-meter"><span id="confidence-fill" style="width:91%"></span></div>
+                <div class="review-note" id="review-note"><b>Human check:</b><span>the mark remains provisional until you approve it.</span></div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section class="next-section" aria-labelledby="next-title">
+          <div class="section-kicker"><span class="section-number">02</span><div><h2 id="next-title">Your next decision</h2><p>LOOP has prepared the work. You choose what moves forward.</p></div></div>
+          <div class="decision-bar">
+            <button class="decision" type="button" id="review-button"><span class="decision-copy"><strong>Review 7 decisions</strong><span>Marks, flags and provisional diagnoses needing you.</span></span><span class="arrow">→</span></button>
+            <button class="decision primary" type="button" id="plan-button"><span class="decision-copy"><strong>Open action plan</strong><span>See how the 120-minute support budget is spent.</span></span><span class="arrow">→</span></button>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <div class="toast" role="status" aria-live="polite" id="toast"></div>
+
+  <script>
+    const findings = {
+      m01: {
+        id: "M01", subtitle: "Learner L04 · Question 4 · equivalent fractions", source: "L04 / Q4", score: "0.91", fill: "91%",
+        answer: '“I made the bottoms the same by adding <mark>3 + 4 = 7</mark>, then <mark>2 + 1 = 3</mark>, so the answer is 3/7.”',
+        caption: "Highlighted text is copied verbatim from the learner’s answer.",
+        points: ["<strong>Observed:</strong> the denominator operation is addition, not a common-unit conversion.", "<strong>Compared:</strong> the same pattern appears in 4 other learners’ responses.", "<strong>Classified:</strong> shared enough to suggest a short group re-teach."],
+        review: "<b>Human check:</b><span>the mark remains provisional until you approve it.</span>"
+      },
+      m07: {
+        id: "M07", subtitle: "Learner L09 · Question 3 · mixed numbers", source: "L09 / Q3", score: "0.84", fill: "84%",
+        answer: '“I got <mark>6/8</mark>. The whole number is 6 and the leftover is 8.”',
+        caption: "Highlighted text shows the learner treating the numerator as the whole number.",
+        points: ["<strong>Observed:</strong> the value 6/8 is present, but the conversion into a mixed number reverses the parts.", "<strong>Compared:</strong> 3 learners make the same reversal after finding an equivalent fraction.", "<strong>Classified:</strong> likely individual procedural support, not a whole-class gap."],
+        review: "<b>Human check:</b><span>confirm the draft mark against the working shown.</span>"
+      },
+      m12: {
+        id: "M12", subtitle: "Learner L02 · Question 6 · number line", source: "L02 / Q6", score: "0.88", fill: "88%",
+        answer: '“Start at 0, move <mark>4 places right</mark>, so the answer is 4.”',
+        caption: "The answer omits the negative sign from the prompt; the highlighted step is the evidence.",
+        points: ["<strong>Observed:</strong> the movement is described in the positive direction despite a negative starting value.", "<strong>Compared:</strong> one other response shows the same sign loss on this question.", "<strong>Classified:</strong> an individual mark review is safer than assigning a misconception."],
+        review: "<b>Human check:</b><span>review intent before approving the provisional mark.</span>"
+      },
+      m18: {
+        id: "M18", subtitle: "Learner L01 · Question 8 · order of operations", source: "L01 / Q8", score: "0.79", fill: "79%",
+        answer: '“I did <mark>6 + 4 × 2 = 20</mark>, so I worked from left to right.”',
+        caption: "The highlighted calculation makes the learner’s operation order visible.",
+        points: ["<strong>Observed:</strong> the response states a left-to-right method for a mixed operation.", "<strong>Compared:</strong> two learners show the same result, but there is no repeat evidence yet.", "<strong>Classified:</strong> watch the next assessment before planning a re-teach."],
+        review: "<b>Human check:</b><span>leave the diagnosis provisional until another response confirms it.</span>"
+      }
+    };
+
+    const rows = document.querySelectorAll("tbody tr[data-id]");
+    const toast = document.getElementById("toast");
+    let toastTimer;
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+    }
+    function selectFinding(id) {
+      const data = findings[id];
+      if (!data) return;
+      rows.forEach((row) => row.classList.toggle("selected", row.dataset.id === id));
+      document.getElementById("evidence-id").textContent = data.id;
+      document.getElementById("evidence-subtitle").textContent = data.subtitle;
+      document.getElementById("evidence-source").textContent = data.source;
+      document.getElementById("evidence-answer").innerHTML = data.answer;
+      document.getElementById("evidence-caption").textContent = data.caption;
+      document.getElementById("reasoning-list").innerHTML = data.points.map((point) => `<li>${point}</li>`).join("");
+      document.getElementById("confidence-score").textContent = data.score;
+      document.getElementById("confidence-fill").style.width = data.fill;
+      document.getElementById("review-note").innerHTML = data.review;
+    }
+    rows.forEach((row) => {
+      row.addEventListener("click", () => selectFinding(row.dataset.id));
+      row.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); selectFinding(row.dataset.id); }
+      });
+    });
+    document.getElementById("review-button").addEventListener("click", () => showToast("Review queue ready: 7 decisions are waiting for your approval."));
+    document.getElementById("plan-button").addEventListener("click", () => showToast("Action plan preview ready: 120 minutes allocated across 5 actions."));
+    document.getElementById("export-button").addEventListener("click", () => showToast("Brief prepared for export. Draft marks are still provisional."));
+  </script>
+</body>
+</html>
