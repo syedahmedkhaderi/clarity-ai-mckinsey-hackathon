@@ -1,276 +1,195 @@
-# LOOP
+<div align="center">
 
-Agentic marking, diagnosis and intervention planning for Meridian Foundation
-learning centres.
+# Markwise
 
-A facilitator marks a batch of assessments. Today that produces scores. Scores
-say who got what wrong. They never say why, never say whether the same learner
-made the same mistake last month, and never say whether half the room shares one
-misconception.
+**An agentic marking assistant for community facilitators. It marks a test, finds out *why* each student lost marks, and decides what the teacher should do next.**
 
-LOOP takes the same batch and decides what the facilitator should do next, inside
-the time they actually have.
+Built for the **McKinsey x QuantumBlack AI Hackathon, Doha 2026**, Education theme.
+Client: **Meridian Foundation**. Use case: **Marks and answer-sheet analysis**.
 
-## Run it in three commands
+`LangGraph` · `FastAPI` · `React + TypeScript` · `Azure OpenAI via the QuantumBlack gateway` · `243 tests`
 
-```bash
-git clone https://github.com/syedahmedkhaderi/lms-marks.git
-cd lms-marks
-./setup.sh && ./start.sh
-```
+</div>
 
-Then open http://localhost:5173. **It opens on a finished analysis already**, so
-there is something to look at before you press anything. That example is seeded
-at startup from the deterministic rules, takes about a second, and is labelled on
-screen as an example. Pressing Analyse runs it for real against the model.
+<table>
+  <tr>
+    <td width="33%"><img src="docs/screenshots/home.png" alt="Home: the analysed test at a glance" /></td>
+    <td width="33%"><img src="docs/screenshots/students.png" alt="A student's findings with evidence highlighted" /></td>
+    <td width="33%"><img src="docs/screenshots/email.png" alt="A drafted note to a student, ready to edit and send" /></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>The whole test at a glance</sub></td>
+    <td align="center"><sub>Why a student lost marks, with evidence from their answer</sub></td>
+    <td align="center"><sub>A note to the student, drafted and ready to send</sub></td>
+  </tr>
+</table>
 
-`setup.sh` creates the virtualenv, installs both dependency sets, generates the
-data, seeds the learner history, rebuilds the frontend fixtures and runs the
-tests. It refuses to finish if the tests fail.
+## The problem
 
-### Which model it uses
+Meridian's 60,000 learners are taught mostly by community facilitators, not specialist teachers. Many learners study in a second language, and many leave and come back.
 
-LOOP picks its provider automatically, and `/api/health` reports which one is
-live:
+A marks sheet shows **who** scored what. It never shows:
 
-| Credentials present | Provider | Models |
+- **why** each mark was lost,
+- whether it is **the same mistake as last month**, or
+- whether **half the class shares it**, which would make it a teaching gap rather than a problem with individual students.
+
+Marking also uses up facilitator time, so feedback arrives too late to change anything.
+
+## What Markwise does
+
+A facilitator uploads a test. Six agents take it from there, and the facilitator stays in charge of every mark that counts.
+
+| | What the agent decides | What the teacher sees |
 |---|---|---|
-| `QB_CLIENT_ID` + `QB_CLIENT_SECRET` | QuantumBlack Azure AI gateway | `gpt-4.1-mini` |
-| `OPENAI_API_KEY` | OpenAI directly | `gpt-4o-mini` and `gpt-4o` |
-| neither | Offline deterministic rules | none |
+| **Marks** | Awards draft marks against the marking scheme, each with a confidence | A draft total per student. Nothing counts until the teacher approves it |
+| **Diagnoses** | Names the mistake pattern behind each lost mark, out of 24 known ones | The student's own answer, with the words it relied on highlighted |
+| **Remembers** | Tracks each student's mistakes across tests, including students with gaps in their record | "Keeps happening" or "Once", per mistake |
+| **Separates** | Decides whether a mistake belongs to one student or to the whole class (40 percent or more) | A heatmap of the class and the whole-class problems |
+| **Plans** | Ranks what to do next within a fixed amount of teacher time, and records what it had to leave out | One ordered action plan: re-teach, catch-ups, restart points, pairings |
+| **Escalates** | Hands over anything it should not decide alone, with both readings and what it would have chosen | A "Needs your call" queue with one-click accept or correct |
+| **Re-plans** | When the teacher corrects a finding, re-runs the class analysis and rebuilds the plan | The plan changes in front of them, with each change marked |
+| **Writes to students** | Drafts a personal note to each student from their own mistakes | An email the teacher edits and sends from the app |
 
-A `qb_gateway/.env` sitting next to this project is read automatically, so
-gateway credentials never need copying into the repo. `qb_gateway/` is
-gitignored.
+## Features we are proudest of
 
-**No API key is needed to run it.** Offline mode is a deterministic rule engine
-producing the same shapes as the model path, so the whole system is demoable
-with no key and no network.
+**1. It emails students, safely.** From a student's page the facilitator presses *Write a note*. Markwise drafts a short, personal email: where the mistake was, what went wrong in plain words, and what to try next. The teacher can edit it, send themselves a test copy, and then send it for real over Gmail. A guard blocks any note that leaks an internal code such as `M01`, or mentions a mark, because marks are still drafts. Every note sent is logged on the student's page, and sending the same note twice asks for confirmation first. With no Gmail set up, the note is saved and labelled **not delivered**, never shown as sent.
 
-It is also the crash floor, and that floor is tested rather than asserted. Point
-the app at a dead endpoint and a full run still completes **in 1.5 seconds**,
-with all 96 marks, 28 named misconceptions, the cohort pattern and a plan inside
-the budget. A circuit breaker opens after three consecutive failures so the run
-stops paying a timeout per call, and the trace tells the facilitator plainly that
-the provider stopped answering and the rules took over.
+**2. Language is never mistaken for maths.** A second-language learner who reaches the right answer but writes it awkwardly is **never** recorded as weak at maths. This is enforced in code, not asked for in a prompt: if the marking scheme's target value appears in the answer, a maths diagnosis is overruled whatever the model says. We added this rule after the model labelled a correct answer as a procedural mistake at 90 percent confidence.
 
-Set `LOOP_OFFLINE=1` to force the rules even when credentials are present. The
-test suite does this, so tests stay fast, free and repeatable.
+**3. Evidence you can check.** Every diagnosis points to an exact piece of the student's own answer, highlighted in place. If the model quotes text that is not in the answer, the diagnosis is rejected.
 
-## What it does
+**4. One correction changes the plan.** In the demo, "adds numerators and denominators separately" is made by 5 of 12 students (42 percent), so it counts as a whole-class problem and the plan includes a group re-teach. Overriding one diagnosis drops it to 4 of 12 (33 percent). The agent re-enters the graph at the cohort analyst, withdraws the group re-teach and moves the next items up the plan.
 
-1. Marks each response provisionally against a scheme, with a confidence.
-2. Names the misconception behind each error, citing the exact span of the
-   learner's own answer as evidence.
-3. Accumulates a per-learner error profile across assessments, handling learners
-   whose records have gaps.
-4. Separates an individual problem from a teaching problem at cohort level.
-5. Decides how to spend a fixed facilitator time budget, and says what it had to
-   leave out.
-6. Escalates what it should not decide alone, with both readings it was weighing
-   and what it would have chosen if forced.
-7. Re-plans when a facilitator overrides it.
+**5. It knows when to stop.** Low-confidence marks, two explanations that fit equally well, wording problems and thin records all go to the teacher with what the system would have done. It never just says "I am unsure".
 
-**The agent never sets a mark that counts.** Every mark is provisional until a
-human approves it. That is a product requirement, not a disclaimer.
+**6. A helper that cites its sources.** The pencil helper answers questions such as *"Which topic is the class weakest at?"* from the analysis and the uploaded files. Its sources fold away until you open them.
 
-## The demo, step by step
+<table>
+  <tr>
+    <td width="33%"><img src="docs/screenshots/review.png" alt="Needs your call queue" /></td>
+    <td width="33%"><img src="docs/screenshots/class.png" alt="Class view of shared mistakes" /></td>
+    <td width="33%"><img src="docs/screenshots/plan.png" alt="Action plan" /></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Needs your call: what it was unsure about and why</sub></td>
+    <td align="center"><sub>One student's problem, or the whole class's?</sub></td>
+    <td align="center"><sub>The action plan, most important first</sub></td>
+  </tr>
+</table>
 
-This sequence is reproducible from a clean `./setup.sh` and is guarded by
-`tests/test_override_replan.py`.
+## Agent workflow
 
-1. **Run and trace.** Choose "Test 3" from the test list and press Analyse this
-   test. The planner runs against a fixed 120 minute budget in code; the
-   facilitator does not set it and the UI never mentions it. The pipeline animates through intake, marker, diagnostician, cohort
-   analyst and planner. The reviewer gate appears as a dashed branch off the
-   line, because that is what it is in the code.
+<!-- TODO: add the designed diagram as docs/agent-workflow.png and uncomment the line below. -->
+<!-- <p align="center"><img src="docs/agent-workflow.png" alt="Agent workflow" width="90%" /></p> -->
+> The designed workflow diagram will go here. Until then, this is the same flow in text:
 
-2. **Learners, Amira K. (L07).** M01, adding numerators and denominators
-   separately, in both A1 and A3. The evidence span is highlighted inside her own
-   answer: `1/3 + 1/4 = 2/7.` She is a returner missing A2, so her history bar
-   shows 3 of 4 assessments.
-
-3. **Learners, Liu Y. (L11).** Her answer to the same question is
-   `Answer is 7/12 km. and then add top ones together I make bottom number same
-   12.` The total is correct. The word order is not. LOOP marks it full marks and
-   records no misconception against her at all. If the marker does withhold a
-   presentation criterion, the diagnosis is escalated as `LANGUAGE_BARRIER`
-   instead. Either way the guarantee is the same and it holds on every run: a
-   learner whose mathematics is right is never recorded as conceptually weak.
-
-   This is enforced in code, not asked for in a prompt.
-   `offline_rules.mathematics_is_correct` reads the marking scheme, and if the
-   learner reached the value it asks for, a conceptual, procedural or
-   computational node cannot be the explanation whatever the model returned.
-   That guard exists because without it the model diagnosed exactly this answer
-   as a procedural misconception at 0.9 confidence.
-   `tests/test_language_rule.py` holds the line.
-
-4. **Cohort.** M01 is held by 5 of 12 learners, 42 percent, at or above the 40
-   percent threshold. It is labelled a teaching problem, not five individual
-   problems.
-
-5. **Action plan.** One ordered list, most important first: a group re-teach on
-   M01, restart points for the three learners who returned after a gap, peer
-   pairings and feedback reviews. Actions the planner ranked below its budget
-   follow in the same list rather than in a separate "did not fit" section; the
-   API response still carries them under `plan.dropped` with severity and the
-   reason "budget exhausted".
-
-   The model proposes and scores the actions, but three things follow from rules
-   and it cannot override them: every learner gets a drafted feedback note, every
-   returner gets a restart point, and a group re-teach exists for a node **if and
-   only if** the cohort analyst put that node above the threshold. Otherwise the
-   plan could contradict the cohort view sitting next to it.
-
-6. **Review queue.** The language case and the ambiguous diagnoses where two
-   readings were too close to separate. `BUDGET_OVERFLOW` escalations are still
-   raised by the reviewer and returned by the API, but the frontend drops them
-   because the time box is not shown.
-
-7. **The override.** Open Kwame A. (L06) on A3Q4, press Override, choose "Not a
-   misconception at all", give a reason. LOOP re-enters the graph at the cohort
-   analyst. M01 falls to 4 of 12, 33 percent, below the threshold. It is no
-   longer a teaching problem, so the group re-teach is **withdrawn**, and the
-   work it had ranked above moves up the list. The plan view highlights every
-   change.
-
-   Verified on three consecutive live runs: 5 of 12 and a group session before
-   the override, 4 of 12 and none after it, budget refilled each time.
-
-Step 7 is the point. The agent did not just accept a correction; it recomputed
-what the correction implied and rebuilt its decision.
-
-## Measured, not asserted
-
-```bash
-.venv/bin/python eval/evaluate.py
+```
+ LMS + teacher inputs          LangGraph orchestrator (shared state + trace)                 Teacher in the loop
+ ────────────────────          ────────────────────────────────────────────                  ───────────────────
+ test paper           ─┐                                                  ┌─ enough signal ─▶ Planner ─┐
+ marking scheme        ├─▶ Intake ─▶ Marker ─▶ Diagnostician ─▶ Cohort ───┤                            ├─▶ Approve marks
+ answer sheets         │              ▲           ▲            Analyst    └─ too little ───▶ insights ─┘   Send notes
+ learner history      ─┘              └── Reviewer gate ───────┴──── (also gates the planner)              Override ─┐
+                                   low confidence · ambiguity · language · thin history · budget                     │
+                                                                  ▲                                                  │
+                                                                  └──────── re-plan from the cohort analyst ─────────┘
 ```
 
-Writes `eval/results.md`: misconception recovery rate, top-2 recovery,
-escalation precision, returner handling, and **language separation**, the
-recovery rate on second-language learners against everyone else. A large gap
-there is the failure mode the whole design is built to avoid, so it is reported
-whether it flatters the system or not.
+| Agent | Role | If the model fails |
+|---|---|---|
+| Intake | Loads the test, scheme, answers and each learner's history from the LMS | No model used |
+| Marker | Draft marks with a confidence per criterion | Rule-based marking from the scheme |
+| Diagnostician | Names the mistake pattern, cites evidence and gives a runner-up | Rule-based diagnosis from the scheme |
+| Cohort analyst | Splits individual problems from teaching problems | No model used |
+| Planner | Proposes and scores actions. Code then fits them to the time budget | Rule-based plan |
+| Reviewer gate | Escalates low confidence, ambiguity, language issues, thin history and budget overflow | No model used |
 
-`eval/results.md` states which mode produced the numbers. In offline mode the
-rules encode the same mathematics the generator used to inject the errors, so
-the recovery rate is a wiring check, not a measurement of model quality.
+A dead model provider costs quality, never a run. After three failures a circuit breaker switches every agent to the deterministic rules. A run against a dead endpoint still completes in 1.5 seconds with full results. The full graph and state contract are in [`architecture.md`](architecture.md), and a test checks that its diagram matches the code.
 
-Measured on the QuantumBlack gateway with `gpt-4.1-mini`, assessment A3:
+## Measured, not claimed
 
-| Metric | Result |
+Errors in the mock data are injected by **Python rules, never by a model**. If the same model had written the errors and then diagnosed them, the accuracy score would be self-graded. The backend is blocked from reading the answer key, and a check fails the evaluation if it ever does.
+
+| Metric (Test 3, 12 learners, 96 answers) | Result |
 |---|---|
-| Misconception recovery | 96% (24 of 25) |
-| Recovery before the reviewer gate | 100% (25 of 25) |
-| Recovery on second-language learners, before the gate | 100% (6 of 6) |
-| Recovery on everyone else, before the gate | 100% (19 of 19) |
-| Evidence span validity | 100% (32 of 32) |
-| Returner handling | 100% (3 of 3) restart points proposed |
-| Run time, full cohort | 21 to 26 seconds |
+| Correct mistake pattern named | **92%** (23 of 25), 96% before the reviewer gate |
+| Correct pattern in the top two | 96% |
+| Evidence quoted from the student's own answer | **100%** (31 of 31) |
+| Second-language learners wrongly called weak at maths | **0** |
+| Returning learners given a restart point | **100%** (3 of 3) |
+| Full class, end to end | about 25 seconds |
 
-The one case not recovered is L11, whose mathematics was correct and whose
-diagnosis the reviewer deliberately held back as a language barrier. The
-diagnostician named it correctly first. Zero second-language learners were
-misdiagnosed as conceptually weak, which is the behaviour the whole fixture
-exists to protect.
+Reproduce with `.venv/bin/python eval/evaluate.py`. The full table is in [`eval/results.md`](eval/results.md).
 
-`gpt-5.4` is also available on the gateway and is one environment variable away
-(`LOOP_MODEL_SMART=gpt-5.4-2026-03-05`), but it measured slightly worse here
-(92% recovery) and took three times as long, so it is not the default. That
-comparison is the reason the eval harness exists.
+## Run it
 
-## The independence rule
+```bash
+git clone https://github.com/syedahmedkhaderi/lms-marks.git && cd lms-marks
+./setup.sh && ./start.sh        # then open http://localhost:5173
+```
 
-`data/generator.py` produces every error from an explicit Python function keyed
-to a taxonomy node. No language model authors the errors. If a model wrote the
-errors and the same model diagnosed them, the accuracy number would be
-self-graded and worthless.
+- **It opens on a finished example**, so there is something to see straight away. Press *Analyse this test* to run it live.
+- **No API key needed.** With no key it runs on deterministic rules. With `QB_CLIENT_ID` and `QB_CLIENT_SECRET` it uses the QuantumBlack gateway (`gpt-4.1-mini`). With `OPENAI_API_KEY` it calls OpenAI directly.
+- **Email:** set `GMAIL_USER` and `GMAIL_APP_PASSWORD` in `.env` to send for real. Without them, notes are saved and marked as not delivered.
 
-**The backend never reads `data/ground_truth.json`.** Only `eval/evaluate.py`
-does, and it greps the `backend/` package for the string and fails loudly if it
-ever appears there.
+<details>
+<summary><b>Two-minute demo script</b></summary>
 
-The generator also asserts that language noise leaves the mathematics untouched:
-the multiset of numeric tokens in a written answer is identical before and after
-noise is applied. A second-language learner's answer differs from a fluent one
-only in its grammar.
+1. **Home.** Test 3 is already analysed: class average, hardest questions, most common mistakes.
+2. **Students, Thabo M.** He evaluates `2 + 3 x 4` left to right in Test 1 and Test 3, so it shows as "Keeps happening". Press *Write a note* to draft his email, edit it and send.
+3. **Students, Liu Y.** She wrote the correct answer in awkward English. It gets full marks and no maths mistake is recorded.
+4. **Class.** "Adds numerators and denominators separately" affects 5 of 12 students, so it is a whole-class problem.
+5. **Action plan.** The group re-teach comes first, then restart points for the three returning learners.
+6. **Students, Kwame A., Test 3 Question 4.** Choose *Correct this*, then *Not a misconception at all*. The count drops to 4 of 12, the group re-teach is withdrawn and the plan reorders.
 
-## The taxonomy
+</details>
 
-`data/taxonomy.json` is a versioned artifact: 24 misconception nodes across 7
-topics, 5 error classes, every node carrying a description, typical evidence and
-a plain-language remediation hint written for a facilitator who is not a subject
-specialist. Four nodes are in the `language` class, because second-language
-handling is a client requirement and not an afterthought.
-
-It is readable and auditable by a subject expert without touching code. The
-diagnostician is given only the nodes for the question's topic, which keeps the
-choice tractable and the accuracy up.
-
-## Layout
+<details>
+<summary><b>Repository layout</b></summary>
 
 ```
 backend/
-  config.py        every threshold the graph branches on
-  state.py         LoopState, the wire contract
-  models.py        pydantic models, mirrored in frontend/src/types.ts
-  graph.py         LangGraph wiring, GRAPH_EDGES asserted against architecture.md
-  service.py       batch runs, overrides, plan diffing
-  api.py           FastAPI surface
-  llm.py           the only module that imports langchain_openai
-  agents/          intake, marker, diagnostician, cohort_analyst, planner, reviewer
-  agents/offline_rules.py   deterministic marking and diagnosis
-  prompts/         marking, diagnosis, planning, feedback
-  lms/mock_api.py  shaped like Canvas and Moodle REST endpoints
-data/              taxonomy, marking schemes, personas, rule-based generator
-eval/              evaluate.py, results.md
-frontend/          React, Vite, TypeScript, Tailwind
-tests/             pytest
+  agents/        intake, marker, diagnostician, cohort_analyst, planner, reviewer, offline_rules
+  graph.py       LangGraph wiring; GRAPH_EDGES is tested against architecture.md
+  config.py      every threshold the graph branches on, in one place
+  llm.py         the only module that talks to a model; never raises
+  mailbox/       drafting, guard and Gmail delivery for student notes
+  lms/           mock LMS API shaped like Canvas and Moodle
+  routers/       uploads, email, chat, insights
+data/            taxonomy (24 mistake patterns), marking schemes, personas, rule-based generator
+eval/            evaluate.py and results.md
+frontend/        React, Vite, TypeScript, Tailwind, TanStack Query
+tests/           pytest, always offline
 ```
 
-`architecture.md` has the graph, the gate table and the state table, and its
-diagram is asserted equal to the compiled graph by a test.
+</details>
 
-## Integration story
+<details>
+<summary><b>Design rules that each have a test</b></summary>
 
-`backend/lms/mock_api.py` is shaped like a real LMS REST API and names the
-Canvas and Moodle endpoint each of its four routes maps to. Swapping the
-connector is the integration work. It is not a rewrite.
+- The agent never sets a mark that counts. Every mark is a draft until a human approves it.
+- The backend never reads the answer key.
+- Evidence is quoted exactly from the student's answer, or the diagnosis is rejected.
+- Language noise never changes the numbers in an answer, and never produces a maths diagnosis.
+- The model may propose a plan, but it cannot drop a feedback note, a restart point or a required group re-teach.
+- The planner fits the budget in code and records everything it left out.
+- The architecture diagram matches the compiled graph.
+- No model call can crash a run.
+- An override re-plans from the cohort analyst, not from the start.
 
-## Divergences from the plan
+The full list, with reasons, is in [`AGENTS.md`](AGENTS.md).
 
-`CODEX_BUILD_PLAN.md` is the original spec. Four deliberate divergences:
+</details>
 
-1. **The demo numbers.** The plan's section 8 describes M01 held by 7 of 12
-   learners, dropping to 6 of 12 after an override and thereby falling below the
-   40 percent threshold. 6 of 12 is 50 percent, which is above 40 percent, so
-   that sequence cannot happen. The personas are tuned instead so M01 lands on 5
-   of 12 (42 percent, above the threshold) and one override drops it to 4 of 12
-   (33 percent, below it). The threshold itself is unchanged at 40 percent and
-   lives in `backend/config.py`.
+<details>
+<summary><b>Divergences from the original plan</b></summary>
 
-2. **`backend/llm.py` and `backend/agents/offline_rules.py`** are not in the
-   plan's file layout. The first is the single provider boundary that makes the
-   try/except-with-fallback requirement enforceable in one place rather than
-   five. The second is that fallback, and is what lets the system run with no API
-   key.
+`CODEX_BUILD_PLAN.md` is the original specification. Four deliberate divergences:
 
-3. **The facilitator time budget is not a UI control.** The planner still fits a
-   fixed budget in code and records what it dropped (invariant 8), and the
-   approve endpoint still exists (invariant 1), but the frontend shows neither a
-   time box nor a confirm-marks table. Facilitators asked for one ordered list
-   of things to do and the drafted notes to students, nothing about minutes.
+1. **Demo numbers.** The plan had a mistake held by 7 of 12 learners falling to 6 of 12 after an override and dropping below the 40 percent line. 6 of 12 is 50 percent, so that cannot happen. The personas are tuned so it lands on 5 of 12 (42 percent) and falls to 4 of 12 (33 percent).
+2. **`backend/llm.py` and `backend/agents/offline_rules.py`** are not in the plan. The first is the single provider boundary, so the fallback is enforced in one place. The second is that fallback, and it is what lets the app run with no API key.
+3. **The time budget is not a UI control.** The planner still fits a fixed budget in code and records what it dropped, but facilitators asked for one ordered list, not minutes.
+4. **The accent is also the primary action colour.** The navy used for agent activity also marks the primary button. Rust still marks only what the agent handed to a human.
 
-4. **The accent is also the primary action colour.** `AGENTS.md` section 5
-   reserves the `agent` colour for agent activity and agent decisions. After a
-   design review the LOOP pages moved to a work-surface layout with a summary
-   rail and tabs, in navy on cool grey, and the same navy is now the primary
-   button and the rail's shortcut to the plan. `flag` still marks only what the
-   agent handed to a human. The LMS shell around the pages is unchanged.
-
-## Working on it
-
-`AGENTS.md` is the contributor guide, shared by every coding agent and symlinked
-to `CLAUDE.md` and `.cursorrules`. It lists eleven invariants that each have a test
-behind them. Read it before changing anything.
+</details>
