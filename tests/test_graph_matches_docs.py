@@ -2,7 +2,7 @@
 
 The build plan makes this explicit: "a diagram that contradicts the code is a
 scored failure". So the compiled LangGraph, the constants the API and the UI
-draw from, and the mermaid block in architecture.md are all asserted to describe
+draw from, and the mermaid block in docs/architecture.md are all asserted to describe
 one and the same graph.
 """
 
@@ -23,7 +23,7 @@ from backend.graph import (
 )
 
 ROOT = Path(__file__).resolve().parent.parent
-ARCHITECTURE = ROOT / "architecture.md"
+ARCHITECTURE = ROOT / "docs" / "architecture.md"
 
 START = "__start__"
 END = "__end__"
@@ -86,7 +86,7 @@ def test_reviewer_is_a_gate_not_a_node() -> None:
 
 def _mermaid_edges(text: str) -> set[tuple[str, str]]:
     block = MERMAID_BLOCK.search(text)
-    assert block, "architecture.md contains no ```mermaid block to compare against the graph"
+    assert block, "docs/architecture.md contains no ```mermaid block to compare against the graph"
     edges: set[tuple[str, str]] = set()
     for line in block.group(1).splitlines():
         match = MERMAID_EDGE.match(line)
@@ -99,14 +99,14 @@ def test_architecture_diagram_matches_the_graph() -> None:
     if not ARCHITECTURE.exists():
         pytest.fail(
             f"{ARCHITECTURE} does not exist. Section 9 of the build plan requires an "
-            f"architecture.md whose diagram matches the actual graph, and this test is the "
+            f"docs/architecture.md whose diagram matches the actual graph, and this test is the "
             f"check on it. Expected a ```mermaid block containing exactly these edges: "
             f"{sorted(GRAPH_EDGES)}")
     edges = _mermaid_edges(ARCHITECTURE.read_text())
     missing = set(GRAPH_EDGES) - edges
     extra = edges - set(GRAPH_EDGES)
-    assert not missing, f"architecture.md is missing these real edges: {sorted(missing)}"
-    assert not extra, f"architecture.md draws edges the code does not have: {sorted(extra)}"
+    assert not missing, f"docs/architecture.md is missing these real edges: {sorted(missing)}"
+    assert not extra, f"docs/architecture.md draws edges the code does not have: {sorted(extra)}"
     assert edges == set(GRAPH_EDGES)
 
 
@@ -116,4 +116,4 @@ def test_architecture_mentions_every_node() -> None:
                     f"test_architecture_diagram_matches_the_graph for what it must contain.")
     text = ARCHITECTURE.read_text()
     for node in GRAPH_NODES:
-        assert node in text, f"architecture.md never mentions the {node} node"
+        assert node in text, f"docs/architecture.md never mentions the {node} node"

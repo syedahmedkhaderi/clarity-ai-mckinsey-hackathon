@@ -119,7 +119,7 @@ A facilitator uploads a test. Six agents take it from there, and the facilitator
 | Planning | `planner` | Proposes and ranks the actions: re-teach, catch-ups, restart points, pairings, notes | Rule-based plan |
 | Safety check | `reviewer` | Hands the teacher low confidence, two close readings, wording issues and thin records | No model used |
 
-A dead model provider costs quality, never a run. After three failures a circuit breaker switches every agent to the deterministic rules. A run against a dead endpoint still completes in 1.5 seconds with full results. The full graph and state contract are in [`architecture.md`](architecture.md), and a test checks that its diagram matches the code.
+A dead model provider costs quality, never a run. After three failures a circuit breaker switches every agent to the deterministic rules. A run against a dead endpoint still completes in 1.5 seconds with full results. The full graph and state contract are in [`docs/architecture.md`](docs/architecture.md), and a test checks that its diagram matches the code.
 
 ## Measured, not claimed
 
@@ -165,15 +165,18 @@ git clone https://github.com/syedahmedkhaderi/lms-marks.git && cd lms-marks
 ```
 backend/
   agents/        intake, marker, diagnostician, cohort_analyst, planner, reviewer, offline_rules
-  graph.py       LangGraph wiring; GRAPH_EDGES is tested against architecture.md
+  graph.py       LangGraph wiring; GRAPH_EDGES is tested against docs/architecture.md
   config.py      every threshold the graph branches on, in one place
   llm.py         the only module that talks to a model; never raises
   mailbox/       drafting, guard and Gmail delivery for student notes
   lms/           mock LMS API shaped like Canvas and Moodle
   routers/       uploads, email, chat, insights
 data/            taxonomy (24 mistake patterns), marking schemes, personas, rule-based generator
+docs/            architecture, original build plan, hackathon brief, screenshots, design explorations
 eval/            evaluate.py and results.md
 frontend/        React, Vite, TypeScript, Tailwind, TanStack Query
+qb_gateway/      QuantumBlack gateway client; its .env is read automatically
+scripts/         build_fixture.py, rebuilds the frontend fixtures from a real run
 tests/           pytest, always offline
 ```
 
@@ -199,7 +202,7 @@ The full list, with reasons, is in [`AGENTS.md`](AGENTS.md).
 <details>
 <summary><b>Divergences from the original plan</b></summary>
 
-`CODEX_BUILD_PLAN.md` is the original specification. Four deliberate divergences:
+[`docs/build-plan.md`](docs/build-plan.md) is the original specification. Four deliberate divergences:
 
 1. **Demo numbers.** The plan had a mistake held by 7 of 12 learners falling to 6 of 12 after an override and dropping below the 40 percent line. 6 of 12 is 50 percent, so that cannot happen. The personas are tuned so it lands on 5 of 12 (42 percent) and falls to 4 of 12 (33 percent).
 2. **`backend/llm.py` and `backend/agents/offline_rules.py`** are not in the plan. The first is the single provider boundary, so the fallback is enforced in one place. The second is that fallback, and it is what lets the app run with no API key.

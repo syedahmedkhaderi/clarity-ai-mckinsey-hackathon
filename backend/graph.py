@@ -85,9 +85,9 @@ def build_replan_graph() -> Any:
     return g.compile()
 
 
-# Shape data used by architecture.md and by the UI's pipeline panel, so the
+# Shape data used by docs/architecture.md and by the UI's pipeline panel, so the
 # diagram and the code cannot drift apart. tests/test_graph_matches_docs.py
-# asserts that architecture.md contains exactly these edges.
+# asserts that docs/architecture.md contains exactly these edges.
 GRAPH_NODES: list[str] = ["intake", "marker", "diagnostician", "cohort_analyst", "planner"]
 GRAPH_EDGES: list[tuple[str, str]] = [
     ("intake", "marker"),

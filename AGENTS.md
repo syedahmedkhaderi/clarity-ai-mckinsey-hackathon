@@ -15,8 +15,8 @@ tracks it per learner across assessments, separates individual problems from
 teaching problems, decides how to spend a fixed facilitator time budget, and
 escalates what it should not decide alone.
 
-`CODEX_BUILD_PLAN.md` is the original specification. `architecture.md` is the
-system as built. Where they disagree, `architecture.md` is right and the
+`docs/build-plan.md` is the original specification. `docs/architecture.md` is the
+system as built. Where they disagree, `docs/architecture.md` is right and the
 divergence should be noted in the README's "Divergences from the plan" section.
 
 ## 2. Non-negotiable invariants
@@ -77,7 +77,7 @@ Breaking any of these is a defect, not a trade-off. Each has a test.
    dropped item with its severity and reason. An agent that silently trims to fit
    hides the trade-off, and the trade-off is the thing worth showing.
 
-9. **The diagram matches the graph.** `architecture.md` contains a mermaid block
+9. **The diagram matches the graph.** `docs/architecture.md` contains a mermaid block
    whose edges are asserted equal to `backend.graph.GRAPH_EDGES` by
    `tests/test_graph_matches_docs.py`. If you change the graph, update
    `GRAPH_EDGES` and the diagram in the same commit. A diagram that contradicts
@@ -211,7 +211,7 @@ it must not look generated.
 
 - `backend/state.py::LoopState` is the wire contract. Changing it means changing
   `frontend/src/types.ts`, rebuilding the fixture, and updating the state table
-  in `architecture.md`.
+  in `docs/architecture.md`.
 - `backend/agents/offline_rules.py` mirrors the mathematics of the marking
   scheme. It must not import from `data/generator.py`. Coupling them would make
   the offline recovery rate circular in a way that is invisible from the outside.
@@ -240,7 +240,7 @@ Before you say a change is finished:
 
 1. `.venv/bin/python -m pytest -q` passes.
 2. `cd frontend && npm run typecheck` passes.
-3. If you touched the graph, `architecture.md` and `GRAPH_EDGES` agree, and the
+3. If you touched the graph, `docs/architecture.md` and `GRAPH_EDGES` agree, and the
    diagram test proves it.
 4. If you touched the diagnostician or its prompt,
    `.venv/bin/python eval/evaluate.py` was re-run and the language separation gap
