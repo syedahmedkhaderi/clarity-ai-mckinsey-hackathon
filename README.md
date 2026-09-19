@@ -143,7 +143,7 @@ git clone https://github.com/syedahmedkhaderi/clarity-ai-mckinsey-hackathon.git 
 ./setup.sh && ./start.sh        # then open http://localhost:5173
 ```
 
-- **It opens on a finished example**, so there is something to see straight away. Press *Analyse this test* to run it live.
+- **It opens clean.** Home greets the teacher and waits. Choose a test and press *Analyse this test*, and the agents run live. Earlier tests are seeded at startup, so a student's repeated mistakes are recognised on the first run.
 - **No API key needed.** With no key it runs on deterministic rules. With `QB_CLIENT_ID` and `QB_CLIENT_SECRET` it uses the QuantumBlack gateway (`gpt-4.1-mini`). With `OPENAI_API_KEY` it calls OpenAI directly.
 - **Email:** set `GMAIL_USER` and `GMAIL_APP_PASSWORD` in `.env` to send for real. Without them, notes are saved and marked as not delivered.
 

@@ -93,12 +93,14 @@ Breaking any of these is a defect, not a trade-off. Each has a test.
     `cohort_analyst`, not at `intake`. Marks below the override are not re-run.
     `tests/test_override_replan.py` guards this end to end.
 
-**The app is never empty on first open.** `backend/demo_seed.py` runs A1 and A2
-for history and A3 for a finished batch at startup, always on the deterministic
-rules so it is instant, free and identical everywhere. It is idempotent and
-never overwrites an existing run. `/api/batch/latest` serves it and the UI adopts
-it on mount, labelled as a worked example so nobody mistakes it for their own
-data. Set `LOOP_SEED_DEMO=0` to turn it off.
+**Home is empty until the teacher analyses a test.** Every page load starts
+clean, and nothing is shown until *Analyse this test* is pressed, so what is on
+screen is always the teacher's own run. `backend/demo_seed.py` still runs A1 and
+A2 for history and A3 for a finished batch at startup, always on the
+deterministic rules so it is instant, free and identical everywhere. The history
+is what makes "keeps happening" work on the first live run. It is idempotent and
+never overwrites an existing run. `/api/batch/latest` still serves the seeded
+batch, but the UI no longer adopts it. Set `LOOP_SEED_DEMO=0` to turn it off.
 
 ## 3. How to run things
 
@@ -201,6 +203,9 @@ it must not look generated.
 - **Charts arrive, they do not pop in.** Bars grow, lines draw and headline
   numbers count up on first show, using the keyframes in `src/index.css`. All of
   it switches off under `prefers-reduced-motion`. No animation library.
+- **Priority on the action plan is the one traffic-light exception**: red for
+  high, amber for medium, green for low, as soft tints with dark text, in the
+  `priority` tokens. Use them nowhere else.
 - **Summaries sit in a bar across the top**, not a side column, so the work gets
   the full width. Students is the exception: its rail is the list it works from.
 - **Confidence is always a number.** Never a bare colour. A judge will ask what

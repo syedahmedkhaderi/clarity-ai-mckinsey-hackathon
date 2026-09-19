@@ -217,11 +217,13 @@ than silent.
 ## Demo seeding
 
 `backend/demo_seed.py` runs A1 and A2 for learner history and A3 for a finished
-batch during FastAPI startup, so the app opens on a worked example rather than an
-empty shell. It always uses the rule engine, which makes it instant, free and
-identical on every machine, and it is idempotent, so a restart never overwrites
-the run someone is looking at. `/api/batch/latest` serves it; the UI adopts it on
-mount and labels it as an example. Each agent falls back to `backend/agents/offline_rules.py`,
+batch during FastAPI startup, so a live run finds each student's earlier results
+and can tell a mistake that keeps happening from a new one. It always uses the
+rule engine, which makes it instant, free and identical on every machine, and it
+is idempotent, so a restart never overwrites an existing run.
+`/api/batch/latest` serves the seeded batch, but the UI does not adopt it: Home
+opens empty on every load and fills only after the teacher presses *Analyse this
+test*. Each agent falls back to `backend/agents/offline_rules.py`,
 a deterministic engine that reads the marking scheme and the taxonomy. The
 system runs end to end with no key and no network.
 
@@ -244,9 +246,9 @@ and `src/hooks/useSession.tsx`.
 
 | Page | What it answers | Built from |
 |---|---|---|
-| Home | How did the class do, and is a mistake one student's or the teaching's? | Test picker, the whole-class problem with its drafted re-teach, the score histogram beside four headline numbers, the most common mistakes against the 40 percent line, and a heatmap of who made which mistake |
+| Home | How did the class do, and is a mistake one student's or the teaching's? | A greeting for the teacher and the test picker. Empty until *Analyse this test* is pressed, then the whole-class problem with its drafted re-teach, the score histogram beside four headline numbers, the most common mistakes against the 40 percent line, and a heatmap of who made which mistake |
 | Students | Why did this student lose marks, and has it happened before? | Diagnoses with the evidence highlighted inside the answer, mistake history across tests, and the note to the student |
-| Action plan | What should the teacher do next, in what order? | `plan.scheduled` as cards, most important first, and the notes to send |
+| Action plan | What should the teacher do next, in what order? | `plan.scheduled` as cards, most important first, each with a red, amber or green priority, and the notes to send |
 | Needs your call | What did the agent refuse to decide alone? | `escalations`, grouped by reason, each showing both readings and what the agent would have chosen |
 
 Home used to share its class view with a separate Class page. That page was
@@ -267,7 +269,8 @@ change marked.
 ### Colour and motion
 
 One accent, a violet built on `#6c5ce7`, marks agent activity and decisions. A
-rust accent marks anything handed to the teacher. Charts use the same violet
+rust accent marks anything handed to the teacher. Priority on the action plan is the one traffic-light exception: red, amber and
+green tints in the `priority` tokens, used nowhere else. Charts use the same violet
 family plus one pink for "look at this": a whole-class mistake, or a mistake
 that keeps happening. The tokens live in `frontend/tailwind.config.js`. Charts
 animate in with CSS keyframes from `src/index.css`: bars grow, lines draw,
