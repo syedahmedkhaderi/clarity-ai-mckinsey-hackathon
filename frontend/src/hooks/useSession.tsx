@@ -185,7 +185,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       try {
         const latest = await api.latestBatch();
         if (cancelled || !latest?.batch_id) return;
-        setBatch(latest);
+        setBatch(withoutBudgetEscalations(latest));
         setBatchId(latest.batch_id);
         setTrace(latest.trace ?? []);
         setStatus(latest.status ?? "complete");
