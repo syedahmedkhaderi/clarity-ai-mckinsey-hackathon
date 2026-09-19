@@ -3,7 +3,6 @@ import { ConfidenceBadge } from "./ConfidenceBadge";
 import { Tag } from "./ui/Tag";
 import { EvidenceSpan } from "./EvidenceSpan";
 import {
-  DIAGNOSIS_SOURCE_LABELS,
   ERROR_CLASS_LABELS,
   LANGUAGE_FINDING_SENTENCE,
   REASON_LABELS,
@@ -87,6 +86,7 @@ export function DiagnosisDetail({
           <p className="text-sm text-ink">{plain(diagnosis.reasoning)}</p>
         </div>
       </div>
+      {(node || alternative) && (
       <div className="flex flex-wrap gap-x-6 gap-y-1 border-t border-line bg-surface-raised px-3 py-2 text-xs text-ink-muted">
         {node && (
           <span>
@@ -100,11 +100,8 @@ export function DiagnosisDetail({
             {alternative.label}
           </span>
         )}
-        <span>
-          <span className="text-ink-faint">Found by: </span>
-          {DIAGNOSIS_SOURCE_LABELS[diagnosis.source] ?? diagnosis.source}
-        </span>
       </div>
+      )}
     </div>
   );
 }
