@@ -150,7 +150,7 @@ export function WhoPanel({
   if (!batch.patterns) return null;
   return (
     <Panel
-      title="Who made which mistake"
+      title="Who made which mistake?"
       subtitle="Read down a column for the class, across a row for one student. Select a square to see the answer."
     >
       <ClassHeatmap

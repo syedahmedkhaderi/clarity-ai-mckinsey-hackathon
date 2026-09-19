@@ -5,10 +5,10 @@ import { EmptyState } from "../components/ui/EmptyState";
 import { useAppView } from "../hooks/useAppView";
 import { useSession } from "../hooks/useSession";
 import { analysisLabel, marksLabel } from "../lib/format";
-import { BarLink, Figures, TopBar, TopSurface } from "../shell/WorkSurface";
+import { BarLink, Figures, PageHeader, TopBar, TopSurface } from "../shell/WorkSurface";
 import { plural } from "./classStats";
 import { OverviewTab, homeStats, type HomeStats } from "./HomeSummary";
-import { BRAND_NAME } from "../lib/brand";
+import { BRAND_NAME, TEACHER_NAME } from "../lib/brand";
 
 /**
  * Home is the overview of one test and the class picture in one place. One bar
@@ -21,7 +21,12 @@ export function HomePage() {
   const stats = s.batch ? homeStats(s.batch) : null;
 
   return (
-    <TopSurface bar={<Bar stats={stats} />}>
+    <TopSurface
+      header={
+        <PageHeader title={`Welcome back, ${TEACHER_NAME}.`} />
+      }
+      bar={<Bar stats={stats} />}
+    >
       {s.running && (
         <div className="mb-5">
           <RunProgress
@@ -140,11 +145,7 @@ function Details({ stats }: { stats: HomeStats | null }) {
           </p>
         )}
         <p>
-          {batch
-            ? s.preloaded
-              ? `${label}. A worked example from a practice class, so you can look around.`
-              : `${label}.`
-            : "This test has not been analysed yet."}{" "}
+          {batch ? `${label}.` : "This test has not been analysed yet."}{" "}
           Every mark is a draft. {BRAND_NAME} never sets a final mark on its own.
         </p>
       </div>

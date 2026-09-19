@@ -68,7 +68,7 @@ export function OverviewTab({ stats, batch }: { stats: HomeStats; batch: BatchRe
       <WholeClass batch={batch} problems={stats.whole} onSee={openPattern} />
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <Panel
-          title="How the class scored"
+          title="How did the class score?"
           subtitle={
             stats.totals.length
               ? `The class average was ${stats.mean} out of ${stats.outOf}.`
@@ -108,7 +108,7 @@ function PatternPanel({
   const top = patterns[0];
   return (
     <Panel
-      title="Most common mistakes"
+      title="What are the most common mistakes?"
       subtitle={
         top
           ? top.teaching_problem

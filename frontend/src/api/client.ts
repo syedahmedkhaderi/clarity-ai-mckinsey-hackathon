@@ -27,7 +27,6 @@ export const api = {
       facilitator_minutes,
     }),
   batch: (batchId: string) => get<BatchResult>(`/batch/${batchId}`),
-  latestBatch: () => get<BatchResult>("/batch/latest"),
   trace: (batchId: string, since: number) =>
     get<{ batch_id: string; status: string; total: number; events: TraceEvent[] }>(
       `/batch/${batchId}/trace?since=${since}`,

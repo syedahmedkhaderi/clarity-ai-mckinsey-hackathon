@@ -32,8 +32,9 @@
     @apply px-4 py-3 border-b border-line bg-surface-head rounded-t
            flex items-baseline justify-between gap-3;
   }
+  /* 15px over a 12px subtitle, so a heading never reads as the sentence under it. */
   .panel-title {
-    @apply text-sm font-semibold text-ink;
+    @apply text-[15px] leading-[22px] font-semibold text-ink;
   }
   .panel-sub {
     @apply text-xs text-ink-faint;

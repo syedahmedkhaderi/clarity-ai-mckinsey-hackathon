@@ -75,8 +75,6 @@ export interface Session {
   setSelectedTest: (id: string) => void;
   batch: BatchResult | null;
   batchId: string | null;
-  /** The screen is showing the seeded example, not a run the teacher started. */
-  preloaded: boolean;
   trace: TraceEvent[];
   status: string;
   running: boolean;
@@ -164,9 +162,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [startedAt, setStartedAt] = useState<number | null>(null);
   const [elapsedMs, setElapsedMs] = useState(0);
   const [lastEventAt, setLastEventAt] = useState<number | null>(null);
-  /** True while the screen is showing the seeded example rather than a run the
-   *  teacher started. The UI says so, so nobody mistakes it for their own data. */
-  const [preloaded, setPreloaded] = useState(false);
 
   const health = useQuery({ queryKey: ["health"], queryFn: api.health });
   const taxonomy = useQuery({ queryKey: ["taxonomy"], queryFn: api.taxonomy });
@@ -194,40 +189,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     },
     [qc],
   );
-
-  // Open on a worked example rather than an empty shell. The backend seeds a
-  // finished analysis at startup, so there is normally one waiting. This only
-  // ever fills an empty session: once the teacher starts their own run, that run
-  // owns the screen.
-  useEffect(() => {
-    let cancelled = false;
-    if (batchId || batch) return;
-    (async () => {
-      try {
-        const latest = await api.latestBatch();
-        if (cancelled || !latest?.batch_id) return;
-        setBatch(withoutBudgetEscalations(latest));
-        setBatchId(latest.batch_id);
-        setTrace(latest.trace ?? []);
-        setStatus(latest.status ?? "complete");
-        setPreloaded(true);
-        const entries = await Promise.all(
-          latest.learners.map(async (l) => {
-            const prof = await api.profile(l.learner_id);
-            return [l.learner_id, prof.entries] as const;
-          }),
-        );
-        if (!cancelled) setProfiles(Object.fromEntries(entries));
-      } catch {
-        // No finished run yet. The empty state and the Run button are correct.
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-    // Deliberately once, on mount.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // A visible clock while the run is in flight. Without it a twenty second wait
   // and a hang look exactly the same.
@@ -322,7 +283,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     setTrace([]);
     setBatch(null);
     setStatus("running");
-    setPreloaded(false);
     setStartedAt(Date.now());
     setElapsedMs(0);
     setLastEventAt(Date.now());
@@ -463,7 +423,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     setSelectedTest,
     batch,
     batchId,
-    preloaded,
     trace,
     status,
     running: status === "running",

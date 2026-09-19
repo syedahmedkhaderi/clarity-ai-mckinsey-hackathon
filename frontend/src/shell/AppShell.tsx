@@ -3,7 +3,7 @@ import { useState, type ReactNode } from "react";
 import { Select } from "../components/ui/Select";
 import { useAppView, type ViewKey } from "../hooks/useAppView";
 import { useSession } from "../hooks/useSession";
-import { BRAND_NAME, ORG_NAME } from "../lib/brand";
+import { BRAND_NAME, ORG_NAME, TEACHER_NAME, TEACHER_ROLE } from "../lib/brand";
 import type { Course } from "../types";
 import coursesFixture from "../fixtures/lms_courses.json";
 
@@ -71,12 +71,14 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
         <div className="ml-auto flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs text-white/70">Teacher</span>
+            <span className="text-xs text-white/70">
+              <span className="font-medium text-white">{TEACHER_NAME}</span>, {TEACHER_ROLE}
+            </span>
             <div
               className="grid h-7 w-7 place-items-center rounded-full bg-white/15 text-2xs font-medium"
               aria-hidden="true"
             >
-              T
+              {TEACHER_NAME.replace(/^(Mr|Mrs|Ms|Dr)\.?\s+/, "").charAt(0)}
             </div>
           </div>
         </div>
