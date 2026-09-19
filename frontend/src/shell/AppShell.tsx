@@ -65,7 +65,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-30 flex h-14 items-center gap-3 bg-[#22262e] px-4 text-white md:static md:px-5">
+      <header className="sticky top-0 z-30 flex h-14 items-center gap-3 bg-bar px-4 text-white md:static md:px-5">
         <div className="flex min-w-0 items-baseline gap-2.5">
           <span className="text-sm font-semibold tracking-wide">{BRAND_NAME}</span>
           <span className="truncate text-xs text-white/50">{ORG_NAME}</span>

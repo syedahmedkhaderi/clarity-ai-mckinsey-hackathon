@@ -74,13 +74,15 @@ export function EscalationQueue({
           <Panel
             key={code}
             flush
+            tone="flag"
             title={REASON_LABELS[code]}
             subtitle={GROUP_HINT[code]}
-            action={<span className="panel-sub shrink-0">{items.length} to decide</span>}
+            action={<span className="count-flag shrink-0">{items.length}</span>}
           >
-            <ul className="divide-y divide-line">
+            {/* Each decision is its own card on a grey ground, so one student never runs into the next. */}
+            <ul className="space-y-3 bg-surface-sunken p-3 md:p-4">
               {items.map((e) => (
-                <li key={e.escalation_id} className="px-4 py-4">
+                <li key={e.escalation_id} className="overflow-hidden rounded border border-line-strong bg-surface">
                   <Item e={e} onResolve={onResolve} onOverride={onOverride} />
                 </li>
               ))}
@@ -143,8 +145,8 @@ function Item({
   const isBudget = e.reason_code === "BUDGET_OVERFLOW";
 
   return (
-    <div className="space-y-3">
-      <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+    <div>
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 border-b border-line bg-surface-head px-4 py-2.5">
         <span className="text-sm font-medium text-ink">
           {isBudget || !e.learner_id ? plain(e.subject) : s.learnerName(e.learner_id)}
         </span>
@@ -163,18 +165,25 @@ function Item({
         </span>
       </div>
 
+      <div className="space-y-3 p-4">
       {answer && (
-        <Block label="What they wrote">
+        <div>
+          <Label>What they wrote</Label>
           <EvidenceSpan answer={answer} span={diagnosis?.evidence_span ?? ""} />
-        </Block>
+        </div>
       )}
 
-      {why && <p className="text-sm text-ink-muted">{why}</p>}
+      {why && (
+        <div>
+          <Label>Why it came to you</Label>
+          <p className="text-sm text-ink-muted">{why}</p>
+        </div>
+      )}
 
       {readings.length > 0 && (
         <div className="grid gap-2 sm:grid-cols-2">
           {readings.map((r) => (
-            <div key={r.label} className="rounded border border-line px-3 py-2">
+            <div key={r.label} className="rounded border border-line-strong bg-surface px-3 py-2">
               <div className="flex items-baseline justify-between gap-2">
                 <span className="text-2xs uppercase tracking-wide text-ink-faint">{r.label}</span>
                 {r.confidence !== undefined && (
@@ -187,22 +196,21 @@ function Item({
         </div>
       )}
 
-      <Block label="What the system would have chosen">
+      <div className="rounded border border-agent-line border-l-[3px] border-l-agent bg-agent-soft px-3 py-2">
+        <div className="mb-0.5 text-2xs font-medium uppercase tracking-wide text-agent">
+          What the system would have chosen
+        </div>
         <p className="text-sm text-ink">
           {choiceFor(e, diagnosis, mark, s.patternName, plain)}
         </p>
-      </Block>
+      </div>
+      </div>
     </div>
   );
 }
 
-function Block({ label, children }: { label: string; children: ReactNode }) {
-  return (
-    <div className="rounded border border-line bg-surface-sunken px-3 py-2">
-      <div className="text-2xs uppercase tracking-wide text-ink-faint mb-0.5">{label}</div>
-      {children}
-    </div>
-  );
+function Label({ children }: { children: ReactNode }) {
+  return <div className="mb-1 text-2xs uppercase tracking-wide text-ink-faint">{children}</div>;
 }
 
 /** A node id reads as its plain name. Anything else is a sentence, so it is cleaned instead. */

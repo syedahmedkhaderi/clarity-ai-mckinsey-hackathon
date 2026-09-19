@@ -253,7 +253,7 @@ function StudentDetail({
           { label: "Waiting for you", value: open, tone: open > 0 ? "flag" : "default" },
         ]}
       />
-      <div className="space-y-5 p-4 md:p-6">
+      <div className="space-y-6 p-4 md:p-6">
       <Findings batch={batch} learner={learner} thisTest={thisTest} />
       <PatternsTable summary={summary} />
       <HistoryStrip
@@ -447,10 +447,11 @@ function Findings({
 
   return (
     <Panel
+      flush
       title={`This test, ${thisTest}`}
       subtitle={`${diagnoses.length} ${diagnoses.length === 1 ? "finding" : "findings"}, ${open} need${open === 1 ? "s" : ""} your call`}
     >
-      <div className="space-y-3">
+      <div className="space-y-3 bg-surface-sunken p-3 md:p-4">
         {diagnoses.map((d) => {
           const mark = marks.get(d.question_id);
           const flagged = escalations.filter((e) => e.question_id === d.question_id);

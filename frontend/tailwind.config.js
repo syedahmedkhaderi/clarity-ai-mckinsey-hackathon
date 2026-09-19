@@ -6,10 +6,14 @@ export default {
       colors: {
         ink: { DEFAULT: "#151a22", muted: "#525b68", faint: "#5f6875" },
         line: { DEFAULT: "#d9dee6", strong: "#b8c0cc" },
-        surface: { DEFAULT: "#ffffff", sunken: "#f3f5f8", raised: "#f8f9fb" },
+        // head: a panel's title band, one clear step below white so each section reads
+        // as its own block. inset: a quoted block inside a white card.
+        surface: { DEFAULT: "#ffffff", sunken: "#f3f5f8", raised: "#f8f9fb", head: "#eaeef3", inset: "#f1f3f7" },
         // The LMS sidebar. A cool institutional grey, one step darker than the page
         // ground, so the portal's own navigation reads apart from LOOP's white rails.
         shell: { DEFAULT: "#e8ecf1", line: "#d0d7e0" },
+        // The top bar of the portal, and the helper button that sits on the same ground.
+        bar: { DEFAULT: "#22262e", hover: "#343a45" },
         // The accent. Navy, so the LOOP panels read as one tool against the plain shell.
         // Used for agent activity, agent decisions and the primary action on a page.
         agent: { DEFAULT: "#1d3d6b", soft: "#e7edf6", line: "#c3d0e4" },

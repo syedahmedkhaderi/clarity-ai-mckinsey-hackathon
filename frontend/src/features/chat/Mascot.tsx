@@ -1,7 +1,7 @@
 /**
  * The helper: a pencil with a face and two small arms. Drawn as one inline SVG
- * so it needs no asset and takes its ink from the surrounding text colour. The
- * accent is used for the eraser only.
+ * so it needs no asset. On the dark helper button the arms and eraser, which sit
+ * outside the white body, switch to light strokes so they do not disappear.
  */
 const CSS = `
 .pencil-bob { animation: pencil-bob 4.5s ease-in-out infinite; }
@@ -13,7 +13,17 @@ const CSS = `
 }
 `;
 
-export function Mascot({ size = 48, animated = true }: { size?: number; animated?: boolean }) {
+export function Mascot({
+  size = 48,
+  animated = true,
+  onDark = false,
+}: {
+  size?: number;
+  animated?: boolean;
+  onDark?: boolean;
+}) {
+  const limb = onDark ? "#ffffff" : "#151a22";
+  const eraser = onDark ? "#9fb6d6" : "#1d3d6b";
   return (
     <svg
       width={size}
@@ -30,12 +40,12 @@ export function Mascot({ size = 48, animated = true }: { size?: number; animated
       {animated && <style>{CSS}</style>}
       <g className={animated ? "pencil-bob" : undefined}>
         {/* arms, drawn first so the body sits over their roots */}
-        <path d="M20 33 C14 34 11 38 11 43" />
-        <path d="M44 33 C50 31 53 27 53 22" />
-        <circle cx="11" cy="44" r="2" fill="#ffffff" />
-        <circle cx="53" cy="21" r="2" fill="#ffffff" />
+        <path d="M20 33 C14 34 11 38 11 43" stroke={limb} />
+        <path d="M44 33 C50 31 53 27 53 22" stroke={limb} />
+        <circle cx="11" cy="44" r="2" fill="#ffffff" stroke={limb} />
+        <circle cx="53" cy="21" r="2" fill="#ffffff" stroke={limb} />
         {/* eraser and band */}
-        <rect x="22" y="4" width="20" height="8" rx="3" fill="#1d3d6b" />
+        <rect x="22" y="4" width="20" height="8" rx="3" fill={eraser} />
         <rect x="20" y="11" width="24" height="5" fill="#ffffff" />
         {/* body and sharpened end */}
         <path d="M20 16 H44 V44 L32 59 L20 44 Z" fill="#ffffff" />

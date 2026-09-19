@@ -29,7 +29,7 @@
     @apply bg-surface border border-line rounded;
   }
   .panel-head {
-    @apply px-4 py-3 border-b border-line bg-surface rounded-t
+    @apply px-4 py-3 border-b border-line bg-surface-head rounded-t
            flex items-baseline justify-between gap-3;
   }
   .panel-title {

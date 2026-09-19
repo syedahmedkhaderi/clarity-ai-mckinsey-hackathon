@@ -38,8 +38,8 @@ export function DiagnosisDetail({
 }) {
   const { questionName, plain } = useSession();
   return (
-    <div className="border border-line rounded-md overflow-hidden">
-      <div className="px-3 py-2 bg-surface-raised border-b border-line flex flex-wrap items-center gap-x-2 gap-y-1.5">
+    <div className="overflow-hidden rounded border border-line-strong bg-surface">
+      <div className="px-3 py-2 bg-surface-head border-b border-line flex flex-wrap items-center gap-x-2 gap-y-1.5">
         <span className="text-xs text-ink-faint">{questionName(diagnosis.question_id)}</span>
         <span className="text-sm font-medium text-ink">{node?.label ?? diagnosis.taxonomy_node}</span>
         <span className="tag border-line bg-surface-sunken text-ink-muted">
@@ -69,9 +69,9 @@ export function DiagnosisDetail({
           </p>
         )}
         {question && (
-          <div>
+          <div className="rounded bg-surface-inset px-3 py-2">
             <div className="text-2xs uppercase tracking-wide text-ink-faint mb-0.5">The question</div>
-            <p className="text-sm text-ink-muted">{question.prompt}</p>
+            <p className="text-sm text-ink">{question.prompt}</p>
           </div>
         )}
         <div>
@@ -80,17 +80,30 @@ export function DiagnosisDetail({
           </div>
           <EvidenceSpan answer={answer} span={diagnosis.evidence_span} />
         </div>
-        <div>
-          <div className="text-2xs uppercase tracking-wide text-ink-faint mb-0.5">
+        <div className="rounded border border-agent-line border-l-[3px] border-l-agent bg-agent-soft px-3 py-2">
+          <div className="text-2xs font-medium uppercase tracking-wide text-agent mb-0.5">
             Why marks were lost
           </div>
-          <p className="text-sm text-ink-muted">{plain(diagnosis.reasoning)}</p>
+          <p className="text-sm text-ink">{plain(diagnosis.reasoning)}</p>
         </div>
-        <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-ink-faint pt-2 border-t border-line">
-          {node && <span>Next step: {plain(node.remediation_hint)}</span>}
-          {alternative && <span>Other possibility: {alternative.label}</span>}
-          <span>Found by: {DIAGNOSIS_SOURCE_LABELS[diagnosis.source] ?? diagnosis.source}</span>
-        </div>
+      </div>
+      <div className="flex flex-wrap gap-x-6 gap-y-1 border-t border-line bg-surface-raised px-3 py-2 text-xs text-ink-muted">
+        {node && (
+          <span>
+            <span className="text-ink-faint">Next step: </span>
+            {plain(node.remediation_hint)}
+          </span>
+        )}
+        {alternative && (
+          <span>
+            <span className="text-ink-faint">Other possibility: </span>
+            {alternative.label}
+          </span>
+        )}
+        <span>
+          <span className="text-ink-faint">Found by: </span>
+          {DIAGNOSIS_SOURCE_LABELS[diagnosis.source] ?? diagnosis.source}
+        </span>
       </div>
     </div>
   );

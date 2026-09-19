@@ -85,9 +85,9 @@ export function ChatDock() {
           aria-expanded={open}
           aria-controls="chat-panel"
           onClick={toggle}
-          className="grid h-12 w-12 place-items-center rounded-full border border-line-strong bg-surface hover:bg-surface-sunken focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-agent md:h-14 md:w-14"
+          className="grid h-12 w-12 place-items-center rounded-full border border-bar bg-bar hover:bg-bar-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-agent md:h-14 md:w-14"
         >
-          <Mascot size={44} />
+          <Mascot size={38} onDark />
         </button>
       </div>
     </>
