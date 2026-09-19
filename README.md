@@ -82,33 +82,7 @@ A facilitator uploads a test. Six agents take it from there, and the facilitator
 
 ## Agent workflow
 
-<!-- TODO: add the designed diagram as docs/agent-workflow.png and uncomment the line below. -->
-<!-- <p align="center"><img src="docs/agent-workflow.png" alt="Agent workflow" width="90%" /></p> -->
-> The designed workflow diagram will go here. Until then, this is the same flow in text:
-
-```
-  Test paper · marking scheme · answer sheets · earlier results (LMS)
-                                  │
-  ┌───────────── LangGraph: shared state and a visible trace ─────────────┐
-  │                               ▼                                       │
-  │                     Reading the class                                 │
-  │                               ▼                                       │
-  │                            Marking ◀─────────┐                        │
-  │                               ▼              │                        │
-  │                     Finding mistakes ◀───────┤  Safety check          │
-  │                               ▼              │  low confidence,       │
-  │   ┌──────────────────▶ Class picture         │  two close readings,   │
-  │   │                           │              │  wording, thin record  │
-  │   │             enough data ──┴── too little │                        │
-  │   │                  ▼               ▼       │                        │
-  │   │              Planning ◀──────────┼───────┘                        │
-  │   │                  ▼               ▼                                │
-  └───┼──── action plan · notes ─── insights only ────────────────────────┘
-      │                  ▼
-      │          Teacher decides: accept, correct, send notes
-      │                  │
-      └── a correction ──┘  re-plans from Class picture, marks are not re-run
-```
+<p align="center"><img src="docs/agent-workflow.png" alt="Agent workflow: inputs, the five agents under the LangGraph orchestrator with the safety check, teacher-facing outputs and the re-plan loop" width="100%" style="max-width: 100%; height: auto;" /></p>
 
 | Agent (name in the app) | Node in the code | What it does | If the model fails |
 |---|---|---|---|
