@@ -5,6 +5,7 @@ import { ApiError } from "../../api/http";
 import { useSession } from "../../hooks/useSession";
 import type { EmailDraft, SendResult } from "../../types/email";
 import { ALREADY_SENT_QUESTION, SEND_PROBLEMS } from "./copy";
+import { MailFlight } from "./MailFlight";
 import { StateTag } from "./parts";
 
 const FIELD = "w-full rounded border border-line-strong px-2 py-1.5 text-sm disabled:bg-surface-sunken";
@@ -136,6 +137,8 @@ function DraftForm({
 
   const busy = send.isPending || testCopy.isPending;
   const locked = sent !== null;
+  // A failed send keeps the form and its message, so the teacher can fix it and try again.
+  const flown = sent && sent.status !== "failed" ? sent : null;
   const ready = to.trim() !== "" && subject.trim() !== "" && body.trim() !== "";
   const edit = (set: (v: string) => void) => (v: string) => {
     set(v);
@@ -158,56 +161,63 @@ function DraftForm({
       </div>
 
       <div className="p-4 space-y-4 overflow-y-auto">
-        <label className="block">
-          <span className="block text-xs text-ink-muted mb-1">To</span>
-          <input
-            type="email"
-            value={to}
-            disabled={locked}
-            onChange={(e) => edit(setTo)(e.target.value)}
-            className={FIELD}
-          />
-          {problem?.where === "to" && <p className="text-xs text-flag mt-1">{problem.text}</p>}
-        </label>
+        {flown ? (
+          <MailFlight result={flown} name={draft.name} />
+        ) : (
+          <>
+            <label className="block">
+              <span className="block text-xs text-ink-muted mb-1">To</span>
+              <input
+                type="email"
+                value={to}
+                disabled={locked}
+                onChange={(e) => edit(setTo)(e.target.value)}
+                className={FIELD}
+              />
+              {problem?.where === "to" && <p className="text-xs text-flag mt-1">{problem.text}</p>}
+            </label>
 
-        <label className="block">
-          <span className="block text-xs text-ink-muted mb-1">Subject</span>
-          <input
-            value={subject}
-            disabled={locked}
-            onChange={(e) => edit(setSubject)(e.target.value)}
-            className={FIELD}
-          />
-        </label>
+            <label className="block">
+              <span className="block text-xs text-ink-muted mb-1">Subject</span>
+              <input
+                value={subject}
+                disabled={locked}
+                onChange={(e) => edit(setSubject)(e.target.value)}
+                className={FIELD}
+              />
+            </label>
 
-        <label className="block">
-          <span className="block text-xs text-ink-muted mb-1">Message</span>
-          <textarea
-            value={body}
-            disabled={locked}
-            onChange={(e) => edit(setBody)(e.target.value)}
-            rows={12}
-            className={`${FIELD} resize-y`}
-          />
-          {problem?.where === "body" && <p className="text-xs text-flag mt-1">{problem.text}</p>}
-        </label>
+            <label className="block">
+              <span className="block text-xs text-ink-muted mb-1">Message</span>
+              <textarea
+                value={body}
+                disabled={locked}
+                onChange={(e) => edit(setBody)(e.target.value)}
+                rows={12}
+                className={`${FIELD} resize-y`}
+              />
+              {problem?.where === "body" && <p className="text-xs text-flag mt-1">{problem.text}</p>}
+            </label>
 
-        {askResend && (
-          <div className="rounded border border-flag-line bg-flag-soft p-3 flex items-center justify-between gap-3">
-            <p className="text-sm text-flag">{ALREADY_SENT_QUESTION}</p>
-            <div className="flex gap-2 shrink-0">
-              <button className="btn btn-xs" onClick={() => setAskResend(false)} disabled={busy}>
-                Not now
-              </button>
-              <button className="btn btn-xs btn-primary" onClick={() => send.mutate(true)} disabled={busy}>
-                Send another
-              </button>
-            </div>
-          </div>
+            {askResend && (
+              <div className="rounded border border-flag-line bg-flag-soft p-3 flex items-center justify-between gap-3">
+                <p className="text-sm text-flag">{ALREADY_SENT_QUESTION}</p>
+                <div className="flex gap-2 shrink-0">
+                  <button className="btn btn-xs" onClick={() => setAskResend(false)} disabled={busy}>
+                    Not now
+                  </button>
+                  <button className="btn btn-xs btn-primary" onClick={() => send.mutate(true)} disabled={busy}>
+                    Send another
+                  </button>
+                </div>
+              </div>
+            )}
+
+          </>
         )}
 
         {problem?.where === "general" && <p className="text-sm text-flag">{problem.text}</p>}
-        {sent && <Outcome label="This note" result={sent} />}
+        {sent && !flown && <Outcome label="This note" result={sent} />}
         {testResult && <Outcome label="Test copy" result={testResult} />}
       </div>
 
