@@ -22,7 +22,7 @@ export function focusOn(batch: BatchResult, node: string): Focus {
 
 /**
  * Four numbers that say where the problem lies, each in its own box. The class
- * average is left to the score chart below, which already names it.
+ * average is left to the score chart beside them, which already names it.
  */
 export function ClassFigures({ batch, named }: { batch: BatchResult; named: NodePattern[] }) {
   const { sharedThreshold, openCount } = useSession();
@@ -53,11 +53,12 @@ export function ClassFigures({ batch, named }: { batch: BatchResult; named: Node
     },
   ];
   return (
-    <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+    // Two by two beside the score chart, stretched to its height so the pair reads as one row.
+    <dl className="grid grid-cols-1 gap-3 sm:auto-rows-fr sm:grid-cols-2">
       {tiles.map((t, i) => (
         <div
           key={t.label}
-          className="anim-rise min-w-0 rounded border border-line bg-surface px-4 py-3.5"
+          className="anim-rise flex min-w-0 flex-col justify-center rounded border border-line bg-surface px-4 py-3.5"
           style={{ animationDelay: `${i * 70}ms` }}
         >
           <dd
@@ -69,7 +70,7 @@ export function ClassFigures({ batch, named }: { batch: BatchResult; named: Node
             <CountUp value={t.value} />
           </dd>
           <dt className="text-sm font-medium text-ink">{t.label}</dt>
-          <dd className="truncate text-xs text-ink-muted" title={t.sub}>
+          <dd className="line-clamp-2 text-xs text-ink-muted" title={t.sub}>
             {t.sub}
           </dd>
         </div>
@@ -79,7 +80,7 @@ export function ClassFigures({ batch, named }: { batch: BatchResult; named: Node
 }
 
 /**
- * The headline under the numbers. A whole-class problem carries the re-teach the
+ * The headline at the top of Home. A whole-class problem carries the re-teach the
  * plan drafted for it, so the teacher reads what to try without leaving the page.
  */
 export function WholeClass({

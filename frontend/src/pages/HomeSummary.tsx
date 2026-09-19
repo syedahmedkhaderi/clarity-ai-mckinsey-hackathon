@@ -41,9 +41,9 @@ export function homeStats(batch: BatchResult): HomeStats {
 }
 
 /**
- * Home's one view, top to bottom: where the problem lies in four numbers, the
- * whole-class problems, how the class scored, the most common mistakes, and who
- * made which. Selecting a mistake anywhere opens the students behind it under
+ * Home's one view, top to bottom: the whole-class problems, how the class
+ * scored beside four numbers that say where the problem lies, the most common
+ * mistakes, and who made which. Selecting a mistake anywhere opens the students behind it under
  * the heatmap, where a finding can be corrected.
  */
 export function OverviewTab({ stats, batch }: { stats: HomeStats; batch: BatchResult }) {
@@ -65,9 +65,8 @@ export function OverviewTab({ stats, batch }: { stats: HomeStats; batch: BatchRe
 
   return (
     <div className="space-y-5">
-      <ClassFigures batch={batch} named={stats.patterns} />
       <WholeClass batch={batch} problems={stats.whole} onSee={openPattern} />
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:items-start">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <Panel
           title="How the class scored"
           subtitle={
@@ -78,6 +77,7 @@ export function OverviewTab({ stats, batch }: { stats: HomeStats; batch: BatchRe
         >
           <ScoreDistribution scores={stats.totals} outOf={stats.outOf} />
         </Panel>
+        <ClassFigures batch={batch} named={stats.patterns} />
       </div>
       <PatternPanel patterns={stats.patterns} onSelect={openPattern} />
       <div ref={who} className="scroll-mt-4">
