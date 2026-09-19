@@ -17,7 +17,7 @@ import {
 
 const TOP_PATTERNS = 5;
 
-/** The class in a handful of numbers. Shared by the Home rail and its tabs. */
+/** The class in a handful of numbers, for the Home overview and its details. */
 export interface HomeStats {
   students: number;
   lost: number;
@@ -49,7 +49,7 @@ export function homeStats(batch: BatchResult, topicName: (id: string) => string)
   };
 }
 
-/** The first tab: two pictures and the mistakes that matter most. */
+/** Home's one view: two pictures and the mistakes that matter most. */
 export function OverviewTab({ stats }: { stats: HomeStats }) {
   const hardest = [...stats.questions].sort(
     (a, b) => a.correct / (a.total || 1) - b.correct / (b.total || 1),
@@ -81,21 +81,6 @@ export function OverviewTab({ stats }: { stats: HomeStats }) {
       </div>
     </div>
   );
-}
-
-export function QuestionsTab({ stats }: { stats: HomeStats }) {
-  return (
-    <Panel
-      title="Every question"
-      subtitle="The share of students who got each question fully right. A short bar is a hard question."
-    >
-      <QuestionBars rows={stats.questions} />
-    </Panel>
-  );
-}
-
-export function MistakesTab({ stats }: { stats: HomeStats }) {
-  return <PatternPanel patterns={stats.patterns} />;
 }
 
 function PatternPanel({ patterns, limit }: { patterns: NodePattern[]; limit?: number }) {

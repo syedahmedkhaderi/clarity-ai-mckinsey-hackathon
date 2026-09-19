@@ -192,7 +192,14 @@ it must not look generated.
 
 - **One accent colour**, `agent` in `tailwind.config.js`. It is used only for
   agent activity and agent decisions. A second accent, `flag`, marks things the
-  agent handed to a human. Everything else is neutral.
+  agent handed to a human. Page chrome is otherwise neutral.
+- **Charts use the `chart` palette**, bright so a picture catches the eye. Each
+  hue keeps one meaning on every page: blue is the ordinary mark, magenta is
+  the one to look at (a hard question, a whole-class mistake, a mistake that
+  keeps coming back), teal is a trend line. Never colour by series, and never
+  let a hue stand in for a number.
+- **Summaries sit in a bar across the top**, not a side column, so the work gets
+  the full width. Students is the exception: its rail is the list it works from.
 - **Confidence is always a number.** Never a bare colour. A judge will ask what
   amber means and there is no good answer.
 - **Evidence is highlighted inline** inside the learner's own answer, never

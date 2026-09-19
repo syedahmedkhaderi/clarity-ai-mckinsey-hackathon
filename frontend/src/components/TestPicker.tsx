@@ -16,9 +16,9 @@ function option(a: Assignment): SelectOption {
 }
 
 /**
- * Chooses the test and starts the analysis. Lives in the Home rail, so it is a
- * vertical stack. A native select rather than a row of buttons: the list grows
- * every term and a row stops fitting after four.
+ * Chooses the test and starts the analysis, laid out as one row for the bar
+ * across the top of Home. A select rather than a row
+ * of buttons: the list grows every term and a row stops fitting after four.
  */
 export function TestPicker({
   assignments,
@@ -48,46 +48,46 @@ export function TestPicker({
       : [{ options: provided }];
 
   return (
-    <div className="flex flex-col gap-3">
-        <div className="min-w-0">
-          {assignments.length === 0 ? (
-            <p className="mt-2 text-sm text-ink-faint">Loading your tests.</p>
-          ) : (
-            <Select
-              id="test-picker"
-              label="Test"
-              value={selected}
-              disabled={running}
-              onChange={onSelect}
-              groups={groups}
-            />
-          )}
+    <div className="flex flex-wrap items-end gap-x-3 gap-y-2">
+      <div className="w-full min-w-0 sm:w-80">
+        {assignments.length === 0 ? (
+          <p className="text-sm text-ink-faint">Loading your tests.</p>
+        ) : (
+          <Select
+            id="test-picker"
+            label="Test"
+            value={selected}
+            disabled={running}
+            onChange={onSelect}
+            groups={groups}
+          />
+        )}
+      </div>
+      <button
+        className="btn btn-primary justify-center"
+        onClick={onRun}
+        disabled={running || !selected || blockedReason !== null}
+      >
+        {running ? (
+          <>
+            <span className="h-3 w-3 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+            Working
+          </>
+        ) : (
+          "Analyse this test"
+        )}
+      </button>
+      {(current || blockedReason) && (
+        <div className="pb-0.5 text-xs">
           {current && (
-            <p className="mt-2 text-xs text-ink-muted">
-              <span className="num">{current.question_count}</span> questions,{" "}
-              <span className="num">{marksLabel(current.points_possible)}</span>,{" "}
-              <span className="num">
-                {current.submission_count} of {current.expected_count}
-              </span>{" "}
-              answer sheets in.
+            <p className="text-ink-muted">
+              {current.question_count} questions, {marksLabel(current.points_possible)},{" "}
+              {current.submission_count} of {current.expected_count} sheets in.
             </p>
           )}
-          {blockedReason && <p className="mt-2 text-xs text-flag">{blockedReason}</p>}
+          {blockedReason && <p className="text-flag">{blockedReason}</p>}
         </div>
-        <button
-          className="btn btn-primary justify-center"
-          onClick={onRun}
-          disabled={running || !selected || blockedReason !== null}
-        >
-          {running ? (
-            <>
-              <span className="h-3 w-3 animate-spin rounded-full border-2 border-white/40 border-t-white" />
-              Working
-            </>
-          ) : (
-            "Analyse this test"
-          )}
-        </button>
+      )}
     </div>
   );
 }

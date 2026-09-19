@@ -1,11 +1,10 @@
 import clsx from "clsx";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 /**
- * The layout every LOOP page shares: a summary rail on the left that answers
- * "what matters here" at a glance, and a work area on the right with a header
- * bar and, where a page has more than one view, a row of tabs. The rail stays
- * in view while the work area scrolls, so the key numbers never leave the screen.
+ * A rail on the left and a work area on the right. Only Students uses it: its
+ * rail is the list of students it works from, so it earns the column. Every
+ * other page puts its summary in a bar across the top instead (TopSurface).
  */
 export function WorkSurface({
   rail,
@@ -73,23 +72,7 @@ export function PageHeader<K extends string>({
           <h1 className="text-xl font-semibold tracking-tight text-ink">{title}</h1>
           {subtitle !== undefined && <p className="mt-0.5 text-xs text-ink-muted">{subtitle}</p>}
         </div>
-        {figures && figures.length > 0 && (
-          <dl className="flex flex-wrap gap-x-7 gap-y-2">
-            {figures.map((f) => (
-              <div key={f.label}>
-                <dt className="text-2xs text-ink-muted">{f.label}</dt>
-                <dd
-                  className={clsx(
-                    "text-lg font-semibold leading-6 tabular-nums",
-                    f.tone === "flag" ? "text-flag" : "text-ink",
-                  )}
-                >
-                  {f.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        )}
+        {figures && figures.length > 0 && <Figures items={figures} />}
         {action && <div className="ml-auto">{action}</div>}
       </div>
       {tabs && active !== undefined && onTab && <Tabs tabs={tabs} active={active} onTab={onTab} />}
@@ -135,31 +118,6 @@ export function Tabs<K extends string>({
   );
 }
 
-/** One line of the rail: a label and a number. */
-export function RailStat({
-  label,
-  value,
-  tone = "default",
-}: {
-  label: string;
-  value: ReactNode;
-  tone?: "default" | "flag";
-}) {
-  return (
-    <div className="flex items-baseline justify-between gap-3 border-b border-line py-2.5 last:border-b-0">
-      <span className="text-sm text-ink-muted">{label}</span>
-      <span
-        className={clsx(
-          "text-base font-semibold tabular-nums",
-          tone === "flag" ? "text-flag" : "text-ink",
-        )}
-      >
-        {value}
-      </span>
-    </div>
-  );
-}
-
 function Chevron({ className }: { className?: string }) {
   return (
     <svg
@@ -180,11 +138,106 @@ function Chevron({ className }: { className?: string }) {
 }
 
 /**
- * A rail shortcut to the page where the work happens. Agent blue for the plan;
- * the flag tone is a rust outline with the count in a solid square, for things
- * waiting on the teacher.
+ * The layout for pages whose summary sits above the work rather than beside it:
+ * the page header, a horizontal bar of key facts and shortcuts, then the work at
+ * full width. Students keeps the rail, because its rail is the list it works from.
  */
-export function RailLink({
+export function TopSurface({
+  header,
+  bar,
+  children,
+}: {
+  header?: ReactNode;
+  bar?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <div className="min-h-[calc(100vh-3.5rem)]">
+      {header}
+      {bar}
+      <div className="p-4 md:p-6">{children}</div>
+    </div>
+  );
+}
+
+/**
+ * One slim row under the header. The detail a teacher only sometimes wants sits
+ * behind a toggle at the end of the row, so the bar never pushes the work down.
+ */
+export function TopBar({
+  children,
+  end,
+  details,
+  detailsLabel = "details",
+}: {
+  children: ReactNode;
+  /** Shortcuts kept together at the right of the row, beside the details toggle. */
+  end?: ReactNode;
+  details?: ReactNode;
+  detailsLabel?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-b border-line bg-surface-raised px-4 md:px-6">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 py-2.5">
+        {children}
+        {(end !== undefined || details !== undefined) && (
+          <div className="ml-auto flex flex-wrap items-center gap-2">
+            {end}
+            {details !== undefined && (
+              <button
+                type="button"
+                className="btn btn-xs"
+                aria-expanded={open}
+                onClick={() => setOpen(!open)}
+              >
+                {open ? `Hide ${detailsLabel}` : `Show ${detailsLabel}`}
+                <Chevron className={clsx("transition-transform", open ? "-rotate-90" : "rotate-90")} />
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+      {details !== undefined && open && <div className="border-t border-line py-4">{details}</div>}
+    </div>
+  );
+}
+
+/** A thin upright rule between groups in the top bar. */
+export function BarDivider() {
+  return <span aria-hidden className="hidden h-6 w-px bg-line sm:block" />;
+}
+
+/** Headline numbers laid out in a row. */
+export function Figures({
+  items,
+}: {
+  items: { label: string; value: ReactNode; tone?: "default" | "flag" }[];
+}) {
+  return (
+    <dl className="flex flex-wrap gap-x-8 gap-y-3">
+      {items.map((f) => (
+        <div key={f.label}>
+          <dt className="text-2xs text-ink-muted">{f.label}</dt>
+          <dd
+            className={clsx(
+              "text-lg font-semibold leading-6 tabular-nums",
+              f.tone === "flag" ? "text-flag" : "text-ink",
+            )}
+          >
+            {f.value}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+/**
+ * A shortcut in the top bar: the rail link, folded into one line. The longer
+ * explanation stays available as the button's tooltip and accessible name.
+ */
+export function BarLink({
   title,
   hint,
   tone = "agent",
@@ -192,9 +245,8 @@ export function RailLink({
   onClick,
 }: {
   title: string;
-  hint: string;
+  hint?: string;
   tone?: "agent" | "flag" | "neutral";
-  /** Shown as a solid square before the title. Meant for the flag tone. */
   count?: number;
   onClick: () => void;
 }) {
@@ -202,54 +254,67 @@ export function RailLink({
     <button
       type="button"
       onClick={onClick}
+      title={hint}
       className={clsx(
-        "flex w-full items-center gap-3 rounded-sm border px-3 py-2.5 text-left transition-colors",
-        tone === "agent" && "border-agent bg-agent-soft hover:bg-agent-line/50",
-        tone === "flag" && "border-flag bg-surface hover:bg-flag-soft",
-        tone === "neutral" && "border-line bg-surface hover:bg-surface-sunken",
+        "inline-flex items-center gap-2 whitespace-nowrap rounded-sm border px-2.5 py-1.5 text-sm font-medium transition-colors",
+        tone === "agent" && "border-agent bg-agent-soft text-agent hover:bg-agent-line/50",
+        tone === "flag" && "border-flag bg-surface text-flag hover:bg-flag-soft",
+        tone === "neutral" && "border-line-strong bg-surface text-ink hover:bg-surface-sunken",
       )}
     >
       {count !== undefined && (
         <span
           className={clsx(
-            "grid h-8 w-8 shrink-0 place-items-center rounded-sm font-mono text-[15px] font-medium tabular-nums",
-            tone === "flag" ? "bg-flag text-white" : "bg-agent text-white",
+            "grid h-5 min-w-5 place-items-center rounded-sm px-1 font-mono text-xs tabular-nums text-white",
+            tone === "flag" ? "bg-flag" : "bg-agent",
           )}
         >
           {count}
         </span>
       )}
-      <span className="min-w-0 flex-1">
-        <span
-          className={clsx(
-            "block text-sm font-semibold",
-            tone === "agent" && "text-agent",
-            tone === "flag" && "text-flag",
-            tone === "neutral" && "text-ink",
-          )}
-        >
-          {title}
-        </span>
-        <span className="mt-0.5 block text-xs text-ink-muted">{hint}</span>
-      </span>
-      <Chevron
-        className={clsx(
-          tone === "agent" && "text-agent",
-          tone === "flag" && "text-flag",
-          tone === "neutral" && "text-ink-muted",
-        )}
-      />
+      {title}
+      <Chevron />
     </button>
   );
 }
 
-export function RailSection({ title, children }: { title?: string; children: ReactNode }) {
+/**
+ * A row of choices that narrow the list below. Each carries its count, so the
+ * row still reads as the page's summary when nothing is chosen.
+ */
+export function FilterChips<K extends string>({
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  label: string;
+  options: { key: K; label: string; count: number }[];
+  value: K;
+  onChange: (key: K) => void;
+}) {
   return (
-    <section>
-      {title && (
-        <p className="mb-1.5 text-2xs font-medium uppercase tracking-wide text-ink-muted">{title}</p>
-      )}
-      {children}
-    </section>
+    <div role="group" aria-label={label} className="flex flex-wrap items-center gap-1.5">
+      {options.map((o) => {
+        const on = o.key === value;
+        return (
+          <button
+            key={o.key}
+            type="button"
+            aria-pressed={on}
+            onClick={() => onChange(o.key)}
+            className={clsx(
+              "inline-flex items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1 text-sm transition-colors",
+              on
+                ? "border-agent bg-agent font-medium text-white"
+                : "border-line-strong bg-surface text-ink hover:bg-surface-sunken",
+            )}
+          >
+            {o.label}
+            <span className={clsx("num text-xs", on ? "text-white/80" : "text-ink-muted")}>{o.count}</span>
+          </button>
+        );
+      })}
+    </div>
   );
 }

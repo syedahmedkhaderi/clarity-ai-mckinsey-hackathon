@@ -2,7 +2,7 @@ import { EscalationQueue } from "../components/EscalationQueue";
 import { useAppView } from "../hooks/useAppView";
 import { useSession } from "../hooks/useSession";
 import { REASON_LABELS } from "../lib/format";
-import { PageHeader, RailLink, RailSection, RailStat, WorkSurface } from "../shell/WorkSurface";
+import { BarDivider, BarLink, PageHeader, TopBar, TopSurface } from "../shell/WorkSurface";
 import type { ReasonCode } from "../types";
 import { BRAND_NAME } from "../lib/brand";
 
@@ -14,35 +14,44 @@ export function ReviewPage() {
   const byReason = new Map<ReasonCode, number>();
   for (const e of open) byReason.set(e.reason_code, (byReason.get(e.reason_code) ?? 0) + 1);
 
-  const rail = (
-    <>
-      <RailSection title="Waiting for you">
-        <RailStat label="Open" value={openCount} tone={openCount > 0 ? "flag" : "default"} />
-        <RailStat label="Decided" value={batch.escalations.length - open.length} />
-      </RailSection>
+  const bar = (
+    <TopBar>
+      <span className="text-sm text-ink-muted">
+        <span className={openCount > 0 ? "num font-semibold text-flag" : "num font-semibold text-ink"}>
+          {openCount}
+        </span>{" "}
+        open,{" "}
+        <span className="num font-semibold text-ink">{batch.escalations.length - open.length}</span>{" "}
+        decided.
+      </span>
       {byReason.size > 0 && (
-        <RailSection title={`Why ${BRAND_NAME} stopped`}>
+        <>
+          <BarDivider />
+          <span className="text-xs text-ink-muted">Why {BRAND_NAME} stopped:</span>
           {[...byReason.entries()].map(([code, n]) => (
-            <RailStat key={code} label={REASON_LABELS[code]} value={n} />
+            <span
+              key={code}
+              className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-2.5 py-0.5 text-xs text-ink"
+            >
+              {REASON_LABELS[code]}
+              <span className="num text-ink-muted">{n}</span>
+            </span>
           ))}
-        </RailSection>
+        </>
       )}
-      <RailSection title="Where to go">
-        <RailLink
+      <span className="ml-auto">
+        <BarLink
           title="Open the action plan"
           hint="Your decisions here change the plan straight away."
           onClick={() => setView("plan")}
         />
-      </RailSection>
-      <p className="mt-auto border-t border-line pt-4 text-2xs leading-4 text-ink-muted">
-        {BRAND_NAME} never sets a mark that counts. It hands you what it is not sure about.
-      </p>
-    </>
+      </span>
+    </TopBar>
   );
 
   return (
-    <WorkSurface
-      rail={rail}
+    <TopSurface
+      bar={bar}
       header={
         <PageHeader
           title="Needs your call"
@@ -52,7 +61,7 @@ export function ReviewPage() {
               : openCount === 1
                 ? "1 thing is waiting for you."
                 : `${openCount} things are waiting for you.`
-          } Each one shows what the system was unsure about and what it would have done.`}
+          } Each one shows what the system was unsure about and what it would have done. ${BRAND_NAME} never sets a mark that counts.`}
         />
       }
     >
@@ -61,6 +70,6 @@ export function ReviewPage() {
         onResolve={(e) => resolve(e.escalation_id)}
         onOverride={overrideEscalation}
       />
-    </WorkSurface>
+    </TopSurface>
   );
 }

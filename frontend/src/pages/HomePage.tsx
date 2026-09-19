@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { HowWorkedOut } from "../components/HowWorkedOut";
 import { RunProgress } from "../components/RunProgress";
 import { TestPicker } from "../components/TestPicker";
@@ -6,35 +5,22 @@ import { EmptyState } from "../components/ui/EmptyState";
 import { useAppView } from "../hooks/useAppView";
 import { useSession } from "../hooks/useSession";
 import { analysisLabel, pct } from "../lib/format";
-import { PageHeader, RailLink, RailSection, RailStat, WorkSurface } from "../shell/WorkSurface";
-import type { BatchResult } from "../types";
+import { BarLink, Figures, PageHeader, TopBar, TopSurface } from "../shell/WorkSurface";
 import { plural } from "./classStats";
-import { MistakesTab, OverviewTab, QuestionsTab, homeStats, type HomeStats } from "./HomeSummary";
+import { OverviewTab, homeStats, type HomeStats } from "./HomeSummary";
 import { BRAND_NAME } from "../lib/brand";
 
-type Tab = "overview" | "questions" | "mistakes" | "how";
-
-const TABS: { key: Tab; label: string }[] = [
-  { key: "overview", label: "Overview" },
-  { key: "questions", label: "Questions" },
-  { key: "mistakes", label: "Mistakes" },
-  { key: "how", label: "How it was worked out" },
-];
-
 /**
- * Home is the work surface for one test: the rail says what matters and where
- * to go, the tabs hold the evidence. Nothing here needs scrolling to find.
+ * Home is the overview of one test. The bar across the top chooses the test and
+ * points to where work is waiting; the numbers behind the pictures stay folded
+ * away until asked for, so the charts get the screen.
  */
 export function HomePage() {
   const s = useSession();
-  const [tab, setTab] = useState<Tab>("overview");
   const stats = s.batch ? homeStats(s.batch, s.topicName) : null;
 
   return (
-    <WorkSurface
-      rail={<Rail stats={stats} />}
-      header={s.batch && stats ? <Header batch={s.batch} tab={tab} onTab={setTab} /> : undefined}
-    >
+    <TopSurface header={<Header />} bar={<Bar stats={stats} />}>
       {s.running && (
         <div className="mb-5">
           <RunProgress
@@ -46,68 +32,54 @@ export function HomePage() {
           />
         </div>
       )}
-      {s.batch && stats ? (
-        <Analysis stats={stats} tab={tab} />
+      {stats ? (
+        <OverviewTab stats={stats} />
       ) : (
         !s.running && (
           <EmptyState title="No analysis yet">
-            Choose a test on the left and press Analyse this test. You will see how the class did
-            and what to do next.
+            Choose a test above and press Analyse this test. You will see how the class did and
+            what to do next.
           </EmptyState>
         )
       )}
-    </WorkSurface>
+    </TopSurface>
   );
 }
 
-function Header({ batch, tab, onTab }: { batch: BatchResult; tab: Tab; onTab: (t: Tab) => void }) {
+function Header() {
   const s = useSession();
-  const label = analysisLabel(s.testName(batch.assessment_id), batch.trace[0]?.timestamp);
+  const { setView } = useAppView();
+  const batch = s.batch;
+  const label = batch ? analysisLabel(s.testName(batch.assessment_id), batch.trace[0]?.timestamp) : "";
   return (
     <PageHeader
-      title={s.testName(batch.assessment_id)}
+      title={batch ? s.testName(batch.assessment_id) : "Home"}
       subtitle={
-        s.preloaded
-          ? `${label}. A worked example from a practice class, so you can look around. Every mark is a draft.`
-          : `${label}. Every mark is a draft.`
+        !batch
+          ? `Every mark ${BRAND_NAME} gives is a draft. It never sets a final mark on its own.`
+          : s.preloaded
+            ? `${label}. A worked example from a practice class, so you can look around. Every mark is a draft.`
+            : `${label}. Every mark is a draft.`
       }
-      tabs={TABS}
-      active={tab}
-      onTab={onTab}
+      action={
+        <button className="btn btn-xs" onClick={() => setView("upload")}>
+          Add a test
+        </button>
+      }
     />
   );
 }
 
-function Analysis({ stats, tab }: { stats: HomeStats; tab: Tab }) {
+/** The test, the places work is waiting, and the test's numbers behind a toggle. */
+function Bar({ stats }: { stats: HomeStats | null }) {
   const s = useSession();
-  return (
-    <>
-      {tab === "overview" && <OverviewTab stats={stats} />}
-      {tab === "questions" && <QuestionsTab stats={stats} />}
-      {tab === "mistakes" && <MistakesTab stats={stats} />}
-      {tab === "how" && (
-        <HowWorkedOut
-          events={s.trace}
-          status={s.status}
-          elapsedMs={s.elapsedMs}
-          health={s.health}
-          running={s.running}
-          stage={s.stage}
-          open
-        />
-      )}
-    </>
-  );
-}
-
-/** What a teacher needs at a glance: the test, five numbers, and the two places work is waiting. */
-function Rail({ stats }: { stats: HomeStats | null }) {
-  const s = useSession();
-  const { setView } = useAppView();
   const selected = s.tests.find((t) => t.id === s.selectedTest);
-  const planned = s.batch?.plan?.scheduled.length ?? 0;
   return (
-    <>
+    <TopBar
+      details={stats ? <Details stats={stats} /> : undefined}
+      detailsLabel="test details"
+      end={stats ? <Links stats={stats} /> : undefined}
+    >
       <TestPicker
         assignments={s.tests}
         selected={s.selectedTest}
@@ -116,65 +88,75 @@ function Rail({ stats }: { stats: HomeStats | null }) {
         running={s.running}
         blockedReason={selected ? s.runBlockedReason(selected) : null}
       />
-      {stats && (
-        <RailSection title="This test">
-          <RailStat label="Students" value={stats.students} />
-          <RailStat label="Marks lost" value={`${stats.lost} of ${stats.possible}`} />
-          <RailStat label="Class average" value={`${stats.mean} of ${stats.outOf}`} />
-          <RailStat label="Whole-class problems" value={stats.whole.length} />
-          <RailStat
-            label="Waiting for you"
-            value={s.openCount}
-            tone={s.openCount > 0 ? "flag" : "default"}
-          />
-        </RailSection>
+    </TopBar>
+  );
+}
+
+/** Where work is waiting after this analysis. */
+function Links({ stats }: { stats: HomeStats }) {
+  const s = useSession();
+  const { setView } = useAppView();
+  const planned = s.batch?.plan?.scheduled.length ?? 0;
+  return (
+    <>
+      <BarLink
+        title="Action plan"
+        count={planned}
+        hint={
+          planned > 0
+            ? `${plural(planned, "thing")} to do, most marks first.`
+            : "Nothing to plan from this analysis."
+        }
+        onClick={() => setView("plan")}
+      />
+      <BarLink
+        tone={s.openCount > 0 ? "flag" : "neutral"}
+        count={s.openCount > 0 ? s.openCount : undefined}
+        title={s.openCount > 0 ? "Needs your call" : "Nothing needs your call"}
+        hint={
+          s.openCount > 0
+            ? `${BRAND_NAME} was not sure enough to decide alone.`
+            : "It decided everything it was sure about."
+        }
+        onClick={() => setView("review")}
+      />
+      {stats.whole.length > 0 && (
+        <BarLink
+          tone="neutral"
+          title={`${stats.whole.length === 1 ? "One" : stats.whole.length} whole-class ${stats.whole.length === 1 ? "problem" : "problems"}`}
+          hint={`A mistake made by ${pct(s.sharedThreshold)} or more of the class. See who on the Class page.`}
+          onClick={() => setView("class")}
+        />
       )}
-      {stats && (
-        <RailSection title="Where to go">
-          <div className="flex flex-col gap-2">
-            <RailLink
-              title="Open the action plan"
-              hint={
-                planned > 0
-                  ? `${plural(planned, "thing")} to do, most marks first.`
-                  : "Nothing to plan from this analysis."
-              }
-              onClick={() => setView("plan")}
-            />
-            <RailLink
-              tone={s.openCount > 0 ? "flag" : "neutral"}
-              count={s.openCount > 0 ? s.openCount : undefined}
-              title={
-                s.openCount > 0
-                  ? `${s.openCount === 1 ? "Answer needs" : "Answers need"} your call`
-                  : "Nothing needs your call"
-              }
-              hint={
-                s.openCount > 0
-                  ? `${BRAND_NAME} was not sure enough to decide alone.`
-                  : "It decided everything it was sure about."
-              }
-              onClick={() => setView("review")}
-            />
-            {stats.whole.length > 0 && (
-              <RailLink
-                tone="neutral"
-                title={`${stats.whole.length === 1 ? "One" : stats.whole.length} whole-class ${stats.whole.length === 1 ? "problem" : "problems"}`}
-                hint={`A mistake made by ${pct(s.sharedThreshold)} or more of the class. See who on the Class page.`}
-                onClick={() => setView("class")}
-              />
-            )}
-          </div>
-        </RailSection>
-      )}
-      <div className="mt-auto flex flex-col gap-3 border-t border-line pt-4">
-        <button className="btn justify-center" onClick={() => setView("upload")}>
-          Add a test
-        </button>
-        <p className="text-2xs leading-4 text-ink-muted">
-          Every mark shown is a draft. {BRAND_NAME} never sets a final mark on its own.
-        </p>
-      </div>
     </>
+  );
+}
+
+function Details({ stats }: { stats: HomeStats }) {
+  const s = useSession();
+  return (
+    <div className="space-y-4">
+      <Figures
+        items={[
+          { label: "Students", value: stats.students },
+          { label: "Marks lost", value: `${stats.lost} of ${stats.possible}` },
+          { label: "Class average", value: `${stats.mean} of ${stats.outOf}` },
+          { label: "Whole-class problems", value: stats.whole.length },
+          {
+            label: "Waiting for you",
+            value: s.openCount,
+            tone: s.openCount > 0 ? "flag" : "default",
+          },
+        ]}
+      />
+      <HowWorkedOut
+        events={s.trace}
+        status={s.status}
+        elapsedMs={s.elapsedMs}
+        health={s.health}
+        running={s.running}
+        stage={s.stage}
+      />
+    </div>
   );
 }

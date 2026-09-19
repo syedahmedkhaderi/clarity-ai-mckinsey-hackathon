@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   ActionCard,
   ChangeList,
@@ -13,7 +14,7 @@ import type {
   PlanChange,
   PlannedAction,
 } from "../types";
-import { PageHeader, PagePad, RailLink, RailSection, RailStat, WorkSurface } from "../shell/WorkSurface";
+import { BarLink, FilterChips, PageHeader, PagePad, TopBar, TopSurface } from "../shell/WorkSurface";
 
 export function PlanPage() {
   const { batch } = useSession();
@@ -30,8 +31,12 @@ function split(actions: PlannedAction[]) {
   };
 }
 
+/** What the plan list is narrowed to: everything, or one kind of action. */
+type Show = "all" | PlannedAction["type"];
+
 function PlanView({ batch }: { batch: BatchResult }) {
   const { setView } = useAppView();
+  const [show, setShow] = useState<Show>("all");
   const plan = batch.plan;
   if (!plan) {
     return (
@@ -44,7 +49,7 @@ function PlanView({ batch }: { batch: BatchResult }) {
             </button>
           }
         >
-          The steps under How this was worked out on Home explain why.
+          Open Show test details on Home and read How this was worked out to see why.
         </EmptyState>
       </PagePad>
     );
@@ -56,58 +61,59 @@ function PlanView({ batch }: { batch: BatchResult }) {
   );
   const all = [...plan.scheduled, ...plan.dropped];
   const count = (type: PlannedAction["type"]) => all.filter((a) => a.type === type).length;
+  const filters: { key: Show; label: string; count: number }[] = [
+    { key: "all", label: "Everything", count: all.filter((a) => a.type !== "feedback_review").length },
+    { key: "group_reteach", label: "Whole-class re-teach", count: count("group_reteach") },
+    { key: "peer_pairing", label: "Pairings", count: count("peer_pairing") },
+    { key: "individual_followup", label: "Individual follow-ups", count: count("individual_followup") },
+    { key: "feedback_review", label: "Notes to send", count: count("feedback_review") },
+  ];
 
-  const rail = (
-    <>
-      <RailSection title="This plan">
-        <RailStat label="Things to do" value={all.filter((a) => a.type !== "feedback_review").length} />
-        <RailStat label="Whole-class re-teach" value={count("group_reteach")} />
-        <RailStat label="Individual follow-ups" value={count("individual_followup")} />
-        <RailStat label="Notes to send" value={count("feedback_review")} />
-        {batch.changes.length > 0 && (
-          <RailStat label="Changed since your correction" value={batch.changes.length} />
-        )}
-      </RailSection>
-      <RailSection title="Where to go">
-        <div className="flex flex-col gap-2">
-          <RailLink
-            tone="neutral"
-            title="See who made each mistake"
-            hint="The Class page shows which students share a problem."
-            onClick={() => setView("class")}
-          />
-          <RailLink
-            tone="neutral"
-            title="Read the notes to students"
-            hint="Each one is drafted for you to read and send yourself."
-            onClick={() => document.getElementById("student-notes")?.scrollIntoView({ behavior: "smooth" })}
-          />
-        </div>
-      </RailSection>
-      <p className="mt-auto border-t border-line pt-4 text-2xs leading-4 text-ink-muted">
-        The plan is a proposal. Nothing is sent or scheduled until you do it.
-      </p>
-    </>
+  const bar = (
+    <TopBar>
+      <FilterChips
+        label="Show"
+        options={filters.filter((f) => f.key === "all" || f.count > 0)}
+        value={show}
+        onChange={setShow}
+      />
+      {batch.changes.length > 0 && (
+        <span className="text-sm text-ink-muted">
+          <span className="num font-semibold text-ink">{batch.changes.length}</span> changed since
+          your correction.
+        </span>
+      )}
+      <span className="ml-auto flex flex-wrap gap-2">
+        <BarLink
+          tone="neutral"
+          title="See who made each mistake"
+          hint="The Class page shows which students share a problem."
+          onClick={() => setView("class")}
+        />
+      </span>
+    </TopBar>
   );
 
   return (
-    <WorkSurface
-      rail={rail}
+    <TopSurface
+      bar={bar}
       header={
         <PageHeader
           title="Action plan"
-          subtitle="Start with the mistakes that cost the most marks. Each note to a student is drafted for you to read and send yourself."
+          subtitle="Start with the mistakes that cost the most marks. The plan is a proposal: nothing is sent or scheduled until you do it."
         />
       }
     >
       <div className="space-y-8">
         <ChangeList changes={batch.changes} />
-        <Planned plan={plan} changed={changed} />
-        <div id="student-notes">
-          <StudentNotes />
-        </div>
+        <Planned plan={plan} changed={changed} show={show} />
+        {(show === "all" || show === "feedback_review") && (
+          <div id="student-notes">
+            <StudentNotes />
+          </div>
+        )}
       </div>
-    </WorkSurface>
+    </TopSurface>
   );
 }
 
@@ -119,23 +125,26 @@ function PlanView({ batch }: { batch: BatchResult }) {
 function Planned({
   plan,
   changed,
+  show,
 }: {
   plan: InterventionPlan;
   changed: Map<string, PlanChange["kind"]>;
+  show: Show;
 }) {
   const first = split(plan.scheduled);
   const later = split(plan.dropped);
   // One severity order across both groups, so a high-severity action the
   // planner could not fit is not buried under lower ones it did.
-  const cards = [...first.cards, ...later.cards].sort(
-    (a, b) => b.severity - a.severity,
-  );
-  const feedback = [...first.feedback, ...later.feedback];
+  const cards = [...first.cards, ...later.cards]
+    .filter((a) => show === "all" || a.type === show)
+    .sort((a, b) => b.severity - a.severity);
+  const feedback =
+    show === "all" || show === "feedback_review" ? [...first.feedback, ...later.feedback] : [];
   return (
     <section aria-labelledby="plan-first-title">
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <h2 id="plan-first-title" className="text-base font-semibold text-ink">
-          Do these first
+          {show === "feedback_review" ? "Notes to check before sending" : "Do these first"}
         </h2>
         {cards.length > 0 && (
           <p className="text-xs text-ink-faint">
