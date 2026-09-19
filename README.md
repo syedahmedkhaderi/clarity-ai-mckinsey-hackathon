@@ -1,6 +1,6 @@
 <div align="center">
 
-# Markwise
+# Clarity AI
 
 **An agentic marking assistant for community facilitators. It marks a test, finds out *why* each student lost marks, and decides what the teacher should do next.**
 
@@ -36,24 +36,24 @@ A marks sheet shows **who** scored what. It never shows:
 
 Marking also uses up facilitator time, so feedback arrives too late to change anything.
 
-## What Markwise does
+## What Clarity AI does
 
-A facilitator uploads a test. Six agents take it from there, and the facilitator stays in charge of every mark that counts.
+A facilitator uploads a test. Six agents take it from there, and the facilitator keeps the final say.
 
 | | What the agent decides | What the teacher sees |
 |---|---|---|
-| **Marks** | Awards draft marks against the marking scheme, each with a confidence | A draft total per student. Nothing counts until the teacher approves it |
+| **Marks** | Awards draft marks against the marking scheme, each with a confidence | A draft total per student. Clarity AI never sets a final mark |
 | **Diagnoses** | Names the mistake pattern behind each lost mark, out of 24 known ones | The student's own answer, with the words it relied on highlighted |
 | **Remembers** | Tracks each student's mistakes across tests, including students with gaps in their record | "Keeps happening" or "Once", per mistake |
 | **Separates** | Decides whether a mistake belongs to one student or to the whole class (40 percent or more) | A heatmap of the class and the whole-class problems |
-| **Plans** | Ranks what to do next within a fixed amount of teacher time, and records what it had to leave out | One ordered action plan: re-teach, catch-ups, restart points, pairings |
+| **Plans** | Decides what to do next and ranks it, most marks lost first | One ordered action plan: re-teach, catch-ups, restart points, pairings |
 | **Escalates** | Hands over anything it should not decide alone, with both readings and what it would have chosen | A "Needs your call" queue with one-click accept or correct |
 | **Re-plans** | When the teacher corrects a finding, re-runs the class analysis and rebuilds the plan | The plan changes in front of them, with each change marked |
 | **Writes to students** | Drafts a personal note to each student from their own mistakes | An email the teacher edits and sends from the app |
 
 ## Features we are proudest of
 
-**1. It emails students, safely.** From a student's page the facilitator presses *Write a note*. Markwise drafts a short, personal email: where the mistake was, what went wrong in plain words, and what to try next. The teacher can edit it, send themselves a test copy, and then send it for real over Gmail. A guard blocks any note that leaks an internal code such as `M01`, or mentions a mark, because marks are still drafts. Every note sent is logged on the student's page, and sending the same note twice asks for confirmation first. With no Gmail set up, the note is saved and labelled **not delivered**, never shown as sent.
+**1. It emails students, safely.** From a student's page the facilitator presses *Write a note*. Clarity AI drafts a short, personal email: where the mistake was, what went wrong in plain words, and what to try next. The teacher can edit it, send themselves a test copy, and then send it for real over Gmail. A guard blocks any note that leaks an internal code such as `M01`, or mentions a mark, because marks are still drafts. Every note sent is logged on the student's page, and sending the same note twice asks for confirmation first. With no Gmail set up, the note is saved and labelled **not delivered**, never shown as sent.
 
 **2. Language is never mistaken for maths.** A second-language learner who reaches the right answer but writes it awkwardly is **never** recorded as weak at maths. This is enforced in code, not asked for in a prompt: if the marking scheme's target value appears in the answer, a maths diagnosis is overruled whatever the model says. We added this rule after the model labelled a correct answer as a procedural mistake at 90 percent confidence.
 
@@ -63,7 +63,9 @@ A facilitator uploads a test. Six agents take it from there, and the facilitator
 
 **5. It knows when to stop.** Low-confidence marks, two explanations that fit equally well, wording problems and thin records all go to the teacher with what the system would have done. It never just says "I am unsure".
 
-**6. A helper that cites its sources.** The pencil helper answers questions such as *"Which topic is the class weakest at?"* from the analysis and the uploaded files. Its sources fold away until you open them.
+**6. Ask your own files (RAG).** The pencil helper answers questions such as *"Which topic is the class weakest at?"* or *"What does the marking scheme say for question 1?"*. It is retrieval-augmented: every question runs a BM25 keyword search over the teacher's uploaded tests, marking schemes and answer sheets, plus summaries of the analysis. The model then writes an answer only from the passages it found, and lists them as sources, folded away until you open them. The search index is rebuilt on every request, so it never quotes a deleted test or an out-of-date mark. If the model is unavailable, the helper shows the most relevant passages and says plainly that the AI is not answering.
+
+<p align="center"><img src="docs/screenshots/chat.png" alt="The pencil helper answering from the teacher's files, with its sources" width="260" /></p>
 
 <table>
   <tr>
@@ -85,25 +87,37 @@ A facilitator uploads a test. Six agents take it from there, and the facilitator
 > The designed workflow diagram will go here. Until then, this is the same flow in text:
 
 ```
- LMS + teacher inputs          LangGraph orchestrator (shared state + trace)                 Teacher in the loop
- ────────────────────          ────────────────────────────────────────────                  ───────────────────
- test paper           ─┐                                                  ┌─ enough signal ─▶ Planner ─┐
- marking scheme        ├─▶ Intake ─▶ Marker ─▶ Diagnostician ─▶ Cohort ───┤                            ├─▶ Approve marks
- answer sheets         │              ▲           ▲            Analyst    └─ too little ───▶ insights ─┘   Send notes
- learner history      ─┘              └── Reviewer gate ───────┴──── (also gates the planner)              Override ─┐
-                                   low confidence · ambiguity · language · thin history · budget                     │
-                                                                  ▲                                                  │
-                                                                  └──────── re-plan from the cohort analyst ─────────┘
+  Test paper · marking scheme · answer sheets · earlier results (LMS)
+                                  │
+  ┌───────────── LangGraph: shared state and a visible trace ─────────────┐
+  │                               ▼                                       │
+  │                     Reading the class                                 │
+  │                               ▼                                       │
+  │                            Marking ◀─────────┐                        │
+  │                               ▼              │                        │
+  │                     Finding mistakes ◀───────┤  Safety check          │
+  │                               ▼              │  low confidence,       │
+  │   ┌──────────────────▶ Class picture         │  two close readings,   │
+  │   │                           │              │  wording, thin record  │
+  │   │             enough data ──┴── too little │                        │
+  │   │                  ▼               ▼       │                        │
+  │   │              Planning ◀──────────┼───────┘                        │
+  │   │                  ▼               ▼                                │
+  └───┼──── action plan · notes ─── insights only ────────────────────────┘
+      │                  ▼
+      │          Teacher decides: accept, correct, send notes
+      │                  │
+      └── a correction ──┘  re-plans from Class picture, marks are not re-run
 ```
 
-| Agent | Role | If the model fails |
-|---|---|---|
-| Intake | Loads the test, scheme, answers and each learner's history from the LMS | No model used |
-| Marker | Draft marks with a confidence per criterion | Rule-based marking from the scheme |
-| Diagnostician | Names the mistake pattern, cites evidence and gives a runner-up | Rule-based diagnosis from the scheme |
-| Cohort analyst | Splits individual problems from teaching problems | No model used |
-| Planner | Proposes and scores actions. Code then fits them to the time budget | Rule-based plan |
-| Reviewer gate | Escalates low confidence, ambiguity, language issues, thin history and budget overflow | No model used |
+| Agent (name in the app) | Node in the code | What it does | If the model fails |
+|---|---|---|---|
+| Reading the class | `intake` | Loads the test, marking scheme, answers and each student's earlier results from the LMS | No model used |
+| Marking | `marker` | Draft marks with a confidence for each criterion | Rule-based marking from the scheme |
+| Finding mistakes | `diagnostician` | Names the mistake pattern, quotes the evidence and gives a runner-up | Rule-based diagnosis from the scheme |
+| Class picture | `cohort_analyst` | Separates one student's problem from a whole-class teaching problem | No model used |
+| Planning | `planner` | Proposes and ranks the actions: re-teach, catch-ups, restart points, pairings, notes | Rule-based plan |
+| Safety check | `reviewer` | Hands the teacher low confidence, two close readings, wording issues and thin records | No model used |
 
 A dead model provider costs quality, never a run. After three failures a circuit breaker switches every agent to the deterministic rules. A run against a dead endpoint still completes in 1.5 seconds with full results. The full graph and state contract are in [`architecture.md`](architecture.md), and a test checks that its diagram matches the code.
 
@@ -168,12 +182,12 @@ tests/           pytest, always offline
 <details>
 <summary><b>Design rules that each have a test</b></summary>
 
-- The agent never sets a mark that counts. Every mark is a draft until a human approves it.
+- The agent never sets a mark that counts. Every mark it produces is a draft.
 - The backend never reads the answer key.
 - Evidence is quoted exactly from the student's answer, or the diagnosis is rejected.
 - Language noise never changes the numbers in an answer, and never produces a maths diagnosis.
 - The model may propose a plan, but it cannot drop a feedback note, a restart point or a required group re-teach.
-- The planner fits the budget in code and records everything it left out.
+- The plan's ranking is checked in code, and anything left out is recorded with a reason.
 - The architecture diagram matches the compiled graph.
 - No model call can crash a run.
 - An override re-plans from the cohort analyst, not from the start.
@@ -189,7 +203,7 @@ The full list, with reasons, is in [`AGENTS.md`](AGENTS.md).
 
 1. **Demo numbers.** The plan had a mistake held by 7 of 12 learners falling to 6 of 12 after an override and dropping below the 40 percent line. 6 of 12 is 50 percent, so that cannot happen. The personas are tuned so it lands on 5 of 12 (42 percent) and falls to 4 of 12 (33 percent).
 2. **`backend/llm.py` and `backend/agents/offline_rules.py`** are not in the plan. The first is the single provider boundary, so the fallback is enforced in one place. The second is that fallback, and it is what lets the app run with no API key.
-3. **The time budget is not a UI control.** The planner still fits a fixed budget in code and records what it dropped, but facilitators asked for one ordered list, not minutes.
+3. **No approval screen and no time budget in the app.** Facilitators asked for one ordered list of things to do and drafted notes to students, not a minutes budget or a confirm-marks table. Both were removed from the interface. Marks stay drafts, and the backend still keeps the approve endpoint and an internal time budget for ranking the plan.
 4. **The accent is also the primary action colour.** The navy used for agent activity also marks the primary button. Rust still marks only what the agent handed to a human.
 
 </details>
