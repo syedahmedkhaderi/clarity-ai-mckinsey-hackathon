@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { pct } from "../../lib/format";
 
 /** Below this share the bar is drawn darker, and the legend says so in words. */
@@ -5,18 +6,29 @@ const HARD_BELOW = 0.5;
 
 /**
  * The share of students who got each question fully right. Bars share one scale
- * from nobody to everybody, so a short bar is a hard question at a glance.
+ * from nobody to everybody, so a short bar is a hard question at a glance. With
+ * `collapseAfter`, the hardest few show first and the rest wait behind a toggle.
  */
 export function QuestionBars({
   rows,
+  collapseAfter,
 }: {
   rows: { number: number; label: string; correct: number; total: number }[];
+  collapseAfter?: number;
 }) {
+  const [all, setAll] = useState(false);
   if (rows.length === 0) return <p className="text-sm text-ink-muted">No questions to show yet.</p>;
+  const rightShare = (r: { correct: number; total: number }) => (r.total ? r.correct / r.total : 0);
+  const extra = collapseAfter !== undefined ? Math.max(0, rows.length - collapseAfter) : 0;
+  // Folded, the list is the hardest questions; opened, it goes back to question order.
+  const shown =
+    extra > 0 && !all
+      ? [...rows].sort((a, b) => rightShare(a) - rightShare(b) || a.number - b.number).slice(0, collapseAfter)
+      : rows;
   return (
     <div>
       <ul className="space-y-2.5" aria-label="Share of students who got each question right">
-        {rows.map((r) => {
+        {shown.map((r) => {
           const share = r.total ? r.correct / r.total : 0;
           const hard = share < HARD_BELOW;
           return (
@@ -56,6 +68,11 @@ export function QuestionBars({
           );
         })}
       </ul>
+      {extra > 0 && (
+        <button type="button" className="btn btn-xs mt-3" aria-expanded={all} onClick={() => setAll(!all)}>
+          {all ? `Show only the ${collapseAfter} hardest` : `Show all ${rows.length} questions`}
+        </button>
+      )}
       <p className="mt-3 text-2xs text-ink-faint">
         Magenta bars: fewer than half the students got the question right. The thin line marks half.
       </p>

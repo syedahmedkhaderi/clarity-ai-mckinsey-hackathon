@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import type { BatchResult, Diagnosis, Escalation, Mark, ReasonCode } from "../types";
 import {
   REASON_LABELS,
@@ -173,12 +173,7 @@ function Item({
         </div>
       )}
 
-      {why && (
-        <div>
-          <Label>Why it came to you</Label>
-          <p className="text-sm text-ink-muted">{why}</p>
-        </div>
-      )}
+      {why && <Why text={why} />}
 
       {readings.length > 0 && (
         <div className="grid gap-2 sm:grid-cols-2">
@@ -205,6 +200,27 @@ function Item({
         </p>
       </div>
       </div>
+    </div>
+  );
+}
+
+/** The system's reasoning is long; it waits behind its label until the teacher wants it. */
+function Why({ text }: { text: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-2 text-2xs uppercase tracking-wide text-ink-muted hover:text-ink"
+      >
+        <span className="grid h-4 w-4 place-items-center rounded-sm border border-line-strong bg-surface text-xs leading-none">
+          {open ? "-" : "+"}
+        </span>
+        Why it came to you
+      </button>
+      {open && <p className="mt-1 text-sm text-ink-muted">{text}</p>}
     </div>
   );
 }

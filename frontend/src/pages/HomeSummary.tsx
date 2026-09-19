@@ -74,7 +74,7 @@ export function OverviewTab({ stats }: { stats: HomeStats }) {
             : "No marked questions yet."
         }
       >
-        <QuestionBars rows={stats.questions} />
+        <QuestionBars rows={stats.questions} collapseAfter={4} />
       </Panel>
       <div className="lg:col-span-2">
         <PatternPanel patterns={stats.patterns} limit={TOP_PATTERNS} />

@@ -62,7 +62,19 @@ function Bar({ stats }: { stats: HomeStats | null }) {
       details={<Details stats={stats} />}
       detailsLabel="test details"
       end={
-        <button className="pill" onClick={() => setView("upload")}>
+        <button className="btn" onClick={() => setView("upload")}>
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            aria-hidden="true"
+          >
+            <path d="M6 1.5v9M1.5 6h9" />
+          </svg>
           Add a test
         </button>
       }

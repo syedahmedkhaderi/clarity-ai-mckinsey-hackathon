@@ -313,8 +313,7 @@ function MistakesSection({
 function TheRest({ named, onOpen }: { named: NodePattern[]; onOpen: (node: string) => void }) {
   const { sharedThreshold } = useSession();
   if (named.length === 0) return null;
-  // A mistake one student made is listed in the chart beside this; naming each again
-  // here would only repeat it, so they are counted in one line.
+  // The single-student mistakes are many and each is small, so they wait behind a footer.
   const several = named.filter((n) => n.count > 1);
   const singles = named.filter((n) => n.count === 1);
   return (
@@ -333,18 +332,49 @@ function TheRest({ named, onOpen }: { named: NodePattern[]; onOpen: (node: strin
             onSee={() => onOpen(n.node_id)}
           />
         ))}
-        {singles.length > 0 && (
-          <RestRow
-            title={
-              singles.length === 1
-                ? "One more mistake, made by one student"
-                : `${singles.length} more mistakes, each made by one student`
-            }
-            hint="A few minutes with each of them when there is time. Select one in the chart to see who."
-          />
-        )}
       </ul>
+      {singles.length > 0 && <Singles singles={singles} onOpen={onOpen} />}
     </Panel>
+  );
+}
+
+/**
+ * The mistakes one student each made, folded behind a footer that looks like a
+ * control rather than another row, so it reads as "there is more here".
+ */
+function Singles({ singles, onOpen }: { singles: NodePattern[]; onOpen: (node: string) => void }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-t border-line">
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-center gap-2 bg-surface-raised px-4 py-2.5 text-left text-sm font-medium text-agent hover:bg-agent-soft"
+      >
+        <span className="grid h-5 w-5 shrink-0 place-items-center rounded-sm border border-agent-line bg-surface text-xs">
+          {open ? "-" : "+"}
+        </span>
+        {open
+          ? "Hide the mistakes made by one student"
+          : singles.length === 1
+            ? "Show one more mistake, made by one student"
+            : `Show ${singles.length} more mistakes, each made by one student`}
+      </button>
+      {open && (
+        <ul className="divide-y divide-line border-t border-line">
+          {singles.map((n) => (
+            <RestRow
+              key={n.node_id}
+              title={n.label}
+              count={`${n.count} of ${n.cohort_size}`}
+              hint="One student. A few minutes with them when there is time."
+              onSee={() => onOpen(n.node_id)}
+            />
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
 
@@ -378,7 +408,7 @@ function RestRow({
         <div className="px-4 pb-3">
           <p className="text-xs text-ink-muted">{hint}</p>
           {onSee && (
-            <button className="pill mt-2 text-xs" onClick={onSee}>
+            <button className="btn btn-xs mt-2" onClick={onSee}>
               See who made it
             </button>
           )}

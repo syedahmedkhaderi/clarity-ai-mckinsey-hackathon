@@ -116,7 +116,7 @@ export function PatternBars({
         })}
       </ul>
       {extra > 0 && (
-        <button type="button" className="pill mt-2" aria-expanded={all} onClick={() => setAll(!all)}>
+        <button type="button" className="btn btn-xs mt-2" aria-expanded={all} onClick={() => setAll(!all)}>
           {all ? `Show only the top ${collapseAfter}` : `Show ${extra} more`}
         </button>
       )}

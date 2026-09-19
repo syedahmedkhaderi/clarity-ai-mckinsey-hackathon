@@ -8,9 +8,8 @@ import { EmptyState } from "../components/ui/EmptyState";
 import { StudentNotes } from "../features/email/StudentNotes";
 import { useAppView } from "../hooks/useAppView";
 import { useSession } from "../hooks/useSession";
-import { severityLevel } from "../lib/format";
 import type { BatchResult, PlanChange, PlannedAction } from "../types";
-import { BarLink, FilterChips, PageHeader, PagePad, TopBar, TopSurface } from "../shell/WorkSurface";
+import { BarLink, PageHeader, PagePad, TopSurface, type TabItem } from "../shell/WorkSurface";
 
 export function PlanPage() {
   const { batch } = useSession();
@@ -18,16 +17,14 @@ export function PlanPage() {
 }
 
 /**
- * The plan in three pages. First comes what moves the most marks: the whole-class
- * re-teach and anything the planner rated high priority. Then the smaller work
- * with one or two students. Then the notes to students, drafted for checking.
- * An action appears on exactly one page.
+ * The plan in two sections: the actions, most important first, and the notes to
+ * students, drafted for checking. The whole-class re-teach and the one-to-one
+ * work share a list because they compete for the same time.
  */
-type Page = "first" | "smaller" | "notes";
+type Section = "actions" | "notes";
 
 function PlanView({ batch }: { batch: BatchResult }) {
-  const { highSeverityFloor } = useSession();
-  const [page, setPage] = useState<Page>("first");
+  const [section, setSection] = useState<Section>("actions");
   const plan = batch.plan;
   if (!plan) return <NoPlan />;
   const changed = new Map<string, PlanChange["kind"]>(
@@ -36,52 +33,50 @@ function PlanView({ batch }: { batch: BatchResult }) {
   // One severity order across what the planner fitted and what it could not, so a
   // high-severity action that missed the budget is not buried under lower ones.
   const all = [...plan.scheduled, ...plan.dropped].sort((a, b) => b.severity - a.severity);
-  const first = (a: PlannedAction) =>
-    a.type === "group_reteach" || severityLevel(a.severity, highSeverityFloor) === "high";
   const cards = all.filter((a) => a.type !== "feedback_review");
   const feedback = all.filter((a) => a.type === "feedback_review");
-  const pages: { key: Page; label: string; count: number }[] = [
-    { key: "first", label: "Do these first", count: cards.filter(first).length },
-    { key: "smaller", label: "Pairings and follow-ups", count: cards.filter((a) => !first(a)).length },
-    { key: "notes", label: "Notes to send", count: feedback.length },
+  const sections: TabItem<Section>[] = [
+    { key: "actions", label: `Actions (${cards.length})` },
+    { key: "notes", label: `Notes to send (${feedback.length})` },
   ];
 
   return (
     <TopSurface
-      bar={
-        <PlanBar pages={pages} page={page} onPage={setPage} changes={batch.changes.length} />
-      }
       header={
         <PageHeader
           title="Action plan"
           subtitle="Start with the mistakes that cost the most marks. The plan is a proposal: nothing is sent or scheduled until you do it."
+          tabs={sections}
+          active={section}
+          onTab={setSection}
+          action={<SeeWho />}
         />
       }
     >
-      {page === "first" && (
+      {section === "actions" ? (
         <div className="space-y-8">
           <ChangeList changes={batch.changes} />
-          <Cards
-            actions={cards.filter(first)}
-            changed={changed}
-            empty="Nothing here is urgent. The smaller pieces of work are on Pairings and follow-ups."
-          />
+          <Cards actions={cards} changed={changed} empty="Nothing needs doing from this analysis." />
         </div>
-      )}
-      {page === "smaller" && (
-        <Cards
-          actions={cards.filter((a) => !first(a))}
-          changed={changed}
-          empty="No pairings or one-to-one follow-ups in this plan."
-        />
-      )}
-      {page === "notes" && (
+      ) : (
         <div className="space-y-6">
           {feedback.length > 0 && <FeedbackChecks actions={feedback} feedback={plan.feedback} />}
           <StudentNotes />
         </div>
       )}
     </TopSurface>
+  );
+}
+
+function SeeWho() {
+  const { setView } = useAppView();
+  return (
+    <BarLink
+      tone="neutral"
+      title="See who made each mistake"
+      hint="The Class page shows which students share a problem."
+      onClick={() => setView("class")}
+    />
   );
 }
 
@@ -100,40 +95,6 @@ function NoPlan() {
         Open Show test details on Home and read How this was worked out to see why.
       </EmptyState>
     </PagePad>
-  );
-}
-
-function PlanBar({
-  pages,
-  page,
-  onPage,
-  changes,
-}: {
-  pages: { key: Page; label: string; count: number }[];
-  page: Page;
-  onPage: (p: Page) => void;
-  changes: number;
-}) {
-  const { setView } = useAppView();
-  return (
-    <TopBar
-      end={
-        <BarLink
-          tone="neutral"
-          title="See who made each mistake"
-          hint="The Class page shows which students share a problem."
-          onClick={() => setView("class")}
-        />
-      }
-    >
-      <FilterChips label="Plan pages" options={pages} value={page} onChange={onPage} />
-      {changes > 0 && (
-        <span className="text-sm text-ink-muted">
-          <span className="num font-semibold text-ink">{changes}</span> changed since your
-          correction.
-        </span>
-      )}
-    </TopBar>
   );
 }
 

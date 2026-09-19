@@ -182,12 +182,13 @@ export function TopBar({
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2 py-2.5">
         {children}
         {(end !== undefined || details !== undefined) && (
-          <div className="ml-auto flex flex-wrap items-center gap-2">
+          // Bottom-aligned, so the buttons sit level with a labelled control on the left.
+          <div className="ml-auto flex flex-wrap items-center gap-2 self-end">
             {end}
             {details !== undefined && (
               <button
                 type="button"
-                className="pill"
+                className="btn"
                 aria-expanded={open}
                 onClick={() => setOpen(!open)}
               >
@@ -275,41 +276,5 @@ export function BarLink({
       {title}
       <Chevron />
     </button>
-  );
-}
-
-/**
- * A row of choices that narrow the list below. Each carries its count, so the
- * row still reads as the page's summary when nothing is chosen.
- */
-export function FilterChips<K extends string>({
-  label,
-  options,
-  value,
-  onChange,
-}: {
-  label: string;
-  options: { key: K; label: string; count: number }[];
-  value: K;
-  onChange: (key: K) => void;
-}) {
-  return (
-    <div role="group" aria-label={label} className="flex flex-wrap items-center gap-1.5">
-      {options.map((o) => {
-        const on = o.key === value;
-        return (
-          <button
-            key={o.key}
-            type="button"
-            aria-pressed={on}
-            onClick={() => onChange(o.key)}
-            className={clsx("pill", on && "border-agent bg-agent font-medium text-white hover:bg-agent")}
-          >
-            {o.label}
-            <span className={clsx("num text-xs", on ? "text-white/80" : "text-ink-muted")}>{o.count}</span>
-          </button>
-        );
-      })}
-    </div>
   );
 }
