@@ -139,7 +139,7 @@ Reproduce with `.venv/bin/python eval/evaluate.py`. The full table is in [`eval/
 ## Run it
 
 ```bash
-git clone https://github.com/syedahmedkhaderi/lms-marks.git && cd lms-marks
+git clone https://github.com/syedahmedkhaderi/clarity-ai-mckinsey-hackathon.git && cd clarity-ai-mckinsey-hackathon
 ./setup.sh && ./start.sh        # then open http://localhost:5173
 ```
 
