@@ -45,6 +45,18 @@ const PIPELINE = ["intake", "marker", "diagnostician", "cohort_analyst", "planne
 // it. The plan page lists everything in priority order instead of a time box.
 const PLANNER_MINUTES = 120;
 
+export type DecidedKind = "accepted" | "corrected";
+
+/** The resolution the server keeps, and how "Already decided" tells the two apart. */
+export const ACCEPTED_RESOLUTION = "Teacher accepted the system's reading.";
+export const CORRECTED_RESOLUTION = "Teacher corrected it.";
+
+/**
+ * How long a just-decided card stays in the queue. A correction is longer because
+ * its dialog shows its own tick first and covers the card while it does.
+ */
+export const DECIDED_FLASH_MS: Record<DecidedKind, number> = { accepted: 1500, corrected: 2600 };
+
 /**
  * Escalations raised only because an action fell outside the planner's budget
  * are dropped here, so no page mentions a time box the teacher cannot see.
@@ -78,6 +90,11 @@ export interface Session {
   cancelRun: () => void;
 
   resolve: (escalationId: string) => Promise<void>;
+  /**
+   * Items decided a moment ago, and how. The queue keeps them on screen long enough
+   * to show the tick and fold away before they join "Already decided".
+   */
+  justDecided: Record<string, DecidedKind>;
 
   profiles: Record<string, ProfileEntry[]>;
   taxonomy: Taxonomy | null;
@@ -86,7 +103,10 @@ export interface Session {
   overrideTarget: OverrideTarget | null;
   setOverrideTarget: (t: OverrideTarget | null) => void;
   overrideBusy: boolean;
-  /** Returns true when the override went through, so the caller can move on. */
+  /**
+   * Returns true when the override went through. The teacher stays on the page they
+   * corrected from; the dialog shows the tick and closes itself.
+   */
   applyOverride: (newValue: string | null, reason: string) => Promise<boolean>;
   overrideDiagnosis: (learnerId: string, questionId: string) => void;
   overrideEscalation: (e: Escalation) => void;
@@ -139,6 +159,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [profiles, setProfiles] = useState<Record<string, ProfileEntry[]>>({});
   const [overrideTarget, setOverrideTarget] = useState<OverrideTarget | null>(null);
   const [overrideBusy, setOverrideBusy] = useState(false);
+  const [justDecided, setJustDecided] = useState<Record<string, DecidedKind>>({});
   const [error, setError] = useState<string | null>(null);
   const [startedAt, setStartedAt] = useState<number | null>(null);
   const [elapsedMs, setElapsedMs] = useState(0);
@@ -324,10 +345,24 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     setError(null);
   };
 
+  const flashDecided = (escalationId: string, kind: DecidedKind) => {
+    setJustDecided((m) => ({ ...m, [escalationId]: kind }));
+    window.setTimeout(
+      () =>
+        setJustDecided((m) => {
+          const { [escalationId]: _gone, ...rest } = m;
+          return rest;
+        }),
+      DECIDED_FLASH_MS[kind],
+    );
+  };
+
   const resolve = async (escalationId: string) => {
     if (!batchId) return;
+    // The tick shows at once; the queue holds the card until it has folded away.
+    flashDecided(escalationId, "accepted");
     try {
-      await api.resolve(batchId, escalationId, "Teacher accepted the system's reading.");
+      await api.resolve(batchId, escalationId, ACCEPTED_RESOLUTION);
       await loadBatch(batchId);
     } catch (e) {
       setError(describe(e));
@@ -348,9 +383,23 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         new_value: newValue,
         reason,
       });
-      setBatch(withoutBudgetEscalations(result));
+      let next = withoutBudgetEscalations(result);
+      // A correction made from the review queue is that item's decision, so it leaves
+      // the queue. Without this it stayed open after the teacher had dealt with it.
+      const escalationId = overrideTarget.escalationId;
+      if (escalationId) {
+        const resolution = `${CORRECTED_RESOLUTION} ${reason}`.trim();
+        await api.resolve(batchId, escalationId, resolution);
+        next = {
+          ...next,
+          escalations: next.escalations.map((x) =>
+            x.escalation_id === escalationId ? { ...x, resolved: true, resolution } : x,
+          ),
+        };
+        flashDecided(escalationId, "corrected");
+      }
+      setBatch(next);
       setTrace(result.trace);
-      setOverrideTarget(null);
       return true;
     } catch (e) {
       setError(describe(e));
@@ -382,6 +431,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       learnerName: learnerName(e.learner_id),
       questionId: e.question_id ?? undefined,
       currentNode: e.candidate_a,
+      escalationId: e.escalation_id,
     });
   };
 
@@ -423,6 +473,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     run,
     cancelRun,
     resolve,
+    justDecided,
     profiles,
     taxonomy: taxonomyData,
     questions: questions.data ?? [],

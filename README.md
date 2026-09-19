@@ -155,7 +155,7 @@ git clone https://github.com/syedahmedkhaderi/clarity-ai-mckinsey-hackathon.git 
 3. **Students, Liu Y.** She wrote the correct answer in awkward English. It gets full marks and no maths mistake is recorded.
 4. **Home, whole-class problem.** "Adds numerators and denominators separately" affects 5 of 12 students, so it is a whole-class problem.
 5. **Action plan.** The group re-teach comes first, then restart points for the three returning learners.
-6. **Home, See which students, Kwame A.** On his Mid-term Question 4 answer, choose *Correct this*, then *Not a mistake pattern at all*. The count drops to 4 of 12, the group re-teach is withdrawn and the plan reorders.
+6. **Home, See which students, Kwame A.** On his Mid-term Question 4 answer, choose *Correct this*, then *Not a mistake pattern at all*. A tick confirms the save and you stay on Home, where the count drops to 4 of 12. Open the *Action plan*: the group re-teach is withdrawn and the plan reorders.
 
 </details>
 

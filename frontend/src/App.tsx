@@ -63,9 +63,7 @@ function Body() {
           target={session.overrideTarget}
           taxonomy={session.taxonomy}
           onCancel={() => session.setOverrideTarget(null)}
-          onSubmit={async (newValue, reason) => {
-            if (await session.applyOverride(newValue, reason)) setView("plan");
-          }}
+          onSubmit={session.applyOverride}
           busy={session.overrideBusy}
         />
       )}

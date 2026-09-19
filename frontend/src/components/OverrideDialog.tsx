@@ -1,7 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSession } from "../hooks/useSession";
+import { Tick } from "./ui/Tick";
 import { CORRECTION_EXPLAINER, NOT_A_PATTERN_LABEL } from "../lib/format";
 import type { Taxonomy } from "../types";
+
+/** Long enough to see the tick land, short enough that nobody reaches for Close. */
+const SAVED_CLOSE_MS = 1300;
 
 export interface OverrideTarget {
   type: "diagnosis" | "mark" | "learner_unavailable";
@@ -9,6 +13,8 @@ export interface OverrideTarget {
   learnerName?: string;
   questionId?: string;
   currentNode?: string | null;
+  /** Set when the correction was started from the review queue, so that item is decided by it. */
+  escalationId?: string;
 }
 
 /**
@@ -25,10 +31,12 @@ export function OverrideDialog({
   target: OverrideTarget;
   taxonomy: Taxonomy | null;
   onCancel: () => void;
-  onSubmit: (newValue: string | null, reason: string) => void;
+  /** Resolves true once saved; the dialog then shows its tick and closes itself. */
+  onSubmit: (newValue: string | null, reason: string) => Promise<boolean>;
   busy: boolean;
 }) {
   const [node, setNode] = useState<string>("");
+  const [saved, setSaved] = useState(false);
   const [reason, setReason] = useState("");
   const { questionName } = useSession();
   const nodes = taxonomy?.nodes ?? [];
@@ -49,14 +57,27 @@ export function OverrideDialog({
     return other.length ? [...listed, { id: "other", label: "Other", nodes: other }] : listed;
   }, [taxonomy, nodes]);
 
+  // The parent passes a fresh onCancel on every render; a re-render must not restart the close.
+  const close = useRef(onCancel);
+  close.current = onCancel;
   useEffect(() => {
-    if (busy) return;
+    if (!saved) return;
+    const t = window.setTimeout(() => close.current(), SAVED_CLOSE_MS);
+    return () => window.clearTimeout(t);
+  }, [saved]);
+
+  const save = async () => {
+    if (await onSubmit(node || null, reason)) setSaved(true);
+  };
+
+  useEffect(() => {
+    if (busy || saved) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onCancel();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [busy, onCancel]);
+  }, [busy, saved, onCancel]);
 
   return (
     <div className="fixed inset-0 z-50 bg-ink/40 grid place-items-center p-4 sm:p-6">
@@ -120,17 +141,27 @@ export function OverrideDialog({
           </label>
         </div>
 
-        <div className="px-4 py-3 border-t border-line flex justify-end gap-2 bg-surface-raised">
-          <button className="btn" onClick={onCancel} disabled={busy}>
-            Cancel
-          </button>
-          <button
-            className="btn btn-primary"
-            onClick={() => onSubmit(node || null, reason)}
-            disabled={busy}
-          >
-            {busy ? "Saving" : "Save correction"}
-          </button>
+        <div className="px-4 py-3 border-t border-line flex items-center justify-end gap-2 bg-surface-raised">
+          {saved ? (
+            <p role="status" className="mr-auto inline-flex items-center gap-2 text-sm font-medium text-agent">
+              <Tick size={20} />
+              <span className="anim-fade" style={{ animationDelay: "250ms" }}>
+                Correction saved. The class picture and the action plan are up to date.
+              </span>
+            </p>
+          ) : (
+            <>
+              {busy && (
+                <p className="mr-auto text-xs text-ink-muted">Updating the class picture and the plan.</p>
+              )}
+              <button className="btn" onClick={onCancel} disabled={busy}>
+                Cancel
+              </button>
+              <button className="btn btn-primary" onClick={save} disabled={busy}>
+                {busy ? "Saving" : "Save correction"}
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

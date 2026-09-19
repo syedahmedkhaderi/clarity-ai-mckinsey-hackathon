@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useState, type ReactNode } from "react";
 import type { BatchResult, Diagnosis, Escalation, Mark, ReasonCode } from "../types";
 import {
@@ -8,11 +9,15 @@ import {
   stripNodeIds,
   sure,
 } from "../lib/format";
-import { useSession } from "../hooks/useSession";
+import { CORRECTED_RESOLUTION, DECIDED_FLASH_MS, useSession, type DecidedKind } from "../hooks/useSession";
 import { EvidenceSpan } from "./EvidenceSpan";
 import { EmptyState } from "./ui/EmptyState";
 import { Panel } from "./ui/Panel";
 import { Tag } from "./ui/Tag";
+import { Tick } from "./ui/Tick";
+
+/** The fold starts once the tick has had time to be seen, and ends as the card leaves the queue. */
+const FOLD_MS = 520;
 
 /** The order the teacher meets them in: what is hardest to trust first. */
 const GROUP_ORDER: ReasonCode[] = [
@@ -62,8 +67,10 @@ export function EscalationQueue({
   onResolve: (e: Escalation) => void;
   onOverride: (e: Escalation) => void;
 }) {
-  const open = escalations.filter((e) => !e.resolved);
-  const done = escalations.filter((e) => e.resolved);
+  const { justDecided } = useSession();
+  // A card decided a moment ago stays in its group until its tick and fold have played.
+  const open = escalations.filter((e) => !e.resolved || justDecided[e.escalation_id]);
+  const done = escalations.filter((e) => e.resolved && !justDecided[e.escalation_id]);
   return (
     <div className="space-y-5">
       {open.length === 0 && <EmptyState title="Nothing is waiting for your decision." />}
@@ -77,15 +84,33 @@ export function EscalationQueue({
             tone="flag"
             title={REASON_LABELS[code]}
             subtitle={GROUP_HINT[code]}
-            action={<span className="count-flag shrink-0">{items.length}</span>}
+            action={
+              <span className="count-flag shrink-0">
+                {items.filter((e) => !justDecided[e.escalation_id]).length}
+              </span>
+            }
           >
             {/* Each decision is its own card on a grey ground, so one student never runs into the next. */}
             <ul className="space-y-3 bg-surface-sunken p-3 md:p-4">
-              {items.map((e) => (
-                <li key={e.escalation_id} className="overflow-hidden rounded border border-line-strong bg-surface">
-                  <Item e={e} onResolve={onResolve} onOverride={onOverride} />
-                </li>
-              ))}
+              {items.map((e) => {
+                const decided = justDecided[e.escalation_id];
+                return (
+                  <li
+                    key={e.escalation_id}
+                    className={clsx(
+                      "overflow-hidden rounded border bg-surface",
+                      decided ? "anim-leave border-agent-line" : "border-line-strong",
+                    )}
+                    style={
+                      decided
+                        ? { animationDelay: `${DECIDED_FLASH_MS[decided] - FOLD_MS}ms` }
+                        : undefined
+                    }
+                  >
+                    <Item e={e} decided={decided} onResolve={onResolve} onOverride={onOverride} />
+                  </li>
+                );
+              })}
             </ul>
           </Panel>
         );
@@ -101,13 +126,17 @@ function Decided({ items }: { items: Escalation[] }) {
     <Panel flush title="Already decided">
       <ul className="divide-y divide-line">
         {items.map((e) => (
-          <li key={e.escalation_id} className="px-4 py-2 flex flex-wrap items-baseline gap-2">
+          <li key={e.escalation_id} className="anim-rise px-4 py-2 flex flex-wrap items-baseline gap-2">
             <span className="text-sm text-ink-muted">
               {e.learner_id ? learnerName(e.learner_id) : e.subject}
               {e.question_id && `, ${questionName(e.question_id)}`}
             </span>
             <span className="ml-auto text-xs text-ink-faint">{REASON_LABELS[e.reason_code]}</span>
-            <Tag>Accepted</Tag>
+            {e.resolution?.startsWith(CORRECTED_RESOLUTION) ? (
+              <Tag tone="agent">Corrected</Tag>
+            ) : (
+              <Tag>Accepted</Tag>
+            )}
           </li>
         ))}
       </ul>
@@ -130,10 +159,12 @@ function evidenceFor(batch: BatchResult | null, e: Escalation) {
 
 function Item({
   e,
+  decided,
   onResolve,
   onOverride,
 }: {
   e: Escalation;
+  decided?: DecidedKind;
   onResolve: (e: Escalation) => void;
   onOverride: (e: Escalation) => void;
 }) {
@@ -153,16 +184,25 @@ function Item({
         {e.question_id && (
           <span className="text-xs text-ink-faint">{s.questionName(e.question_id)}</span>
         )}
-        <span className="ml-auto flex flex-wrap gap-2">
-          {e.learner_id && CAN_CORRECT.includes(e.reason_code) && (
-            <button className="btn btn-xs" onClick={() => onOverride(e)}>
-              Correct this
+        {decided ? (
+          <span role="status" className="ml-auto inline-flex items-center gap-1.5 text-sm font-medium text-agent">
+            <Tick />
+            <span className="anim-fade" style={{ animationDelay: "250ms" }}>
+              {decided === "corrected" ? "Corrected" : "Accepted"}
+            </span>
+          </span>
+        ) : (
+          <span className="ml-auto flex flex-wrap gap-2">
+            {e.learner_id && CAN_CORRECT.includes(e.reason_code) && (
+              <button className="btn btn-xs" onClick={() => onOverride(e)}>
+                Correct this
+              </button>
+            )}
+            <button className="btn btn-xs" onClick={() => onResolve(e)}>
+              Accept its choice
             </button>
-          )}
-          <button className="btn btn-xs" onClick={() => onResolve(e)}>
-            Accept its choice
-          </button>
-        </span>
+          </span>
+        )}
       </div>
 
       <div className="space-y-3 p-4">
