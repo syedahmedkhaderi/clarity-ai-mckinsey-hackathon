@@ -18,7 +18,7 @@ Client: **Meridian Foundation**. Use case: **Marks and answer-sheet analysis**.
     <td width="33%"><img src="docs/screenshots/email.png" alt="A drafted note to a student, ready to edit and send" /></td>
   </tr>
   <tr>
-    <td align="center"><sub>The whole test at a glance</sub></td>
+    <td align="center"><sub>The whole test at a glance: the whole-class problem, scores and four headline numbers</sub></td>
     <td align="center"><sub>Why a student lost marks, with evidence from their answer</sub></td>
     <td align="center"><sub>A note to the student, drafted and ready to send</sub></td>
   </tr>
@@ -45,10 +45,10 @@ A facilitator uploads a test. Six agents take it from there, and the facilitator
 | **Marks** | Awards draft marks against the marking scheme, each with a confidence | A draft total per student. Clarity AI never sets a final mark |
 | **Diagnoses** | Names the mistake pattern behind each lost mark, out of 24 known ones | The student's own answer, with the words it relied on highlighted |
 | **Remembers** | Tracks each student's mistakes across tests, including students with gaps in their record | "Keeps happening" or "Once", per mistake |
-| **Separates** | Decides whether a mistake belongs to one student or to the whole class (40 percent or more) | A heatmap of the class and the whole-class problems |
+| **Separates** | Decides whether a mistake belongs to one student or to the whole class (40 percent or more) | On Home: the whole-class problem, the most common mistakes and a heatmap of who made which |
 | **Plans** | Decides what to do next and ranks it, most marks lost first | One ordered action plan: re-teach, catch-ups, restart points, pairings |
-| **Escalates** | Hands over anything it should not decide alone, with both readings and what it would have chosen | A "Needs your call" queue with one-click accept or correct |
-| **Re-plans** | When the teacher corrects a finding, re-runs the class analysis and rebuilds the plan | The plan changes in front of them, with each change marked |
+| **Escalates** | Hands over anything it should not decide alone, with both readings and what it would have chosen | A "Needs your call" queue with one-click accept or correct. A decided item ticks and moves to "Already decided" |
+| **Re-plans** | When the teacher corrects a finding, re-runs the class analysis and rebuilds the plan | A tick confirms the correction without leaving the page. The rebuilt plan marks each change |
 | **Writes to students** | Drafts a personal note to each student from their own mistakes | An email the teacher edits and sends from the app |
 
 ## Features we are proudest of
@@ -75,7 +75,7 @@ A facilitator uploads a test. Six agents take it from there, and the facilitator
   </tr>
   <tr>
     <td align="center"><sub>Needs your call: what it was unsure about and why</sub></td>
-    <td align="center"><sub>One student's problem, or the whole class's?</sub></td>
+    <td align="center"><sub>Who made which mistake: one student's problem, or the whole class's?</sub></td>
     <td align="center"><sub>The action plan, most important first</sub></td>
   </tr>
 </table>
@@ -119,7 +119,7 @@ A facilitator uploads a test. Six agents take it from there, and the facilitator
 | Planning | `planner` | Proposes and ranks the actions: re-teach, catch-ups, restart points, pairings, notes | Rule-based plan |
 | Safety check | `reviewer` | Hands the teacher low confidence, two close readings, wording issues and thin records | No model used |
 
-A dead model provider costs quality, never a run. After three failures a circuit breaker switches every agent to the deterministic rules. A run against a dead endpoint still completes in 1.5 seconds with full results. The full graph and state contract are in [`docs/architecture.md`](docs/architecture.md), and a test checks that its diagram matches the code.
+A dead model provider costs quality, never a run. After three failures a circuit breaker switches every agent to the deterministic rules. A run against a dead endpoint still completes in 1.5 seconds with full results. The full graph, the state contract and the frontend pages are in [`docs/architecture.md`](docs/architecture.md), and a test checks that its diagram matches the code.
 
 ## Measured, not claimed
 

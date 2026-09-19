@@ -234,6 +234,48 @@ mathematics the generator used to inject the errors, so a recovery rate measured
 in offline mode is a check that the pipeline is wired correctly, not a
 measurement of model quality.
 
+## Frontend
+
+The UI sits inside a plain, institutional LMS shell (grey sidebar, dark top bar)
+so that the agent's own pages carry the visual weight. There are four pages
+after an analysis, plus the upload flow. The page is kept in the URL hash
+(`src/hooks/useAppView.ts`), and all server state comes through TanStack Query
+and `src/hooks/useSession.tsx`.
+
+| Page | What it answers | Built from |
+|---|---|---|
+| Home | How did the class do, and is a mistake one student's or the teaching's? | Test picker, the whole-class problem with its drafted re-teach, the score histogram beside four headline numbers, the most common mistakes against the 40 percent line, and a heatmap of who made which mistake |
+| Students | Why did this student lose marks, and has it happened before? | Diagnoses with the evidence highlighted inside the answer, mistake history across tests, and the note to the student |
+| Action plan | What should the teacher do next, in what order? | `plan.scheduled` as cards, most important first, and the notes to send |
+| Needs your call | What did the agent refuse to decide alone? | `escalations`, grouped by reason, each showing both readings and what the agent would have chosen |
+
+Home used to share its class view with a separate Class page. That page was
+folded into Home and removed, so the class picture is read in one place.
+
+### The correction path in the UI
+
+A correction can start from a heatmap square on Home or from an item in Needs
+your call. Both open the same dialog (`src/components/OverrideDialog.tsx`), which
+calls `/api/batch/{id}/override`. The server re-enters the graph at
+`cohort_analyst` (see the re-plan graph above). When the correction came from the
+review queue, the session also resolves that escalation with the teacher's
+reason, so the item leaves the queue and is listed as Corrected. The teacher
+stays on the page they corrected from. A tick confirms the save and the dialog
+closes itself. The rebuilt plan is waiting on the Action plan page, with each
+change marked.
+
+### Colour and motion
+
+One accent, a violet built on `#6c5ce7`, marks agent activity and decisions. A
+rust accent marks anything handed to the teacher. Charts use the same violet
+family plus one pink for "look at this": a whole-class mistake, or a mistake
+that keeps happening. The tokens live in `frontend/tailwind.config.js`. Charts
+animate in with CSS keyframes from `src/index.css`: bars grow, lines draw,
+headline numbers count up. Decisions in the review queue show a tick and fold
+away, and a sent note flies off. A note that was only saved settles into an
+outbox instead, so the animation never claims a delivery that did not happen.
+All motion is switched off under `prefers-reduced-motion`.
+
 ## Stack
 
 | Layer | Choice |
