@@ -338,13 +338,13 @@ function HistoryStrip({
                   <div className="h-16 flex items-end justify-center">
                     {row ? (
                       <div
-                        className="flex h-full w-7 items-end overflow-hidden rounded-sm bg-surface-head"
+                        className="flex h-full w-7 items-end overflow-hidden rounded-sm bg-chart-track"
                         title={`${t.name}: ${scoreText(row.awarded)} of ${scoreText(t.points_possible)}`}
                       >
                         <div
                           className={
                             "w-full rounded-sm " +
-                            (row.provisional ? "border border-agent-line bg-agent-line/70" : "bg-agent")
+                            (row.provisional ? "bg-chart-light" : "bg-chart-line")
                           }
                           style={{ height: `${Math.max(4, share * 100)}%` }}
                         />
@@ -360,7 +360,7 @@ function HistoryStrip({
               );
             })}
           </div>
-          <p className="text-2xs text-ink-faint mt-2">The grey behind each bar is the full mark. Pale blue bars are drafts, solid blue bars are confirmed.</p>
+          <p className="text-2xs text-ink-faint mt-2">The grey behind each bar is the full mark. Light blue bars are drafts, dark teal bars are confirmed.</p>
         </>
       )}
       {missing.length > 0 && (

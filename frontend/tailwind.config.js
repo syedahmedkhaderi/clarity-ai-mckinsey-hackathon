@@ -20,6 +20,20 @@ export default {
         // Things the agent handed to a human. A deep rust: solid where the teacher acts,
         // an outline where it only points the way.
         flag: { DEFAULT: "#8a3b12", soft: "#faf1ec", line: "#d9b8a5" },
+        // Charts. Bright so a picture catches the eye before the numbers do, but each hue
+        // keeps one meaning everywhere: blue is the ordinary mark, magenta is the one to
+        // look at (a hard question, a whole-class mistake, a mistake that keeps coming
+        // back), teal is a trend line. wash is the ground of a whole-class callout.
+        chart: {
+          DEFAULT: "#3aa8d6",
+          light: "#6ccaf0",
+          pale: "#d3eefa",
+          hot: "#d81f6f",
+          line: "#1784a8",
+          track: "#e8ecf1",
+          wash: "#e7f5fc",
+          deep: "#0b5068",
+        },
       },
       fontFamily: {
         sans: ["IBM Plex Sans", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],

@@ -10,10 +10,10 @@ interface Spot {
 }
 
 /**
- * Students down the side, mistake patterns across the top. A solid square is a
- * mistake that keeps happening, a pale one is new this test, and a pattern
- * whose number is highlighted is shared by enough of the class to be a gap in
- * the teaching. Columns carry a number and the names sit in a key underneath,
+ * Students down the side, mistake patterns across the top. A magenta square is
+ * a mistake that keeps happening, a blue one is new this test, and a pattern
+ * whose number is magenta is shared by enough of the class to be a gap in the
+ * teaching. Columns carry a number and the names sit in a key underneath,
  * because eighty characters do not fit over a column and rotated text overlaps.
  */
 export function ClassHeatmap({
@@ -107,7 +107,7 @@ export function ClassHeatmap({
                   key={n.node_id}
                   className={clsx(
                     "border-0 p-0 pt-2 text-center num",
-                    n.teaching_problem ? "font-semibold text-agent" : "text-ink-muted",
+                    n.teaching_problem ? "font-semibold text-chart-hot" : "text-ink-muted",
                   )}
                 >
                   {n.count}
@@ -130,12 +130,12 @@ export function ClassHeatmap({
             <span
               className={clsx(
                 "num w-5 shrink-0 text-right",
-                n.teaching_problem ? "font-semibold text-agent" : "text-ink-faint",
+                n.teaching_problem ? "font-semibold text-chart-hot" : "text-ink-faint",
               )}
             >
               {i + 1}
             </span>
-            <span className={n.teaching_problem ? "font-semibold text-agent" : "text-ink-muted"}>
+            <span className={n.teaching_problem ? "font-semibold text-chart-hot" : "text-ink-muted"}>
               {n.label}
             </span>
           </li>
@@ -144,11 +144,11 @@ export function ClassHeatmap({
 
       <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-2xs text-ink-faint">
         <span className="inline-flex items-center gap-1.5">
-          <span className="h-3 w-3 rounded-[2px] bg-agent" />
+          <span className="h-3 w-3 rounded-[2px] bg-chart-hot" />
           Keeps happening: also seen in earlier tests
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <span className="h-3 w-3 rounded-[2px] border border-agent-line bg-agent-soft" />
+          <span className="h-3 w-3 rounded-[2px] bg-chart-light" />
           New this test
         </span>
         <span>
@@ -170,7 +170,7 @@ function Header({ node, index, lit }: { node: NodePattern; index: number; lit: b
       <div
         className={clsx(
           "mx-auto rounded-[3px] py-0.5 text-center num",
-          node.teaching_problem ? "bg-agent-soft font-semibold text-agent" : "text-ink-muted",
+          node.teaching_problem ? "bg-chart-hot/10 font-semibold text-chart-hot" : "text-ink-muted",
           lit && !node.teaching_problem && "bg-surface-sunken text-ink",
         )}
       >
@@ -215,13 +215,13 @@ function Cell({
           className={clsx(
             "block h-7 w-full rounded-[3px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ink",
             again
-              ? "bg-agent hover:bg-[#152d50]"
-              : "border border-agent-line bg-agent-soft hover:bg-agent-line",
+              ? "bg-chart-hot hover:bg-[#b5195c]"
+              : "bg-chart-light hover:bg-chart",
             chosen && "ring-2 ring-ink ring-offset-1",
           )}
         />
       ) : (
-        <div aria-hidden className="h-7 w-full rounded-[3px] bg-surface-sunken" />
+        <div aria-hidden className="h-7 w-full rounded-[3px] border border-line/70 bg-surface-raised" />
       )}
     </td>
   );

@@ -60,7 +60,7 @@ function Small({
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="stroke-ink-faint"
+            className="stroke-chart-line"
           />
         )}
         <circle
@@ -68,7 +68,7 @@ function Small({
           cy={y(last.value)}
           r="3.5"
           strokeWidth="2"
-          className="fill-ink stroke-surface"
+          className="fill-chart-hot stroke-surface"
         />
       </svg>
       <span className="num text-ink">{format(last.value)}</span>
@@ -127,7 +127,7 @@ function Trend({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   vectorEffect="non-scaling-stroke"
-                  className="stroke-ink-faint"
+                  className="stroke-chart-line"
                 />
               </svg>
             )}
@@ -138,10 +138,18 @@ function Trend({
                 className="absolute -translate-x-1/2 -translate-y-1/2"
                 style={{ left: `${x(i)}%`, top: `${y(p.value)}%` }}
               >
-                <span className="block h-3 w-3 rounded-full border-2 border-surface bg-ink" />
+                <span
+                  className={
+                    "block h-3 w-3 rounded-full border-2 border-surface " +
+                    (i === n - 1 ? "bg-chart-hot" : "bg-chart-line")
+                  }
+                />
                 <span
                   aria-hidden
-                  className="absolute bottom-full left-1/2 mb-1 -translate-x-1/2 num text-ink group-hover:hidden group-focus:hidden"
+                  className={
+                    "absolute bottom-full left-1/2 mb-1 -translate-x-1/2 num group-hover:hidden group-focus:hidden " +
+                    (i === n - 1 ? "font-medium text-chart-hot" : "text-ink")
+                  }
                 >
                   {format(p.value)}
                 </span>

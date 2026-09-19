@@ -72,12 +72,12 @@ export function PatternBars({
                   <div
                     role="img"
                     aria-label={`${r.count} of ${r.cohortSize} students, ${pct(share)}`}
-                    className="h-3 w-full rounded-r-[4px] bg-surface-sunken"
+                    className="h-3 w-full rounded-full bg-chart-track"
                   >
                     <div
                       className={clsx(
-                        "h-full rounded-r-[4px]",
-                        whole ? "bg-agent" : "bg-agent-line",
+                        "h-full rounded-full",
+                        whole ? "bg-chart-hot" : "bg-chart",
                       )}
                       style={{ width: `${Math.min(1, r.count / size) * 100}%` }}
                     />
@@ -102,11 +102,11 @@ export function PatternBars({
 
       <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-2xs text-ink-faint">
         <span className="inline-flex items-center gap-1.5">
-          <span className="h-2.5 w-4 rounded-[2px] bg-agent" />
+          <span className="h-2.5 w-4 rounded-[2px] bg-chart-hot" />
           At or past the line
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <span className="h-2.5 w-4 rounded-[2px] bg-agent-line" />
+          <span className="h-2.5 w-4 rounded-[2px] bg-chart" />
           Below the line
         </span>
         <span>

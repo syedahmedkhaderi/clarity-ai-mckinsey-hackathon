@@ -29,13 +29,13 @@ export function QuestionBars({
                 <div
                   role="img"
                   aria-label={`Question ${r.number}, ${r.label}: ${r.correct} of ${r.total} students got it right, ${pct(share)}`}
-                  className="relative mt-0.5 h-3 rounded-r-[4px] bg-surface-sunken"
+                  className="relative mt-0.5 h-3 rounded-full bg-chart-track"
                 >
                   <div
                     className={
                       hard
-                        ? "h-full rounded-r-[4px] bg-ink"
-                        : "h-full rounded-r-[4px] bg-ink-faint"
+                        ? "h-full rounded-full bg-chart-hot"
+                        : "h-full rounded-full bg-chart"
                     }
                     style={{ width: `${share * 100}%` }}
                   />
@@ -57,7 +57,7 @@ export function QuestionBars({
         })}
       </ul>
       <p className="mt-3 text-2xs text-ink-faint">
-        Darker bars: fewer than half the students got the question right. The thin line marks half.
+        Magenta bars: fewer than half the students got the question right. The thin line marks half.
       </p>
     </div>
   );

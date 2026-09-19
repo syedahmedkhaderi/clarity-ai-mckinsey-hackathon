@@ -80,7 +80,7 @@ export function ScoreDistribution({ scores, outOf }: { scores: number[]; outOf: 
                     text={`${students(b.count)} scored ${range(b)} out of ${outOf}`}
                   >
                     <span
-                      className="relative block w-full max-w-10 rounded-t-[4px] bg-ink-faint transition-colors group-hover:bg-ink-muted group-focus:bg-ink-muted"
+                      className="relative block w-full max-w-10 rounded-t-[4px] bg-chart transition-colors group-hover:bg-chart-line group-focus:bg-chart-line"
                       style={{ height: `${(b.count / top) * 100}%` }}
                     >
                       <span className="absolute bottom-full left-0 right-0 mb-0.5 text-center num text-ink">
@@ -94,12 +94,12 @@ export function ScoreDistribution({ scores, outOf }: { scores: number[]; outOf: 
 
             <span
               aria-hidden
-              className="absolute -top-1 bottom-0 w-px bg-ink"
+              className="absolute -top-1 bottom-0 w-0.5 bg-chart-hot"
               style={{ left: `${meanAt * 100}%` }}
             />
             <span
               aria-hidden
-              className="absolute -top-6 -translate-x-1/2 whitespace-nowrap text-2xs font-medium text-ink"
+              className="absolute -top-6 -translate-x-1/2 whitespace-nowrap text-2xs font-medium text-chart-hot"
               style={{ left: `${labelAt}%` }}
             >
               Class average {meanText}
