@@ -1,13 +1,11 @@
 import { Panel } from "../components/ui/Panel";
-import { StatTile } from "../components/ui/StatTile";
-import { Tag } from "../components/ui/Tag";
 import { PatternBars } from "../components/charts/PatternBars";
 import { QuestionBars } from "../components/charts/QuestionBars";
 import { ScoreDistribution } from "../components/charts/ScoreDistribution";
 import { useAppView } from "../hooks/useAppView";
 import { useSession } from "../hooks/useSession";
-import { analysisLabel, pct } from "../lib/format";
-import type { BatchResult } from "../types";
+import { pct } from "../lib/format";
+import type { BatchResult, NodePattern } from "../types";
 import {
   marksLost,
   namedPatterns,
@@ -19,116 +17,117 @@ import {
 
 const TOP_PATTERNS = 5;
 
-/** What a teacher wants after a run: the class in four numbers, four pictures, and where to go next. */
-export function HomeSummary({ batch }: { batch: BatchResult }) {
-  const s = useSession();
+/** The class in a handful of numbers. Shared by the Home rail and its tabs. */
+export interface HomeStats {
+  students: number;
+  lost: number;
+  possible: number;
+  mean: string;
+  outOf: number;
+  lowest: number;
+  highest: number;
+  totals: number[];
+  questions: ReturnType<typeof questionRows>;
+  patterns: NodePattern[];
+  whole: NodePattern[];
+}
+
+export function homeStats(batch: BatchResult, topicName: (id: string) => string): HomeStats {
   const scores = studentScores(batch);
   const { lost, possible } = marksLost(scores);
-  const outOf = Math.max(0, ...scores.map((x) => x.possible));
   const totals = scores.map((x) => x.awarded);
   const mean = totals.length ? totals.reduce((a, b) => a + b, 0) / totals.length : 0;
-  const questions = questionRows(batch, s.topicName);
-  const hardest = [...questions].sort((a, b) => a.correct / (a.total || 1) - b.correct / (b.total || 1))[0];
   const patterns = namedPatterns(batch.patterns?.nodes ?? []);
-  const whole = patterns.filter((n) => n.teaching_problem);
-  const plan = batch.plan;
+  return {
+    students: scores.length,
+    lost,
+    possible,
+    mean: roundOne(mean),
+    outOf: Math.max(0, ...scores.map((x) => x.possible)),
+    lowest: totals.length ? Math.min(...totals) : 0,
+    highest: totals.length ? Math.max(...totals) : 0,
+    totals,
+    questions: questionRows(batch, topicName),
+    patterns,
+    whole: patterns.filter((n) => n.teaching_problem),
+  };
+}
 
+/** The first tab: two pictures and the mistakes that matter most. */
+export function OverviewTab({ stats }: { stats: HomeStats }) {
+  const hardest = [...stats.questions].sort(
+    (a, b) => a.correct / (a.total || 1) - b.correct / (b.total || 1),
+  )[0];
   return (
-    <section className="space-y-6" aria-label="Analysis summary">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-        <h2 className="text-base font-semibold text-ink">
-          {analysisLabel(s.testName(batch.assessment_id), batch.trace[0]?.timestamp)}
-        </h2>
-        <p className="text-xs text-ink-faint">Every mark shown is a draft.</p>
+    <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
+      <Panel
+        title="How the class scored"
+        subtitle={
+          stats.totals.length
+            ? `The class average was ${stats.mean} out of ${stats.outOf}.`
+            : "No scores to show yet."
+        }
+      >
+        <ScoreDistribution scores={stats.totals} outOf={stats.outOf} />
+      </Panel>
+      <Panel
+        title="Which questions were hard"
+        subtitle={
+          hardest
+            ? `Question ${hardest.number} was the hardest: ${hardest.correct} of ${hardest.total} got it right.`
+            : "No marked questions yet."
+        }
+      >
+        <QuestionBars rows={stats.questions} />
+      </Panel>
+      <div className="lg:col-span-2">
+        <PatternPanel patterns={stats.patterns} limit={TOP_PATTERNS} />
       </div>
-
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <StatTile label="Students" value={scores.length} hint={`took ${s.testName(batch.assessment_id)}`} />
-        <StatTile
-          label="Marks lost"
-          value={lost}
-          hint={`of ${possible} marks on offer`}
-        />
-        <StatTile
-          label="Whole-class problems"
-          value={whole.length}
-          hint={
-            whole.length
-              ? `Mistakes made by ${pct(s.sharedThreshold)} or more of the class`
-              : "No mistake is shared widely enough"
-          }
-        />
-        <StatTile
-          label="Needs your call"
-          value={s.openCount}
-          tone={s.openCount > 0 ? "flag" : "default"}
-          hint={s.openCount > 0 ? "Waiting for you in To review" : "Nothing waiting"}
-        />
-      </div>
-
-      <NextSteps planned={plan ? plan.scheduled.length : 0} open={s.openCount} />
-
-      <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
-        <Panel
-          title="How the class scored"
-          subtitle={
-            totals.length
-              ? `The class average was ${roundOne(mean)} out of ${outOf}.`
-              : "No scores to show yet."
-          }
-        >
-          <ScoreDistribution scores={totals} outOf={outOf} />
-        </Panel>
-
-        <Panel
-          title="Which questions were hard"
-          subtitle={
-            hardest
-              ? `Question ${hardest.number} was the hardest: ${hardest.correct} of ${hardest.total} got it right.`
-              : "No marked questions yet."
-          }
-        >
-          <QuestionBars rows={questions} />
-        </Panel>
-
-        <div className="lg:col-span-2">
-          <PatternPanel patterns={patterns} threshold={s.sharedThreshold} />
-        </div>
-      </div>
-    </section>
+    </div>
   );
 }
 
-function PatternPanel({
-  patterns,
-  threshold,
-}: {
-  patterns: ReturnType<typeof namedPatterns>;
-  threshold: number;
-}) {
-  const { setView } = useAppView();
-  const top = patterns[0];
-  const shown = patterns.slice(0, TOP_PATTERNS);
+export function QuestionsTab({ stats }: { stats: HomeStats }) {
   return (
     <Panel
-      title="Most common mistakes"
+      title="Every question"
+      subtitle="The share of students who got each question fully right. A short bar is a hard question."
+    >
+      <QuestionBars rows={stats.questions} />
+    </Panel>
+  );
+}
+
+export function MistakesTab({ stats }: { stats: HomeStats }) {
+  return <PatternPanel patterns={stats.patterns} />;
+}
+
+function PatternPanel({ patterns, limit }: { patterns: NodePattern[]; limit?: number }) {
+  const { setView } = useAppView();
+  const { sharedThreshold } = useSession();
+  const top = patterns[0];
+  const shown = limit ? patterns.slice(0, limit) : patterns;
+  const more = limit !== undefined && patterns.length > limit;
+  return (
+    <Panel
+      title={limit ? "Most common mistakes" : "Every mistake pattern"}
       subtitle={
         top
           ? top.teaching_problem
             ? `${top.count} of ${top.cohort_size} students made the same mistake, so it is a whole-class problem.`
-            : "No mistake is shared by enough of the class to be a whole-class problem."
+            : `No mistake is made by ${pct(sharedThreshold)} of the class, so none is a whole-class problem.`
           : "No mistake patterns were found."
       }
       action={
-        patterns.length > TOP_PATTERNS ? (
+        more ? (
           <button className="btn btn-xs" onClick={() => setView("class")}>
-            See all {patterns.length}
+            See all {plural(patterns.length, "pattern")} on the Class page
           </button>
         ) : undefined
       }
     >
       <PatternBars
-        threshold={threshold}
+        threshold={sharedThreshold}
         onSelect={() => setView("class")}
         rows={shown.map((n) => ({
           id: n.node_id,
@@ -138,45 +137,6 @@ function PatternPanel({
           kind: n.kind,
         }))}
       />
-    </Panel>
-  );
-}
-
-function NextSteps({ planned, open }: { planned: number; open: number }) {
-  const { setView } = useAppView();
-  return (
-    <Panel title="What to do next" flush>
-      <ul className="divide-y divide-line">
-        <li className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
-          <div className="min-w-0 flex-1">
-            <div className="text-sm text-ink">Look at your action plan</div>
-            <div className="text-xs text-ink-muted">
-              {planned > 0
-                ? `${plural(planned, "thing")} to do, in the order that will win back the most marks.`
-                : "Nothing to plan from this analysis."}
-            </div>
-          </div>
-          <button className="btn btn-xs" onClick={() => setView("plan")}>
-            Open action plan
-          </button>
-        </li>
-        <li className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2 text-sm text-ink">
-              Check what needs your call
-              {open > 0 && <Tag tone="flag">{open}</Tag>}
-            </div>
-            <div className="text-xs text-ink-muted">
-              {open > 0
-                ? `${plural(open, "answer")} the system was not sure enough to decide alone.`
-                : "The system decided everything it was sure about."}
-            </div>
-          </div>
-          <button className="btn btn-xs" onClick={() => setView("review")}>
-            Open To review
-          </button>
-        </li>
-      </ul>
     </Panel>
   );
 }

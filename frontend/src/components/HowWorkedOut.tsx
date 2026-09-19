@@ -4,8 +4,9 @@ import { AGENT_LABELS } from "../lib/format";
 import type { Health, TraceEvent } from "../types";
 
 /**
- * The steps, in order, for anyone who wants to check the work. Closed by default
- * so the page a teacher sees is about the class, not about the machinery.
+ * The steps, in order, for anyone who wants to check the work. On Home it has
+ * its own tab, so it is shown open; elsewhere it stays closed by default so the
+ * page a teacher sees is about the class, not about the machinery.
  */
 export function HowWorkedOut({
   events,
@@ -14,6 +15,7 @@ export function HowWorkedOut({
   health,
   running,
   stage,
+  open = false,
 }: {
   events: TraceEvent[];
   status: string;
@@ -21,17 +23,35 @@ export function HowWorkedOut({
   health: Health | null;
   running: boolean;
   stage: string | null;
+  open?: boolean;
 }) {
-  return (
-    <Collapsible
-      title="How this was worked out"
-      hint={running ? (stage ?? "Starting") : "The steps, in order, for anyone who wants to check."}
-    >
+  const body = (
+    <>
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
         <AgentTrace events={events} status={status} elapsedMs={elapsedMs} />
         <StepOrder health={health} />
       </div>
       {events.length > 0 && <TraceLog events={events} />}
+    </>
+  );
+  if (open) {
+    return (
+      <div className="space-y-4">
+        <p className="text-sm text-ink-muted">
+          {running
+            ? `Working: ${stage ?? "starting"}.`
+            : "The steps, in order, for anyone who wants to check the work."}
+        </p>
+        {body}
+      </div>
+    );
+  }
+  return (
+    <Collapsible
+      title="How this was worked out"
+      hint={running ? (stage ?? "Starting") : "The steps, in order, for anyone who wants to check."}
+    >
+      {body}
     </Collapsible>
   );
 }

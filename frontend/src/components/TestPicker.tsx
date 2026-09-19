@@ -2,8 +2,9 @@ import type { Assignment } from "../types";
 import { marksLabel } from "../lib/format";
 
 /**
- * Chooses the test and starts the analysis. A native select rather than a row
- * of buttons: the list grows every term and a row stops fitting after four.
+ * Chooses the test and starts the analysis. Lives in the Home rail, so it is a
+ * vertical stack. A native select rather than a row of buttons: the list grows
+ * every term and a row stops fitting after four.
  */
 export function TestPicker({
   assignments,
@@ -26,11 +27,13 @@ export function TestPicker({
   const provided = assignments.filter((a) => a.source !== "uploaded");
 
   return (
-    <div className="panel">
-      <div className="flex flex-col gap-4 p-4 md:flex-row md:items-end md:gap-6 md:p-5">
-        <div className="min-w-0 flex-1">
-          <label htmlFor="test-picker" className="block text-xs font-medium text-ink-muted">
-            Test to analyse
+    <div className="flex flex-col gap-3">
+        <div className="min-w-0">
+          <label
+            htmlFor="test-picker"
+            className="block text-2xs font-medium uppercase tracking-wide text-ink-muted"
+          >
+            Analysing
           </label>
           {assignments.length === 0 ? (
             <p className="mt-2 text-sm text-ink-faint">Loading your tests.</p>
@@ -40,7 +43,7 @@ export function TestPicker({
               value={selected}
               disabled={running}
               onChange={(e) => onSelect(e.target.value)}
-              className="mt-1.5 w-full max-w-md rounded border border-line-strong bg-surface px-3 py-2 text-sm text-ink outline-none transition-colors focus:border-ink focus:ring-1 focus:ring-ink disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-1.5 w-full rounded border border-line-strong bg-surface px-3 py-2 text-sm text-ink outline-none transition-colors focus:border-ink focus:ring-1 focus:ring-ink disabled:cursor-not-allowed disabled:opacity-60"
             >
               {yours.length > 0 ? (
                 <>
@@ -81,7 +84,7 @@ export function TestPicker({
           {blockedReason && <p className="mt-2 text-xs text-flag">{blockedReason}</p>}
         </div>
         <button
-          className="btn btn-primary shrink-0 self-start md:self-auto"
+          className="btn btn-primary justify-center"
           onClick={onRun}
           disabled={running || !selected || blockedReason !== null}
         >
@@ -94,7 +97,6 @@ export function TestPicker({
             "Analyse this test"
           )}
         </button>
-      </div>
     </div>
   );
 }
