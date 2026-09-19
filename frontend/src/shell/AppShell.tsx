@@ -86,13 +86,14 @@ export function AppShell({ children }: { children: ReactNode }) {
         <aside
           aria-label="LMS navigation"
           className={clsx(
-            "shrink-0 border-line bg-surface",
+            "shrink-0 border-shell-line bg-shell",
             "flex flex-col border-b",
             "md:block md:w-60 md:border-b-0 md:border-r",
-            "md:min-h-[calc(100vh-3.5rem)]",
+            // Stays put while the page scrolls; its own content scrolls if it is taller than the window.
+            "md:sticky md:top-0 md:max-h-screen md:self-start md:overflow-y-auto md:min-h-screen",
           )}
         >
-          <section className="border-b border-line px-4 py-4" aria-labelledby="lms-context-title">
+          <section className="border-b border-shell-line px-4 py-4" aria-labelledby="lms-context-title">
             <p id="lms-context-title" className="text-sm font-semibold tracking-tight text-ink">
               Meridian LMS
             </p>
@@ -120,7 +121,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             </div>
           </section>
 
-          <div className="hidden border-b border-line px-3 py-3 md:block" aria-label="Course sections">
+          <div className="hidden border-b border-shell-line px-3 py-3 md:block" aria-label="Course sections">
             <p className="px-2 pb-1.5 text-2xs font-medium uppercase tracking-wide text-ink-faint">
               Course pages
             </p>
@@ -154,8 +155,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                     "flex items-center gap-2 whitespace-nowrap rounded-sm px-2 py-1.5 text-left text-xs md:px-2.5 md:py-2 md:text-sm",
                     "w-full justify-between transition-colors",
                     active === item.key
-                      ? "border-l-2 border-ink bg-surface-sunken pl-1.5 font-medium text-ink md:pl-2"
-                      : "border-l-2 border-transparent text-ink-muted hover:bg-surface-sunken hover:text-ink",
+                      ? "border-l-2 border-agent bg-surface pl-1.5 font-medium text-ink md:pl-2"
+                      : "border-l-2 border-transparent text-ink-muted hover:bg-surface hover:text-ink",
                   )}
                 >
                   {item.label}
