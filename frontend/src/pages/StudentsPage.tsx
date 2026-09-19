@@ -338,13 +338,17 @@ function HistoryStrip({
                   <div className="h-16 flex items-end justify-center">
                     {row ? (
                       <div
-                        className={
-                          "w-7 rounded-sm border border-line-strong " +
-                          (row.provisional ? "bg-line" : "bg-ink-muted border-ink-muted")
-                        }
-                        style={{ height: `${Math.max(4, share * 100)}%` }}
+                        className="flex h-full w-7 items-end overflow-hidden rounded-sm bg-surface-head"
                         title={`${t.name}: ${scoreText(row.awarded)} of ${scoreText(t.points_possible)}`}
-                      />
+                      >
+                        <div
+                          className={
+                            "w-full rounded-sm " +
+                            (row.provisional ? "border border-agent-line bg-agent-line/70" : "bg-agent")
+                          }
+                          style={{ height: `${Math.max(4, share * 100)}%` }}
+                        />
+                      </div>
                     ) : (
                       <div className="w-7 h-full rounded-sm border border-dashed border-line-strong" />
                     )}
@@ -356,7 +360,7 @@ function HistoryStrip({
               );
             })}
           </div>
-          <p className="text-2xs text-ink-faint mt-2">Pale bars are drafts. Dark bars are confirmed.</p>
+          <p className="text-2xs text-ink-faint mt-2">The grey behind each bar is the full mark. Pale blue bars are drafts, solid blue bars are confirmed.</p>
         </>
       )}
       {missing.length > 0 && (
@@ -451,12 +455,20 @@ function Findings({
       title={`This test, ${thisTest}`}
       subtitle={`${diagnoses.length} ${diagnoses.length === 1 ? "finding" : "findings"}, ${open} need${open === 1 ? "s" : ""} your call`}
     >
-      <div className="space-y-3 bg-surface-sunken p-3 md:p-4">
-        {diagnoses.map((d) => {
+      <div className="space-y-6 bg-surface-sunken p-3 md:p-4">
+        {diagnoses.map((d, i) => {
           const mark = marks.get(d.question_id);
           const flagged = escalations.filter((e) => e.question_id === d.question_id);
           return (
-            <div key={d.question_id} className="space-y-2">
+            <section key={d.question_id} className="space-y-2" aria-label={`Finding ${i + 1}`}>
+              {diagnoses.length > 1 && (
+                <p className="flex items-center gap-3 text-xs font-semibold text-ink-muted">
+                  <span className="shrink-0">
+                    Finding {i + 1} of {diagnoses.length}
+                  </span>
+                  <span aria-hidden className="h-px flex-1 bg-line-strong" />
+                </p>
+              )}
               <DiagnosisDetail
                 diagnosis={d}
                 question={s.questions.find((q) => q.question_id === d.question_id)}
@@ -474,7 +486,7 @@ function Findings({
               {flagged.map((e) => (
                 <EscalationNote key={e.escalation_id} escalation={e} />
               ))}
-            </div>
+            </section>
           );
         })}
         {unpaired.map((e) => (

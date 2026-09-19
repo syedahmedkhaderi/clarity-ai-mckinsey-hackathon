@@ -8,9 +8,7 @@
  * unhighlighted with a note.
  */
 export function EvidenceSpan({ answer, span }: { answer: string; span: string }) {
-  // The student's own words: a left rule so it reads as a quotation, apart from the system's text.
-  const box =
-    "rounded border border-line border-l-[3px] border-l-ink-faint bg-surface px-3 py-2 text-sm text-ink";
+  const box = "rounded border border-line bg-surface px-3 py-2 text-sm text-ink";
   if (!answer.trim()) {
     return <p className={`${box} text-ink-faint`}>No answer was given.</p>;
   }

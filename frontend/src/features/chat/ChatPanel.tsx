@@ -170,32 +170,50 @@ function Message({ message }: { message: ChatMessage }) {
   );
 }
 
-/** Answer mode: titles as chips, one snippet open at a time. */
+/** Answer mode: folded to one line until asked for, then titles as chips, one snippet open at a time. */
 function SourceChips({ sources }: { sources: ChatSource[] }) {
+  const [listed, setListed] = useState(false);
   const [open, setOpen] = useState<string | null>(null);
   const shown = sources.find((s) => s.id === open);
+  const count = `${sources.length} ${sources.length === 1 ? "source" : "sources"}`;
   return (
     <div className="min-w-0">
-      <p className="mb-1 text-2xs font-medium uppercase tracking-wide text-ink-faint">Sources</p>
-      <ul className="flex flex-wrap gap-1.5">
-        {sources.map((s) => (
-          <li key={s.id} className="max-w-full">
-            <button
-              type="button"
-              aria-expanded={open === s.id}
-              onClick={() => setOpen(open === s.id ? null : s.id)}
-              className={`max-w-full truncate rounded border px-1.5 py-0.5 text-xs ${focusRing} ${
-                open === s.id
-                  ? "border-agent-line bg-agent-soft text-agent"
-                  : "border-line-strong bg-surface text-ink-muted hover:bg-surface-sunken"
-              }`}
-            >
-              {s.title}
-            </button>
-          </li>
-        ))}
-      </ul>
-      {shown && (
+      <button
+        type="button"
+        aria-expanded={listed}
+        onClick={() => setListed(!listed)}
+        className={`inline-flex items-center gap-1 rounded text-xs text-ink-muted hover:text-ink ${focusRing}`}
+      >
+        <svg
+          viewBox="0 0 12 12"
+          aria-hidden="true"
+          className={`h-3 w-3 transition-transform ${listed ? "rotate-90" : ""}`}
+        >
+          <path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+        {listed ? "Hide sources" : `Based on ${count}`}
+      </button>
+      {listed && (
+        <ul className="mt-1.5 flex flex-wrap gap-1.5">
+          {sources.map((s) => (
+            <li key={s.id} className="max-w-full">
+              <button
+                type="button"
+                aria-expanded={open === s.id}
+                onClick={() => setOpen(open === s.id ? null : s.id)}
+                className={`max-w-full truncate rounded border px-1.5 py-0.5 text-xs ${focusRing} ${
+                  open === s.id
+                    ? "border-agent-line bg-agent-soft text-agent"
+                    : "border-line-strong bg-surface text-ink-muted hover:bg-surface-sunken"
+                }`}
+              >
+                {s.title}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      {listed && shown && (
         <p className="mt-1.5 whitespace-pre-wrap rounded border border-line bg-surface px-2 py-1.5 text-xs text-ink-muted [overflow-wrap:anywhere]">
           {shown.snippet}
         </p>

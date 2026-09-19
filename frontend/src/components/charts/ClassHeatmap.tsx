@@ -12,9 +12,9 @@ interface Spot {
 /**
  * Students down the side, mistake patterns across the top. A solid square is a
  * mistake that keeps happening, a pale one is new this test, and a pattern
- * whose name is highlighted is shared by enough of the class to be a gap in the
- * teaching. Patterns are named in full on hover and focus, because eighty
- * characters do not fit over a column.
+ * whose number is highlighted is shared by enough of the class to be a gap in
+ * the teaching. Columns carry a number and the names sit in a key underneath,
+ * because eighty characters do not fit over a column and rotated text overlaps.
  */
 export function ClassHeatmap({
   patterns,
@@ -67,8 +67,8 @@ export function ClassHeatmap({
               <th className="sticky left-0 z-10 w-40 border-0 bg-surface p-0 pb-2 align-bottom text-2xs font-medium normal-case tracking-normal text-ink-faint">
                 Student
               </th>
-              {columns.map((n) => (
-                <Header key={n.node_id} node={n} lit={hoverNode === n.node_id} />
+              {columns.map((n, i) => (
+                <Header key={n.node_id} node={n} index={i + 1} lit={hoverNode === n.node_id} />
               ))}
             </tr>
           </thead>
@@ -118,6 +118,30 @@ export function ClassHeatmap({
         </table>
       </div>
 
+      <ol className="mt-4 grid gap-x-6 gap-y-1 border-t border-line pt-3 sm:grid-cols-2">
+        {columns.map((n, i) => (
+          <li
+            key={n.node_id}
+            className={clsx(
+              "flex items-baseline gap-2 rounded-[3px] px-1 text-xs",
+              hoverNode === n.node_id && "bg-surface-sunken",
+            )}
+          >
+            <span
+              className={clsx(
+                "num w-5 shrink-0 text-right",
+                n.teaching_problem ? "font-semibold text-agent" : "text-ink-faint",
+              )}
+            >
+              {i + 1}
+            </span>
+            <span className={n.teaching_problem ? "font-semibold text-agent" : "text-ink-muted"}>
+              {n.label}
+            </span>
+          </li>
+        ))}
+      </ol>
+
       <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-2xs text-ink-faint">
         <span className="inline-flex items-center gap-1.5">
           <span className="h-3 w-3 rounded-[2px] bg-agent" />
@@ -128,28 +152,29 @@ export function ClassHeatmap({
           New this test
         </span>
         <span>
-          Highlighted names are whole-class problems: {pct(threshold)} or more of the class.
+          Highlighted numbers and names are whole-class problems: {pct(threshold)} or more of the class.
         </span>
       </div>
     </div>
   );
 }
 
-function Header({ node, lit }: { node: NodePattern; lit: boolean }) {
+function Header({ node, index, lit }: { node: NodePattern; index: number; lit: boolean }) {
   return (
     <th
       scope="col"
       title={node.label}
-      className="w-11 border-0 bg-transparent p-0 px-0.5 align-bottom font-normal normal-case tracking-normal"
+      aria-label={node.label}
+      className="w-11 border-0 bg-transparent p-0 px-0.5 pb-1.5 align-bottom font-normal normal-case tracking-normal"
     >
       <div
         className={clsx(
-          "mx-auto max-h-40 overflow-hidden rounded-[3px] py-1 text-left text-2xs leading-[14px] [writing-mode:vertical-rl] rotate-180",
+          "mx-auto rounded-[3px] py-0.5 text-center num",
           node.teaching_problem ? "bg-agent-soft font-semibold text-agent" : "text-ink-muted",
           lit && !node.teaching_problem && "bg-surface-sunken text-ink",
         )}
       >
-        {node.label}
+        {index}
       </div>
     </th>
   );

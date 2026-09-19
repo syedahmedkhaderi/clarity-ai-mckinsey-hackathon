@@ -80,8 +80,8 @@ export function DiagnosisDetail({
           </div>
           <EvidenceSpan answer={answer} span={diagnosis.evidence_span} />
         </div>
-        <div className="rounded border border-agent-line border-l-[3px] border-l-agent bg-agent-soft px-3 py-2">
-          <div className="text-2xs font-medium uppercase tracking-wide text-agent mb-0.5">
+        <div>
+          <div className="text-2xs uppercase tracking-wide text-ink-faint mb-0.5">
             Why marks were lost
           </div>
           <p className="text-sm text-ink">{plain(diagnosis.reasoning)}</p>
