@@ -187,7 +187,7 @@ export function TopBar({
             {details !== undefined && (
               <button
                 type="button"
-                className="btn btn-xs"
+                className="pill"
                 aria-expanded={open}
                 onClick={() => setOpen(!open)}
               >
@@ -303,12 +303,7 @@ export function FilterChips<K extends string>({
             type="button"
             aria-pressed={on}
             onClick={() => onChange(o.key)}
-            className={clsx(
-              "inline-flex items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1 text-sm transition-colors",
-              on
-                ? "border-agent bg-agent font-medium text-white"
-                : "border-line-strong bg-surface text-ink hover:bg-surface-sunken",
-            )}
+            className={clsx("pill", on && "border-agent bg-agent font-medium text-white hover:bg-agent")}
           >
             {o.label}
             <span className={clsx("num text-xs", on ? "text-white/80" : "text-ink-muted")}>{o.count}</span>

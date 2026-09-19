@@ -57,7 +57,7 @@ function Priority({ severity }: { severity: number }) {
   const high = severityLevel(severity, highSeverityFloor) === "high";
   return (
     <Tag
-      className={clsx(high && "border-line-strong bg-surface text-ink")}
+      className={clsx("rounded-full px-2.5", high && "border-line-strong bg-surface text-ink")}
       title={`Priority score ${Math.round(severity * 100)} out of 100`}
     >
       {severityLabel(severity, highSeverityFloor)}

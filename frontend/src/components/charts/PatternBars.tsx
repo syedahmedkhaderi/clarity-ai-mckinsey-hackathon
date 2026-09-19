@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useState } from "react";
 import { PATTERN_KIND_LABELS, pct } from "../../lib/format";
 import type { PatternKind } from "../../types";
 import { Tag } from "../ui/Tag";
@@ -8,17 +9,21 @@ const GRID = "grid grid-cols-[minmax(0,1fr)_auto] sm:grid-cols-[minmax(0,19rem)_
 /**
  * How many students made each mistake, out of the whole class. The full width of
  * a bar is every student, and the vertical line is where a mistake stops being
- * a set of individual problems and becomes a gap in the teaching.
+ * a set of individual problems and becomes a gap in the teaching. With
+ * `collapseAfter`, only the biggest few show until the teacher asks for the rest.
  */
 export function PatternBars({
   rows,
   threshold,
   onSelect,
+  collapseAfter,
 }: {
   rows: { id: string; label: string; count: number; cohortSize: number; kind: PatternKind }[];
   threshold: number;
   onSelect?: (id: string) => void;
+  collapseAfter?: number;
 }) {
+  const [all, setAll] = useState(false);
   if (rows.length === 0) {
     return <p className="text-sm text-ink-muted">No mistake patterns were found in this test.</p>;
   }
@@ -26,17 +31,23 @@ export function PatternBars({
   const sorted = [...rows].sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
   const line = Math.min(1, Math.max(0, threshold));
   const lineStudents = Math.ceil(line * size - 1e-9);
+  const extra = collapseAfter !== undefined ? Math.max(0, sorted.length - collapseAfter) : 0;
+  const shown = extra > 0 && !all ? sorted.slice(0, collapseAfter) : sorted;
 
   return (
     <div>
+      {/* Only the line is named up here; the ends of the scale are in the key below, so
+          nothing collides when the line sits near an end on a narrow screen. */}
       <div className={clsx(GRID, "hidden sm:grid")} aria-hidden>
         <span />
-        <div className="relative h-5 text-2xs text-ink-faint">
-          <span className="absolute left-0 top-0 num">0</span>
-          <span className="absolute right-0 top-0 num">{size} students</span>
+        <div className="relative h-5 text-2xs">
           <span
-            className="absolute top-0 -translate-x-1/2 whitespace-nowrap font-medium text-ink"
-            style={{ left: `${line * 100}%` }}
+            className="absolute top-0 whitespace-nowrap font-medium text-ink"
+            style={
+              line > 0.5
+                ? { right: `${(1 - line) * 100}%`, paddingRight: 4 }
+                : { left: `${line * 100}%`, paddingLeft: 4 }
+            }
           >
             Whole-class line
           </span>
@@ -45,7 +56,7 @@ export function PatternBars({
       </div>
 
       <ul aria-label="Students who made each mistake">
-        {sorted.map((r) => {
+        {shown.map((r) => {
           const share = r.cohortSize ? r.count / r.cohortSize : 0;
           const whole = r.kind === "shared" || share >= line;
           return (
@@ -61,10 +72,15 @@ export function PatternBars({
                   </button>
                 ) : (
                   r.label
-                )}{" "}
-                <Tag tone={r.kind === "shared" ? "agent" : "neutral"} className="align-middle">
-                  {PATTERN_KIND_LABELS[r.kind]}
-                </Tag>
+                )}
+                {r.kind !== "emerging" && (
+                  <>
+                    {" "}
+                    <Tag tone={r.kind === "shared" ? "agent" : "neutral"} className="align-middle">
+                      {PATTERN_KIND_LABELS[r.kind]}
+                    </Tag>
+                  </>
+                )}
               </div>
 
               <div className="order-3 col-span-2 pb-2 sm:order-none sm:col-span-1 sm:pb-0">
@@ -99,6 +115,11 @@ export function PatternBars({
           );
         })}
       </ul>
+      {extra > 0 && (
+        <button type="button" className="pill mt-2" aria-expanded={all} onClick={() => setAll(!all)}>
+          {all ? `Show only the top ${collapseAfter}` : `Show ${extra} more`}
+        </button>
+      )}
 
       <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-2xs text-ink-faint">
         <span className="inline-flex items-center gap-1.5">
@@ -110,7 +131,7 @@ export function PatternBars({
           Below the line
         </span>
         <span>
-          The line is {lineStudents} of {size} students ({pct(line)}).
+          A full bar is all {size} students. The line is {lineStudents} of {size} ({pct(line)}).
         </span>
       </div>
     </div>

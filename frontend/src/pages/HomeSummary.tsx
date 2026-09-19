@@ -15,7 +15,7 @@ import {
   studentScores,
 } from "./classStats";
 
-const TOP_PATTERNS = 5;
+const TOP_PATTERNS = 4;
 
 /** The class in a handful of numbers, for the Home overview and its details. */
 export interface HomeStats {

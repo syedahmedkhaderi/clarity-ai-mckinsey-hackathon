@@ -49,7 +49,7 @@ export function ScoreDistribution({ scores, outOf }: { scores: number[]; outOf: 
   return (
     <div role="group" aria-label={`Scores out of ${outOf}. Class average ${meanText}.`}>
       <div className="flex gap-2">
-        <div className="relative mt-6 h-32 w-6 shrink-0" aria-hidden>
+        <div className="relative mt-10 h-32 w-6 shrink-0" aria-hidden>
           {ticks.map((t) => (
             <span
               key={t}
@@ -62,7 +62,7 @@ export function ScoreDistribution({ scores, outOf }: { scores: number[]; outOf: 
         </div>
 
         <div className="min-w-0 flex-1">
-          <div className="relative mt-6 h-32">
+          <div className="relative mt-10 h-32">
             {ticks.map((t) => (
               <span
                 key={t}
@@ -99,7 +99,7 @@ export function ScoreDistribution({ scores, outOf }: { scores: number[]; outOf: 
             />
             <span
               aria-hidden
-              className="absolute -top-6 -translate-x-1/2 whitespace-nowrap text-2xs font-medium text-chart-hot"
+              className="absolute -top-10 -translate-x-1/2 whitespace-nowrap text-2xs font-medium text-chart-hot"
               style={{ left: `${labelAt}%` }}
             >
               Class average {meanText}

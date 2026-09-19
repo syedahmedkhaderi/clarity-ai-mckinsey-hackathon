@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useRef, useState } from "react";
 import { insightsApi } from "../api/insights";
-import { DiagnosisDetail } from "../components/DiagnosisDetail";
+import { FindingCard } from "../components/FindingCard";
 import { LearnerCard, type LearnerTotal, type LearnerTrend } from "../components/LearnerCard";
 import { PageHeader, WorkSurface } from "../shell/WorkSurface";
 import { Collapsible } from "../components/ui/Collapsible";
@@ -381,11 +381,7 @@ function PatternsTable({ summary }: { summary: Summary }) {
     (a, b) => b[1].length - a[1].length || byId(a[0], b[0]),
   );
   return (
-    <Panel
-      title="Mistake patterns across tests"
-      subtitle="This is what a score cannot show: whether it is the same mistake again."
-      flush
-    >
+    <Panel flush>
       {rows.length === 0 ? (
         <p className="px-4 py-5 text-sm text-ink-muted">No mistake patterns are on record for this student.</p>
       ) : (
@@ -432,9 +428,6 @@ function Findings({
   const s = useSession();
   const id = learner.learner_id;
   const nodeMeta = (node: string | null) => s.taxonomy?.nodes.find((n) => n.id === node);
-  const marks = new Map(
-    (batch.all_marks ?? batch.marks).filter((m) => m.learner_id === id).map((m) => [m.question_id, m]),
-  );
   const escalations = batch.escalations.filter((e) => e.learner_id === id);
   const waiting = (q: string) => escalations.some((e) => e.question_id === q && !e.resolved);
   // Answers waiting on the teacher come first; the rest stay in question order.
@@ -455,21 +448,12 @@ function Findings({
       title={`This test, ${thisTest}`}
       subtitle={`${diagnoses.length} ${diagnoses.length === 1 ? "finding" : "findings"}, ${open} need${open === 1 ? "s" : ""} your call`}
     >
-      <div className="space-y-6 bg-surface-sunken p-3 md:p-4">
+      <div className="space-y-3 bg-surface-sunken p-3 md:p-4">
         {diagnoses.map((d, i) => {
-          const mark = marks.get(d.question_id);
           const flagged = escalations.filter((e) => e.question_id === d.question_id);
           return (
             <section key={d.question_id} className="space-y-2" aria-label={`Finding ${i + 1}`}>
-              {diagnoses.length > 1 && (
-                <p className="flex items-center gap-3 text-xs font-semibold text-ink-muted">
-                  <span className="shrink-0">
-                    Finding {i + 1} of {diagnoses.length}
-                  </span>
-                  <span aria-hidden className="h-px flex-1 bg-line-strong" />
-                </p>
-              )}
-              <DiagnosisDetail
+              <FindingCard
                 diagnosis={d}
                 question={s.questions.find((q) => q.question_id === d.question_id)}
                 answer={
@@ -478,10 +462,6 @@ function Findings({
                   )?.answer ?? ""
                 }
                 node={nodeMeta(d.taxonomy_node)}
-                alternative={nodeMeta(d.alternative_node)}
-                awarded={mark ? `${scoreText(mark.awarded)} of ${scoreText(mark.max_marks)}` : undefined}
-                needsCall={flagged.some((e) => !e.resolved)}
-                onOverride={() => s.overrideDiagnosis(id, d.question_id)}
               />
               {flagged.map((e) => (
                 <EscalationNote key={e.escalation_id} escalation={e} />

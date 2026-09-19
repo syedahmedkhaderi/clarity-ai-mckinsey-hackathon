@@ -46,6 +46,11 @@
   .btn-primary {
     @apply border-agent bg-agent text-white hover:bg-[#152d50];
   }
+  /* The rounded control used for choices and toggles in the top bars. */
+  .pill {
+    @apply inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-line-strong
+           bg-surface px-3 py-1 text-sm text-ink transition-colors hover:bg-surface-sunken;
+  }
   .btn-xs {
     @apply px-2 py-1 text-xs;
   }

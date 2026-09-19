@@ -42,7 +42,6 @@ const CLASS_TABS: { key: ClassTab; label: string }[] = [
  */
 function ClassView({ batch }: { batch: BatchResult }) {
   const s = useSession();
-  const { setView } = useAppView();
   const [focus, setFocus] = useState<Focus | null>(null);
   const [tab, setTab] = useState<ClassTab>("mistakes");
   const details = useRef<HTMLDivElement>(null);
@@ -74,17 +73,9 @@ function ClassView({ batch }: { batch: BatchResult }) {
     setTab("who");
   };
 
-  const header = (
-    <PageHeader
-      title="Class"
-      subtitle={`${plural(patterns.cohort_size, "student")} took ${s.testName(patterns.assessment_id)}. This page shows whether a mistake belongs to one student or to the whole class.`}
-      action={<BarLink title="Open the action plan" onClick={() => setView("plan")} />}
-    />
-  );
-
   return (
     <TopSurface
-      header={header}
+      header={<ClassHeader patterns={patterns} />}
       bar={
         <TopBar>
           <ClassFigures batch={batch} named={named} history={history} />
@@ -99,20 +90,7 @@ function ClassView({ batch }: { batch: BatchResult }) {
         {tab === "mistakes" && (
           <MistakesSection patterns={patterns} named={named} onOpen={open} />
         )}
-        {tab === "who" && (
-          <Panel
-            title="Who made which mistake"
-            subtitle="Read down a column for the class, across a row for one student. Select a square to see the answer."
-          >
-            <ClassHeatmap
-              patterns={patterns}
-              learners={batch.learners}
-              threshold={s.sharedThreshold}
-              selected={focus?.learner ? { learnerId: focus.learner, nodeId: focus.node } : null}
-              onCell={(learner, node) => setFocus({ node, learner })}
-            />
-          </Panel>
-        )}
+        {tab === "who" && <WhoPanel batch={batch} focus={focus} onFocus={setFocus} />}
         {tab === "trend" && <ClassTrend history={history} />}
 
         <div ref={details}>
@@ -120,6 +98,45 @@ function ClassView({ batch }: { batch: BatchResult }) {
         </div>
       </div>
     </TopSurface>
+  );
+}
+
+function ClassHeader({ patterns }: { patterns: CohortPatterns }) {
+  const s = useSession();
+  const { setView } = useAppView();
+  return (
+    <PageHeader
+      title="Class"
+      subtitle={`${plural(patterns.cohort_size, "student")} took ${s.testName(patterns.assessment_id)}. This page shows whether a mistake belongs to one student or to the whole class.`}
+      action={<BarLink title="Open the action plan" onClick={() => setView("plan")} />}
+    />
+  );
+}
+
+function WhoPanel({
+  batch,
+  focus,
+  onFocus,
+}: {
+  batch: BatchResult;
+  focus: Focus | null;
+  onFocus: (f: Focus) => void;
+}) {
+  const s = useSession();
+  if (!batch.patterns) return null;
+  return (
+    <Panel
+      title="Who made which mistake"
+      subtitle="Read down a column for the class, across a row for one student. Select a square to see the answer."
+    >
+      <ClassHeatmap
+        patterns={batch.patterns}
+        learners={batch.learners}
+        threshold={s.sharedThreshold}
+        selected={focus?.learner ? { learnerId: focus.learner, nodeId: focus.node } : null}
+        onCell={(learner, node) => onFocus({ node, learner })}
+      />
+    </Panel>
   );
 }
 
@@ -274,6 +291,7 @@ function MistakesSection({
         <PatternBars
           threshold={s.sharedThreshold}
           onSelect={onOpen}
+          collapseAfter={4}
           rows={named.map((n) => ({
             id: n.node_id,
             label: n.label,
@@ -298,45 +316,75 @@ function TheRest({ named, onOpen }: { named: NodePattern[]; onOpen: (node: strin
   // A mistake one student made is listed in the chart beside this; naming each again
   // here would only repeat it, so they are counted in one line.
   const several = named.filter((n) => n.count > 1);
-  const singles = named.length - several.length;
+  const singles = named.filter((n) => n.count === 1);
   return (
     <Panel
       title="The rest, briefly"
-      subtitle={`Below the ${pct(sharedThreshold)} line. Not a re-teach: a pairing, a word at the break, or a few minutes with one student.`}
+      subtitle={`Below the ${pct(sharedThreshold)} line. Open a row to see what to do.`}
       flush
     >
       <ul className="divide-y divide-line">
         {several.map((n) => (
-          <li key={n.node_id} className="px-4 py-2.5">
-            <div className="flex items-baseline gap-3">
-              <button
-                type="button"
-                onClick={() => onOpen(n.node_id)}
-                className="text-left text-sm font-medium text-ink hover:underline"
-              >
-                {n.label}
-              </button>
-              <span className="num ml-auto shrink-0 text-ink-muted">
-                {n.count} of {n.cohort_size}
-              </span>
-            </div>
-            <p className="mt-0.5 text-xs text-ink-muted">
-              Too few for class time. Pair them with someone who has it, or catch them at the break.
-            </p>
-          </li>
+          <RestRow
+            key={n.node_id}
+            title={n.label}
+            count={`${n.count} of ${n.cohort_size}`}
+            hint="Too few for class time. Pair them with someone who has it, or catch them at the break."
+            onSee={() => onOpen(n.node_id)}
+          />
         ))}
-        {singles > 0 && (
-          <li className="px-4 py-2.5">
-            <p className="text-sm font-medium text-ink">
-              {singles === 1 ? "One more mistake, made by one student." : `${singles} more mistakes, each made by one student.`}
-            </p>
-            <p className="mt-0.5 text-xs text-ink-muted">
-              A few minutes with each of them when there is time. Select one in the chart to see who.
-            </p>
-          </li>
+        {singles.length > 0 && (
+          <RestRow
+            title={
+              singles.length === 1
+                ? "One more mistake, made by one student"
+                : `${singles.length} more mistakes, each made by one student`
+            }
+            hint="A few minutes with each of them when there is time. Select one in the chart to see who."
+          />
         )}
       </ul>
     </Panel>
+  );
+}
+
+function RestRow({
+  title,
+  count,
+  hint,
+  onSee,
+}: {
+  title: string;
+  count?: string;
+  hint: string;
+  onSee?: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <li>
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-baseline gap-3 px-4 py-2.5 text-left hover:bg-surface-raised"
+      >
+        <span className="min-w-0 flex-1 text-sm font-medium text-ink">{title}</span>
+        {count && <span className="num shrink-0 text-ink-muted">{count}</span>}
+        <span aria-hidden className="w-3 shrink-0 text-center text-xs text-ink-muted">
+          {open ? "-" : "+"}
+        </span>
+      </button>
+      {open && (
+        <div className="px-4 pb-3">
+          <p className="text-xs text-ink-muted">{hint}</p>
+          {onSee && (
+            <button className="pill mt-2 text-xs" onClick={onSee}>
+              See who made it
+            </button>
+          )}
+        </div>
+      )}
+    </li>
   );
 }
 

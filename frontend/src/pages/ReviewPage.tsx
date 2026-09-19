@@ -8,20 +8,54 @@ import { BRAND_NAME } from "../lib/brand";
 
 export function ReviewPage() {
   const { batch, resolve, overrideEscalation, openCount } = useSession();
-  const { setView } = useAppView();
   if (!batch) return null;
   const open = batch.escalations.filter((e) => !e.resolved);
   const byReason = new Map<ReasonCode, number>();
   for (const e of open) byReason.set(e.reason_code, (byReason.get(e.reason_code) ?? 0) + 1);
 
-  const bar = (
+  return (
+    <TopSurface
+      bar={<ReviewBar open={open.length} decided={batch.escalations.length - open.length} byReason={byReason} />}
+      header={
+        <PageHeader
+          title="Needs your call"
+          subtitle={`${
+            openCount === 0
+              ? "Nothing is waiting for you."
+              : openCount === 1
+                ? "1 thing is waiting for you."
+                : `${openCount} things are waiting for you.`
+          } Each one shows what the system was unsure about and what it would have done. ${BRAND_NAME} never sets a mark that counts.`}
+        />
+      }
+    >
+      <EscalationQueue
+        escalations={batch.escalations}
+        onResolve={(e) => resolve(e.escalation_id)}
+        onOverride={overrideEscalation}
+      />
+    </TopSurface>
+  );
+}
+
+function ReviewBar({
+  open,
+  decided,
+  byReason,
+}: {
+  open: number;
+  decided: number;
+  byReason: Map<ReasonCode, number>;
+}) {
+  const { setView } = useAppView();
+  return (
     <TopBar>
       <span className="text-sm text-ink-muted">
-        <span className={openCount > 0 ? "num font-semibold text-flag" : "num font-semibold text-ink"}>
-          {openCount}
+        <span className={open > 0 ? "num font-semibold text-flag" : "num font-semibold text-ink"}>
+          {open}
         </span>{" "}
         open,{" "}
-        <span className="num font-semibold text-ink">{batch.escalations.length - open.length}</span>{" "}
+        <span className="num font-semibold text-ink">{decided}</span>{" "}
         decided.
       </span>
       {byReason.size > 0 && (
@@ -47,29 +81,5 @@ export function ReviewPage() {
         />
       </span>
     </TopBar>
-  );
-
-  return (
-    <TopSurface
-      bar={bar}
-      header={
-        <PageHeader
-          title="Needs your call"
-          subtitle={`${
-            openCount === 0
-              ? "Nothing is waiting for you."
-              : openCount === 1
-                ? "1 thing is waiting for you."
-                : `${openCount} things are waiting for you.`
-          } Each one shows what the system was unsure about and what it would have done. ${BRAND_NAME} never sets a mark that counts.`}
-        />
-      }
-    >
-      <EscalationQueue
-        escalations={batch.escalations}
-        onResolve={(e) => resolve(e.escalation_id)}
-        onOverride={overrideEscalation}
-      />
-    </TopSurface>
   );
 }

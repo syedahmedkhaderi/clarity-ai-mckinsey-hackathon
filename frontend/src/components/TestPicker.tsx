@@ -1,5 +1,5 @@
 import type { Assignment } from "../types";
-import { marksLabel, shortDate } from "../lib/format";
+import { shortDate } from "../lib/format";
 import { Select, type SelectOption } from "./ui/Select";
 
 /** One menu row per test: the short name, the full name, when it is due and how many sheets are in. */
@@ -17,7 +17,7 @@ function option(a: Assignment): SelectOption {
 
 /**
  * Chooses the test and starts the analysis, laid out as one row for the bar
- * across the top of Home. A select rather than a row
+ * across the top of Home. The test's own facts live in Home's details panel. A select rather than a row
  * of buttons: the list grows every term and a row stops fitting after four.
  */
 export function TestPicker({
@@ -36,7 +36,6 @@ export function TestPicker({
   /** Why the selected test cannot be run, or null when it can. */
   blockedReason: string | null;
 }) {
-  const current = assignments.find((a) => a.id === selected);
   const yours = assignments.filter((a) => a.source === "uploaded").map(option);
   const provided = assignments.filter((a) => a.source !== "uploaded").map(option);
   const groups =
@@ -77,17 +76,7 @@ export function TestPicker({
           "Analyse this test"
         )}
       </button>
-      {(current || blockedReason) && (
-        <div className="pb-0.5 text-xs">
-          {current && (
-            <p className="text-ink-muted">
-              {current.question_count} questions, {marksLabel(current.points_possible)},{" "}
-              {current.submission_count} of {current.expected_count} sheets in.
-            </p>
-          )}
-          {blockedReason && <p className="text-flag">{blockedReason}</p>}
-        </div>
-      )}
+      {blockedReason && <p className="pb-0.5 text-xs text-flag">{blockedReason}</p>}
     </div>
   );
 }

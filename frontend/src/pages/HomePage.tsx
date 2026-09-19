@@ -4,23 +4,23 @@ import { TestPicker } from "../components/TestPicker";
 import { EmptyState } from "../components/ui/EmptyState";
 import { useAppView } from "../hooks/useAppView";
 import { useSession } from "../hooks/useSession";
-import { analysisLabel, pct } from "../lib/format";
-import { BarLink, Figures, PageHeader, TopBar, TopSurface } from "../shell/WorkSurface";
+import { analysisLabel, marksLabel, pct } from "../lib/format";
+import { BarLink, Figures, TopBar, TopSurface } from "../shell/WorkSurface";
 import { plural } from "./classStats";
 import { OverviewTab, homeStats, type HomeStats } from "./HomeSummary";
 import { BRAND_NAME } from "../lib/brand";
 
 /**
- * Home is the overview of one test. The bar across the top chooses the test and
- * points to where work is waiting; the numbers behind the pictures stay folded
- * away until asked for, so the charts get the screen.
+ * Home is the overview of one test. One bar across the top chooses the test;
+ * the facts about it stay folded away until asked for, so the charts get the
+ * screen. Where to go next comes after the charts, once the teacher has read them.
  */
 export function HomePage() {
   const s = useSession();
   const stats = s.batch ? homeStats(s.batch, s.topicName) : null;
 
   return (
-    <TopSurface header={<Header />} bar={<Bar stats={stats} />}>
+    <TopSurface bar={<Bar stats={stats} />}>
       {s.running && (
         <div className="mb-5">
           <RunProgress
@@ -33,7 +33,13 @@ export function HomePage() {
         </div>
       )}
       {stats ? (
-        <OverviewTab stats={stats} />
+        <>
+          <OverviewTab stats={stats} />
+          <div className="mt-6 flex flex-wrap items-center gap-2 border-t border-line pt-5">
+            <span className="mr-2 text-sm font-medium text-ink">Next:</span>
+            <Links stats={stats} />
+          </div>
+        </>
       ) : (
         !s.running && (
           <EmptyState title="No analysis yet">
@@ -46,39 +52,20 @@ export function HomePage() {
   );
 }
 
-function Header() {
-  const s = useSession();
-  const { setView } = useAppView();
-  const batch = s.batch;
-  const label = batch ? analysisLabel(s.testName(batch.assessment_id), batch.trace[0]?.timestamp) : "";
-  return (
-    <PageHeader
-      title={batch ? s.testName(batch.assessment_id) : "Home"}
-      subtitle={
-        !batch
-          ? `Every mark ${BRAND_NAME} gives is a draft. It never sets a final mark on its own.`
-          : s.preloaded
-            ? `${label}. A worked example from a practice class, so you can look around. Every mark is a draft.`
-            : `${label}. Every mark is a draft.`
-      }
-      action={
-        <button className="btn btn-xs" onClick={() => setView("upload")}>
-          Add a test
-        </button>
-      }
-    />
-  );
-}
-
-/** The test, the places work is waiting, and the test's numbers behind a toggle. */
+/** The test and the button to analyse it, with its facts behind a toggle. */
 function Bar({ stats }: { stats: HomeStats | null }) {
   const s = useSession();
+  const { setView } = useAppView();
   const selected = s.tests.find((t) => t.id === s.selectedTest);
   return (
     <TopBar
-      details={stats ? <Details stats={stats} /> : undefined}
+      details={<Details stats={stats} />}
       detailsLabel="test details"
-      end={stats ? <Links stats={stats} /> : undefined}
+      end={
+        <button className="pill" onClick={() => setView("upload")}>
+          Add a test
+        </button>
+      }
     >
       <TestPicker
         assignments={s.tests}
@@ -132,31 +119,55 @@ function Links({ stats }: { stats: HomeStats }) {
   );
 }
 
-function Details({ stats }: { stats: HomeStats }) {
+function Details({ stats }: { stats: HomeStats | null }) {
   const s = useSession();
+  const test = s.tests.find((t) => t.id === s.selectedTest);
+  const batch = s.batch;
+  const label = batch ? analysisLabel(s.testName(batch.assessment_id), batch.trace[0]?.timestamp) : "";
   return (
     <div className="space-y-4">
-      <Figures
-        items={[
-          { label: "Students", value: stats.students },
-          { label: "Marks lost", value: `${stats.lost} of ${stats.possible}` },
-          { label: "Class average", value: `${stats.mean} of ${stats.outOf}` },
-          { label: "Whole-class problems", value: stats.whole.length },
-          {
-            label: "Waiting for you",
-            value: s.openCount,
-            tone: s.openCount > 0 ? "flag" : "default",
-          },
-        ]}
-      />
-      <HowWorkedOut
-        events={s.trace}
-        status={s.status}
-        elapsedMs={s.elapsedMs}
-        health={s.health}
-        running={s.running}
-        stage={s.stage}
-      />
+      <div className="space-y-1 text-sm text-ink-muted">
+        {test && (
+          <p>
+            {test.display_name ?? test.name}: {test.question_count} questions,{" "}
+            {marksLabel(test.points_possible)}, {test.submission_count} of {test.expected_count}{" "}
+            answer sheets in.
+          </p>
+        )}
+        <p>
+          {batch
+            ? s.preloaded
+              ? `${label}. A worked example from a practice class, so you can look around.`
+              : `${label}.`
+            : "This test has not been analysed yet."}{" "}
+          Every mark is a draft. {BRAND_NAME} never sets a final mark on its own.
+        </p>
+      </div>
+      {stats && (
+        <Figures
+          items={[
+            { label: "Students", value: stats.students },
+            { label: "Marks lost", value: `${stats.lost} of ${stats.possible}` },
+            { label: "Class average", value: `${stats.mean} of ${stats.outOf}` },
+            { label: "Whole-class problems", value: stats.whole.length },
+            {
+              label: "Waiting for you",
+              value: s.openCount,
+              tone: s.openCount > 0 ? "flag" : "default",
+            },
+          ]}
+        />
+      )}
+      {batch && (
+        <HowWorkedOut
+          events={s.trace}
+          status={s.status}
+          elapsedMs={s.elapsedMs}
+          health={s.health}
+          running={s.running}
+          stage={s.stage}
+        />
+      )}
     </div>
   );
 }
