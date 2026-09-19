@@ -70,7 +70,7 @@ A facilitator uploads a test. Six agents take it from there, and the facilitator
 <table>
   <tr>
     <td width="33%"><img src="docs/screenshots/review.png" alt="Needs your call queue" /></td>
-    <td width="33%"><img src="docs/screenshots/class.png" alt="Class view of shared mistakes" /></td>
+    <td width="33%"><img src="docs/screenshots/mistakes.png" alt="Who made which mistake, on Home" /></td>
     <td width="33%"><img src="docs/screenshots/plan.png" alt="Action plan" /></td>
   </tr>
   <tr>
