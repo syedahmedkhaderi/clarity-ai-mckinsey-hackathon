@@ -22,6 +22,19 @@ export default {
         // Things the agent handed to a human. A deep rust: solid where the teacher acts,
         // an outline where it only points the way.
         flag: { DEFAULT: "#8a3b12", soft: "#faf1ec", line: "#d9b8a5" },
+        // Priority on the action plan, and only there: red, amber, green, each as a soft
+        // tint with dark text so it reads without shouting over the violet.
+        priority: {
+          high: "#b42318",
+          "high-soft": "#fef0ef",
+          "high-line": "#f5c2bd",
+          medium: "#935f00",
+          "medium-soft": "#fff6e0",
+          "medium-line": "#f0d593",
+          low: "#1d7a3e",
+          "low-soft": "#ecf8f0",
+          "low-line": "#b5e0c3",
+        },
         // Charts. The same violet family as the accent, with one pink for the mark to
         // look at. Each hue keeps one meaning everywhere: violet is the ordinary mark,
         // pink is the one to look at (a whole-class mistake, a mistake that keeps coming

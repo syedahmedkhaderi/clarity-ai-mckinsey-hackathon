@@ -5,6 +5,8 @@ const TONES = {
   neutral: "border-line bg-surface-sunken text-ink-muted",
   agent: "border-agent-line bg-agent-soft text-agent",
   flag: "border-flag bg-surface text-flag font-semibold uppercase tracking-wider",
+  // The caller supplies every colour, as the action plan's priority tags do.
+  custom: "",
 } as const;
 
 /**

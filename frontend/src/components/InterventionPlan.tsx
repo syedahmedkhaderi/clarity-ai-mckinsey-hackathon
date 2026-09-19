@@ -8,6 +8,7 @@ import {
   stripNodeIds,
   severityLabel,
   severityLevel,
+  type SeverityLevel,
 } from "../lib/format";
 import { useSession } from "../hooks/useSession";
 import { Tag } from "./ui/Tag";
@@ -45,19 +46,26 @@ function StudentNames({ ids }: { ids: string[] }) {
   const more = names.length - NAMES_SHOWN;
   return (
     <p className="text-xs text-ink-muted" title={names.join(", ")}>
-      <span className="text-ink-faint">{ids.length === 1 ? "Student: " : "Students: "}</span>
+      <span className="font-semibold text-ink">{ids.length === 1 ? "Student: " : "Students: "}</span>
       {names.slice(0, NAMES_SHOWN).join(", ")}
       {more > 0 && ` and ${more} more`}
     </p>
   );
 }
 
+const PRIORITY_TONE: Record<SeverityLevel, string> = {
+  high: "border-priority-high-line bg-priority-high-soft text-priority-high",
+  medium: "border-priority-medium-line bg-priority-medium-soft text-priority-medium",
+  low: "border-priority-low-line bg-priority-low-soft text-priority-low",
+};
+
 function Priority({ severity }: { severity: number }) {
   const { highSeverityFloor } = useSession();
-  const high = severityLevel(severity, highSeverityFloor) === "high";
+  const level = severityLevel(severity, highSeverityFloor);
   return (
     <Tag
-      className={clsx("rounded-full px-2.5", high && "border-line-strong bg-surface text-ink")}
+      tone="custom"
+      className={clsx("rounded-full px-2.5 font-semibold", PRIORITY_TONE[level])}
       title={`Priority score ${Math.round(severity * 100)} out of 100`}
     >
       {severityLabel(severity, highSeverityFloor)}
@@ -100,7 +108,7 @@ export function ActionCard({
       <div className="mb-1 text-sm font-medium text-ink">{plain(action.title)}</div>
       <StudentNames ids={action.learner_ids} />
       <p className="mt-2 text-xs text-ink-muted">
-        <span className="text-ink-faint">Why: </span>
+        <span className="font-semibold text-ink">Why: </span>
         {plain(action.justification)}
       </p>
       {action.facilitator_script && (

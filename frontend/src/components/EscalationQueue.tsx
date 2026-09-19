@@ -195,10 +195,12 @@ function Item({
           <span className="ml-auto flex flex-wrap gap-2">
             {e.learner_id && CAN_CORRECT.includes(e.reason_code) && (
               <button className="btn btn-xs" onClick={() => onOverride(e)}>
+                <PencilIcon />
                 Correct this
               </button>
             )}
             <button className="btn btn-xs" onClick={() => onResolve(e)}>
+              <CheckIcon />
               Accept its choice
             </button>
           </span>
@@ -220,7 +222,7 @@ function Item({
           {readings.map((r) => (
             <div key={r.label} className="rounded border border-line-strong bg-surface px-3 py-2">
               <div className="flex items-baseline justify-between gap-2">
-                <span className="text-2xs uppercase tracking-wide text-ink-faint">{r.label}</span>
+                <span className="text-2xs font-semibold uppercase tracking-wide text-ink">{r.label}</span>
                 {r.confidence !== undefined && (
                   <span className="num text-ink-muted">{sure(r.confidence)}</span>
                 )}
@@ -253,7 +255,7 @@ function Why({ text }: { text: string }) {
         type="button"
         aria-expanded={open}
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 text-2xs uppercase tracking-wide text-ink-muted hover:text-ink"
+        className="flex items-center gap-2 text-2xs font-semibold uppercase tracking-wide text-ink hover:text-agent"
       >
         <span className="grid h-4 w-4 place-items-center rounded-sm border border-line-strong bg-surface text-xs leading-none">
           {open ? "-" : "+"}
@@ -266,7 +268,27 @@ function Why({ text }: { text: string }) {
 }
 
 function Label({ children }: { children: ReactNode }) {
-  return <div className="mb-1 text-2xs uppercase tracking-wide text-ink-faint">{children}</div>;
+  return <div className="mb-1 text-2xs font-semibold uppercase tracking-wide text-ink">{children}</div>;
+}
+
+/** Drawn inline, 12px, in the button's own colour. The app uses no icon library. */
+function PencilIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4"
+      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0">
+      <path d="M8.2 1.8l2 2L4 10H2V8z" />
+      <path d="M7 3l2 2" />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8"
+      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0 text-agent">
+      <path d="M2 6.3l2.6 2.6L10 3.4" />
+    </svg>
+  );
 }
 
 /** A node id reads as its plain name. Anything else is a sentence, so it is cleaned instead. */
